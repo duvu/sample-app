@@ -1,0 +1,72 @@
+<md-card class="content-card">
+    <md-card-title>Account Permissions</md-card-title>
+    <md-card-content>
+        <div fxLayout="row" fxLayout.sm="column" *ngIf="account_acl">
+            <md-list>
+                <perm-item [name]="'accountID'"           [icon]="'perm_identity'" [value]="account_acl.accountID"              [disabled]="!is_edit"    (change)="permItemChanged($event)">Account Id</perm-item>
+                <perm-item [name]="'accountType'"         [icon]="'perm_identity'" [value]="account_acl.accountType"            [disabled]="!is_edit"    (change)="permItemChanged($event)">Account Type</perm-item>
+                <perm-item [name]="'notifyEmail'"         [icon]="'perm_identity'" [value]="account_acl.notifyEmail"            [disabled]="!is_edit"    (change)="permItemChanged($event)">Notify Email</perm-item>
+                <perm-item [name]="'speedUnits'"          [icon]="'perm_identity'" [value]="account_acl.speedUnits"             [disabled]="!is_edit"    (change)="permItemChanged($event)">Speed Units</perm-item>
+                <perm-item [name]="'distanceUnits'"       [icon]="'perm_identity'" [value]="account_acl.distanceUnits"          [disabled]="!is_edit"    (change)="permItemChanged($event)">Distance Units</perm-item>
+                <perm-item [name]="'volumeUnits'"         [icon]="'perm_identity'" [value]="account_acl.volumeUnits"            [disabled]="!is_edit"    (change)="permItemChanged($event)">Volume Units</perm-item>
+                <perm-item [name]="'pressureUnits'"       [icon]="'perm_identity'" [value]="account_acl.pressureUnits"          [disabled]="!is_edit"    (change)="permItemChanged($event)">Pressure Units</perm-item>
+                <perm-item [name]="'economyUnits'"        [icon]="'perm_identity'" [value]="account_acl.economyUnits"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Economy Units</perm-item>
+                <perm-item [name]="'temperatureUnits'"    [icon]="'perm_identity'" [value]="account_acl.temperatureUnits"       [disabled]="!is_edit"    (change)="permItemChanged($event)">Temperature Units</perm-item>
+                <perm-item [name]="'latLonFormat'"        [icon]="'perm_identity'" [value]="account_acl.latLonFormat"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Latlon Format</perm-item>
+                <perm-item [name]="'geocoderMode'"        [icon]="'perm_identity'" [value]="account_acl.geocoderMode"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Geocoder Mode</perm-item>
+                <perm-item [name]="'privateLabelName'"    [icon]="'perm_identity'" [value]="account_acl.privateLabelName"       [disabled]="!is_edit"    (change)="permItemChanged($event)">Private Label Name</perm-item>
+                <perm-item [name]="'isBorderCrossing'"    [icon]="'perm_identity'" [value]="account_acl.isBorderCrossing"       [disabled]="!is_edit"    (change)="permItemChanged($event)">Is Border Crossing</perm-item>
+                <perm-item [name]="'retainedEventAge'"    [icon]="'perm_identity'" [value]="account_acl.retainedEventAge"       [disabled]="!is_edit"    (change)="permItemChanged($event)">Retained Event Age</perm-item>
+                <perm-item [name]="'maximumDevices'"      [icon]="'perm_identity'" [value]="account_acl.maximumDevices"         [disabled]="!is_edit"    (change)="permItemChanged($event)">Maximum Devices</perm-item>
+                <perm-item [name]="'totalPingCount'"      [icon]="'perm_identity'" [value]="account_acl.totalPingCount"         [disabled]="!is_edit"    (change)="permItemChanged($event)">Total Ping Count</perm-item>
+                <perm-item [name]="'maxPingCount'"        [icon]="'perm_identity'" [value]="account_acl.maxPingCount"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Max Ping Count</perm-item>
+                <perm-item [name]="'autoAddDevices'"      [icon]="'perm_identity'" [value]="account_acl.autoAddDevices"         [disabled]="!is_edit"    (change)="permItemChanged($event)">Auto Add Devices</perm-item>
+                <perm-item [name]="'dcsPropertiesID'"     [icon]="'perm_identity'" [value]="account_acl.dcsPropertiesID"        [disabled]="!is_edit"    (change)="permItemChanged($event)">Dcs Properties Id</perm-item>
+                <perm-item [name]="'expirationTime'"      [icon]="'perm_identity'" [value]="account_acl.expirationTime"         [disabled]="!is_edit"    (change)="permItemChanged($event)">Expiration Time</perm-item>
+                <perm-item [name]="'defaultUser'"         [icon]="'perm_identity'" [value]="account_acl.defaultUser"            [disabled]="!is_edit"    (change)="permItemChanged($event)">Default User</perm-item>
+                <perm-item [name]="'password'"            [icon]="'perm_identity'" [value]="account_acl.password"               [disabled]="!is_edit"    (change)="permItemChanged($event)">Password</perm-item>
+                <perm-item [name]="'token'"               [icon]="'perm_identity'" [value]="account_acl.token"                  [disabled]="!is_edit"    (change)="permItemChanged($event)">Token</perm-item>
+                <perm-item [name]="'contactName'"         [icon]="'perm_identity'" [value]="account_acl.contactName"            [disabled]="!is_edit"    (change)="permItemChanged($event)">Contact Name</perm-item>
+                <perm-item [name]="'contactPhone'"        [icon]="'perm_identity'" [value]="account_acl.contactPhone"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Contact Phone</perm-item>
+                <perm-item [name]="'contactEmail'"        [icon]="'perm_identity'" [value]="account_acl.contactEmail"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Contact Email</perm-item>
+                <perm-item [name]="'timeZone'"            [icon]="'perm_identity'" [value]="account_acl.timeZone"               [disabled]="!is_edit"    (change)="permItemChanged($event)">Timezone</perm-item>
+                <perm-item [name]="'passwdQueryTime'"     [icon]="'perm_identity'" [value]="account_acl.passwdQueryTime"        [disabled]="!is_edit"    (change)="permItemChanged($event)">Passwd Query Time</perm-item>
+                <perm-item [name]="'lastLoginTime'"       [icon]="'perm_identity'" [value]="account_acl.lastLoginTime"          [disabled]="!is_edit"    (change)="permItemChanged($event)">Last Login Time</perm-item>
+                <perm-item [name]="'isActive'"            [icon]="'perm_identity'" [value]="account_acl.isActive"               [disabled]="!is_edit"    (change)="permItemChanged($event)">Is Active</perm-item>
+                <perm-item [name]="'displayName'"         [icon]="'perm_identity'" [value]="account_acl.displayName"            [disabled]="!is_edit"    (change)="permItemChanged($event)">Display Name</perm-item>
+            </md-list>
+            <md-list>
+                <perm-item [name]="'description'"         [icon]="'perm_identity'" [value]="account_acl.description"            [disabled]="!is_edit"    (change)="permItemChanged($event)">Description</perm-item>
+                <perm-item [name]="'notes'"               [icon]="'perm_identity'" [value]="account_acl.notes"                  [disabled]="!is_edit"    (change)="permItemChanged($event)">Notes</perm-item>
+                <perm-item [name]="'mapLegendDevice'"     [icon]="'perm_identity'" [value]="account_acl.mapLegendDevice"        [disabled]="!is_edit"    (change)="permItemChanged($event)">Map Legend Device</perm-item>
+                <perm-item [name]="'mapLegendGroup'"      [icon]="'perm_identity'" [value]="account_acl.mapLegendGroup"         [disabled]="!is_edit"    (change)="permItemChanged($event)">Map Legend Group</perm-item>
+                <perm-item [name]="'isAccountManager'"    [icon]="'perm_identity'" [value]="account_acl.isAccountManager"       [disabled]="!is_edit"    (change)="permItemChanged($event)">Is Account Manager</perm-item>
+                <perm-item [name]="'managerID'"           [icon]="'perm_identity'" [value]="account_acl.managerID"              [disabled]="!is_edit"    (change)="permItemChanged($event)">Manager Id</perm-item>
+                <perm-item [name]="'requestPassCode'"     [icon]="'perm_identity'" [value]="account_acl.requestPassCode"        [disabled]="!is_edit"    (change)="permItemChanged($event)">Request Pass Code</perm-item>
+                <perm-item [name]="'requestIPAddress'"    [icon]="'perm_identity'" [value]="account_acl.requestIPAddress"       [disabled]="!is_edit"    (change)="permItemChanged($event)">Request Ip Address</perm-item>
+                <perm-item [name]="'dataPushURL'"         [icon]="'perm_identity'" [value]="account_acl.dataPushURL"            [disabled]="!is_edit"    (change)="permItemChanged($event)">Data Push Url</perm-item>
+                <perm-item [name]="'lastDataRequestTime'" [icon]="'perm_identity'" [value]="account_acl.lastDataRequestTime"    [disabled]="!is_edit"    (change)="permItemChanged($event)">Last Data Request Time</perm-item>
+                <perm-item [name]="'lastDataPushTime'"    [icon]="'perm_identity'" [value]="account_acl.lastDataPushTime"       [disabled]="!is_edit"    (change)="permItemChanged($event)">Last Data Push Time</perm-item>
+                <perm-item [name]="'smsEnabled'"          [icon]="'perm_identity'" [value]="account_acl.smsEnabled"             [disabled]="!is_edit"    (change)="permItemChanged($event)">Sms Enabled</perm-item>
+                <perm-item [name]="'smsProperties'"       [icon]="'perm_identity'" [value]="account_acl.smsProperties"          [disabled]="!is_edit"    (change)="permItemChanged($event)">Sms Properties</perm-item>
+                <perm-item [name]="'emailProperties'"     [icon]="'perm_identity'" [value]="account_acl.emailProperties"        [disabled]="!is_edit"    (change)="permItemChanged($event)">Email Properties</perm-item>
+                <perm-item [name]="'passwdChangeTime'"    [icon]="'perm_identity'" [value]="account_acl.passwdChangeTime"       [disabled]="!is_edit"    (change)="permItemChanged($event)">Passwd Change Time</perm-item>
+                <perm-item [name]="'addressLine1'"        [icon]="'perm_identity'" [value]="account_acl.addressLine1"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Address Line 1</perm-item>
+                <perm-item [name]="'addressLine2'"        [icon]="'perm_identity'" [value]="account_acl.addressLine2"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Address Line 2</perm-item>
+                <perm-item [name]="'addressLine3'"        [icon]="'perm_identity'" [value]="account_acl.addressLine3"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Address Line 3</perm-item>
+                <perm-item [name]="'addressCity'"         [icon]="'perm_identity'" [value]="account_acl.addressCity"            [disabled]="!is_edit"    (change)="permItemChanged($event)">Address City</perm-item>
+                <perm-item [name]="'addressState'"        [icon]="'perm_identity'" [value]="account_acl.addressState"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Address State</perm-item>
+                <perm-item [name]="'addressPostalCode'"   [icon]="'perm_identity'" [value]="account_acl.addressPostalCode"      [disabled]="!is_edit"    (change)="permItemChanged($event)">Address Postal Code</perm-item>
+                <perm-item [name]="'addressCountry'"      [icon]="'perm_identity'" [value]="account_acl.addressCountry"         [disabled]="!is_edit"    (change)="permItemChanged($event)">Address Country</perm-item>
+                <perm-item [name]="'allowNotify'"         [icon]="'perm_identity'" [value]="account_acl.allowNotify"            [disabled]="!is_edit"    (change)="permItemChanged($event)">Allow Notify</perm-item>
+                <perm-item [name]="'currencyUnits'"       [icon]="'perm_identity'" [value]="account_acl.currencyUnits"          [disabled]="!is_edit"    (change)="permItemChanged($event)">Currency Units</perm-item>
+                <perm-item [name]="'fuelCostPerLiter'"    [icon]="'perm_identity'" [value]="account_acl.fuelCostPerLiter"       [disabled]="!is_edit"    (change)="permItemChanged($event)">Fuel Cost Perliter</perm-item>
+                <perm-item [name]="'roleID'"              [icon]="'perm_identity'" [value]="account_acl.roleID"                 [disabled]="!is_edit"    (change)="permItemChanged($event)">Role Id</perm-item>
+                <perm-item [name]="'allowWebService'"     [icon]="'perm_identity'" [value]="account_acl.allowWebService"        [disabled]="!is_edit"    (change)="permItemChanged($event)">Allow Web Service</perm-item>
+                <perm-item [name]="'lastUpdateTime'"      [icon]="'perm_identity'" [value]="account_acl.lastUpdateTime"         [disabled]="!is_edit"    (change)="permItemChanged($event)">Last Update Time</perm-item>
+                <perm-item [name]="'lastUpdateUser'"      [icon]="'perm_identity'" [value]="account_acl.lastUpdateUser"         [disabled]="!is_edit"    (change)="permItemChanged($event)">Last Update User</perm-item>
+                <perm-item [name]="'creationTime'"        [icon]="'perm_identity'" [value]="account_acl.creationTime"           [disabled]="!is_edit"    (change)="permItemChanged($event)">Creation Time</perm-item>
+            </md-list>
+        </div>
+    </md-card-content>
+</md-card>

@@ -1,0 +1,327 @@
+<md-toolbar>
+    <button md-button [routerLink]="['/m/admin/account']">
+        <md-icon>arrow_back</md-icon>
+        <span i18n>Back</span>
+    </button>
+    <span class="fill-remain-space"></span>
+    <div *ngIf="!isEdit">
+        <button md-button (click)="edit()">
+            <md-icon>edit</md-icon>
+            <span i18n>Edit</span>
+        </button>
+        <button md-button (click)="onBtnDelClick()">
+            <md-icon>delete</md-icon>
+            <span i18n>Delete</span>
+        </button>
+    </div>
+    <div *ngIf="isEdit">
+        <button md-button (click)="save()">
+            <md-icon>save</md-icon>
+            <span i18n>Save</span>
+        </button>
+        <button md-button (click)="cancel()">
+            <md-icon>cancel</md-icon>
+            <span i18n>Cancel</span>
+        </button>
+    </div>
+</md-toolbar>
+
+<!--Content-->
+<div fxLayout="column">
+    <div *ngIf="account">
+        <md-card class="content-card">
+            <md-card-title-group>
+                <md-card-title>
+                    <span>{{account.displayName}}</span>
+                    <md-icon [color]="account.isActive ? 'primary' : 'warn'">lens</md-icon>
+                </md-card-title>
+                <md-card-subtitle>
+                    <span>{{account.accountID}}</span>
+                    <md-checkbox name="isActive" [disabled]="!isEdit" [(ngModel)]="account.isActive">Is Active</md-checkbox>
+                </md-card-subtitle>
+            </md-card-title-group>
+
+            <md-card-content>
+                <md-input-container class="input-item">
+                    <input mdInput name="displayName" i18n-placeholder placeholder="Display Name" [(ngModel)]="account.displayName" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="description" i18n-placeholder placeholder="Description" [(ngModel)]="account.description" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput [mdDatepicker]="expirationTimePicker" name="expirationTime" i18n-placeholder placeholder="Expiration Time" [(ngModel)]="expirationTime" [disabled]="!isEdit">
+                    <button mdSuffix [mdDatepickerToggle]="expirationTimePicker" [disabled]="!isEdit"></button>
+                </md-input-container>
+                <md-datepicker #expirationTimePicker></md-datepicker>
+                <md-input-container class="input-item">
+                    <input mdInput name="contactName" i18n-placeholder placeholder="Contact Name" [(ngModel)]="account.contactName" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="contactPhone" i18n-placeholder placeholder="Contact Phone" [(ngModel)]="account.contactPhone" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="contactEmail" i18n-placeholder placeholder="Contact Email" [(ngModel)]="account.contactEmail" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="notifyEmail" i18n-placeholder placeholder="Notify Email" [(ngModel)]="account.notifyEmail" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="timeZone" i18n-placeholder placeholder="TimeZone" [(ngModel)]="account.timeZone" [disabled]="!isEdit">
+                </md-input-container>
+
+                <md-input-container class="input-item">
+                    <input mdInput name="notes" i18n-placeholder placeholder="Notes" [(ngModel)]="account.notes" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="addressLine1" i18n-placeholder placeholder="Address Line 1" [(ngModel)]="account.addressLine1" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="addressLine2" i18n-placeholder placeholder="Address Line 2" [(ngModel)]="account.addressLine2" [disabled]="!isEdit">
+                </md-input-container>
+                <!--<md-input-container class="input-item">
+                    <input mdInput name="addressLine3" i18n-placeholder placeholder="Address Line 3" [(ngModel)]="account.addressLine3" [disabled]="!isEdit">
+                </md-input-container>-->
+                <md-input-container class="input-item">
+                    <input mdInput name="addressCity" i18n-placeholder placeholder="City" [(ngModel)]="account.addressCity" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="addressState" i18n-placeholder placeholder="State" [(ngModel)]="account.addressState" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="addressPostalCode" i18n-placeholder placeholder="Postal Code" [(ngModel)]="account.addressPostalCode" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="addressCountry" i18n-placeholder placeholder="Country" [(ngModel)]="account.addressCountry" [disabled]="!isEdit">
+                </md-input-container>
+                <md-select i18n-placeholder placeholder="Role" [(ngModel)]="account.roleID" name="role" class="input-item" [disabled]="!isEdit">
+                    <md-option *ngFor="let role of roleList" [value]="role.roleID">{{role.displayName}}</md-option>
+                </md-select>
+                <md-input-container class="input-item">
+                    <input mdInput name="role-id" i18n-placeholder placeholder="Role ID" [(ngModel)]="account.roleID" disabled>
+                </md-input-container>
+
+            </md-card-content>
+
+        </md-card>
+        <!--*-->
+        <md-card class="content-card">
+            <md-card-content>
+                <md-input-container class="input-item">
+                    <input mdInput name="speedUnits" i18n-placeholder placeholder="Speed Units" [(ngModel)]="account.speedUnits" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="distanceUnits" i18n-placeholder placeholder="Distance Units" [(ngModel)]="account.distanceUnits" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="volumeUnits" i18n-placeholder placeholder="Volume Units" [(ngModel)]="account.volumeUnits" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="pressureUnits" i18n-placeholder placeholder="Pressure Units" [(ngModel)]="account.pressureUnits" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="economyUnits" i18n-placeholder placeholder="Economy Units" [(ngModel)]="account.economyUnits" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="temperatureUnits" i18n-placeholder placeholder="Temperature Units" [(ngModel)]="account.temperatureUnits" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="currencyUnits" i18n-placeholder placeholder="Currency Units" [(ngModel)]="account.currencyUnits" [disabled]="!isEdit">
+                </md-input-container>
+            </md-card-content>
+        </md-card>
+
+
+        <md-card class="content-card">
+            <md-card-content>
+
+                <md-input-container class="input-item">
+                    <input mdInput name="retainedEventAge" i18n-placeholder placeholder="Retained Event Age" [(ngModel)]="account.retainedEventAge" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="maximumDevices" i18n-placeholder placeholder="Maximum Devices" [(ngModel)]="account.maximumDevices" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="totalPingCount" i18n-placeholder placeholder="Total Ping Count" [(ngModel)]="account.totalPingCount" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="maxPingCount" i18n-placeholder placeholder="Max Ping Count" [(ngModel)]="account.maxPingCount" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="autoAddDevices" i18n-placeholder placeholder="Auto Add Devices" [(ngModel)]="account.autoAddDevices" [disabled]="!isEdit">
+                </md-input-container>
+
+                <md-input-container class="input-item">
+                    <input mdInput name="mapLegendDevice" i18n-placeholder placeholder="Map Legend Device" [(ngModel)]="account.mapLegendDevice" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="mapLegendGroup" i18n-placeholder placeholder="Map Legend Group" [(ngModel)]="account.mapLegendGroup" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="isAccountManager" i18n-placeholder placeholder="Is Account Manager" [(ngModel)]="account.isAccountManager" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="managerID" i18n-placeholder placeholder="Manager ID" [(ngModel)]="account.managerID" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="dataPushURL" i18n-placeholder placeholder="Data Push URL" [(ngModel)]="account.dataPushURL" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="smsEnabled" i18n-placeholder placeholder="SMS Enabled" [(ngModel)]="account.smsEnabled" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="smsProperties" i18n-placeholder placeholder="SMS Properties" [(ngModel)]="account.smsProperties" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="emailProperties" i18n-placeholder placeholder="Email Properties" [(ngModel)]="account.emailProperties" [disabled]="!isEdit">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput name="allowNotify" i18n-placeholder placeholder="Allow Notify" [(ngModel)]="account.allowNotify" [disabled]="!isEdit">
+                </md-input-container>
+
+                <md-input-container class="input-item">
+                    <input mdInput name="fuelCostPerLiter" i18n-placeholder placeholder="Fuel Cost Per Liter" [(ngModel)]="account.fuelCostPerLiter" [disabled]="!isEdit">
+                </md-input-container>
+
+                <md-input-container class="input-item">
+                    <input mdInput name="allowWebService" i18n-placeholder placeholder="Allow Web Service" [(ngModel)]="account.allowWebService" [disabled]="!isEdit">
+                </md-input-container>
+
+                <md-input-container class="input-item">
+                    <input mdInput [mdDatepicker]="updatedAt" name="updatedAt" i18n-placeholder placeholder="Updated At" [(ngModel)]="account.updatedAt" disabled>
+                    <button mdSuffix [mdDatepickerToggle]="updatedAt" disabled></button>
+                </md-input-container>
+                <md-datepicker #updatedAt></md-datepicker>
+                <md-input-container class="input-item">
+                    <input mdInput [mdDatepicker]="createdAt" name="createdAt" i18n-placeholder placeholder="Created At" [(ngModel)]="account.createdAt" disabled>
+                    <button mdSuffix [mdDatepickerToggle]="createdAt" disabled></button>
+                </md-input-container>
+                <md-datepicker #createdAt></md-datepicker>
+            </md-card-content>
+        </md-card>
+    </div>
+
+    <div *ngIf="accountAcl.pages">
+        <md-card class="view-information right">
+            <md-card-content>
+                <md-list>
+                    <!--Mapping-->
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Live Monitoring</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['map:live']" name="map-live">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                        </md-button-toggle-group>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Historical Data</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['map:history']" name="map-his">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                        </md-button-toggle-group>
+                    </md-list-item>
+                    <!--Reporting-->
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Summary Report</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['report:summary']" name="report-sum">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                        </md-button-toggle-group>
+
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Speeding Report</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['report:speeding']" name="report-speed">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                        </md-button-toggle-group>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Parking Report</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['report:parking']" name="report-park">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                        </md-button-toggle-group>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Geozone Report</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['report:geozone']" name="report-geozone">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                        </md-button-toggle-group>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+        </md-card>
+        <md-card class="view-information right">
+            <md-card-title>
+                Administration ACLs
+            </md-card-title>
+            <md-card-content>
+                <md-list>
+                    <!--Administration-->
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Accounts</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['admin:account']" name="page-account">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                            <md-button-toggle value="2" disabled>Write</md-button-toggle>
+                            <md-button-toggle value="3" disabled>Full</md-button-toggle>
+                        </md-button-toggle-group>
+                        <button md-icon-button><md-icon>navigate_next</md-icon></button>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Roles</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['admin:role']" name="page-role">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                            <md-button-toggle value="2" disabled>Write</md-button-toggle>
+                            <md-button-toggle value="3" disabled>Full</md-button-toggle>
+                        </md-button-toggle-group>
+                        <button md-icon-button><md-icon>navigate_next</md-icon></button>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Devices</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['admin:device']" name="page-device">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                            <md-button-toggle value="2" disabled>Write</md-button-toggle>
+                            <md-button-toggle value="3" disabled>Full</md-button-toggle>
+                        </md-button-toggle-group>
+                        <button md-icon-button><md-icon>navigate_next</md-icon></button>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Alerts</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['admin:alert']" name="page-alert">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                            <md-button-toggle value="2" disabled>Write</md-button-toggle>
+                            <md-button-toggle value="3" disabled>Full</md-button-toggle>
+                        </md-button-toggle-group>
+                        <button md-icon-button><md-icon>navigate_next</md-icon></button>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon md-list-icon>folder</md-icon>
+                        <h4 md-line>Geozones</h4>
+                        <md-button-toggle-group #group="mdButtonToggleGroup" [(ngModel)]="accountAcl.pages['admin:geozone']" name="page-geozone">
+                            <md-button-toggle value="0" disabled>None</md-button-toggle>
+                            <md-button-toggle value="1" disabled>Read</md-button-toggle>
+                            <md-button-toggle value="2" disabled>Write</md-button-toggle>
+                            <md-button-toggle value="3" disabled>Full</md-button-toggle>
+                        </md-button-toggle-group>
+                        <button md-icon-button><md-icon>navigate_next</md-icon></button>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>

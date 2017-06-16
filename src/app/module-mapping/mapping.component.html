@@ -1,0 +1,15 @@
+<md-sidenav-container class="side-nav-container">
+    <md-sidenav mode="side" opened="true" align="end">
+        <md-nav-list>
+            <md-list-item *ngFor="let device of liveEvents">
+                <md-icon md-list-icon [color]="device.isActive? 'primary' : ''">brightness_1</md-icon>
+                <a md-line (click)="moveToMarker(device)">{{ device.displayName }}</a>
+            </md-list-item>
+        </md-nav-list>
+    </md-sidenav>
+
+    <div class="sidenav-content">
+        <div id="mapid" class="main-map"></div>
+    </div>
+
+</md-sidenav-container>

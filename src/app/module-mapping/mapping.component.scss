@@ -1,0 +1,15 @@
+.main-map {
+  height:100%;
+}
+
+.side-nav-container {
+  height: 100%;
+}
+.sidenav-content {
+  height: 100%;
+}
+.side-nav-container md-sidenav {
+  overflow-y: auto;
+  min-width: 200px;
+  max-width: 250px;
+}

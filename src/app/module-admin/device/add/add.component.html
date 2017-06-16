@@ -1,0 +1,522 @@
+<!--Toolbar-->
+<md-toolbar>
+    <button md-button (click)="back()">
+        <md-icon>arrow_back</md-icon>
+        <span>Back</span>
+    </button>
+    <span class="fill-remain-space"></span>
+    <button md-raised-button color="primary" (click)="save()">
+        <md-icon>save</md-icon>
+        <span>Save</span>
+    </button>
+    <button md-raised-button class="toolbar-button" (click)="cancel()">
+        <md-icon>cancel</md-icon>
+        <span>Cancel</span>
+    </button>
+</md-toolbar>
+<div *ngIf="newDevice">
+    <form>
+        <md-card class="content-card">
+            <md-card-title-group>
+                <md-card-title>{{newDevice.displayName}}</md-card-title>
+                <md-card-subtitle>{{newDevice.uniqueID}}</md-card-subtitle>
+                <md-card-subtitle>{{newDevice.description}}</md-card-subtitle>
+            </md-card-title-group>
+            <md-card-content>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Account Id" [(ngModel)]="newDevice.accountID" name="device-account-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Unique Id" [(ngModel)]="newDevice.uniqueID" name="device-unique-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Group Id" [(ngModel)]="newDevice.groupID" name="device-group-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Device Id" [(ngModel)]="newDevice.deviceID" name="device-device-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Display Name" [(ngModel)]="newDevice.displayName" name="device-display-name">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Description" [(ngModel)]="newDevice.description" name="device-description">
+                </md-input-container>
+            </md-card-content>
+        </md-card>
+        <md-card class="content-card">
+            <md-card-title-group>
+                <md-card-title>{{newDevice.displayName}}</md-card-title>
+                <md-card-subtitle>{{newDevice.uniqueID}}</md-card-subtitle>
+                <md-card-subtitle>{{newDevice.description}}</md-card-subtitle>
+            </md-card-title-group>
+            <md-card-content>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Vehicle Id" [(ngModel)]="newDevice.vehicleID" name="device-vehicle-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Driver Id" [(ngModel)]="newDevice.driverID" name="device-driver-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Is Active" [(ngModel)]="newDevice.isActive" name="device-is-active">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Equipment Type" [(ngModel)]="newDevice.equipmentType" name="device-equipment-type">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="License Plate" [(ngModel)]="newDevice.licensePlate" name="device-license-plate">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Device Code" [(ngModel)]="newDevice.deviceCode" name="device-device-code">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Device Type" [(ngModel)]="newDevice.deviceType" name="device-device-type">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Speed Limit Kph" [(ngModel)]="newDevice.speedLimitKPH" name="device-speed-limit-kph">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fuel Capacity" [(ngModel)]="newDevice.fuelCapacity" name="device-fuel-capacity">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fuel Economy" [(ngModel)]="newDevice.fuelEconomy" name="device-fuel-economy">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Plan Distance Km" [(ngModel)]="newDevice.planDistanceKM" name="device-plan-distance-km">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Dcs Properties Id" [(ngModel)]="newDevice.dcsPropertiesID" name="device-dcs-properties-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Pushpin Id" [(ngModel)]="newDevice.pushpinID" name="device-pushpin-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Display Color" [(ngModel)]="newDevice.displayColor" name="device-display-color">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Serial Number" [(ngModel)]="newDevice.serialNumber" name="device-serial-number">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Sim Phone Number" [(ngModel)]="newDevice.simPhoneNumber" name="device-sim-phone-number">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Sms Email" [(ngModel)]="newDevice.smsEmail" name="device-sms-email">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Imei Number" [(ngModel)]="newDevice.imeiNumber" name="device-imei-number">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Data Key" [(ngModel)]="newDevice.dataKey" name="device-data-key">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Expiration Time" [(ngModel)]="newDevice.expirationTime" name="device-expiration-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Ignition Index" [(ngModel)]="newDevice.ignitionIndex" name="device-ignition-index">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Code Version" [(ngModel)]="newDevice.codeVersion" name="device-code-version">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Feature Set" [(ngModel)]="newDevice.featureSet" name="device-feature-set">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Ip Address Valid" [(ngModel)]="newDevice.ipAddressValid" name="device-ip-address-valid">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Total Connect Time" [(ngModel)]="newDevice.lastTotalConnectTime" name="device-last-total-connect-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Duplex Connect Time" [(ngModel)]="newDevice.lastDuplexConnectTime" name="device-last-duplex-connect-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Pending Ping Command" [(ngModel)]="newDevice.pendingPingCommand" name="device-pending-ping-command">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Ping Time" [(ngModel)]="newDevice.lastPingTime" name="device-last-ping-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Total Ping Count" [(ngModel)]="newDevice.totalPingCount" name="device-total-ping-count">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Max Ping Count" [(ngModel)]="newDevice.maxPingCount" name="device-max-ping-count">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Expect Ack" [(ngModel)]="newDevice.expectAck" name="device-expect-ack">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Ack Command" [(ngModel)]="newDevice.lastAckCommand" name="device-last-ack-command">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Ack Time" [(ngModel)]="newDevice.lastAckTime" name="device-last-ack-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Dcs Config Mask" [(ngModel)]="newDevice.dcsConfigMask" name="device-dcs-config-mask">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Supports Dmtp" [(ngModel)]="newDevice.supportsDMTP" name="device-supports-dmtp">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Supported Encodings" [(ngModel)]="newDevice.supportedEncodings" name="device-supported-encodings">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Unit Limit Interval" [(ngModel)]="newDevice.unitLimitInterval" name="device-unit-limit-interval">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Max Allowed Events" [(ngModel)]="newDevice.maxAllowedEvents" name="device-max-allowed-events">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Total Profile Mask" [(ngModel)]="newDevice.totalProfileMask" name="device-total-profile-mask">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Total Max Conn" [(ngModel)]="newDevice.totalMaxConn" name="device-total-max-conn">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Total Max Conn Per Min" [(ngModel)]="newDevice.totalMaxConnPerMin" name="device-total-max-conn-per-min">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Duplex Profile Mask" [(ngModel)]="newDevice.duplexProfileMask" name="device-duplex-profile-mask">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Duplex Max Conn" [(ngModel)]="newDevice.duplexMaxConn" name="device-duplex-max-conn">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Duplex Max Conn Per Min" [(ngModel)]="newDevice.duplexMaxConnPerMin" name="device-duplex-max-conn-per-min">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Ip Address Current" [(ngModel)]="newDevice.ipAddressCurrent" name="device-ip-address-current">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Remote Port Current" [(ngModel)]="newDevice.remotePortCurrent" name="device-remote-port-current">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Listen Port Current" [(ngModel)]="newDevice.listenPortCurrent" name="device-listen-port-current">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Input State" [(ngModel)]="newDevice.lastInputState" name="device-last-input-state">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Battery Level" [(ngModel)]="newDevice.lastBatteryLevel" name="device-last-battery-level">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Fuel Level" [(ngModel)]="newDevice.lastFuelLevel" name="device-last-fuel-level">
+                </md-input-container>
+
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Fuel Total" [(ngModel)]="newDevice.lastFuelTotal" name="device-last-fuel-total">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Oil Level" [(ngModel)]="newDevice.lastOilLevel" name="device-last-oil-level">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Valid Latitude" [(ngModel)]="newDevice.lastValidLatitude" name="device-last-valid-latitude">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Valid Longitude" [(ngModel)]="newDevice.lastValidLongitude" name="device-last-valid-longitude">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Valid Heading" [(ngModel)]="newDevice.lastValidHeading" name="device-last-valid-heading">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Gps Timestamp" [(ngModel)]="newDevice.lastGPSTimestamp" name="device-last-gps-timestamp">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Event Timestamp" [(ngModel)]="newDevice.lastEventTimestamp" name="device-last-event-timestamp">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Cell Serving Info" [(ngModel)]="newDevice.lastCellServingInfo" name="device-last-cell-serving-info">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Odometer Km" [(ngModel)]="newDevice.lastOdometerKM" name="device-last-odometer-km">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Odometer Offset Km" [(ngModel)]="newDevice.odometerOffsetKM" name="device-odometer-offset-km">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Engine Hours" [(ngModel)]="newDevice.lastEngineHours" name="device-last-engine-hours">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Engine Hours Offset" [(ngModel)]="newDevice.engineHoursOffset" name="device-engine-hours-offset">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Ignition On Time" [(ngModel)]="newDevice.lastIgnitionOnTime" name="device-last-ignition-on-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Ignition Off Time" [(ngModel)]="newDevice.lastIgnitionOffTime" name="device-last-ignition-off-time">
+                </md-input-container>
+
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Notes" [(ngModel)]="newDevice.notes" name="device-notes">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Update Time" [(ngModel)]="newDevice.lastUpdateTime" name="device-last-update-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Update User" [(ngModel)]="newDevice.lastUpdateUser" name="device-last-update-user">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Device Key" [(ngModel)]="newDevice.deviceKey" name="device-device-key">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Creation Time" [(ngModel)]="newDevice.creationTime" name="device-creation-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Allow Notify" [(ngModel)]="newDevice.allowNotify" name="device-allow-notify">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Notify Time" [(ngModel)]="newDevice.lastNotifyTime" name="device-last-notify-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Notify Code" [(ngModel)]="newDevice.lastNotifyCode" name="device-last-notify-code">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Notify Email" [(ngModel)]="newDevice.notifyEmail" name="device-notify-email">
+                </md-input-container>
+
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Notify Selector" [(ngModel)]="newDevice.notifySelector" name="device-notify-selector">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Notify Action" [(ngModel)]="newDevice.notifyAction" name="device-notify-action">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Notify Description" [(ngModel)]="newDevice.notifyDescription" name="device-notify-description">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Notify Subject" [(ngModel)]="newDevice.notifySubject" name="device-notify-subject">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Notify Text" [(ngModel)]="newDevice.notifyText" name="device-notify-text">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Notify Use Wrapper" [(ngModel)]="newDevice.notifyUseWrapper" name="device-notify-use-wrapper">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Notify Priority" [(ngModel)]="newDevice.notifyPriority" name="device-notify-priority">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Parked Latitude" [(ngModel)]="newDevice.parkedLatitude" name="device-parked-latitude">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Parked Longitude" [(ngModel)]="newDevice.parkedLongitude" name="device-parked-longitude">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Parked Radius" [(ngModel)]="newDevice.parkedRadius" name="device-parked-radius">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Data Push Time" [(ngModel)]="newDevice.lastDataPushTime" name="device-last-data-push-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Event Create Millis" [(ngModel)]="newDevice.lastEventCreateMillis" name="device-last-event-create-millis">
+                </md-input-container>
+
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Active Corridor" [(ngModel)]="newDevice.activeCorridor" name="device-active-corridor">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fixed Latitude" [(ngModel)]="newDevice.fixedLatitude" name="device-fixed-latitude">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fixed Longitude" [(ngModel)]="newDevice.fixedLongitude" name="device-fixed-longitude">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fixed Address" [(ngModel)]="newDevice.fixedAddress" name="device-fixed-address">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fixed Contact Phone" [(ngModel)]="newDevice.fixedContactPhone" name="device-fixed-contact-phone">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fixed Service Time" [(ngModel)]="newDevice.fixedServiceTime" name="device-fixed-service-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Link Url" [(ngModel)]="newDevice.linkURL" name="device-link-url">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Link Description" [(ngModel)]="newDevice.linkDescription" name="device-link-description">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Border Crossing" [(ngModel)]="newDevice.borderCrossing" name="device-border-crossing">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Border Crosstime" [(ngModel)]="newDevice.lastBorderCrossTime" name="device-last-border-crosstime">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Maint Interval Km0" [(ngModel)]="newDevice.maintIntervalKM0" name="device-maint-interval-km0">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Maint Odometer Km0" [(ngModel)]="newDevice.maintOdometerKM0" name="device-maint-odometer-km0">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Maint Interval Km1" [(ngModel)]="newDevice.maintIntervalKM1" name="device-maint-interval-km1">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Maint Odometer Km1" [(ngModel)]="newDevice.maintOdometerKM1" name="device-maint-odometer-km1">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Maint Interval Hr0" [(ngModel)]="newDevice.maintIntervalHR0" name="device-maint-interval-hr0">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Maint Eng Hours Hr0" [(ngModel)]="newDevice.maintEngHoursHR0" name="device-maint-eng-hours-hr0">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Maint Notes" [(ngModel)]="newDevice.maintNotes" name="device-maint-notes">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Work Order Id" [(ngModel)]="newDevice.workOrderID" name="device-work-order-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Job Number" [(ngModel)]="newDevice.jobNumber" name="device-job-number">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Job Latitude" [(ngModel)]="newDevice.jobLatitude" name="device-job-latitude">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Job Longitude" [(ngModel)]="newDevice.jobLongitude" name="device-job-longitude">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Job Radius" [(ngModel)]="newDevice.jobRadius" name="device-job-radius">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Custom Attributes" [(ngModel)]="newDevice.customAttributes" name="device-custom-attributes">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Destination" [(ngModel)]="newDevice.destination" name="device-destination">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Sim Id" [(ngModel)]="newDevice.simID" name="device-sim-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Tcp Session Id" [(ngModel)]="newDevice.lastTcpSessionID" name="device-last-tcp-session-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Ignition Hours" [(ngModel)]="newDevice.lastIgnitionHours" name="device-last-ignition-hours">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Stop Time" [(ngModel)]="newDevice.lastStopTime" name="device-last-stop-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Start Time" [(ngModel)]="newDevice.lastStartTime" name="device-last-start-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Malfunction Lamp" [(ngModel)]="newDevice.lastMalfunctionLamp" name="device-last-malfunction-lamp">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Fault Code" [(ngModel)]="newDevice.lastFaultCode" name="device-last-fault-code">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Notify Rule" [(ngModel)]="newDevice.lastNotifyRule" name="device-last-notify-rule">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Assigned User Id" [(ngModel)]="newDevice.assignedUserID" name="device-assigned-user-id">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Thermal Profile" [(ngModel)]="newDevice.thermalProfile" name="device-thermal-profile">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Reminder Message" [(ngModel)]="newDevice.reminderMessage" name="device-reminder-message">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Reminder Interval" [(ngModel)]="newDevice.reminderInterval" name="device-reminder-interval">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Reminder Time" [(ngModel)]="newDevice.reminderTime" name="device-reminder-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Service Time" [(ngModel)]="newDevice.lastServiceTime" name="device-last-service-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Next Service Time" [(ngModel)]="newDevice.nextServiceTime" name="device-next-service-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Distance Km" [(ngModel)]="newDevice.lastDistanceKM" name="device-last-distance-km">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Vehicle Make" [(ngModel)]="newDevice.vehicleMake" name="device-vehicle-make">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Vehicle Model" [(ngModel)]="newDevice.vehicleModel" name="device-vehicle-model">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Driver Status" [(ngModel)]="newDevice.driverStatus" name="device-driver-status">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Install Time" [(ngModel)]="newDevice.installTime" name="device-install-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Reset Time" [(ngModel)]="newDevice.resetTime" name="device-reset-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Command State Mask" [(ngModel)]="newDevice.commandStateMask" name="device-command-state-mask">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Expect Ack Code" [(ngModel)]="newDevice.expectAckCode" name="device-expect-ack-code">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Dcs Command Host" [(ngModel)]="newDevice.dcsCommandHost" name="device-dcs-command-host">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Output State" [(ngModel)]="newDevice.lastOutputState" name="device-last-output-state">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Hours Of Operation" [(ngModel)]="newDevice.hoursOfOperation" name="device-hours-of-operation">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Status Code State" [(ngModel)]="newDevice.statusCodeState" name="device-status-code-state">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Engine Ontime" [(ngModel)]="newDevice.lastEngineOnTime" name="device-last-engine-ontime">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Engine Off Time" [(ngModel)]="newDevice.lastEngineOffTime" name="device-last-engine-off-time">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Events Per Secondms" [(ngModel)]="newDevice.lastEventsPerSecondMS" name="device-last-events-per-secondms">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Events Per Second" [(ngModel)]="newDevice.lastEventsPerSecond" name="device-last-events-per-second">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Equipment Status" [(ngModel)]="newDevice.equipmentStatus" name="device-equipment-status">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="License Expire" [(ngModel)]="newDevice.licenseExpire" name="device-license-expire">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fuel Rate Per Hour" [(ngModel)]="newDevice.fuelRatePerHour" name="device-fuel-rate-per-hour">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Dcs Config String" [(ngModel)]="newDevice.dcsConfigString" name="device-dcs-config-string">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Valid Speed Kph" [(ngModel)]="newDevice.lastValidSpeedKPH" name="device-last-valid-speed-kph">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Engine On Hours" [(ngModel)]="newDevice.lastEngineOnHours" name="device-last-engine-on-hours">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Last Ignition On Hours" [(ngModel)]="newDevice.lastIgnitionOnHours" name="device-last-ignition-on-hours">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Pending Message" [(ngModel)]="newDevice.pendingMessage" name="device-pending-message">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Pending Message Ack" [(ngModel)]="newDevice.pendingMessageACK" name="device-pending-message-ack">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fuel Millimeter" [(ngModel)]="newDevice.fuelMillimeter" name="device-fuel-millimeter">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fuel Cost Per Liter" [(ngModel)]="newDevice.fuelCostPerLiter" name="device-fuel-cost-per-liter">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Fuel Tank Profile" [(ngModel)]="newDevice.fuelTankProfile" name="device-fuel-tank-profile">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Insurance Expire" [(ngModel)]="newDevice.insuranceExpire" name="device-insurance-expire">
+                </md-input-container>
+                <md-input-container class="input-item">
+                    <input mdInput placeholder="Parked Max Speed Kph" [(ngModel)]="newDevice.parkedMaxSpeedKPH" name="device-parked-max-speed-kph">
+                </md-input-container>
+            </md-card-content>
+        </md-card>
+    </form>
+</div>

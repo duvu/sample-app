@@ -1,0 +1,49 @@
+<div class="page-center" #spinnerElem>
+    <span>
+        <md-progress-spinner
+                class="center"
+                mode="indeterminate"
+                color="primary">
+        </md-progress-spinner>
+    </span>
+</div>
+<div class="page-center" #loginForm>
+    <span>
+        <table cellpadding="0" width="100%" class="login-form">
+            <tr>
+                <td colspan="3">
+                    <div>{{errorMessage}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="login-logo">GPSHANDLE</td>
+                <td class="login-vertical-divider"></td>
+                <td>
+                    <form (ngSubmit)="onSubmit()">
+                        <table cellpadding="0" width="100%">
+                            <tr>
+                                <td>
+                                    <md-input-container class="full-width">
+                                        <input mdInput placeholder="User Name" type="text" [(ngModel)]="cred.accountId" name="userName">
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <md-input-container class="full-width">
+                                        <input mdInput placeholder="Password" type="password" [(ngModel)]="cred.password" name="password">
+                                    </md-input-container>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button md-raised-button type="submit">Login</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </span>
+</div>

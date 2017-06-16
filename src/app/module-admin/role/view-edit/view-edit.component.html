@@ -1,0 +1,117 @@
+<!--Toolbar-->
+<md-toolbar>
+    <button md-button (click)="back()">
+        <md-icon>arrow_back</md-icon>
+        <span>Back</span>
+    </button>
+    <span class="fill-remain-space"></span>
+    <div *ngIf="isEdit">
+        <button md-raised-button color="primary" (click)="saveEditRole()">
+            <md-icon>save</md-icon>
+            <span>Save</span>
+        </button>
+        <button md-raised-button class="add-role-component-button-cancel" (click)="cancelEditRole()">
+            <md-icon>cancel</md-icon>
+            <span>Cancel</span>
+        </button>
+    </div>
+    <div *ngIf="!isEdit">
+        <button md-button color="primary" (click)="editRole()" [disabled]="(role && role.global)">
+            <md-icon>edit</md-icon>
+            <span i18n>Edit</span>
+        </button>
+        <button md-button color="primary" (click)="destroy()" [disabled]="(role && role.global)">
+            <md-icon>delete</md-icon>
+            <span i18n>Delete</span>
+        </button>
+    </div>
+</md-toolbar>
+
+
+<!--Content-->
+<div fxLayout="column" fxLayout.sm="column">
+    <md-card class="content-card" *ngIf="role">
+        <md-card-title>
+            <span *ngIf="!isEdit" i18n>View</span>
+            <span *ngIf="isEdit" i18n>Edit</span>
+            <span i18n>Role</span>
+            <span>#{{role.displayName}}</span>
+        </md-card-title>
+
+        <md-card-content>
+            <form>
+                <div fxLayout="column">
+                    <table class="full-width">
+                        <tr>
+                            <td>
+                                <md-input-container class="full-width">
+                                    <input mdInput placeholder="Role Name" [(ngModel)]="role.displayName" name="role-name" required  [disabled]="!isEdit">
+                                </md-input-container>
+                            </td>
+                            <td>
+                                <table  class="full-width">
+                                    <tr>
+                                        <td>
+                                            <md-checkbox [(ngModel)]="role.default" name="role-default" [disabled]="!isEdit">Is Default</md-checkbox>
+                                        </td>
+                                        <td>
+                                            <md-checkbox disabled="!isAdministrator" [(ngModel)]="role.global" name="role-scope" [disabled]="!isEdit">Is Global</md-checkbox>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <table width="100%">
+                        <tr>
+                            <td>
+                                <md-input-container class="full-width">
+                                    <textarea mdInput placeholder="Description" [(ngModel)]="role.description" name="description" [disabled]="!isEdit"></textarea>
+                                </md-input-container>
+                            </td>
+                            <td>
+                                <md-input-container class="full-width">
+                                    <textarea mdInput placeholder="Notes" [(ngModel)]="role.notes" name="notes" [disabled]="!isEdit"></textarea>
+                                </md-input-container>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </md-card-content>
+    </md-card>
+
+    <perm-basic
+            [is_edit]="isEdit"
+            [permMapLive]="perm_map_live"
+            [permMapHistory]="perm_map_history"
+            [permReportSummary]="perm_report_summary"
+            [permReportSpeeding]="perm_report_speeding"
+            [permReportParking]="perm_report_parking"
+            [permReportGeozone]="perm_report_geozone"
+            [permAccount]="perm_account"
+            [permRole]="perm_role"
+            [permDevice]="perm_device"
+            [permAlert]="perm_alert"
+            [permGeozone]="perm_geozone"
+            (change)="permChange($event)"></perm-basic>
+    <!--Permissions details for account-->
+    <perm-account *ngIf="perm_account>3"
+                  [is_edit]="isEdit"
+                  [account_acl]="accountAcl"
+                  (change)="permItemAccountChange($event)"></perm-account>
+    <!--Todo: later change-->
+    <perm-device *ngIf="perm_device>3"></perm-device>
+
+    <div *ngIf="showContent==3"> <!--Page.device permission details-->
+
+    </div>
+    <div *ngIf="showContent==4"> <!--Page.alert permission details-->
+
+    </div>
+    <div *ngIf="showContent==5"> <!--Page.geozone permission details-->
+
+    </div>
+</div>

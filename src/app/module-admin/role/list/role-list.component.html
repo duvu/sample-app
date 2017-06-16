@@ -1,0 +1,59 @@
+<md-toolbar>
+    <md-input-container class="inside-toolbar-input">
+        <input mdInput type="text"
+               #searchKey
+               value=""
+               i18n-placeholder placeholder="Enter for search role">
+    </md-input-container>
+    <a md-icon-button *ngIf="searchKey.value" (click)="searchKey.value=''">
+        <md-icon>clear</md-icon>
+    </a>
+    <span class="fill-remain-space"></span>
+    <button md-raised-button color="primary" routerLink='add'>
+        <md-icon>add</md-icon>
+        <span i18n>Add New Role</span>
+    </button>
+</md-toolbar>
+<md-card class="list-card">
+    <md-card-content>
+        <table class="list-table" cellspacing="0">
+            <tr>
+                <th>#</th>
+                <th>Role Name</th>
+                <th>Description</th>
+                <th>Is Global</th>
+                <th>Is Default</th>
+                <th>Notes</th>
+                <th>Actions</th>
+            </tr>
+            <tr *ngFor="let role of (roleList | filter:searchKey.value)">
+                <td>
+                    <md-slide-toggle color="primary" [(ngModel)]="role.isActive" (change)="toggleStatusRole(role)"></md-slide-toggle>
+                </td>
+
+                <td>{{role.displayName}}</td>
+                <td>{{role.description}}</td>
+                <td>
+                    <md-icon>
+                        {{role.global ? 'done' : ''}}
+                    </md-icon>
+                </td>
+                <td>
+                    <md-icon>
+                        {{role.default ? 'done' : '' }}
+                    </md-icon>
+                </td>
+                <td>{{role.notes}}</td>
+                <td>
+                    <button md-icon-button (click)="viewRole(role)"><md-icon>visibility</md-icon></button>
+                    <button md-icon-button (click)="editRole(role.roleID)" [disabled]="role.global">
+                        <md-icon>edit</md-icon>
+                    </button>
+                    <button md-icon-button (click)="openDeleteDialog(role)" color="warn" [disabled]="role.global">
+                        <md-icon>delete</md-icon>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </md-card-content>
+</md-card>
