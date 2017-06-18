@@ -9,6 +9,7 @@ import {EventService} from "../services/event.service";
 import {EventData} from "../models/EventData";
 import * as _ from 'lodash';
 import map = L.map;
+import {el} from "@angular/platform-browser/testing/src/browser_util";
 // import MarkerCluster = L.MarkerCluster;
 // import MarkerClusterGroup = L.MarkerClusterGroup;
 
@@ -66,10 +67,7 @@ export class MappingComponent implements OnInit {
         _.forEach(this.liveEvents, function (event) {
             if (event.latitude && event.longitude) {
                 let ll = L.latLng(event.latitude, event.longitude);
-                let hIcon = '<div>'+ event.displayName +'</div>';
-                let dIcon = L.divIcon({
-                    html: hIcon
-                });
+                let dIcon = this.buildIcon(event);
                 let marker = L.marker(ll, {icon: dIcon})/*
                     .bindTooltip(event.deviceID, {
                         permanent: true
@@ -77,11 +75,42 @@ export class MappingComponent implements OnInit {
                 markersCluster.addLayer(marker);
                 latlngArray.push(ll);
             }
-        });
+        }.bind(this));
 
         let bounds = L.latLngBounds(latlngArray);
         this.map.addLayer(markersCluster);
         this.map.fitBounds(bounds);
+    }
+
+    buildIcon(event: EventData): L.DivIcon {
+
+        let htmlIcon = '<table cellspacing="0">';
+        htmlIcon += '<tr>';
+        htmlIcon += '<td>';
+        if (event.icon !== null && typeof event.icon !== 'undefined') {
+            htmlIcon += event.icon;
+        } else {
+            //default icon - square
+
+        }
+        htmlIcon += '</td>'
+        htmlIcon += '</tr>'
+        htmlIcon += '<tr>';
+        htmlIcon += '<td nowrap>';
+        htmlIcon +='<div class="map-icon-label">'+ event.displayName +'</div>';
+        htmlIcon += '</td>';
+        htmlIcon += '</tr>'
+        htmlIcon += '</table>'
+
+        // html?: string | false;
+        // bgPos?: PointExpression;
+        // iconSize?: PointExpression;
+        // iconAnchor?: PointExpression;
+        // popupAnchor?: PointExpression;
+        // className?: string;
+        return L.divIcon({
+            html: htmlIcon
+        });
     }
 
     moveToMarker(event: EventData): void{

@@ -6,4 +6,5 @@ export interface EventData {
     displayName: string,
     latitude: number;
     longitude: number;
+    icon: string;
 }
