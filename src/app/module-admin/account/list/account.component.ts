@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from "../../../services/account/account.service";
 import {MdSnackBar} from "@angular/material";
-// import {ToastyConfig, ToastyService} from "ng2-toasty";
 
 @Component({
     selector: 'app-account',

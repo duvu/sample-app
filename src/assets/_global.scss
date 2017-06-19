@@ -75,3 +75,14 @@
     margin: auto;
   }
 }
+
+//Override css mapping
+.marker-label {
+  padding: 0!important;
+  &:before {
+    content: none!important;
+  }
+}
+.popup-title {
+  font-weight: 600;
+}

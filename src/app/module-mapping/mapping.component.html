@@ -1,3 +1,12 @@
+<div *ngIf="isLoading" class="page-center">
+    <span>
+        <md-progress-spinner
+                class="center"
+                mode="indeterminate"
+                color="primary">
+        </md-progress-spinner>
+    </span>
+</div>
 <md-sidenav-container class="side-nav-container">
     <md-sidenav mode="side" opened="true" align="end">
         <md-nav-list>
@@ -11,5 +20,4 @@
     <div class="sidenav-content">
         <div id="mapid" class="main-map"></div>
     </div>
-
 </md-sidenav-container>

@@ -13,3 +13,28 @@
   min-width: 200px;
   max-width: 250px;
 }
+.page-center {
+  z-index: 1000;
+  background-color: white;
+  opacity: 0.9;
+  display: table;
+  width: 100%;
+  height: 100%;
+  top:0;
+  text-align: center;
+  position: absolute;
+  overflow: hidden;
+  >span {
+    display: table-cell;
+    vertical-align: middle;
+
+  }
+  >form {
+    display: table-cell;
+    vertical-align: middle;
+
+  }
+  .center {
+    margin: auto;
+  }
+}

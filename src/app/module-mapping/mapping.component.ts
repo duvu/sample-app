@@ -9,9 +9,8 @@ import {EventService} from "../services/event.service";
 import {EventData} from "../models/EventData";
 import * as _ from 'lodash';
 import map = L.map;
-import {el} from "@angular/platform-browser/testing/src/browser_util";
-// import MarkerCluster = L.MarkerCluster;
-// import MarkerClusterGroup = L.MarkerClusterGroup;
+import PointExpression = L.PointExpression;
+
 
 const TILE_OSM = "http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png";
 
@@ -24,7 +23,9 @@ export class MappingComponent implements OnInit {
     liveEvents: EventData[];
     customDefault: L.Icon;
     map: L.Map;
-    markersCluster: L.MarkerClusterGroup;
+
+    isLoading: boolean = true;
+
     constructor(private _device_service: DeviceService, private _event_service: EventService) { }
 
     ngOnInit() {
@@ -54,6 +55,7 @@ export class MappingComponent implements OnInit {
         this._event_service.getLiveEvents().subscribe(
             liveEvents => {
                 this.liveEvents = liveEvents;
+                this.isLoading = false;
                 this.processEvents();
             },
             error => {},
@@ -66,12 +68,8 @@ export class MappingComponent implements OnInit {
         let latlngArray = [];
         _.forEach(this.liveEvents, function (event) {
             if (event.latitude && event.longitude) {
+                let marker = this.buildMarker(event);
                 let ll = L.latLng(event.latitude, event.longitude);
-                let dIcon = this.buildIcon(event);
-                let marker = L.marker(ll, {icon: dIcon})/*
-                    .bindTooltip(event.deviceID, {
-                        permanent: true
-                    })*/;
                 markersCluster.addLayer(marker);
                 latlngArray.push(ll);
             }
@@ -82,25 +80,23 @@ export class MappingComponent implements OnInit {
         this.map.fitBounds(bounds);
     }
 
+    buildMarker(event: EventData): L.Marker {
+        let ll = L.latLng(event.latitude, event.longitude);
+        let icon = this.buildIcon(event);
+        let popup = this.buildPopup(event);
+        return L.marker(ll, {icon: icon})
+            .bindTooltip(event.displayName, {
+                permanent: true,
+                direction: 'bottom',
+                offset: L.point(0, 6),
+                opacity: 1,
+                className: 'marker-label'
+            }).bindPopup(popup);
+    }
+
     buildIcon(event: EventData): L.DivIcon {
 
-        let htmlIcon = '<table cellspacing="0">';
-        htmlIcon += '<tr>';
-        htmlIcon += '<td>';
-        if (event.icon !== null && typeof event.icon !== 'undefined') {
-            htmlIcon += event.icon;
-        } else {
-            //default icon - square
-
-        }
-        htmlIcon += '</td>'
-        htmlIcon += '</tr>'
-        htmlIcon += '<tr>';
-        htmlIcon += '<td nowrap>';
-        htmlIcon +='<div class="map-icon-label">'+ event.displayName +'</div>';
-        htmlIcon += '</td>';
-        htmlIcon += '</tr>'
-        htmlIcon += '</table>'
+        let htmlIcon = '';
 
         // html?: string | false;
         // bgPos?: PointExpression;
@@ -111,6 +107,21 @@ export class MappingComponent implements OnInit {
         return L.divIcon({
             html: htmlIcon
         });
+    }
+
+    buildPopup(event: EventData): L.Popup {
+        let popup = L.popup();
+        let htmlPopup = '';
+        htmlPopup += '<table>';
+        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'DeviceID:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.deviceID;htmlPopup += '</td>';htmlPopup += '</tr>';
+        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.timestamp;htmlPopup += '</td>';htmlPopup += '</tr>';
+        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Lat/Lng:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.latitude + '/' + event.longitude;htmlPopup += '</td>';htmlPopup += '</tr>';
+        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Address:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.address;htmlPopup += '</td>';htmlPopup += '</tr>';
+        htmlPopup += '</table>';
+        popup.setContent(htmlPopup);
+        popup.options.offset = L.point(0, 0);
+
+        return popup;
     }
 
     moveToMarker(event: EventData): void{
