@@ -10,6 +10,7 @@ import {EventData} from "../models/EventData";
 import * as _ from 'lodash';
 import map = L.map;
 import PointExpression = L.PointExpression;
+import {DatePipe} from "@angular/common";
 
 
 const TILE_OSM = "http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png";
@@ -26,7 +27,7 @@ export class MappingComponent implements OnInit {
 
     isLoading: boolean = true;
 
-    constructor(private _device_service: DeviceService, private _event_service: EventService) { }
+    constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
 
     ngOnInit() {
         this.customDefault = L.icon({
@@ -112,9 +113,11 @@ export class MappingComponent implements OnInit {
     buildPopup(event: EventData): L.Popup {
         let popup = L.popup();
         let htmlPopup = '';
+
+        let txtDate = this._datePipe.transform(event.timestamp * 1000);
         htmlPopup += '<table>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'DeviceID:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.deviceID;htmlPopup += '</td>';htmlPopup += '</tr>';
-        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.timestamp;htmlPopup += '</td>';htmlPopup += '</tr>';
+        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += txtDate;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Lat/Lng:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.latitude + '/' + event.longitude;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Address:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.address;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '</table>';

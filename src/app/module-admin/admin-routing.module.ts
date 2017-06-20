@@ -13,6 +13,9 @@ import {ViewAccountComponent} from "./account/view-edit/view-edit-account.compon
 import {DeviceComponent} from "./device/list/device.component";
 import {AddComponent as AddDeviceComponent} from "./device/add/add.component";
 import {ViewEditComponent as ViewEditDeviceComponent} from "./device/view-edit/view-edit.component";
+import {GroupComponent} from "./group/group.component";
+import {AddGroupComponent} from "./group/add-group/add-group.component";
+import {ViewEditGroupComponent} from "./group/view-edit-group/view-edit-group.component";
 
 const routes: Routes = [
     {
@@ -31,6 +34,10 @@ const routes: Routes = [
             { path: 'device', component: DeviceComponent},
             { path: 'device/add', component: AddDeviceComponent },
             { path: 'device/:deviceId', component: ViewEditDeviceComponent},
+            //Group
+            { path: 'group', component: GroupComponent },
+            { path: 'group/add', component: AddGroupComponent },
+            { path: 'group/:groupId', component: ViewEditGroupComponent}
         ]
     }
 ];

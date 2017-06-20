@@ -32,6 +32,9 @@ MdNativeDateModule, MdDatepickerModule, MdSelectModule
 import { AddComponent } from './device/add/add.component';
 import {DeviceService} from "app/services/device.service";
 import {ConfirmDeleteDeviceDialog} from "./device/list/confirm-delete-device.dialog";
+import { GroupComponent } from './group/group.component';
+import { AddGroupComponent } from './group/add-group/add-group.component';
+import { ViewEditGroupComponent } from './group/view-edit-group/view-edit-group.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -85,6 +88,9 @@ import {ConfirmDeleteDeviceDialog} from "./device/list/confirm-delete-device.dia
         //Pipes
         FilterPipe,
         AddComponent,
+        GroupComponent,
+        AddGroupComponent,
+        ViewEditGroupComponent,
     ],
     entryComponents: [
         ConfirmDeleteDialog,
