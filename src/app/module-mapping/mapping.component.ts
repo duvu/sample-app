@@ -27,6 +27,9 @@ export class MappingComponent implements OnInit {
 
     isLoading: boolean = true;
 
+    selectedEvent: EventData = null;
+    inputSearch: string = null;
+
     constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
 
     ngOnInit() {
@@ -126,9 +129,15 @@ export class MappingComponent implements OnInit {
 
         return popup;
     }
-
-    moveToMarker(event: EventData): void{
+    clearSearch(): void {
+        this.inputSearch = null;
+    }
+    clearSelected() {
+        this.selectedEvent = null;
+    }
+    selectAnEvent(event: EventData): void{
         console.log("Device", event);
+        this.selectedEvent = event;
         let center = L.latLng(event.latitude, event.longitude);
         this.map.setView(center, 15);
     }

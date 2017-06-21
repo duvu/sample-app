@@ -9,10 +9,49 @@
   height: 100%;
 }
 .side-nav-container md-sidenav {
-  overflow-y: auto;
-  min-width: 200px;
+  overflow-y: hidden;
+  //overflow-x: hidden;
+  min-width: 250px;
   max-width: 250px;
+  display: flex;
+  flex-direction: column;
 }
+
+.table-search-device{
+  width: 250px;
+  height: 36px;
+  position: relative;
+  //display: block;
+  //margin: 1px;
+  border: 1px solid rgba(182, 182, 182, 0.79);
+  //background-color: red;
+  >tbody {
+    >tr {
+      width: 100%;
+      >td {
+        //position: relative;
+        >input[type=text] {
+          width: 100%;
+          padding: 6px 0px;
+          //margin: 8px 0;
+          border: none;
+          box-sizing: border-box;
+        }
+      }
+    }
+  }
+}
+
+.side-nav-container md-sidenav md-nav-list {
+  overflow-y: auto;
+}
+
+.map-device-status {
+  width: 10px;
+  height: 100%;
+  background-color: red;
+}
+
 .page-center {
   z-index: 1000;
   background-color: white;
@@ -38,3 +77,4 @@
     margin: auto;
   }
 }
+

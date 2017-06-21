@@ -9,12 +9,37 @@
 </div>
 <md-sidenav-container class="side-nav-container">
     <md-sidenav mode="side" opened="true" align="end">
-        <md-nav-list>
-            <md-list-item *ngFor="let device of liveEvents">
-                <md-icon md-list-icon [color]="device.isActive? 'primary' : ''">brightness_1</md-icon>
-                <a md-line (click)="moveToMarker(device)">{{ device.displayName }}</a>
+        <form>
+            <table cellspacing="0" class="table-search-device">
+                <tr>
+                    <td *ngIf="inputSearch">
+                        <button md-icon-button (click)="clearSearch()"><md-icon>close</md-icon></button>
+                    </td>
+                    <td>
+                        <input type="text" [(ngModel)]="inputSearch" name="searching">
+                    </td>
+                </tr>
+            </table>
+
+            <!--<md-input-container class="map-search-device">
+                <md-icon mdPrefix>search</md-icon>
+                <input mdInput class="map-search-device-input">
+                <md-icon mdSuffix (click)="clearSelected()">close</md-icon>
+            </md-input-container>-->
+        </form>
+        <md-nav-list dense>
+            <md-list-item *ngFor="let event of liveEvents">
+                <md-icon md-list-icon [color]="event.isActive? 'primary' : ''">brightness_1</md-icon>
+                <a md-line (click)="selectAnEvent(event)">{{ event.displayName }}</a>
+                <div md-line>Test</div>
             </md-list-item>
         </md-nav-list>
+        <table *ngIf="selectedEvent">
+            <tr>
+                <td i18n>Device ID</td>
+                <td>{{selectedEvent.deviceID}}</td>
+            </tr>
+        </table>
     </md-sidenav>
 
     <div class="sidenav-content">
