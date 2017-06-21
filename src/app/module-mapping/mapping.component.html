@@ -10,22 +10,26 @@
 <md-sidenav-container class="side-nav-container">
     <md-sidenav mode="side" opened="true" align="end">
         <form>
-            <table cellspacing="0" class="table-search-device">
-                <tr>
-                    <td *ngIf="inputSearch">
-                        <button md-icon-button (click)="clearSearch()"><md-icon>close</md-icon></button>
-                    </td>
-                    <td>
-                        <input type="text" [(ngModel)]="inputSearch" name="searching">
-                    </td>
-                </tr>
-            </table>
+            <!--<table cellspacing="0" class="table-search-device">-->
+                <!--<tr>-->
+                    <!--<td *ngIf="inputSearch">-->
+                        <!--<button md-icon-button (click)="clearSearch()"><md-icon>close</md-icon></button>-->
+                    <!--</td>-->
+                    <!--<td>-->
+                        <!--<input type="text" [(ngModel)]="inputSearch" name="searching" [mdAutocomplete]="auto" [formControl]="stateCtrl">-->
+                        <!--<md-autocomplete #auto="mdAutocomplete">-->
+                            <!--<md-option *ngFor="let event of liveEvents | async" [value]="event.displayName">-->
+                                <!--{{ event.displayName }}-->
+                            <!--</md-option>-->
+                        <!--</md-autocomplete>-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</table>-->
 
-            <!--<md-input-container class="map-search-device">
-                <md-icon mdPrefix>search</md-icon>
-                <input mdInput class="map-search-device-input">
-                <md-icon mdSuffix (click)="clearSelected()">close</md-icon>
-            </md-input-container>-->
+            <md-input-container class="map-search-device">
+                <md-icon mdPrefix>{{inputSearch ? 'close' : 'search'}}</md-icon>
+                <input mdInput name="searching-device-input" [(ngModel)]="inputSearch">
+            </md-input-container>
         </form>
         <md-nav-list dense>
             <md-list-item *ngFor="let event of liveEvents">
@@ -34,7 +38,7 @@
                 <div md-line>Test</div>
             </md-list-item>
         </md-nav-list>
-        <table *ngIf="selectedEvent">
+        <table *ngIf="selectedEvent && inputSearch" class="table-device-detail">
             <tr>
                 <td i18n>Device ID</td>
                 <td>{{selectedEvent.deviceID}}</td>

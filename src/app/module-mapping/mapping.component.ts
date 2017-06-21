@@ -117,7 +117,7 @@ export class MappingComponent implements OnInit {
         let popup = L.popup();
         let htmlPopup = '';
 
-        let txtDate = this._datePipe.transform(event.timestamp * 1000);
+        let txtDate = this._datePipe.transform(event.timestamp * 1000, "MMM dd, yyyy hh:mm:ss");
         htmlPopup += '<table>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'DeviceID:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.deviceID;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += txtDate;htmlPopup += '</td>';htmlPopup += '</tr>';
@@ -131,13 +131,14 @@ export class MappingComponent implements OnInit {
     }
     clearSearch(): void {
         this.inputSearch = null;
+        this.selectedEvent = null;
     }
     clearSelected() {
         this.selectedEvent = null;
     }
     selectAnEvent(event: EventData): void{
-        console.log("Device", event);
         this.selectedEvent = event;
+        this.inputSearch = event.displayName;
         let center = L.latLng(event.latitude, event.longitude);
         this.map.setView(center, 15);
     }

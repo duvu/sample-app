@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { MappingRoutingModule } from './mapping-routing.module';
 import { MappingComponent } from './mapping.component';
 import {CommonModule, DatePipe} from "@angular/common";
 import {
-MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdProgressSpinnerModule,
-MdSidenavModule
+    MdAutocompleteModule,
+    MdButtonModule, MdIconModule, MdInputModule, MdListModule, MdProgressSpinnerModule,
+    MdSidenavModule
 } from "@angular/material";
 import {DeviceService} from "../services/device.service";
 import {EventService} from "../services/event.service";
@@ -16,6 +17,7 @@ import {EventService} from "../services/event.service";
         CommonModule,
         FormsModule,
         MappingRoutingModule,
+        MdAutocompleteModule,
         MdButtonModule,
         MdListModule,
         MdInputModule,

@@ -1,3 +1,5 @@
+$side-nav-width: 250px;
+
 .main-map {
   height:100%;
 }
@@ -11,19 +13,19 @@
 .side-nav-container md-sidenav {
   overflow-y: hidden;
   //overflow-x: hidden;
-  min-width: 250px;
-  max-width: 250px;
+  min-width: $side-nav-width;
+  max-width: $side-nav-width;
   display: flex;
   flex-direction: column;
 }
 
 .table-search-device{
-  width: 250px;
+  width: $side-nav-width;
   height: 36px;
   position: relative;
   //display: block;
   //margin: 1px;
-  border: 1px solid rgba(182, 182, 182, 0.79);
+  border-bottom: 1px solid rgba(182, 182, 182, 0.79);
   //background-color: red;
   >tbody {
     >tr {
@@ -41,9 +43,27 @@
     }
   }
 }
+.table-device-detail {
+  width: $side-nav-width;
+  border-top: 1px solid rgba(182, 182, 182, 0.79);
+}
+
+.map-search-device {
+  width: $side-nav-width;
+  >div {
+    margin-bottom: 0px!important;
+  }
+}
 
 .side-nav-container md-sidenav md-nav-list {
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #ffffff;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #9b9b9b;
+  }
 }
 
 .map-device-status {
