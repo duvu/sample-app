@@ -106,9 +106,11 @@
         <!--*-->
         <md-card class="content-card">
             <md-card-content>
-                <md-input-container class="input-item">
-                    <input mdInput name="speedUnits" i18n-placeholder placeholder="Speed Units" [(ngModel)]="account.speedUnits" [disabled]="!isEdit">
-                </md-input-container>
+                <md-select i18n-placeholder placeholder="Speed Units" [(ngModel)]="account.speedUnits" name="speed-units" class="input-item" [disabled]="!isEdit">
+                    <md-option *ngFor="let units of SpeedUnitsArray" [value]="units.value">{{SpeedUnits[units.value]}}</md-option>
+                </md-select>
+
+
                 <md-input-container class="input-item">
                     <input mdInput name="distanceUnits" i18n-placeholder placeholder="Distance Units" [(ngModel)]="account.distanceUnits" [disabled]="!isEdit">
                 </md-input-container>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import 'leaflet';
 import 'leaflet.markercluster';
@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import map = L.map;
 import PointExpression = L.PointExpression;
 import {DatePipe} from "@angular/common";
+import {Observable} from "rxjs/Observable";
 
 
 const TILE_OSM = "http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png";
@@ -20,7 +21,8 @@ const TILE_OSM = "http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png";
     templateUrl: './mapping.component.html',
     styleUrls: ['./mapping.component.scss']
 })
-export class MappingComponent implements OnInit {
+export class MappingComponent implements OnInit, OnDestroy {
+
     liveEvents: EventData[];
     customDefault: L.Icon;
     map: L.Map;
@@ -29,7 +31,7 @@ export class MappingComponent implements OnInit {
 
     selectedEvent: EventData = null;
     inputSearch: string = null;
-
+    subcription: any;
     constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
 
     ngOnInit() {
@@ -37,8 +39,8 @@ export class MappingComponent implements OnInit {
             iconRetinaUrl: '/assets/images/marker-icon-2x.png',
             iconUrl: '/assets/images/marker-icon.png',
             shadowUrl: '/assets/images/marker-shadow.png',
-        })
-        this.map = L.map("mapid", {
+        });
+        this.map = L.map("map-id", {
             zoomControl: false,
             center: L.latLng(21.731253, 105.996139),
             zoom: 12,
@@ -50,13 +52,17 @@ export class MappingComponent implements OnInit {
                 })]
         });
 
-        L.control.zoom({ position: "topright" }).addTo(this.map);
         L.control.scale().addTo(this.map);
-        this.loadLivesEvent(this.map);
+        // L.control.zoom({ position: "topright" }).addTo(this.map);
+        L.control.zoom().setPosition("bottomleft").addTo(this.map);
+        this.loadLivesEvent();
     }
-
-    loadLivesEvent(map): void {
-        this._event_service.getLiveEvents().subscribe(
+    ngOnDestroy(): void {
+        this.subcription.unsubscribe();
+    }
+    loadLivesEvent(): void {
+        this.subcription = Observable.interval(10000).startWith(0)
+            .flatMap(() => this._event_service.getLiveEvents()).subscribe(
             liveEvents => {
                 this.liveEvents = liveEvents;
                 this.isLoading = false;
@@ -64,7 +70,18 @@ export class MappingComponent implements OnInit {
             },
             error => {},
             () => {}
-        )
+        );
+
+
+        // this._event_service.getLiveEvents().subscribe(
+        //     liveEvents => {
+        //         this.liveEvents = liveEvents;
+        //         this.isLoading = false;
+        //         this.processEvents();
+        //     },
+        //     error => {},
+        //     () => {}
+        // )
     }
     processEvents(): void {
         let icon = this.customDefault;

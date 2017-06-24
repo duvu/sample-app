@@ -18,6 +18,7 @@ export class EventService extends BaseService{
     //1. get lives events
     //2. get historical data
     getLiveEvents(): Observable<EventData[]> {
+        // return Observable.interval(10000).flatMap(() => this._http.get(API_LOCATION_PATH).map(events => events.json() as EventData[]).catch(this.error));
         return this._http.get(API_LOCATION_PATH)
                 .map(events => events.json() as EventData[])
                 .catch(this.error);

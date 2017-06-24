@@ -4,6 +4,8 @@ import {AccountService} from "../../../services/account/account.service";
 import { Account } from "../../../models/Account";
 import {RoleService} from "../../../services/role/role.service";
 import {Role} from "../../../models/Role";
+import {EnumUtils} from "../../../utils/EnumUtils";
+import {SpeedUnits} from "../MeasureUnitsEnum";
 
 @Component({
     selector: 'app-view-account',
@@ -17,6 +19,9 @@ export class ViewAccountComponent implements OnInit {
     isEdit: boolean = false;
 
     expirationTime: Date;
+
+    SpeedUnits = SpeedUnits;
+    SpeedUnitsArray = [];
 
     roleList: Role[];
 
@@ -42,6 +47,8 @@ export class ViewAccountComponent implements OnInit {
 
             });
         this.loadRoleList();
+
+        this.SpeedUnitsArray = EnumUtils.toArray(this.SpeedUnits);
     }
     loadRoleList() {
         this.roleService.getAll().subscribe(
