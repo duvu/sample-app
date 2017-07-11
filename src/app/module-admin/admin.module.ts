@@ -24,10 +24,10 @@ import { DeviceComponent }       from "./device/list/device.component";
 import {AddComponent as AddDeviceComponent} from "./device/add/add.component";
 import {ViewEditComponent as ViewEditDeviceComponent} from "./device/view-edit/view-edit.component";
 import {
-MdIconModule, MdListModule, MdSidenavModule, MdToolbarModule, MdButtonModule,
-MdButtonToggleModule, MdCheckboxModule, MdDialogModule, MdInputModule, MdCardModule,
-MdProgressSpinnerModule, MdSlideToggleModule, MdTooltipModule, MdSnackBarModule,
-MdNativeDateModule, MdDatepickerModule, MdSelectModule
+    MdIconModule, MdListModule, MdSidenavModule, MdToolbarModule, MdButtonModule,
+    MdButtonToggleModule, MdCheckboxModule, MdDialogModule, MdInputModule, MdCardModule,
+    MdProgressSpinnerModule, MdSlideToggleModule, MdTooltipModule, MdSnackBarModule,
+    MdNativeDateModule, MdDatepickerModule, MdSelectModule, MdTableModule
 } from "@angular/material";
 import { AddComponent } from './device/add/add.component';
 import {DeviceService} from "app/services/device.service";
@@ -35,18 +35,21 @@ import {ConfirmDeleteDeviceDialog} from "./device/list/confirm-delete-device.dia
 import { GroupComponent } from './group/group.component';
 import { AddGroupComponent } from './group/add-group/add-group.component';
 import { ViewEditGroupComponent } from './group/view-edit-group/view-edit-group.component';
+import {CdkTableModule} from "@angular/cdk";
 @NgModule({
     imports: [
         CommonModule,
         FlexLayoutModule,
         FormsModule,
 
+        CdkTableModule,
         //--material-2
         MdButtonModule,
         MdButtonToggleModule,
         MdCardModule,
         MdCheckboxModule,
         MdDialogModule,
+        MdTableModule,
         MdDatepickerModule,
         MdNativeDateModule,
         MdIconModule,

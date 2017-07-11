@@ -1,8 +1,10 @@
-import {Component, ElementRef, NgZone, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CollectionViewer, DataSource} from '@angular/cdk';
 import {DeviceService} from "../../../services/device.service";
 import {Device} from "../../../models/Device";
 import {MdDialog, MdDialogConfig, MdSnackBar} from "@angular/material";
 import {ConfirmDeleteDeviceDialog} from "./confirm-delete-device.dialog";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'app-device',
@@ -11,7 +13,9 @@ import {ConfirmDeleteDeviceDialog} from "./confirm-delete-device.dialog";
 })
 export class DeviceComponent implements OnInit {
     deviceList: Device[];
+    dataSource: DeviceDataSource;
     deviceActive: number = 0;
+    displayedColumns = ['deviceInfo', 'eventInfo', 'vehicleInfo', 'notes', 'actions'];
 
     loading: boolean = true;
 
@@ -32,33 +36,33 @@ export class DeviceComponent implements OnInit {
 
     constructor(private _service: DeviceService,
                 private _snackBar: MdSnackBar,
-                private _dialog: MdDialog,
-                private renderer: Renderer2) { }
+                private _dialog: MdDialog) { }
 
     ngOnInit() {
-        this.load();
+        // this.load();
+        this.dataSource = new DeviceDataSource(this._service);
     }
 
-    load(): void {
-        this.loading = true;
-        this._service.getAll().subscribe(
-            devices => {
-                this.deviceList = devices
-                for (let i = 0; i< devices.length; i++) {
-                    if (devices[i].isActive) {
-                        this.deviceActive++;
-                    }
-                }
-                this.loading = false;
-            },
-            error => {
-                console.log("error", error);
-            },
-            () => {
-
-            }
-        );
-    }
+    // load(): void {
+    //     this.loading = true;
+    //     this._service.getAll().subscribe(
+    //         devices => {
+    //             this.deviceList = devices
+    //             for (let i = 0; i< devices.length; i++) {
+    //                 if (devices[i].isActive) {
+    //                     this.deviceActive++;
+    //                 }
+    //             }
+    //             this.loading = false;
+    //         },
+    //         error => {
+    //             console.log("error", error);
+    //         },
+    //         () => {
+    //
+    //         }
+    //     );
+    // }
     toggle(deviceId: string): void {
         this._service.toggle(deviceId).subscribe(
             device => {
@@ -98,4 +102,38 @@ export class DeviceComponent implements OnInit {
             }
         );
     }
+}
+
+export class DeviceDataSource extends DataSource<any> {
+    constructor(private _service: DeviceService) {
+        super();
+    }
+    connect(collectionViewer: CollectionViewer): Observable<Device[]> {
+        return this._service.getAll();
+    //     load(): void {
+    //         this.loading = true;
+    //     this._service.getAll().subscribe(
+    //         devices => {
+    //             this.deviceList = devices
+    //             for (let i = 0; i< devices.length; i++) {
+    //                 if (devices[i].isActive) {
+    //                     this.deviceActive++;
+    //                 }
+    //             }
+    //             this.loading = false;
+    //         },
+    //         error => {
+    //             console.log("error", error);
+    //         },
+    //         () => {
+    //
+    //         }
+    //     );
+    // }
+    }
+
+    disconnect(collectionViewer: CollectionViewer): void {
+        //throw new Error("Method not implemented.");
+    }
+
 }
