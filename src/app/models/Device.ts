@@ -2,14 +2,24 @@
  * Created by beou on 5/4/17.
  */
 export class Device {
+    //- device info
     accountID: string;
     uniqueID: string;
     groupID: string;
     deviceID: string;
-    vehicleID: string;
-    driverID: string;
     isActive: boolean;
     equipmentType: string;
+    serialNumber: string;
+    simPhoneNumber: string;
+    smsEmail: string;
+    imeiNumber: string;
+    simID: string;
+    expirationTime: number;
+
+    //- vehicle info
+    vehicleID: string;
+    vehicleMake: string;
+    vehicleModel: string;
     licensePlate: string;
     deviceCode: string;
     deviceType: string;
@@ -20,12 +30,11 @@ export class Device {
     dcsPropertiesID: string;
     pushpinID: string;
     displayColor: string;
-    serialNumber: string;
-    simPhoneNumber: string;
-    smsEmail: string;
-    imeiNumber: string;
+
+    driverID: string;
+    driverStatus: number;
+
     dataKey: string;
-    expirationTime: number;
     ignitionIndex: number;
     codeVersion: number;
     featureSet: string;
@@ -36,9 +45,7 @@ export class Device {
     lastPingTime: number;
     totalPingCount: number;
     maxPingCount: number;
-    expectAck: boolean;
-    lastAckCommand: string;
-    lastAckTime: number;
+
     dcsConfigMask: number;
     supportsDMTP: boolean;
     supportedEncodings: boolean;
@@ -53,6 +60,8 @@ export class Device {
     ipAddressCurrent: string;
     remotePortCurrent: number;
     listenPortCurrent: number;
+
+    //- last event info
     lastInputState: number;
     lastBatteryLevel: number;
     lastFuelLevel: number;
@@ -64,6 +73,14 @@ export class Device {
     lastGPSTimestamp: number;
     lastEventTimestamp: number;
     lastCellServingInfo: string;
+    expectAck: boolean;
+    lastAckCommand: string;
+    lastAckTime: number;
+    lastTcpSessionID: string;
+    lastIgnitionHours: number;
+    lastStopTime: number;
+    lastStartTime: number;
+
     lastOdometerKM: number;
     odometerOffsetKM: number;
     lastEngineHours: number;
@@ -81,6 +98,8 @@ export class Device {
     lastNotifyTime: number;
     lastNotifyCode: number;
     notifyEmail: string;
+
+    //- notify
     notifySelector: string;
     notifyAction: number;
     notifyDescription: string;
@@ -88,6 +107,8 @@ export class Device {
     notifyText: string;
     notifyUseWrapper: boolean;
     notifyPriority: number;
+
+
     parkedLatitude: number;
     parkedLongitude: number;
     parkedRadius: number;
@@ -103,6 +124,8 @@ export class Device {
     linkDescription: string;
     borderCrossing: boolean;
     lastBorderCrossTime: number;
+
+    //- maintain interval
     maintIntervalKM0: number;
     maintOdometerKM0: number;
     maintIntervalKM1: number;
@@ -110,6 +133,8 @@ export class Device {
     maintIntervalHR0: number;
     maintEngHoursHR0: number;
     maintNotes: string;
+
+    //- job
     workOrderID: string;
     jobNumber: string;
     jobLatitude: number;
@@ -117,11 +142,8 @@ export class Device {
     jobRadius: number;
     customAttributes: string;
     destination: string;
-    simID: string;
-    lastTcpSessionID: string;
-    lastIgnitionHours: number;
-    lastStopTime: number;
-    lastStartTime: number;
+
+
     lastMalfunctionLamp: boolean;
     lastFaultCode: string;
     lastNotifyRule: string;
@@ -133,9 +155,8 @@ export class Device {
     lastServiceTime: number;
     nextServiceTime: number;
     lastDistanceKM: number;
-    vehicleMake: string;
-    vehicleModel: string;
-    driverStatus: number;
+
+
     installTime: number;
     resetTime: number;
     commandStateMask: number;

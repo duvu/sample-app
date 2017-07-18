@@ -1,3 +1,16 @@
 .device-mat-row {
-  height: 80px;
+  height: 60px;
+  .display-name {
+    font-weight: 600;
+    color: deepskyblue;
+  }
+}
+
+.device-header {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.info-icon {
+  font-size: 14px;
 }

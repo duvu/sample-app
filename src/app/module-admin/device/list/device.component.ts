@@ -15,7 +15,7 @@ export class DeviceComponent implements OnInit {
     deviceList: Device[];
     dataSource: DeviceDataSource;
     deviceActive: number = 0;
-    displayedColumns = ['deviceInfo', 'eventInfo', 'vehicleInfo', 'notes', 'actions'];
+    displayedColumns = ['deviceInfo', 'deviceExpired', 'notes', 'actions'];
 
     loading: boolean = true;
 

@@ -17,44 +17,34 @@
 <md-table #table [dataSource]="dataSource">
     <!-- ID Column -->
     <ng-container cdkColumnDef="deviceInfo">
-        <md-header-cell *cdkHeaderCellDef> Device Infos </md-header-cell>
+        <md-header-cell *cdkHeaderCellDef class="device-header"> Device Information </md-header-cell>
         <md-cell *cdkCellDef="let device">
-            <div>{{device.displayName}}</div>
+            <div class="display-name">{{device.displayName}}</div>
             <div>{{device.uniqueID}}</div>
-            <div>{{device.simPhoneNumber}}</div>
+            <div *ngIf="device.simPhoneNumber">
+                <md-icon class="info-icon">sim_card</md-icon>
+                <span>{{device.simPhoneNumber}}</span>
+            </div>
+
+        </md-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="deviceExpired">
+        <md-header-cell *cdkHeaderCellDef="" class="device-header">Expired at</md-header-cell>
+        <md-cell *cdkCellDef="let device">
             <div>{{device.expirationTime * 1000 | date: 'short'}}</div>
         </md-cell>
     </ng-container>
 
-    <ng-container cdkColumnDef="vehicleInfo">
-        <md-header-cell *cdkHeaderCellDef>Vehicle Infos</md-header-cell>
-        <md-cell *cdkCellDef="let device">
-            <div>{{device.licenseExpire * 1000 | date: 'short'}}</div>
-            <div>{{device.vehicleID}}</div>
-            <div>{{device.vehicleModel}}</div>
-            <div>{{device.vehicleMake}}</div>
-            <div>{{device.lastOdometerKM}}</div>
-        </md-cell>
-    </ng-container>
-
-    <ng-container cdkColumnDef="eventInfo">
-        <md-header-cell *cdkHeaderCellDef>Last Event Infos</md-header-cell>
-        <md-cell *cdkCellDef="let device">
-            <div>{{device.lastBatteryLevel}}</div>
-            <div>{{device.lastDataPushTime * 1000 | date: 'short'}}</div>
-            <div>{{device.lastValidLatitude}}/{{device.lastValidLongitude}}</div>
-        </md-cell>
-    </ng-container>
-
     <ng-container cdkColumnDef="notes">
-        <md-header-cell *cdkHeaderCellDef="">Notes</md-header-cell>
+        <md-header-cell *cdkHeaderCellDef="" class="device-header">Notes</md-header-cell>
         <md-cell *cdkCellDef="let device">
             <div>{{device.notes}}</div>
         </md-cell>
     </ng-container>
 
     <ng-container cdkColumnDef="actions">
-        <md-header-cell *cdkHeaderCellDef="">Actions</md-header-cell>
+        <md-header-cell *cdkHeaderCellDef="" class="device-header">Actions</md-header-cell>
         <md-cell *cdkCellDef="let device">
             <button md-icon-button>
                 <md-icon>visibility</md-icon>
