@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Account } from '../models/Account';
 import {NavigationEnd, Router} from "@angular/router";
 import {AppService} from "../services/app.service";
+import {MdIconRegistry} from "@angular/material";
+import {DomSanitizer} from "@angular/platform-browser";
+import icon = L.icon;
 @Component({
   selector: 'main',
   templateUrl: './main.component.html',
@@ -9,7 +12,13 @@ import {AppService} from "../services/app.service";
 })
 export class MainComponent implements OnInit {
   profile: Account;
-  constructor(private app: AppService, private router: Router) { }
+  constructor(private app: AppService, private router: Router, iconRegistry: MdIconRegistry, sanitizer: DomSanitizer) {
+      // iconRegistry.addSvgIconSet(
+      //     sanitizer.bypassSecurityTrustResourceUrl('assets/icons/icons.svg'));
+
+      iconRegistry.registerFontClassAlias("default", "material-icons");
+      iconRegistry.setDefaultFontSetClass("material-icons");
+  }
 
   ngOnInit() {
       this.app.getCurrentAccount().subscribe(

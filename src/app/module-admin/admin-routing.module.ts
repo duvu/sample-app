@@ -34,6 +34,10 @@ const routes: Routes = [
             { path: 'device', component: DeviceComponent},
             { path: 'device/add', component: AddDeviceComponent },
             { path: 'device/:deviceId', component: ViewEditDeviceComponent},
+            //Vehicle management
+            { path: 'vehicle', component: DeviceComponent},
+            { path: 'vehicle/add', component: AddDeviceComponent },
+            { path: 'vehicle/:deviceId', component: ViewEditDeviceComponent},
             //Group
             { path: 'group', component: GroupComponent },
             { path: 'group/add', component: AddGroupComponent },

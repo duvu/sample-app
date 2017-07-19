@@ -1,16 +1,28 @@
-.device-mat-row {
-  height: 60px;
-  .display-name {
-    font-weight: 600;
-    color: deepskyblue;
+@mixin device-list($theme) {
+  $primary: map-get($theme, primary);
+  $warn: map-get($theme, warn);
+
+  .mat-row {
+    min-height: 80px;
+    line-height: 20px;
+    .display-name {
+      font-weight: 700;
+      font-size: 16px;
+      color: mat-color($primary);
+    }
   }
-}
 
-.device-header {
-  text-transform: uppercase;
-  font-weight: 600;
-}
 
-.info-icon {
-  font-size: 14px;
+  .device-header {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .info-icon {
+    font-size: 14px!important;
+    max-height: 14px;
+    max-width: 14px;
+  }
+
 }

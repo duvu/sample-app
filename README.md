@@ -56,3 +56,7 @@ Finally, in the component or file that uses the library, add the following code:
 import * as typelessPackage from 'typeless-package';
 typelessPackage.method();
 Done. Note: you might need or find useful to define more typings for the library that you're trying to use.
+
+### Work with icon-font
+
+### work with custom-theme

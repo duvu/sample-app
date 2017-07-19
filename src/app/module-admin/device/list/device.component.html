@@ -15,11 +15,19 @@
     </button>
 </md-toolbar>
 <md-table #table [dataSource]="dataSource">
-    <!-- ID Column -->
+    <ng-container cdkColumnDef="toggleColumn">
+        <md-header-cell *cdkHeaderCellDef class="device-header">#</md-header-cell>
+        <md-cell *cdkCellDef="let device">
+
+        </md-cell>
+    </ng-container>
     <ng-container cdkColumnDef="deviceInfo">
         <md-header-cell *cdkHeaderCellDef class="device-header"> Device Information </md-header-cell>
         <md-cell *cdkCellDef="let device">
-            <div class="display-name">{{device.displayName}}</div>
+            <div class="display-name">
+                <span>{{device.displayName}}</span>
+                <span>*</span>
+            </div>
             <div>{{device.uniqueID}}</div>
             <div *ngIf="device.simPhoneNumber">
                 <md-icon class="info-icon">sim_card</md-icon>
@@ -47,12 +55,9 @@
         <md-header-cell *cdkHeaderCellDef="" class="device-header">Actions</md-header-cell>
         <md-cell *cdkCellDef="let device">
             <button md-icon-button>
-                <md-icon>visibility</md-icon>
-            </button>
-            <button md-icon-button>
                 <md-icon>edit</md-icon>
             </button>
-            <button md-icon-button>
+            <button md-icon-button color="warn">
                 <md-icon>delete</md-icon>
             </button>
         </md-cell>

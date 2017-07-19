@@ -27,7 +27,7 @@ import {
     MdIconModule, MdListModule, MdSidenavModule, MdToolbarModule, MdButtonModule,
     MdButtonToggleModule, MdCheckboxModule, MdDialogModule, MdInputModule, MdCardModule,
     MdProgressSpinnerModule, MdSlideToggleModule, MdTooltipModule, MdSnackBarModule,
-    MdNativeDateModule, MdDatepickerModule, MdSelectModule, MdTableModule
+    MdNativeDateModule, MdDatepickerModule, MdSelectModule, MdTableModule, MdChipsModule
 } from "@angular/material";
 import { AddComponent } from './device/add/add.component';
 import {DeviceService} from "app/services/device.service";
@@ -48,6 +48,7 @@ import {CdkTableModule} from "@angular/cdk";
         MdButtonToggleModule,
         MdCardModule,
         MdCheckboxModule,
+        MdChipsModule,
         MdDialogModule,
         MdTableModule,
         MdDatepickerModule,

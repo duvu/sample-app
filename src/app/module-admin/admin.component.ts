@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {NavigationEnd, NavigationStart, Router} from "@angular/router";
+import {NavigationStart, Router} from "@angular/router";
+import {MdIconRegistry} from "@angular/material";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'gps-admin',
@@ -8,7 +10,10 @@ import {NavigationEnd, NavigationStart, Router} from "@angular/router";
 })
 export class AdminComponent implements OnInit {
 
-    constructor(private router: Router) { }
+    constructor(private router: Router) {
+        // iconRegistry.addSvgIconSet(
+        //     sanitizer.bypassSecurityTrustResourceUrl('assets/icons/icons.svg'));
+    }
 
     ngOnInit() {
         console.log("Init");
