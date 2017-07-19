@@ -19,10 +19,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "gts-app-theme.scss",
-        "assets/_global.scss",
         "styles.scss",
+
+        "assets/app-theme.scss",
         "assets/icons/font/style.scss",
+
         "../node_modules/leaflet/dist/leaflet.css",
         "../node_modules/leaflet.markercluster/dist/MarkerCluster.css",
         "../node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css"
