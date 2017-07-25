@@ -65,3 +65,9 @@
     <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
     <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
 </md-table>
+<md-paginator #paginator
+              [length]="100"
+              [pageIndex]="0"
+              [pageSize]="25"
+              [pageSizeOptions]="[25, 50, 100]">
+</md-paginator>

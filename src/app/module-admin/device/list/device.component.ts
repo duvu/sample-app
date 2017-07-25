@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CollectionViewer, DataSource} from '@angular/cdk';
 import {DeviceService} from "../../../services/device.service";
 import {Device} from "../../../models/Device";
-import {MdDialog, MdDialogConfig, MdSnackBar} from "@angular/material";
+import {MdDialog, MdDialogConfig, MdPaginator, MdSnackBar} from "@angular/material";
 import {ConfirmDeleteDeviceDialog} from "./confirm-delete-device.dialog";
 import {Observable} from "rxjs/Observable";
 
@@ -33,14 +33,14 @@ export class DeviceComponent implements OnInit {
             message: 'Jazzy jazz jazz'
         }
     };
-
+    @ViewChild(MdPaginator) paginator: MdPaginator;
     constructor(private _service: DeviceService,
                 private _snackBar: MdSnackBar,
                 private _dialog: MdDialog) { }
 
     ngOnInit() {
         // this.load();
-        this.dataSource = new DeviceDataSource(this._service);
+        this.dataSource = new DeviceDataSource(this._service, this.paginator);
     }
 
     // load(): void {
@@ -105,11 +105,12 @@ export class DeviceComponent implements OnInit {
 }
 
 export class DeviceDataSource extends DataSource<any> {
-    constructor(private _service: DeviceService) {
+    constructor(private _service: DeviceService, private paginator: MdPaginator) {
         super();
     }
     connect(collectionViewer: CollectionViewer): Observable<Device[]> {
-        return this._service.getAll();
+        return this._service.getPagination(this.paginator.pageIndex, this.paginator.pageSize);
+        // return this._service.getAll();
     //     load(): void {
     //         this.loading = true;
     //     this._service.getAll().subscribe(

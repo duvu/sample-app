@@ -25,6 +25,14 @@ export class DeviceService extends BaseService{
             .map(devices => devices.json() as Device[])
             .catch(this.error);
     }
+
+    getPagination(page: number, size: number): Observable<Device[]> {
+        let url = API_DEVICE_PATH+"?page="+page+"&size="+size;
+        return this._http.get(url)
+            .map(devices => devices.json() as Device[])
+            .catch(this.error);
+    }
+
     toggle(deviceId: string): Observable<Device> {
         let url = API_DEVICE_PATH + deviceId + "?action=toggle";
         return this._http.get(url)
