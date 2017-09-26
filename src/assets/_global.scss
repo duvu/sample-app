@@ -8,6 +8,20 @@
   .fill-remain-space {
     flex: 1 1 auto;
   }
+
+  .flex-center {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+
+    align-items: center;
+    justify-content: center;
+  }
+
   .toolbar-button {
     margin-left: 10px!important;
   }
@@ -44,6 +58,10 @@
 
   .full-width {
     width: 100%;
+  }
+
+  .full-height {
+    height: 100%;
   }
 
   .input-item {

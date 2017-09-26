@@ -5,8 +5,9 @@
     "module": "es2015",
     "baseUrl": "",
     "types": [
+      "lodash",
       "leaflet",
-      "leaflet-markercluster"
+      "leaflet.markercluster"
     ]
   },
   "exclude": [

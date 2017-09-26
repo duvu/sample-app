@@ -3,18 +3,9 @@ html, body {
   font-family: "Roboto","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
   margin: 0;
 }
-html, body, gps, main, gps-admin {
+html, body, app-root, app-login {
   height: 100%;
 }
 body {
   overflow: hidden;
-}
-
-h1, h2 {
-  font-weight: 400;
-}
-
-.gps-root {
-  display: flex;
-  flex-direction: column;
 }
