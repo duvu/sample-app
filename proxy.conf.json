@@ -1,6 +1,11 @@
 {
+  "/oauth": {
+    "target": "http://localhost:8081",
+    "secure": false
+  },
+
   "/api": {
-    "target": "http://localhost:3003",
+    "target": "http://localhost:8081",
     "secure": false
   }
 }

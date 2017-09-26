@@ -1,0 +1,22 @@
+<div class="full-height flex-center">
+    <form class="login-form flex-center">
+        <md-card>
+            <md-card-content>
+                <md-form-field class="full-width">
+                    <input mdInput placeholder="Your Usermame" [(ngModel)]="model.username" name="username">
+                    <span mdPrefix class=""><md-icon mdPrefix>profile</md-icon></span>
+                </md-form-field>
+                <md-form-field class="full-width">
+                    <input mdInput type="password" placeholder="Your Password" [(ngModel)]="model.password" name="password">
+                    <span mdPrefix class=""><md-icon mdPrefix>key</md-icon></span>
+                </md-form-field>
+            </md-card-content>
+            <md-card-actions align="middle">
+                <button md-raised-button color="primary" (click)="login()">Login</button>
+            </md-card-actions>
+            <md-card-footer align="end" class="card-footer">
+                <span>Forgot Password ?</span>
+            </md-card-footer>
+        </md-card>
+    </form>
+</div>

@@ -1,0 +1,11 @@
+.login-form {
+  max-width: 50%;
+  width: 450px;
+  >form button {
+    text-transform: uppercase;
+  }
+  .card-footer{
+    border-top: 1px lightgray solid;
+    padding: 16px;
+  }
+}

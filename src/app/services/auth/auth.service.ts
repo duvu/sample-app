@@ -1,62 +1,50 @@
 import { Injectable } from '@angular/core';
-import { Http, Response} from "@angular/http";
 import { Observable} from "rxjs";
-import { tokenNotExpired } from "angular2-jwt";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {ProgressBarService} from "../progress-bar.service";
 
 @Injectable()
 export class AuthService {
-    private profile: any;
     private redirectURL: string;
-    constructor(private http: Http) {
-        this.profile = JSON.parse(localStorage.getItem('profile_current'));
-    }
+
+    private basicAuthHeader = 'Basic ' + btoa('webapp:123456');
+    constructor(private http: HttpClient, private _progress: ProgressBarService) {}
 
     setRedirectURL (url: string) {
         this.redirectURL = url;
     }
     getRedirectURL() {
-        return (this.redirectURL ? this.redirectURL : '/m/admin');
-    }
-
-    login(username: string, password: string) : Observable<boolean> {
-        return this.http.post('/api/authenticate', {
-            accountId: username,
-            password: password
-        }).map((response: Response) => {
-            let token = response.json() && response.json().token;
-            if (token) {
-                localStorage.setItem('id_token', token);
-                localStorage.setItem('profile_current', JSON.stringify(response.json()));
-                return true;
-            } else {
-                return false;
-            }
-        }).catch(this.handleError);
-    };
-    isLoggedIn() {
-        return tokenNotExpired('id_token');
-    };
-    logout() {
-        localStorage.removeItem('id_token');
-        localStorage.removeItem('profile_current');
+        return (this.redirectURL ? this.redirectURL : '/main');
     }
 
 
-    private handleError(err: Response | any) {
-        let errMsg: string;
-        if (err instanceof Response) {
-            const body = err.json();
-            const error = body.message || JSON.stringify(body);
-            errMsg = `${err.status} - ${err.statusText || ''} ${error}`;
-        } else {
-            try {
-                errMsg = JSON.parse(err).message;
-            } catch (e) {
-                //noop
-                errMsg = err.message ? err.message : err.toString();
-            }
+    login(username: string, password: string): Observable<any> {
+        const headers = new HttpHeaders({
+            'Authorization': this.basicAuthHeader,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        });
 
+        const options = {headers: headers};
+        return this.http.post('/oauth/token',
+            'grant_type=password&scope=read%20write&username=' + username + '&password=' + password,
+            options);
+    }
+
+    store(profile: any): void {
+        localStorage.setItem('currentUser', profile);
+    }
+
+    logout(): void {
+        localStorage.removeItem('currentUser');
+    }
+
+    isLoggedIn(): boolean {
+        try {
+            const profile = JSON.parse(localStorage.getItem('currentUser'));
+            return profile != null;
+        } catch (e) {
+            console.log("error", e);
         }
-        return Observable.throw(errMsg);
+        return false;
     }
 }

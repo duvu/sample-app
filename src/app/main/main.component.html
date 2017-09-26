@@ -1,0 +1,48 @@
+<div class="main">
+    <md-toolbar color="primary" class="header">
+        <button md-icon-button>
+            <md-icon>home</md-icon>
+        </button>
+        <button md-button routerLink="live">
+            <md-icon>map</md-icon>
+            <span i18n>Live</span>
+        </button>
+        <button md-button routerLink="report">
+            <md-icon>report</md-icon>
+            <span i18n>Reports</span>
+        </button>
+        <button md-button routerLink="admin">
+            <md-icon>setting</md-icon>
+            <span i18n>Administration</span>
+        </button>
+        <span class="fill-remain-space"></span>
+        <button md-icon-button>
+            <md-icon>mail</md-icon>
+        </button>
+        <!--<div *ngIf="profile!=null">-->
+            <!--<button md-button [mdMenuTriggerFor]="menu">-->
+                <!--<md-icon>profile</md-icon>-->
+                <!--<span>{{profile.displayName || profile.contactName}}</span>-->
+            <!--</button>-->
+            <!--&lt;!&ndash;<md-menu #menu="mdMenu">&ndash;&gt;-->
+                <!--&lt;!&ndash;<div md-menu-item class="profile-current">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span>{{profile.displayName || profile.contactName}}</span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span>{{profile.totalDevices || 0}}</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<button md-menu-item>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<md-icon>home</md-icon>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span>Home</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                <!--&lt;!&ndash;<button md-menu-item (click)="logout()">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<md-icon>logout</md-icon>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span i18n>Logout</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</md-menu>&ndash;&gt;-->
+        <!--</div>-->
+    </md-toolbar>
+    <div class="page-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+

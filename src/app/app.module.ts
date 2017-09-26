@@ -1,20 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule, RequestOptions, Http} from '@angular/http';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpModule} from '@angular/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule} from "./app-routing.module";
 import { AuthService} from "./services/auth/auth.service";
-import { AuthGuard} from "./guards/auth.guard";
+import { AuthGuard} from "./services/guards/auth.guard";
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { MdButtonModule, MdIconModule, MdToolbarModule, MdProgressSpinnerModule, MdInputModule} from "@angular/material";
 import { CommonModule} from "@angular/common";
-import { LoginComponent} from "./pages/login/login.component";
-import { AuthModule } from "./auth.module";
+import { LoginComponent} from "./login/login.component";
 
 import 'hammerjs';
+import {MaterialShared} from "./shared/material-shared";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthInterceptor} from "./services/auth-interceptor";
+import {ProgressBarService} from "./services/progress-bar.service";
 
 @NgModule({
     declarations: [
@@ -26,23 +27,23 @@ import 'hammerjs';
         BrowserModule,
         BrowserAnimationsModule,
         CommonModule,
-        FlexLayoutModule,
         FormsModule,
         HttpModule,
-        //-- Material
-        MdButtonModule,
-        MdIconModule,
-        MdInputModule,
-        MdToolbarModule,
-        MdProgressSpinnerModule,
-        //-- Routing
-        AppRoutingModule,
-        //-- AuthModule
-        AuthModule
+        HttpClientModule,
+
+        MaterialShared,
+
+        AppRoutingModule
     ],
     providers: [
         AuthService,
-        AuthGuard
+        AuthGuard,
+        ProgressBarService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }
     ],
     bootstrap: [AppComponent]
 })

@@ -3,15 +3,15 @@
  */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {AuthGuard} from "./guards/auth.guard";
+import {AuthGuard} from "./services/guards/auth.guard";
 import {PageNotFoundComponent} from "./pages/page-not-found/page-not-found.component";
-import {LoginComponent} from "./pages/login/login.component";
+import {LoginComponent} from "./login/login.component";
 
 
 const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full'},
     { path: 'login', component: LoginComponent },
-    { path: 'm', loadChildren: 'app/module-main/main.module#MainModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
+    { path: 'main', loadChildren: 'app/main/main.module#MainModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
     { path: '*', component: PageNotFoundComponent }
 ];
 
