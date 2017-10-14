@@ -22,3 +22,14 @@
   flex: 0 0 auto;
   background-color: #dcdcdc;
 }
+
+
+.side-nav-headers-align .mat-expansion-panel-header-title,
+.side-nav-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.side-nav-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}

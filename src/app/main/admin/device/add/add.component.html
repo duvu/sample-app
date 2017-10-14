@@ -1,0 +1,522 @@
+<!--Toolbar-->
+<mat-toolbar>
+    <button mat-button (click)="back()">
+        <mat-icon>back</mat-icon>
+        <span>Back</span>
+    </button>
+    <span class="fill-remain-space"></span>
+    <button mat-raised-button color="primary" (click)="save()">
+        <mat-icon>save</mat-icon>
+        <span>Save</span>
+    </button>
+    <button mat-raised-button class="toolbar-button" (click)="cancel()">
+        <mat-icon>cancel</mat-icon>
+        <span>Cancel</span>
+    </button>
+</mat-toolbar>
+<div *ngIf="newDevice">
+    <form>
+        <mat-card class="content-card">
+            <mat-card-title-group>
+                <mat-card-title>{{newDevice.displayName}}</mat-card-title>
+                <mat-card-subtitle>{{newDevice.uniqueID}}</mat-card-subtitle>
+                <mat-card-subtitle>{{newDevice.description}}</mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-card-content>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Account Id" [(ngModel)]="newDevice.accountID" name="device-account-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Unique Id" [(ngModel)]="newDevice.uniqueID" name="device-unique-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Group Id" [(ngModel)]="newDevice.groupID" name="device-group-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Device Id" [(ngModel)]="newDevice.deviceID" name="device-device-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Display Name" [(ngModel)]="newDevice.displayName" name="device-display-name">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Description" [(ngModel)]="newDevice.description" name="device-description">
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="content-card">
+            <mat-card-title-group>
+                <mat-card-title>{{newDevice.displayName}}</mat-card-title>
+                <mat-card-subtitle>{{newDevice.uniqueID}}</mat-card-subtitle>
+                <mat-card-subtitle>{{newDevice.description}}</mat-card-subtitle>
+            </mat-card-title-group>
+            <mat-card-content>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Vehicle Id" [(ngModel)]="newDevice.vehicleID" name="device-vehicle-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Driver Id" [(ngModel)]="newDevice.driverID" name="device-driver-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Is Active" [(ngModel)]="newDevice.isActive" name="device-is-active">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Equipment Type" [(ngModel)]="newDevice.equipmentType" name="device-equipment-type">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="License Plate" [(ngModel)]="newDevice.licensePlate" name="device-license-plate">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Device Code" [(ngModel)]="newDevice.deviceCode" name="device-device-code">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Device Type" [(ngModel)]="newDevice.deviceType" name="device-device-type">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Speed Limit Kph" [(ngModel)]="newDevice.speedLimitKPH" name="device-speed-limit-kph">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fuel Capacity" [(ngModel)]="newDevice.fuelCapacity" name="device-fuel-capacity">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fuel Economy" [(ngModel)]="newDevice.fuelEconomy" name="device-fuel-economy">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Plan Distance Km" [(ngModel)]="newDevice.planDistanceKM" name="device-plan-distance-km">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Dcs Properties Id" [(ngModel)]="newDevice.dcsPropertiesID" name="device-dcs-properties-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Pushpin Id" [(ngModel)]="newDevice.pushpinID" name="device-pushpin-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Display Color" [(ngModel)]="newDevice.displayColor" name="device-display-color">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Serial Number" [(ngModel)]="newDevice.serialNumber" name="device-serial-number">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Sim Phone Number" [(ngModel)]="newDevice.simPhoneNumber" name="device-sim-phone-number">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Sms Email" [(ngModel)]="newDevice.smsEmail" name="device-sms-email">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Imei Number" [(ngModel)]="newDevice.imeiNumber" name="device-imei-number">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Data Key" [(ngModel)]="newDevice.dataKey" name="device-data-key">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Expiration Time" [(ngModel)]="newDevice.expirationTime" name="device-expiration-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Ignition Index" [(ngModel)]="newDevice.ignitionIndex" name="device-ignition-index">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Code Version" [(ngModel)]="newDevice.codeVersion" name="device-code-version">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Feature Set" [(ngModel)]="newDevice.featureSet" name="device-feature-set">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Ip Address Valid" [(ngModel)]="newDevice.ipAddressValid" name="device-ip-address-valid">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Total Connect Time" [(ngModel)]="newDevice.lastTotalConnectTime" name="device-last-total-connect-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Duplex Connect Time" [(ngModel)]="newDevice.lastDuplexConnectTime" name="device-last-duplex-connect-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Pending Ping Command" [(ngModel)]="newDevice.pendingPingCommand" name="device-pending-ping-command">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Ping Time" [(ngModel)]="newDevice.lastPingTime" name="device-last-ping-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Total Ping Count" [(ngModel)]="newDevice.totalPingCount" name="device-total-ping-count">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Max Ping Count" [(ngModel)]="newDevice.maxPingCount" name="device-max-ping-count">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Expect Ack" [(ngModel)]="newDevice.expectAck" name="device-expect-ack">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Ack Command" [(ngModel)]="newDevice.lastAckCommand" name="device-last-ack-command">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Ack Time" [(ngModel)]="newDevice.lastAckTime" name="device-last-ack-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Dcs Config Mask" [(ngModel)]="newDevice.dcsConfigMask" name="device-dcs-config-mask">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Supports Dmtp" [(ngModel)]="newDevice.supportsDMTP" name="device-supports-dmtp">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Supported Encodings" [(ngModel)]="newDevice.supportedEncodings" name="device-supported-encodings">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Unit Limit Interval" [(ngModel)]="newDevice.unitLimitInterval" name="device-unit-limit-interval">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Max Allowed Events" [(ngModel)]="newDevice.maxAllowedEvents" name="device-max-allowed-events">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Total Profile Mask" [(ngModel)]="newDevice.totalProfileMask" name="device-total-profile-mask">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Total Max Conn" [(ngModel)]="newDevice.totalMaxConn" name="device-total-max-conn">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Total Max Conn Per Min" [(ngModel)]="newDevice.totalMaxConnPerMin" name="device-total-max-conn-per-min">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Duplex Profile Mask" [(ngModel)]="newDevice.duplexProfileMask" name="device-duplex-profile-mask">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Duplex Max Conn" [(ngModel)]="newDevice.duplexMaxConn" name="device-duplex-max-conn">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Duplex Max Conn Per Min" [(ngModel)]="newDevice.duplexMaxConnPerMin" name="device-duplex-max-conn-per-min">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Ip Address Current" [(ngModel)]="newDevice.ipAddressCurrent" name="device-ip-address-current">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Remote Port Current" [(ngModel)]="newDevice.remotePortCurrent" name="device-remote-port-current">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Listen Port Current" [(ngModel)]="newDevice.listenPortCurrent" name="device-listen-port-current">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Input State" [(ngModel)]="newDevice.lastInputState" name="device-last-input-state">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Battery Level" [(ngModel)]="newDevice.lastBatteryLevel" name="device-last-battery-level">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Fuel Level" [(ngModel)]="newDevice.lastFuelLevel" name="device-last-fuel-level">
+                </mat-form-field>
+
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Fuel Total" [(ngModel)]="newDevice.lastFuelTotal" name="device-last-fuel-total">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Oil Level" [(ngModel)]="newDevice.lastOilLevel" name="device-last-oil-level">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Valid Latitude" [(ngModel)]="newDevice.lastValidLatitude" name="device-last-valid-latitude">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Valid Longitude" [(ngModel)]="newDevice.lastValidLongitude" name="device-last-valid-longitude">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Valid Heading" [(ngModel)]="newDevice.lastValidHeading" name="device-last-valid-heading">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Gps Timestamp" [(ngModel)]="newDevice.lastGPSTimestamp" name="device-last-gps-timestamp">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Event Timestamp" [(ngModel)]="newDevice.lastEventTimestamp" name="device-last-event-timestamp">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Cell Serving Info" [(ngModel)]="newDevice.lastCellServingInfo" name="device-last-cell-serving-info">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Odometer Km" [(ngModel)]="newDevice.lastOdometerKM" name="device-last-odometer-km">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Odometer Offset Km" [(ngModel)]="newDevice.odometerOffsetKM" name="device-odometer-offset-km">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Engine Hours" [(ngModel)]="newDevice.lastEngineHours" name="device-last-engine-hours">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Engine Hours Offset" [(ngModel)]="newDevice.engineHoursOffset" name="device-engine-hours-offset">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Ignition On Time" [(ngModel)]="newDevice.lastIgnitionOnTime" name="device-last-ignition-on-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Ignition Off Time" [(ngModel)]="newDevice.lastIgnitionOffTime" name="device-last-ignition-off-time">
+                </mat-form-field>
+
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Notes" [(ngModel)]="newDevice.notes" name="device-notes">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Update Time" [(ngModel)]="newDevice.lastUpdateTime" name="device-last-update-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Update User" [(ngModel)]="newDevice.lastUpdateUser" name="device-last-update-user">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Device Key" [(ngModel)]="newDevice.deviceKey" name="device-device-key">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Creation Time" [(ngModel)]="newDevice.creationTime" name="device-creation-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Allow Notify" [(ngModel)]="newDevice.allowNotify" name="device-allow-notify">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Notify Time" [(ngModel)]="newDevice.lastNotifyTime" name="device-last-notify-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Notify Code" [(ngModel)]="newDevice.lastNotifyCode" name="device-last-notify-code">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Notify Email" [(ngModel)]="newDevice.notifyEmail" name="device-notify-email">
+                </mat-form-field>
+
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Notify Selector" [(ngModel)]="newDevice.notifySelector" name="device-notify-selector">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Notify Action" [(ngModel)]="newDevice.notifyAction" name="device-notify-action">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Notify Description" [(ngModel)]="newDevice.notifyDescription" name="device-notify-description">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Notify Subject" [(ngModel)]="newDevice.notifySubject" name="device-notify-subject">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Notify Text" [(ngModel)]="newDevice.notifyText" name="device-notify-text">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Notify Use Wrapper" [(ngModel)]="newDevice.notifyUseWrapper" name="device-notify-use-wrapper">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Notify Priority" [(ngModel)]="newDevice.notifyPriority" name="device-notify-priority">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Parked Latitude" [(ngModel)]="newDevice.parkedLatitude" name="device-parked-latitude">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Parked Longitude" [(ngModel)]="newDevice.parkedLongitude" name="device-parked-longitude">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Parked Radius" [(ngModel)]="newDevice.parkedRadius" name="device-parked-radius">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Data Push Time" [(ngModel)]="newDevice.lastDataPushTime" name="device-last-data-push-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Event Create Millis" [(ngModel)]="newDevice.lastEventCreateMillis" name="device-last-event-create-millis">
+                </mat-form-field>
+
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Active Corridor" [(ngModel)]="newDevice.activeCorridor" name="device-active-corridor">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fixed Latitude" [(ngModel)]="newDevice.fixedLatitude" name="device-fixed-latitude">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fixed Longitude" [(ngModel)]="newDevice.fixedLongitude" name="device-fixed-longitude">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fixed Address" [(ngModel)]="newDevice.fixedAddress" name="device-fixed-address">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fixed Contact Phone" [(ngModel)]="newDevice.fixedContactPhone" name="device-fixed-contact-phone">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fixed Service Time" [(ngModel)]="newDevice.fixedServiceTime" name="device-fixed-service-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Link Url" [(ngModel)]="newDevice.linkURL" name="device-link-url">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Link Description" [(ngModel)]="newDevice.linkDescription" name="device-link-description">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Border Crossing" [(ngModel)]="newDevice.borderCrossing" name="device-border-crossing">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Border Crosstime" [(ngModel)]="newDevice.lastBorderCrossTime" name="device-last-border-crosstime">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Maint Interval Km0" [(ngModel)]="newDevice.maintIntervalKM0" name="device-maint-interval-km0">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Maint Odometer Km0" [(ngModel)]="newDevice.maintOdometerKM0" name="device-maint-odometer-km0">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Maint Interval Km1" [(ngModel)]="newDevice.maintIntervalKM1" name="device-maint-interval-km1">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Maint Odometer Km1" [(ngModel)]="newDevice.maintOdometerKM1" name="device-maint-odometer-km1">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Maint Interval Hr0" [(ngModel)]="newDevice.maintIntervalHR0" name="device-maint-interval-hr0">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Maint Eng Hours Hr0" [(ngModel)]="newDevice.maintEngHoursHR0" name="device-maint-eng-hours-hr0">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Maint Notes" [(ngModel)]="newDevice.maintNotes" name="device-maint-notes">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Work Order Id" [(ngModel)]="newDevice.workOrderID" name="device-work-order-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Job Number" [(ngModel)]="newDevice.jobNumber" name="device-job-number">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Job Latitude" [(ngModel)]="newDevice.jobLatitude" name="device-job-latitude">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Job Longitude" [(ngModel)]="newDevice.jobLongitude" name="device-job-longitude">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Job Radius" [(ngModel)]="newDevice.jobRadius" name="device-job-radius">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Custom Attributes" [(ngModel)]="newDevice.customAttributes" name="device-custom-attributes">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Destination" [(ngModel)]="newDevice.destination" name="device-destination">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Sim Id" [(ngModel)]="newDevice.simID" name="device-sim-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Tcp Session Id" [(ngModel)]="newDevice.lastTcpSessionID" name="device-last-tcp-session-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Ignition Hours" [(ngModel)]="newDevice.lastIgnitionHours" name="device-last-ignition-hours">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Stop Time" [(ngModel)]="newDevice.lastStopTime" name="device-last-stop-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Start Time" [(ngModel)]="newDevice.lastStartTime" name="device-last-start-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Malfunction Lamp" [(ngModel)]="newDevice.lastMalfunctionLamp" name="device-last-malfunction-lamp">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Fault Code" [(ngModel)]="newDevice.lastFaultCode" name="device-last-fault-code">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Notify Rule" [(ngModel)]="newDevice.lastNotifyRule" name="device-last-notify-rule">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Assigned User Id" [(ngModel)]="newDevice.assignedUserID" name="device-assigned-user-id">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Thermal Profile" [(ngModel)]="newDevice.thermalProfile" name="device-thermal-profile">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Reminder Message" [(ngModel)]="newDevice.reminderMessage" name="device-reminder-message">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Reminder Interval" [(ngModel)]="newDevice.reminderInterval" name="device-reminder-interval">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Reminder Time" [(ngModel)]="newDevice.reminderTime" name="device-reminder-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Service Time" [(ngModel)]="newDevice.lastServiceTime" name="device-last-service-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Next Service Time" [(ngModel)]="newDevice.nextServiceTime" name="device-next-service-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Distance Km" [(ngModel)]="newDevice.lastDistanceKM" name="device-last-distance-km">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Vehicle Make" [(ngModel)]="newDevice.vehicleMake" name="device-vehicle-make">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Vehicle Model" [(ngModel)]="newDevice.vehicleModel" name="device-vehicle-model">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Driver Status" [(ngModel)]="newDevice.driverStatus" name="device-driver-status">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Install Time" [(ngModel)]="newDevice.installTime" name="device-install-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Reset Time" [(ngModel)]="newDevice.resetTime" name="device-reset-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Command State Mask" [(ngModel)]="newDevice.commandStateMask" name="device-command-state-mask">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Expect Ack Code" [(ngModel)]="newDevice.expectAckCode" name="device-expect-ack-code">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Dcs Command Host" [(ngModel)]="newDevice.dcsCommandHost" name="device-dcs-command-host">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Output State" [(ngModel)]="newDevice.lastOutputState" name="device-last-output-state">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Hours Of Operation" [(ngModel)]="newDevice.hoursOfOperation" name="device-hours-of-operation">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Status Code State" [(ngModel)]="newDevice.statusCodeState" name="device-status-code-state">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Engine Ontime" [(ngModel)]="newDevice.lastEngineOnTime" name="device-last-engine-ontime">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Engine Off Time" [(ngModel)]="newDevice.lastEngineOffTime" name="device-last-engine-off-time">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Events Per Secondms" [(ngModel)]="newDevice.lastEventsPerSecondMS" name="device-last-events-per-secondms">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Events Per Second" [(ngModel)]="newDevice.lastEventsPerSecond" name="device-last-events-per-second">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Equipment Status" [(ngModel)]="newDevice.equipmentStatus" name="device-equipment-status">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="License Expire" [(ngModel)]="newDevice.licenseExpire" name="device-license-expire">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fuel Rate Per Hour" [(ngModel)]="newDevice.fuelRatePerHour" name="device-fuel-rate-per-hour">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Dcs Config String" [(ngModel)]="newDevice.dcsConfigString" name="device-dcs-config-string">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Valid Speed Kph" [(ngModel)]="newDevice.lastValidSpeedKPH" name="device-last-valid-speed-kph">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Engine On Hours" [(ngModel)]="newDevice.lastEngineOnHours" name="device-last-engine-on-hours">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Last Ignition On Hours" [(ngModel)]="newDevice.lastIgnitionOnHours" name="device-last-ignition-on-hours">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Pending Message" [(ngModel)]="newDevice.pendingMessage" name="device-pending-message">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Pending Message Ack" [(ngModel)]="newDevice.pendingMessageACK" name="device-pending-message-ack">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fuel Millimeter" [(ngModel)]="newDevice.fuelMillimeter" name="device-fuel-millimeter">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fuel Cost Per Liter" [(ngModel)]="newDevice.fuelCostPerLiter" name="device-fuel-cost-per-liter">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Fuel Tank Profile" [(ngModel)]="newDevice.fuelTankProfile" name="device-fuel-tank-profile">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Insurance Expire" [(ngModel)]="newDevice.insuranceExpire" name="device-insurance-expire">
+                </mat-form-field>
+                <mat-form-field class="input-item">
+                    <input matInput placeholder="Parked Max Speed Kph" [(ngModel)]="newDevice.parkedMaxSpeedKPH" name="device-parked-max-speed-kph">
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+    </form>
+</div>

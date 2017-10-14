@@ -1,0 +1,69 @@
+<mat-toolbar>
+    <mat-form-field class="inside-toolbar-input">
+        <input matInput type="text"
+               #searchKey
+               value=""
+               i18n-placeholder placeholder="Enter for search group">
+    </mat-form-field>
+    <a mat-icon-button *ngIf="searchKey.value" (click)="searchKey.value=''">
+        <mat-icon>clear</mat-icon>
+    </a>
+    <span class="fill-remain-space"></span>
+    <button mat-raised-button color="primary" routerLink='add'>
+        <mat-icon>add</mat-icon>
+        <span i18n>Add New Group</span>
+    </button>
+</mat-toolbar>
+<div class="spinner" *ngIf="loading">
+    <span>
+        <mat-progress-spinner
+                class="center"
+                mode="indeterminate"
+                color="primary">
+        </mat-progress-spinner>
+    </span>
+</div>
+
+<mat-card class="list-card" *ngIf="!loading">
+    <mat-card-title-group>
+        <mat-card-title>
+            <div>
+                <span>Total Devices</span>
+                <span>#{{deviceList && deviceList.length}}</span>
+            </div>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <span>Active</span>
+            <span>#{{deviceActive}}</span>
+        </mat-card-subtitle>
+    </mat-card-title-group>
+    <mat-card-content>
+        <table class="list-table" cellspacing="0">
+            <tr>
+                <th>#</th>
+                <th>Device ID</th>
+                <th>Unique ID</th>
+                <th>Display Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            <tr *ngFor="let device of deviceList">
+                <td>
+                    <mat-slide-toggle color="primary" [(ngModel)]="device.isActive" (change)="toggle(device.deviceID)"></mat-slide-toggle>
+                </td>
+                <td>{{device.deviceID}}</td>
+                <td>{{device.uniqueID}}</td>
+                <td>{{device.displayName}}</td>
+                <td>{{device.description}}</td>
+                <td>
+                    <button mat-icon-button (click)="editDevice(device.deviceID)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="openDeleteDialog(device)" color="warn">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>

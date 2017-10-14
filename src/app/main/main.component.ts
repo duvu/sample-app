@@ -1,25 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { Account } from '../models/Account';
-import {NavigationEnd, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {AppService} from "../services/app.service";
-import {MdIconRegistry} from "@angular/material";
-import {DomSanitizer} from "@angular/platform-browser";
+import {MatSidenav} from "@angular/material";
 
 @Component({
-  selector: 'main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+    selector: 'main',
+    templateUrl: './main.component.html',
+    styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  profile: Account;
-  constructor(private app: AppService, private router: Router) {}
+    profile: Account;
+    mainIcon: string;
 
-  ngOnInit() {
-      console.log('initing ...');
-  }
+    @ViewChild(MatSidenav) sideNav: MatSidenav;
 
-  logout() {
-    this.app.logout();
-    this.router.navigate(['/login']);
-  }
+    constructor(private app: AppService, private router: Router) {}
+
+    ngOnInit() {
+        console.log('initing ...');
+        this.mainIcon = 'back';
+        this.app.getCurrentAccount().subscribe(
+            data => {
+                this.profile = data;
+            }
+        );
+    }
+
+    logout() {
+        this.app.logout();
+        this.router.navigate(['/login']);
+    }
+
+    toggleSideNav(): void {
+        this.sideNav.toggle();
+        if (this.sideNav.opened) {
+            this.mainIcon = 'back';
+        } else {
+            this.mainIcon = 'menu';
+        }
+    }
 }

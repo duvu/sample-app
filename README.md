@@ -58,5 +58,15 @@ typelessPackage.method();
 Done. Note: you might need or find useful to define more typings for the library that you're trying to use.
 
 ### Work with icon-font
+To build a customized font icon for the project.
+- Go to page: https://icomoon.io/app
+- Create project and load svg icon
+- Download font-icon to folder assets/
+
+To load current font-icon into IconMoon, let use file ```selection.json```
+
+Import into the project via .angular-cli.json
 
 ### work with custom-theme
+
+Create a theme call app-theme.scss

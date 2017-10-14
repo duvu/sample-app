@@ -22,7 +22,7 @@
         "styles.scss",
 
         "assets/app-theme.scss",
-        "assets/icons/font/style.scss",
+        "assets/icons/style.scss",
 
         "../node_modules/leaflet/dist/leaflet.css",
         "../node_modules/leaflet.markercluster/dist/MarkerCluster.css",

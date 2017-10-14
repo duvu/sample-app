@@ -1,0 +1,36 @@
+<div *ngIf="isLoading" class="page-center">
+    <span>
+        <mat-progress-spinner
+                class="center"
+                mode="indeterminate"
+                color="primary">
+        </mat-progress-spinner>
+    </span>
+</div>
+<mat-sidenav-container class="side-nav-container">
+    <mat-sidenav mode="side" opened="true" align="end">
+        <form>
+            <mat-form-field class="map-search-device">
+                <mat-icon matPrefix>{{inputSearch ? 'cancel' : 'filter'}}</mat-icon>
+                <input matInput name="searching-device-input" [(ngModel)]="inputSearch">
+            </mat-form-field>
+        </form>
+        <mat-nav-list dense>
+            <mat-list-item *ngFor="let event of liveEvents">
+                <!--<mat-icon mat-list-icon [color]="event.isActive? 'primary' : ''">brightness_1</mat-icon>-->
+                <a matLine (click)="selectAnEvent(event)">{{ event.displayName }}</a>
+                <div matLine>Test</div>
+            </mat-list-item>
+        </mat-nav-list>
+        <table *ngIf="selectedEvent && inputSearch" class="table-device-detail">
+            <tr>
+                <td i18n>Device ID</td>
+                <td>{{selectedEvent.deviceID}}</td>
+            </tr>
+        </table>
+    </mat-sidenav>
+
+    <div class="sidenav-content">
+        <div id="map-id" class="main-map"></div>
+    </div>
+</mat-sidenav-container>
