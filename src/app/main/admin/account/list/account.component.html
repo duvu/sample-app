@@ -1,0 +1,71 @@
+<mat-toolbar>
+    <mat-form-field class="inside-toolbar-input">
+        <input matInput type="text"
+               #searchKey
+               value=""
+               i18n-placeholder placeholder="Enter for search account">
+    </mat-form-field>
+    <a mat-icon-button *ngIf="searchKey.value" (click)="searchKey.value=''">
+        <mat-icon>clear</mat-icon>
+    </a>
+
+    <span class="fill-remain-space"></span>
+    <button mat-raised-button color="primary" routerLink="add">
+        <mat-icon>add</mat-icon>
+        <span i18n>Add New Account</span>
+    </button>
+</mat-toolbar>
+<!--progress spinner here-->
+<div *ngIf="showSpinner"class="progress-surface">
+    <mat-progress-spinner
+            class="center"
+            mode="indeterminate"
+            color="primary">
+    </mat-progress-spinner>
+</div>
+<mat-card class="list-card">
+    <mat-card-content>
+        <table class="list-table" cellspacing="0">
+            <tr>
+                <th>#</th>
+                <th i18n>Account ID</th>
+                <th i18n>Contact Name</th>
+                <th i18n>Contact Email</th>
+                <!--<th i18n>Status</th>-->
+                <th i18n>Total Devices</th>
+                <th i18n>Manager ID</th>
+                <th i18n>Actions</th>
+            </tr>
+            <tr *ngFor="let account of accountList">
+                <td>
+                    <mat-slide-toggle color="primary" [checked]="account.isActive" (change)="toggleStatus(account)"></mat-slide-toggle>
+                </td>
+                <td>
+                    <a [routerLink]="['.', account.accountID]" [queryParams]="{action: 'view'}">{{account.accountID}}</a>
+                </td>
+                <td>{{account.contactName}}</td>
+                <td>{{account.contactEmail}}</td>
+                <!--<td>-->
+                    <!--<mat-icon>-->
+                        <!--{{account.isActive ? 'done' : 'clear' }}-->
+                    <!--</mat-icon>-->
+                    <!--&lt;!&ndash;{{account.isActive}}&ndash;&gt;-->
+                <!--</td>-->
+                <td>{{account.totalDevices}}</td>
+                <td>{{account.managerID}}</td>
+                <td>
+                    <button mat-icon-button (click)="edit(account.accountID)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="del(account.accountID)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </mat-card-content>
+</mat-card>
+
+<!--<div class="ng2-toasty">
+    <ng2-toasty></ng2-toasty>
+</div>-->

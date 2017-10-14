@@ -6,7 +6,7 @@ import {Subscription} from "rxjs/Subscription";
 @Component({
   selector: 'app-root',
   template: `
-      <md-progress-bar class="main-progress-bar" mode="indeterminate" *ngIf="loading"></md-progress-bar>
+      <mat-progress-bar class="main-progress-bar" mode="indeterminate" *ngIf="loading"></mat-progress-bar>
       <router-outlet fullscreen></router-outlet>
   `,
   styles: [`

@@ -8,9 +8,9 @@ const routes: Routes = [
         path: '',
         component: MainComponent,
         children:[
-            { path: 'live',     loadChildren: 'app/main/module-mapping/mapping.module#MappingModule', canActivate: [AuthGuard]},
-            { path: 'report',   loadChildren: 'app/main/module-report/report.module#ReportModule',    canActivate: [AuthGuard]},
-            { path: 'admin',    loadChildren: 'app/main/module-admin/admin.module#AdminModule',       canActivate: [AuthGuard]}
+            { path: 'live',     loadChildren: 'app/main/dashboard/mapping.module#MappingModule', canActivate: [AuthGuard]},
+            { path: 'report',   loadChildren: 'app/main/report/report.module#ReportModule',    canActivate: [AuthGuard]},
+            { path: 'admin',    loadChildren: 'app/main/admin/admin.module#AdminModule',       canActivate: [AuthGuard]}
         ]
     }
 ];
