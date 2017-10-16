@@ -1,79 +1,91 @@
+<mat-progress-bar class="main-progress-bar" mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <mat-sidenav-container class="side-nav-container" fullscreen>
     <mat-sidenav #sideNav mode="side" opened="true" class="mat-elevation-z3">
         <mat-card class="mat-elevation-z0">
             Profile
         </mat-card>
+        <mat-divider></mat-divider>
+        <div class="side-nav-menu">
+            <mat-accordion [multi]="true" [displayMode]="flat" class="mat-elevation-z0 side-nav-headers-align">
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <mat-icon>map</mat-icon>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Dashboard
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>sub-menu</mat-icon>
+                            <a matLine [routerLink]="">Live Tracking</a>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>sub-menu</mat-icon>
+                            <a matLine [routerLink]="">Historical Tracking</a>
+                        </mat-list-item>
+                    </mat-nav-list>
 
-        <mat-accordion multi="false" displayMode="flat" class="mat-elevation-z0 side-nav-headers-align">
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <mat-icon>map</mat-icon>
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        Dashboard
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <mat-nav-list>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon>sub-menu</mat-icon>
-                        <a matLine [routerLink]="">Live Tracking</a>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon>sub-menu</mat-icon>
-                        <a matLine [routerLink]="">Historical Tracking</a>
-                    </mat-list-item>
-                </mat-nav-list>
+                </mat-expansion-panel>
 
-            </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <mat-icon>report</mat-icon>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Reports
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
 
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <mat-icon>report</mat-icon>
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        Reports
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
+                    <mat-nav-list>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>sub-menu</mat-icon>
+                            <a matLine [routerLink]="">Live Tracking</a>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>sub-menu</mat-icon>
+                            <a matLine [routerLink]="">Historical Tracking</a>
+                        </mat-list-item>
+                    </mat-nav-list>
 
-                <mat-nav-list>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon>sub-menu</mat-icon>
-                        <a matLine [routerLink]="">Live Tracking</a>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon>sub-menu</mat-icon>
-                        <a matLine [routerLink]="">Historical Tracking</a>
-                    </mat-list-item>
-                </mat-nav-list>
+                </mat-expansion-panel>
 
-            </mat-expansion-panel>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <mat-icon>settings</mat-icon>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            Administration
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
 
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <mat-icon>settings</mat-icon>
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        Administration
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-
-                <mat-nav-list>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon>sub-menu</mat-icon>
-                        <a matLine [routerLink]="">Account</a>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <mat-icon mat-list-icon>sub-menu</mat-icon>
-                        <a matLine [routerLink]="">Device</a>
-                    </mat-list-item>
-                </mat-nav-list>
+                    <mat-nav-list>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>sub-menu</mat-icon>
+                            <a matLine routerLink="_admin/account" i18n>Account</a>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>sub-menu</mat-icon>
+                            <a matLine routerLink="_admin/organization" i18n>Organization</a>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>sub-menu</mat-icon>
+                            <a matLine routerLink="_admin/privilege" i18n>Privilege</a>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <mat-icon mat-list-icon>sub-menu</mat-icon>
+                            <a matLine routerLink="_admin/device">Device</a>
+                        </mat-list-item>
+                    </mat-nav-list>
 
 
-            </mat-expansion-panel>
-        </mat-accordion>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+
     </mat-sidenav>
     <div class="main">
         <mat-toolbar color="primary" class="header">
@@ -123,8 +135,3 @@
         </div>
     </div>
 </mat-sidenav-container>
-
-
-
-
-

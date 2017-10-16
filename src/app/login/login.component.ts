@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { AuthService } from "../services/auth/auth.service";
 import { Router } from "@angular/router";
 import {ProgressBarService} from "../services/progress-bar.service";
-
+import {AppService} from "../services/app.service";
 
 @Component({
     selector: 'app-login',
@@ -15,11 +15,12 @@ export class LoginComponent implements OnInit {
 
     constructor(private auth: AuthService,
                 private router: Router,
+                private app: AppService,
                 private progress: ProgressBarService) {}
 
     ngOnInit() {
-        if (this.auth.isLoggedIn()) {
-            const redirectUrl = this.auth.getRedirectURL();
+        if (this.app.isLoggedIn()) {
+            const redirectUrl = this.app.getRedirectURL();
             this.router.navigate([redirectUrl]);
         }
     }
@@ -28,15 +29,14 @@ export class LoginComponent implements OnInit {
         this.progress.show();
         this.auth.login(this.model.username, this.model.password).subscribe(
             result => {
-                localStorage.setItem('currentUser', JSON.stringify(result));
+                this.app.setCurrentAccount(result);
             },
             error => {
                 this.errorMessage = "Error" + error;
                 this.progress.hide();
             },
             () => {
-                const redirectUrl = this.auth.getRedirectURL();
-                console.log("RedirectUrl", redirectUrl);
+                const redirectUrl = this.app.getRedirectURL();
                 this.progress.hide();
                 this.router.navigate([redirectUrl]);
             }

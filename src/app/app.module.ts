@@ -16,6 +16,7 @@ import {MaterialShared} from "./shared/material-shared";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthInterceptor} from "./services/auth-interceptor";
 import {ProgressBarService} from "./services/progress-bar.service";
+import {AppService} from "./services/app.service";
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import {ProgressBarService} from "./services/progress-bar.service";
     providers: [
         AuthService,
         AuthGuard,
+        AppService,
         ProgressBarService,
         {
             provide: HTTP_INTERCEPTORS,
