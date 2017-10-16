@@ -4,11 +4,11 @@ import {
     CanActivateChild, Router, NavigationExtras
 } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import {AuthService} from "../auth/auth.service";
+import {AppService} from "../app.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
-    constructor(private auth: AuthService, private router: Router) {}
+    constructor(private app: AppService, private router: Router) {}
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
         return this.canActivate(childRoute, state);
     }
@@ -17,10 +17,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             return this.checkLogin(url);
     }
     checkLogin(url: string): boolean {
-        if (this.auth.isLoggedIn()) {return true;}
+        if (this.app.isLoggedIn()) {return true;}
 
         //store the attempted URL for redirecting
-        this.auth.setRedirectURL(url);
+        this.app.setRedirectURL(url);
         //create session_id
         let sessionId=12345567;
         //Set our navigation extras object

@@ -1,5 +1,6 @@
 @import '../../node_modules/@angular/material/theming';
-@import "../app/main/admin/device/list/device.component";
+//@import "../app/main/admin/device/list/device.component";
+@import "../app/main/main.component";
 @import "../app/main/dashboard/mapping.component";
 @import "global";
 // Plus imports for other components in your app.
@@ -26,7 +27,8 @@ $my-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @mixin load-component-style($theme) {
-  @include device-list($theme);
+  //@include device-list($theme);
+  @include main-component($theme);
   @include map-component($theme);
   @include global-style($theme);
 }
