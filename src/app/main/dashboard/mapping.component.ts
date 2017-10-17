@@ -64,17 +64,17 @@ export class MappingComponent implements OnInit, OnDestroy {
         this.subcription.unsubscribe();
     }
     loadLivesEvent(): void {
-        this.subcription = Observable.interval(10000).startWith(0)
-            .flatMap(() => this._event_service.getLiveEvents()).subscribe(
-            liveEvents => {
-                this.liveEvents = liveEvents;
-                this.isLoading = false;
-                this.numberOfLoad++;
-                // this.processEvents();
-            },
-            error => {},
-            () => {}
-        );
+        // this.subcription = Observable.interval(10000).startWith(0)
+        //     .flatMap(() => this._event_service.getLiveEvents()).subscribe(
+        //     liveEvents => {
+        //         this.liveEvents = liveEvents;
+        //         this.isLoading = false;
+        //         this.numberOfLoad++;
+        //         // this.processEvents();
+        //     },
+        //     error => {},
+        //     () => {}
+        // );
     }
     // processEvents(): void {
     //     let icon = this.customDefault;
