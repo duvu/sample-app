@@ -10,7 +10,7 @@ const routes: Routes = [
         children:[
             { path: 'live',     loadChildren: 'app/main/dashboard/mapping.module#MappingModule', canActivate: [AuthGuard]},
             { path: 'report',   loadChildren: 'app/main/report/report.module#ReportModule',    canActivate: [AuthGuard]},
-            // { path: 'admin',    loadChildren: 'app/main/admin/admin.module#AdminModule',       canActivate: [AuthGuard]}
+            { path: '_admin',    loadChildren: 'app/main/administration/administration.module#AdministrationModule', canActivate: [AuthGuard]}
         ]
     }
 ];
