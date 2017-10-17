@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { DeviceService } from './device.service';
+import { DeviceService } from '../device.service';
 
 describe('DeviceService', () => {
   beforeEach(() => {

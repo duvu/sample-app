@@ -1,19 +1,74 @@
+import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
-import {AuthHttpError} from "angular2-jwt";
-import {Observable} from "rxjs";
-import {Response} from "@angular/http";
-import {Router} from "@angular/router";
+import { Observable } from "rxjs";
+import { Response } from "@angular/http";
+import { Router } from "@angular/router";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {Search} from "../models/Search";
+import {PageableResponse} from "../models/PageableResponse";
 
 @Injectable()
-export class BaseService {
-    protected router: Router
-    constructor(router: Router) {
-        this.router = router;
+export class BaseService<T> {
+    private _http: HttpClient;
+    private _url: string;
+    private _router: Router;
+
+    constructor(http: HttpClient, router: Router, url: string) {
+        this._router = router;
+        this._url = url;
+        this._http = http;
     }
-    protected error(error: Response | any) {
+
+    searhAndSort(page: number, size: number, sort: string, order: string, searchList: Search[]): Observable<PageableResponse<T>> {
+        let params = new HttpParams();
+        params.append('page', String(page));
+        params.append('size', String(size));
+        params.append('sort', sort + ',' + order);
+
+        if (searchList && searchList.length > 0) {
+            _.forEach(searchList, (search) => {
+                if (search.column && search.content) {
+                    params.append(search.column, search.content);
+                }
+            });
+        }
+        return this._http.get<PageableResponse<T>>(this._url, {params: params});
+    }
+
+    getAll(): Observable<T[]> {
+        const url = this._url + '/all';
+        return this._http.get<T[]>(url);
+    }
+
+    getById(id: number): Observable<T> {
+        const url = this._url + '/' + id;
+        return this._http.get<T>(url);
+    }
+
+    _delete(id: number): Observable<number> {
+        const url = this._url + '/' + id;
+        return this._http.delete<any>(url);
+    }
+
+    update(id: number, data: T): Observable<T> {
+        const url = this._url + '/' + id;
+        return this._http.put<T>(url, data);
+    }
+
+    update2(id: number, data: T): Observable<T> {
+        const url = this._url + '/' + id;
+        return this._http.patch<T>(url, data);
+    }
+
+    create(data: T): Observable<T> {
+        const url = this._url;
+        return this._http.post<T>(url, data);
+    }
+
+    protected error(error: Response | any): Observable<any> {
         console.log("Error", error);
-        if (error instanceof AuthHttpError) {
-            this.router.navigate(['/login']);
+        if (error) {
+            this._router.navigate(['/login']);
         } else {
             let errMsg: string;
             if (error instanceof Response) {

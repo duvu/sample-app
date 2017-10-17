@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {ProgressBarService} from "../progress-bar.service";
+import {ProgressBarService} from "./progress-bar.service";
 
 @Injectable()
 export class AuthService {
