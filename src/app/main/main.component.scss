@@ -1,4 +1,4 @@
-$side-nav-width: 250px;
+@import "../../assets/variables";
 @mixin main-component($theme) {
 
   .main {
@@ -22,7 +22,7 @@ $side-nav-width: 250px;
   }
 
   .side-nav-container .mat-sidenav {
-    width: 250px;
+    width: $side-nav-width;
     max-width: 350px;
     .side-nav-menu {
       overflow-y: auto;
