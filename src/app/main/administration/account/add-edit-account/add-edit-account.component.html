@@ -1,0 +1,56 @@
+<div matDialogTitle>
+    <span *ngIf="data.id" i18n>Modifying Account</span>
+    <span *ngIf="data.id==null" i18n>Creating Account</span>
+    <span> #{{data.accountId}}</span>
+    <span class="x-dialog-close-btn">
+        <button mat-icon-button (click)="cancel()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </span>
+</div>
+
+<div mat-dialog-content>
+    <div fxLayout="column">
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Codice" name="can-code" [(ngModel)]="data.code">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Tipo" name="can-type" [(ngModel)]="data.type">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Descrizione" name="can-description" [(ngModel)]="data.description">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Indirizzo" name="can-address" [(ngModel)]="data.address">
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Città" name="can-city" [(ngModel)]="data.city">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Provincia" name="can-province" [(ngModel)]="data.province">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Codice postale" name="can-zip" [(ngModel)]="data.zip">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onSave()" i18n>Save</button>
+    <button mat-button (click)="cancel()" i18n>Cancel</button>
+</div>

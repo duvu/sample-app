@@ -19,7 +19,7 @@ export class BaseService<T> {
         this._http = http;
     }
 
-    searhAndSort(page: number, size: number, sort: string, order: string, searchList: Search[]): Observable<PageableResponse<T>> {
+    searchAndSort(page: number, size: number, sort: string, order: string, searchList: Search[]): Observable<PageableResponse<T>> {
         let params = new HttpParams();
         params.append('page', String(page));
         params.append('size', String(size));
