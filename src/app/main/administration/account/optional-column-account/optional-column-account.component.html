@@ -1,0 +1,34 @@
+<div matDialogTitle>
+    <span i18n>Select columns to show</span>
+    <span class="x-dialog-close-btn">
+        <button mat-icon-button (click)="cancel()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </span>
+</div>
+<div mat-dialog-content>
+    <mat-selection-list #shoes>
+        <mat-list-option i18n (selectChange)="toggle(data.id.selected)" [selected]="data.id.selected">ID</mat-list-option>
+        <mat-list-option i18n [selected]="data.accountId.selected">Account Id</mat-list-option>
+        <mat-list-option i18n [selected]="data.firstName.selected">First Name</mat-list-option>
+        <mat-list-option i18n [selected]="data.lastName.selected">Last Name</mat-list-option>
+        <mat-list-option i18n [selected]="data.status.selected">Status</mat-list-option>
+        <mat-list-option i18n [selected]="data.organizationId.selected">Organization Id</mat-list-option>
+        <mat-list-option i18n [selected]="data.organizationName.selected">Organization Name</mat-list-option>
+        <mat-list-option i18n [selected]="data.phoneNumber.selected">Phone Number</mat-list-option>
+        <mat-list-option i18n [selected]="data.photoUrl.selected">Photo Url</mat-list-option>
+        <mat-list-option i18n [selected]="data.emailAddress.selected">Email Address</mat-list-option>
+        <mat-list-option i18n [selected]="data.addressLine1.selected">Address Line1</mat-list-option>
+        <mat-list-option i18n [selected]="data.addressLine2.selected">Address Line2</mat-list-option>
+        <mat-list-option i18n [selected]="data.notes.selected">Notes</mat-list-option>
+        <mat-list-option i18n [selected]="data.createdBy.selected">Created By</mat-list-option>
+        <mat-list-option i18n [selected]="data.createdOn.selected">Created On</mat-list-option>
+        <mat-list-option i18n [selected]="data.updatedBy.selected">Updated By</mat-list-option>
+        <mat-list-option i18n [selected]="data.updatedOn.selected">Updated On</mat-list-option>
+    </mat-selection-list>
+
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onSave()" i18n>Save</button>
+    <button mat-button (click)="cancel()" i18n>Cancel</button>
+</div>
