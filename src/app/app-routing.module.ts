@@ -12,7 +12,7 @@ const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full'},
     { path: 'login', component: LoginComponent },
     { path: 'main', loadChildren: 'app/main/main.module#MainModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
-    { path: '*', component: PageNotFoundComponent }
+    { path: '**', pathMatch: 'full', component: PageNotFoundComponent }
 ];
 
 @NgModule({

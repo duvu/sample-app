@@ -1,27 +1,26 @@
 import * as _ from 'lodash';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AccountService} from "../../../services/account.service";
-import {ProgressBarService} from "../../../services/progress-bar.service";
-import {BaseDataSource} from "../../../services/BaseDataSource";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {FormControl} from "@angular/forms";
-import {Account} from "../../../models/Account";
-import {MatDialog, MatPaginator, MatSort} from "@angular/material";
-import {Search} from "../../../models/Search";
-import {AddEditAccountComponent} from "app/main/administration/account/add-edit-account/add-edit-account.component";
-import {OptionalColumnAccountComponent} from "./optional-column-account/optional-column-account.component";
+import {AccountService} from '../../../services/account.service';
+import {ProgressBarService} from '../../../services/progress-bar.service';
+import {BaseDataSource} from '../../../services/base-data-source';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {FormControl} from '@angular/forms';
+import {Account} from '../../../models/account';
+import {MatDialog, MatPaginator, MatSort} from '@angular/material';
+import {Search} from '../../../models/search';
+import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
+import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
+import {AppService} from '../../../services/app.service';
+import {DeleteEvent} from '../../../models/delete-event';
+import {ConfirmDeleteComponent} from '../../shared/confirm-delete/confirm-delete.component';
 
 @Component({
     selector: 'app-account',
     templateUrl: './account.component.html',
     styleUrls: ['./account.component.scss']
 })
+
 export class AccountComponent implements OnInit {
-
-    constructor(private dialog: MatDialog,
-                private service: AccountService,
-                private progress: ProgressBarService) { }
-
     dataSource: BaseDataSource<Account> | null;
     dataChange: BehaviorSubject<any>;
     searchingStatement: string;
@@ -33,26 +32,31 @@ export class AccountComponent implements OnInit {
 
     displayedColumns = ['id', 'accountId', 'firstName', 'lastName', 'organizationName', 'notes', 'createdBy', 'createdOn', 'actions'];
 
-
     columns = {
-        id: {selected: true, order: 0},
+        id: {selected: false, order: 0},
         accountId: {selected: false, order: 1},
         firstName: {selected: false, order: 2},
-        lastName: {selected: false, order: 4},
-        status: {selected: false, order: 5},
-        organizationId: {selected: false, order: 6},
-        organizationName: {selected: false, order: 7},
-        phoneNumber: {selected: false, order: 8},
-        photoUrl: {selected: false, order: 9},
+        lastName: {selected: false, order: 3},
+        status: {selected: false, order: 4},
+        organizationId: {selected: false, order: 5},
+        organizationName: {selected: false, order: 6},
+        phoneNumber: {selected: false, order: 7},
+        photoUrl: {selected: false, order: 8},
         emailAddress: {selected: false, order: 9},
-        addressLine1: {selected: false, order: 9},
-        addressLine2: {selected: false, order: 9},
-        notes: {selected: false, order: 9},
-        createdBy: {selected: false, order: 9},
-        createdOn: {selected: false, order: 9},
-        updatedBy: {selected: false, order: 9},
-        updatedOn: {selected: false, order: 9}
+        addressLine1: {selected: false, order: 10},
+        addressLine2: {selected: false, order: 11},
+        notes: {selected: false, order: 12},
+        createdBy: {selected: false, order: 13},
+        createdOn: {selected: false, order: 14},
+        updatedBy: {selected: false, order: 15},
+        updatedOn: {selected: false, order: 16},
+        actions: {selected: false, order: 17}
     };
+
+    constructor(private dialog: MatDialog,
+                private app: AppService,
+                private service: AccountService,
+                private progress: ProgressBarService) { }
 
     ngOnInit() {
         this.stateCtrl = new FormControl();
@@ -70,7 +74,7 @@ export class AccountComponent implements OnInit {
     }
     initTableSettings(): void {
         try {
-            const displayeds = JSON.parse(localStorage.getItem('account-displayed-columns'));
+            const displayeds = JSON.parse(localStorage.getItem('acc-disp-cols'));
             if (displayeds != null) {
                 this.displayedColumns = displayeds;
             }
@@ -79,13 +83,11 @@ export class AccountComponent implements OnInit {
         }
 
         // 2. generate new columns
-        _.forEach(Object.keys(this.columns), (column) => {
-            console.log(column);
-            if (this.displayedColumns.includes(column)) {
-                this.columns[column].selected = true;
+        _.forOwn(this.columns, (value, key) => {
+            if (this.displayedColumns.includes(key)) {
+                value.selected = true;
             }
         });
-        console.log(this.columns);
     }
 
     openDialogColumnOptions(): void {
@@ -93,17 +95,17 @@ export class AccountComponent implements OnInit {
             data: this.columns
         });
         dialogRef.afterClosed().subscribe(
-            // result => {
-            //     if (result) {
-            //         this.displayedColumns = _.reduce(this.columns, (refined, column) => {
-            //             if (column.selected) {
-            //                 refined.push(column.name);
-            //             }
-            //             return refined;
-            //         }, []);
-            //     }
-            //     localStorage.setItem('cocs-displayed-columns', JSON.stringify(this.displayedColumns));
-            // }
+            result => {
+                if (result) {
+                    this.displayedColumns = [];
+                    _.forOwn(this.columns, (value, key) => {
+                        if (value.selected) {
+                            this.displayedColumns.push(key);
+                        }
+                    });
+                }
+                localStorage.setItem('acc-disp-cols', JSON.stringify(this.displayedColumns));
+            }
         );
     }
 
@@ -119,11 +121,13 @@ export class AccountComponent implements OnInit {
     }
 
     openDialogNewObject(): void {
-        const account = new Account();
+        const data = new Account();
+        data.organizationId = this.app.currentAccount.organizationId;
+        data.organizationName = this.app.currentAccount.organizationName;
         const dialogRef = this.dialog.open(AddEditAccountComponent, {
-            //width: '600px',
+            // width: '600px',
             disableClose: true,
-            data: account
+            data: data
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -140,6 +144,28 @@ export class AccountComponent implements OnInit {
                 this.dataChange.next(data.id);
             }
         );
+    }
+
+    openDialogConfirmDelete(account: Account): void {
+        const data = new DeleteEvent();
+        data.setId(account.id);
+        data.setName(account.accountId);
+        data.setType('Account');
+        const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+            disableClose: true,
+            data: data
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('data', result);
+            if (result) {
+                this.delete(result);
+            }
+        });
+    }
+
+    delete(account: Account): void {
+        this.service._delete(account.id).subscribe();
     }
 
 }

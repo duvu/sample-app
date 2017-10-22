@@ -4,8 +4,8 @@ import { Observable } from "rxjs";
 import { Response } from "@angular/http";
 import { Router } from "@angular/router";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Search} from "../models/Search";
-import {PageableResponse} from "../models/PageableResponse";
+import {Search} from "../models/search";
+import {PageableResponse} from "../models/pageable-response";
 
 @Injectable()
 export class BaseService<T> {

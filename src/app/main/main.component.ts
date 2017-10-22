@@ -1,19 +1,19 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import { Account } from '../models/Account';
-import {Router} from "@angular/router";
-import {AppService} from "../services/app.service";
-import {MatSidenav} from "@angular/material";
-import {Subscription} from "rxjs/Subscription";
-import {ProgressBarService} from "../services/progress-bar.service";
+import {Router} from '@angular/router';
+import {AppService} from '../services/app.service';
+import {MatSidenav} from '@angular/material';
+import {Subscription} from 'rxjs/Subscription';
+import {ProgressBarService} from '../services/progress-bar.service';
+import {LoginResponse} from '../models/login-response';
 
 @Component({
-    selector: 'main',
+    selector: 'app-main',
     templateUrl: './main.component.html',
     styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
 
-    profile: Account;
+    profile: LoginResponse;
     mainIcon: string;
     subscription: Subscription;
     loading: boolean;
@@ -24,11 +24,10 @@ export class MainComponent implements OnInit, OnDestroy {
     ngOnInit() {
         console.log('initing ...');
         this.mainIcon = 'back';
-        this.app.getCurrentAccount().subscribe(
-            data => {
-                this.profile = data;
-            }
-        );
+
+        this.profile = this.app.getCurrentAccount();
+
+        console.log('profile', this.profile);
 
         this.subscription = this.progress.showing$.subscribe(
             showing => {
@@ -42,6 +41,7 @@ export class MainComponent implements OnInit, OnDestroy {
     }
 
     showLoading(showing): void {
+        console.log('showing!');
         this.loading = showing;
     }
 

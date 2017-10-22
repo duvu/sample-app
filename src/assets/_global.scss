@@ -142,6 +142,8 @@
     .x-header {
       min-height: 64px;
       display: flex;
+        padding-left: 16px;
+        padding-right: 16px;
       flex-direction: row;
       font-size: 20px;
       align-items: center;
@@ -177,5 +179,10 @@
       }
     }
   }
-
+    .mat-header-row {
+        text-transform: uppercase;
+    }
+    .mat-sort-header-button {
+        text-transform: uppercase;
+    }
 }

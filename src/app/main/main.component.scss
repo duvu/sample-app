@@ -1,51 +1,51 @@
 @import "../../assets/variables";
 @mixin main-component($theme) {
 
-  .main {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .header {
-    flex: 0 0 auto;
-    z-index: 8;
-  }
-  .page-content {
-    flex: 1 1 auto;
-    height: 100%;
-    position: relative;/* need this to position inner content */
-    overflow-y: auto;
-  }
-
-  .side-nav-container {
-    height: 100%;
-  }
-
-  .side-nav-container .mat-sidenav {
-    width: $side-nav-width;
-    max-width: 350px;
-    .side-nav-menu {
-      overflow-y: auto;
+    .main {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
-    .profile-avartar {
-      width: 60px;
-      height: 60px;
-      padding: 2px;
-      background-size: cover;
-      border: 1px solid lightgray;
+    .header {
+        flex: 0 0 auto;
+        z-index: 8;
+    }
+    .page-content {
+        flex: 1 1 auto;
+        height: 100%;
+        position: relative;
+        overflow-y: auto;
     }
 
-  }
+    .side-nav-container {
+        height: 100%;
+    }
 
-  .side-nav-headers-align .mat-expansion-panel-header-title,
-  .side-nav-headers-align .mat-expansion-panel-header-description {
-    flex-grow: 0;
-    color: inherit;
-  }
+    .side-nav-container .mat-sidenav {
+        width: $side-nav-width;
+        max-width: 350px;
+        .side-nav-menu {
+            overflow-y: auto;
+        }
+        .profile-avartar {
+            width: 60px;
+            height: 60px;
+            padding: 2px;
+            background-size: cover;
+            border: 1px solid lightgray;
+        }
 
-  .main-progress-bar {
-    height: 5px;
-    z-index: 9;
-  }
+    }
+
+    .side-nav-headers-align .mat-expansion-panel-header-title,
+    .side-nav-headers-align .mat-expansion-panel-header-description {
+        flex-grow: 0;
+        color: inherit;
+    }
+
+    .main-progress-bar {
+        height: 5px;
+        z-index: 99;
+    }
 
 }

@@ -1,9 +1,9 @@
-import {CollectionViewer, DataSource} from "@angular/cdk/collections";
-import {BaseService} from "./base.service";
-import {MatPaginator, MatSort} from "@angular/material";
-import {ProgressBarService} from "./progress-bar.service";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {Observable} from "rxjs/Observable";
+import {CollectionViewer, DataSource} from '@angular/cdk/collections';
+import {BaseService} from './base.service';
+import {MatPaginator, MatSort} from '@angular/material';
+import {ProgressBarService} from './progress-bar.service';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
 
 export class BaseDataSource<T> extends DataSource<T> {
     private _service: BaseService<T>;
@@ -47,7 +47,7 @@ export class BaseDataSource<T> extends DataSource<T> {
                 this.length = dataObject.totalElements;
                 return dataObject.content;
             }).catch(error => {
-                this._progress.hide()
+                this._progress.hide();
                 return Observable.throw(error);
             });
     }

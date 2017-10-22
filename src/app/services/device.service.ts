@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {BaseService} from "./base.service";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {Device} from "../models/Device";
+import {Device} from "../models/device";
 
 const API_DEVICE_PATH = '/api/device/';
 

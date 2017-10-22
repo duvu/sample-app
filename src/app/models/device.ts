@@ -2,7 +2,7 @@
  * Created by beou on 5/4/17.
  */
 export class Device {
-    //- device info
+    // device info
     accountID: string;
     uniqueID: string;
     groupID: string;
@@ -16,7 +16,7 @@ export class Device {
     simID: string;
     expirationTime: number;
 
-    //- vehicle info
+    // vehicle info
     vehicleID: string;
     vehicleMake: string;
     vehicleModel: string;

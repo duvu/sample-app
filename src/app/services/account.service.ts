@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Account} from "../models/Account";
-import {Router} from "@angular/router";
-import {BaseService} from "./base.service";
-import {HttpClient} from "@angular/common/http";
+import {Account} from '../models/account';
+import {Router} from '@angular/router';
+import {BaseService} from './base.service';
+import {HttpClient} from '@angular/common/http';
 
 const ACCOUNT_API_URL = '/api/account';
 

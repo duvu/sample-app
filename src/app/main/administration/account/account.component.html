@@ -94,14 +94,14 @@
                 <mat-cell *matCellDef="let element"> {{element.createdOn | date:'short'}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="modifiedBy">
-                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Modified By </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.modifiedBy}} </mat-cell>
+            <ng-container matColumnDef="updatedBy">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Updated By </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="modifiedOn">
-                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Modified On </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.modifiedOn | date:'short'}} </mat-cell>
+            <ng-container matColumnDef="updatedOn">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Updated On </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.updatedOn | date:'short'}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="actions">
