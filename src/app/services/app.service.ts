@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { Account } from '../models/account';
 import {LoginResponse} from '../models/login-response';
 
-export const currentUser = 'currentUser';
+export const currentUser = 'vd5-current-user';
 export const redirectUrl = 'redirectUrl';
 
 @Injectable()
