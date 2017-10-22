@@ -131,7 +131,6 @@ export class AccountComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('data', result);
             if (result) {
                 this.createObject(result);
             }
@@ -157,15 +156,24 @@ export class AccountComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('data', result);
             if (result) {
-                this.delete(result);
+                this._delete(result);
             }
         });
     }
 
-    delete(account: Account): void {
-        this.service._delete(account.id).subscribe();
+    _delete(account: Account): void {
+        this.service._delete(account.id).subscribe(
+            data => {
+                this.dataChange.next(0);
+            },
+            error => {
+                this.dataChange.next(error);
+            },
+            () => {
+                this.dataChange.next(1);
+            }
+        );
     }
 
 }

@@ -13,7 +13,7 @@ import {LoginResponse} from '../models/login-response';
 })
 export class MainComponent implements OnInit, OnDestroy {
 
-    profile: LoginResponse;
+    profile: LoginResponse | any;
     mainIcon: string;
     subscription: Subscription;
     loading: boolean;

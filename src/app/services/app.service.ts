@@ -7,17 +7,19 @@ export const redirectUrl = 'redirectUrl';
 
 @Injectable()
 export class AppService {
-    private redirectURL: string;
-
+    redirectURL: string;
     currentAccount: LoginResponse;
+    private _access_token: string;
 
     constructor() {
         console.log('App service is initiating!');
     }
 
     init(): void {
+        console.log('init app...')
         try {
             this.currentAccount = JSON.parse(localStorage.getItem(currentUser));
+            this._access_token = this.currentAccount.access_token;
         } catch (e) {
             // console.log("error", e);
         }
@@ -41,8 +43,21 @@ export class AppService {
     }
 
 
+    get access_token(): string {
+        return this._access_token;
+    }
+
+    set access_token(value: string) {
+        this._access_token = value;
+    }
+
+    getToken(): string {
+        return this.currentAccount.token_type + " " + this.currentAccount.access_token;
+    }
+
     setCurrentAccount(credential: LoginResponse) {
         this.currentAccount = credential;
+        localStorage.setItem(currentUser, JSON.stringify(this.currentAccount));
     }
 
     logout() {
@@ -51,6 +66,8 @@ export class AppService {
     }
 
     isLoggedIn(): boolean {
+        console.log('isLoggedIn()', this.currentAccount);
+
         return this.currentAccount != null;
     }
 
