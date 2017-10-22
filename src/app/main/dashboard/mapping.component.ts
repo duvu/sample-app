@@ -5,7 +5,7 @@ import * as L from 'leaflet';
 
 import {DeviceService} from "../../services/device.service";
 import {EventService} from "../../services/event.service";
-import {EventData} from "../../models/EventData";
+import {EventData} from "../../models/event-data";
 import * as _ from 'lodash';
 //import PointExpression = L.PointExpression;
 import {DatePipe} from "@angular/common";

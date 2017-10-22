@@ -7,25 +7,80 @@
     </span>
 </div>
 <div mat-dialog-content>
-    <mat-selection-list #shoes>
-        <mat-list-option i18n (selectChange)="toggle(data.id.selected)" [selected]="data.id.selected">ID</mat-list-option>
-        <mat-list-option i18n [selected]="data.accountId.selected">Account Id</mat-list-option>
-        <mat-list-option i18n [selected]="data.firstName.selected">First Name</mat-list-option>
-        <mat-list-option i18n [selected]="data.lastName.selected">Last Name</mat-list-option>
-        <mat-list-option i18n [selected]="data.status.selected">Status</mat-list-option>
-        <mat-list-option i18n [selected]="data.organizationId.selected">Organization Id</mat-list-option>
-        <mat-list-option i18n [selected]="data.organizationName.selected">Organization Name</mat-list-option>
-        <mat-list-option i18n [selected]="data.phoneNumber.selected">Phone Number</mat-list-option>
-        <mat-list-option i18n [selected]="data.photoUrl.selected">Photo Url</mat-list-option>
-        <mat-list-option i18n [selected]="data.emailAddress.selected">Email Address</mat-list-option>
-        <mat-list-option i18n [selected]="data.addressLine1.selected">Address Line1</mat-list-option>
-        <mat-list-option i18n [selected]="data.addressLine2.selected">Address Line2</mat-list-option>
-        <mat-list-option i18n [selected]="data.notes.selected">Notes</mat-list-option>
-        <mat-list-option i18n [selected]="data.createdBy.selected">Created By</mat-list-option>
-        <mat-list-option i18n [selected]="data.createdOn.selected">Created On</mat-list-option>
-        <mat-list-option i18n [selected]="data.updatedBy.selected">Updated By</mat-list-option>
-        <mat-list-option i18n [selected]="data.updatedOn.selected">Updated On</mat-list-option>
-    </mat-selection-list>
+    <mat-list>
+        <mat-list-item>
+            <span matLine i18n>ID</span>
+            <mat-checkbox [(ngModel)]="data.id.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Account ID</span>
+            <mat-checkbox [(ngModel)]="data.accountId.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>First Name</span>
+            <mat-checkbox [(ngModel)]="data.firstName.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Last Name</span>
+            <mat-checkbox [(ngModel)]="data.lastName.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Status</span>
+            <mat-checkbox [(ngModel)]="data.status.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Organization ID</span>
+            <mat-checkbox [(ngModel)]="data.organizationId.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Organization Name</span>
+            <mat-checkbox [(ngModel)]="data.organizationName.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Phone Number</span>
+            <mat-checkbox [(ngModel)]="data.phoneNumber.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Photo Url</span>
+            <mat-checkbox [(ngModel)]="data.photoUrl.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Email Address</span>
+            <mat-checkbox [(ngModel)]="data.emailAddress.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Address Line1</span>
+            <mat-checkbox [(ngModel)]="data.addressLine1.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Address Line2</span>
+            <mat-checkbox [(ngModel)]="data.addressLine2.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Notes</span>
+            <mat-checkbox [(ngModel)]="data.notes.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Created By</span>
+            <mat-checkbox [(ngModel)]="data.createdBy.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Created On</span>
+            <mat-checkbox [(ngModel)]="data.createdOn.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Updated By</span>
+            <mat-checkbox [(ngModel)]="data.updatedBy.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Updated On</span>
+            <mat-checkbox [(ngModel)]="data.updatedOn.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Actions</span>
+            <mat-checkbox [(ngModel)]="data.actions.selected"></mat-checkbox>
+        </mat-list-item>
+    </mat-list>
 
 </div>
 <div mat-dialog-actions align="end">

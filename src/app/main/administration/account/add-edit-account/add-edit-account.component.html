@@ -11,43 +11,84 @@
 
 <div mat-dialog-content>
     <div fxLayout="column">
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
-            <div fxFlex="50">
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Codice" name="can-code" [(ngModel)]="data.code">
-                </mat-form-field>
-            </div>
-            <div fxFlex="50">
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Tipo" name="can-type" [(ngModel)]="data.type">
-                </mat-form-field>
-            </div>
-        </div>
-
-        <mat-form-field class="full-width">
-            <input matInput placeholder="Descrizione" name="can-description" [(ngModel)]="data.description">
-        </mat-form-field>
-
-        <mat-form-field class="full-width">
-            <input matInput placeholder="Indirizzo" name="can-address" [(ngModel)]="data.address">
-        </mat-form-field>
         <div fxLayout="row" fxLayoutGap="16px">
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Città" name="can-city" [(ngModel)]="data.city">
+                    <input matInput i18n-placeholder placeholder="Account ID" name="acc-account-id" [(ngModel)]="data.accountId" required>
                 </mat-form-field>
             </div>
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Provincia" name="can-province" [(ngModel)]="data.province">
+                    <input matInput i18n-placeholder placeholder="Status" name="acc-status" [(ngModel)]="data.status">
+                </mat-form-field>
+
+                <!--mat-form-field class="full-width">
+                    <input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+                            <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
+                            <span>{{ state.name }}</span> |
+                            <small>Population: {{state.population}}</small>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field-->
+
+            </div>
+        </div>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input type="password" matInput i18n-placeholder placeholder="Password" name="acc-password" [(ngModel)]="data.password">
                 </mat-form-field>
             </div>
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Codice postale" name="can-zip" [(ngModel)]="data.zip">
+                    <input type="password" matInput i18n-placeholder placeholder="Re-type Password" name="acc-re-password" [(ngModel)]="data.password">
                 </mat-form-field>
             </div>
         </div>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="First Name" name="acc-first-name" [(ngModel)]="data.firstName">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Last Name" name="acc-last-name" [(ngModel)]="data.lastName">
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <mat-form-field class="full-width">
+            <input matInput i18n-placeholder placeholder="Orgnization Name" name="acc-organization-name" [(ngModel)]="data.organizationName" [disabled]="data.organizationName">
+        </mat-form-field>
+
+
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Phone Number" name="acc-phone-number" [(ngModel)]="data.phoneNumber">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Email Address" name="acc-email-address" [(ngModel)]="data.emailAddress" required>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-form-field class="full-width">
+            <input matInput i18n-placeholder placeholder="Address Line1" name="acc-address-line1" [(ngModel)]="data.addressLine1">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput i18n-placeholder placeholder="Address Line2" name="acc-address-line2" [(ngModel)]="data.addressLine2">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <input matInput i18n-placeholder placeholder="Notes" name="acc-notes" [(ngModel)]="data.notes">
+        </mat-form-field>
+
     </div>
 </div>
 <div mat-dialog-actions align="end">

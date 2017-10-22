@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ProgressBarService} from "./services/progress-bar.service";
-import {Subscription} from "rxjs/Subscription";
+import {AppService} from './services/app.service';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +8,17 @@ import {Subscription} from "rxjs/Subscription";
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-    ngOnInit(): void {
+    constructor(private app: AppService) {
 
+    }
+
+    ngOnInit(): void {
+        // init app-service here to populate app-settings
+        this.app.init();
     }
 
     ngOnDestroy(): void {
-        throw new Error("Method not implemented.");
-    }
-
-    constructor() {
-
+        // destroy app-service here to store app-settings
+        this.app.destroy();
     }
 }

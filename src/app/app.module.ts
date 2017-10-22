@@ -1,22 +1,22 @@
+import 'hammerjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule} from '@angular/http';
 import { AppComponent } from './app.component';
-import { AppRoutingModule} from "./app-routing.module";
-import { AuthService} from "./services/auth.service";
-import { AuthGuard} from "./services/auth.guard";
+import { AppRoutingModule} from './app-routing.module';
+import { AuthService} from './services/auth.service';
+import { AuthGuard} from './services/auth.guard';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { CommonModule} from "@angular/common";
-import { LoginComponent} from "./login/login.component";
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { CommonModule} from '@angular/common';
+import { LoginComponent} from './login/login.component';
 
-import 'hammerjs';
-import {MaterialShared} from "./shared/material-shared";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AuthInterceptor} from "./services/auth-interceptor";
-import {ProgressBarService} from "./services/progress-bar.service";
-import {AppService} from "./services/app.service";
+import {MaterialShared} from './shared/material-shared';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {AuthInterceptor} from './services/auth-interceptor';
+import {ProgressBarService} from './services/progress-bar.service';
+import {AppService} from './services/app.service';
 
 @NgModule({
     declarations: [
@@ -47,6 +47,7 @@ import {AppService} from "./services/app.service";
             multi: true
         }
     ],
+
     bootstrap: [AppComponent]
 })
 export class AppModule { }

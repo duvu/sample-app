@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
+import {Component, OnInit, Inject, ViewChild} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSelectionList} from '@angular/material';
 
 @Component({
     selector: 'app-optional-column-account',
@@ -18,11 +18,7 @@ export class OptionalColumnAccountComponent implements OnInit {
     }
 
     onSave(): void {
-        console.log("data", this.data);
+        console.log('data', this.data);
         this.dialogRef.close(this.data);
-    }
-
-    toggle(selected: boolean): void {
-        console.log("Test" + selected);
     }
 }

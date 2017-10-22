@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
-import { CommonModule} from "@angular/common";
-import { FormsModule} from "@angular/forms";
-import { MaterialShared} from "../shared/material-shared";
+import { CommonModule} from '@angular/common';
+import { FormsModule} from '@angular/forms';
+import { MaterialShared} from '../shared/material-shared';
+import { ConfirmDeleteComponent } from './shared/confirm-delete/confirm-delete.component';
 
 @NgModule({
     imports: [
@@ -14,9 +15,13 @@ import { MaterialShared} from "../shared/material-shared";
         MainRoutingModule
     ],
     declarations: [
-        MainComponent
+        MainComponent,
+        ConfirmDeleteComponent
     ],
     providers: [
+    ],
+    entryComponents: [
+        ConfirmDeleteComponent
     ]
 })
 export class MainModule { }

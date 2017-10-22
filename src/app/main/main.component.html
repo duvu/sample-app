@@ -88,7 +88,7 @@
 
     </mat-sidenav>
     <div class="main">
-        <mat-toolbar color="primary" class="header">
+        <mat-toolbar color="primary" class="header mat-elevation-z3">
             <button mat-icon-button (click)="toggleSideNav()">
                 <mat-icon>{{mainIcon}}</mat-icon>
             </button>
@@ -112,7 +112,7 @@
             <div *ngIf="profile!=null">
                 <button mat-button [matMenuTriggerFor]="menu">
                     <mat-icon>profile</mat-icon>
-                    <span>{{profile.displayName || profile.contactName}}</span>
+                    <span>{{profile.accountName}}</span>
                 </button>
                 <mat-menu #menu="matMenu">
                     <div mat-menu-item class="profile-current">

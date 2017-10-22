@@ -1,22 +1,36 @@
-import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
-import { Account } from '../models/Account';
+import {Injectable} from '@angular/core';
+import { Account } from '../models/account';
+import {LoginResponse} from '../models/login-response';
+
+export const currentUser = 'currentUser';
+export const redirectUrl = 'redirectUrl';
 
 @Injectable()
 export class AppService {
     private redirectURL: string;
 
-    constructor() { }
+    currentAccount: LoginResponse;
 
-    getCurrentAccount(): Observable<Account> {
-        return new Observable<Account>(
-            observer => {
-                let storedAccount = localStorage.getItem('currentUser');
-                let acc: Account = JSON.parse(storedAccount);
-                observer.next(acc);
-                observer.complete();
-            }
-        );
+    constructor() {
+        console.log('App service is initiating!');
+    }
+
+    init(): void {
+        try {
+            this.currentAccount = JSON.parse(localStorage.getItem(currentUser));
+        } catch (e) {
+            // console.log("error", e);
+        }
+        this.redirectURL = localStorage.getItem(redirectUrl);
+    }
+
+    destroy(): void {
+        localStorage.setItem(currentUser, JSON.stringify(this.currentAccount));
+        localStorage.setItem(redirectUrl, this.redirectURL);
+    }
+
+    getCurrentAccount(): LoginResponse {
+        return this.currentAccount
     }
 
     setRedirectURL (url: string) {
@@ -27,21 +41,20 @@ export class AppService {
     }
 
 
-    setCurrentAccount(credential: any) {
-        localStorage.setItem('currentUser', JSON.stringify(credential));
+    setCurrentAccount(credential: LoginResponse) {
+        this.currentAccount = credential;
     }
 
     logout() {
-        localStorage.removeItem('currentUser');
+        this.currentAccount = null;
+        this.redirectURL = null;
     }
 
     isLoggedIn(): boolean {
-        try {
-            const profile = JSON.parse(localStorage.getItem('currentUser'));
-            return profile != null;
-        } catch (e) {
-            // console.log("error", e);
-        }
+        return this.currentAccount != null;
+    }
+
+    isSysAdmin(): boolean {
         return false;
     }
 }
