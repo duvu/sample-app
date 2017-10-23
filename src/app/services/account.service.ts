@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {BaseService} from './base.service';
 import {HttpClient} from '@angular/common/http';
 
-const ACCOUNT_API_URL = '/api/account';
+export const ACCOUNT_API_URL = '/api/account';
 
 @Injectable()
 export class AccountService extends BaseService<Account> {
