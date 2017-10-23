@@ -18,7 +18,6 @@ export class OptionalColumnAccountComponent implements OnInit {
     }
 
     onSave(): void {
-        console.log('data', this.data);
         this.dialogRef.close(this.data);
     }
 }

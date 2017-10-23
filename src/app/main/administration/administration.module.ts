@@ -11,6 +11,9 @@ import { AccountService} from '../../services/account.service';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AddEditAccountComponent } from './account/add-edit-account/add-edit-account.component';
 import { OptionalColumnAccountComponent } from './account/optional-column-account/optional-column-account.component';
+import { OptionalColumnOrganizationComponent } from './organization/optional-column-organization/optional-column-organization.component';
+import { AddEditOrganizationComponent } from './organization/add-edit-organization/add-edit-organization.component';
+import { OrganizationService } from 'app/services/organization.service';
 
 @NgModule({
     imports: [
@@ -27,14 +30,19 @@ import { OptionalColumnAccountComponent } from './account/optional-column-accoun
         OrganizationComponent,
         PrivilegeComponent,
         AddEditAccountComponent,
-        OptionalColumnAccountComponent
+        OptionalColumnAccountComponent,
+        AddEditOrganizationComponent,
+        OptionalColumnOrganizationComponent
     ],
     providers: [
-        AccountService
+        AccountService,
+        OrganizationService
     ],
     entryComponents: [
         AddEditAccountComponent,
-        OptionalColumnAccountComponent
+        OptionalColumnAccountComponent,
+        AddEditOrganizationComponent,
+        OptionalColumnOrganizationComponent
     ]
 })
 export class AdministrationModule { }
