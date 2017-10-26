@@ -1,0 +1,97 @@
+<div matDialogTitle>
+    <span i18n>Select columns to show</span>
+    <span class="x-dialog-close-btn">
+        <button mat-icon-button (click)="cancel()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </span>
+</div>
+<div mat-dialog-content>
+    <mat-list>
+        <mat-list-item>
+            <span matLine i18n>ID</span>
+            <mat-checkbox [(ngModel)]="data.id.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Name</span>
+            <mat-checkbox [(ngModel)]="data.name.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Device ID</span>
+            <mat-checkbox [(ngModel)]="data.deviceId.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Account ID</span>
+            <mat-checkbox [(ngModel)]="data.accountId.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Account Name</span>
+            <mat-checkbox [(ngModel)]="data.accountName.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Vehicle ID</span>
+            <mat-checkbox [(ngModel)]="data.vehicleId.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Vehicle Name</span>
+            <mat-checkbox [(ngModel)]="data.vehicleName.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>IP Address</span>
+            <mat-checkbox [(ngModel)]="data.ipAddress.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Port</span>
+            <mat-checkbox [(ngModel)]="data.port.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Protocol</span>
+            <mat-checkbox [(ngModel)]="data.protocol.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Serial Number</span>
+            <mat-checkbox [(ngModel)]="data.serialNumber.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Model Name</span>
+            <mat-checkbox [(ngModel)]="data.modelName.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Manufacturer Name</span>
+            <mat-checkbox [(ngModel)]="data.manufacturerName.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Firmware Version</span>
+            <mat-checkbox [(ngModel)]="data.firmwareVersion.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Orginal Country</span>
+            <mat-checkbox [(ngModel)]="data.originalCountry.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Created By</span>
+            <mat-checkbox [(ngModel)]="data.createdBy.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Created On</span>
+            <mat-checkbox [(ngModel)]="data.createdOn.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Updated By</span>
+            <mat-checkbox [(ngModel)]="data.updatedBy.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Updated On</span>
+            <mat-checkbox [(ngModel)]="data.updatedOn.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Actions</span>
+            <mat-checkbox [(ngModel)]="data.actions.selected"></mat-checkbox>
+        </mat-list-item>
+    </mat-list>
+
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onSave()" i18n>Save</button>
+    <button mat-button (click)="cancel()" i18n>Cancel</button>
+</div>

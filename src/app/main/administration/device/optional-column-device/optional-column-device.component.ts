@@ -2,13 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
-    selector: 'app-add-edit-organization',
-    templateUrl: './add-edit-organization.component.html',
-    styleUrls: ['./add-edit-organization.component.scss']
+  selector: 'app-optional-column-device',
+  templateUrl: './optional-column-device.component.html',
+  styleUrls: ['./optional-column-device.component.scss']
 })
-export class AddEditOrganizationComponent implements OnInit {
+export class OptionalColumnDeviceComponent implements OnInit {
 
-    constructor(public dialogRef: MatDialogRef<AddEditOrganizationComponent>,
+    constructor(public dialogRef: MatDialogRef<OptionalColumnDeviceComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import { Account } from '../models/account';
 import {LoginResponse} from '../models/login-response';
 
-export const currentUser = 'vd5-current-user';
+export const CURRENT_USER = 'vd5-current-user';
 export const redirectUrl = 'redirectUrl';
 
 @Injectable()
@@ -16,9 +16,8 @@ export class AppService {
     }
 
     init(): void {
-        console.log('init app...')
         try {
-            this.currentAccount = JSON.parse(localStorage.getItem(currentUser));
+            this.currentAccount = JSON.parse(localStorage.getItem(CURRENT_USER));
             this._access_token = this.currentAccount.access_token;
         } catch (e) {
             // console.log("error", e);
@@ -27,7 +26,7 @@ export class AppService {
     }
 
     destroy(): void {
-        localStorage.setItem(currentUser, JSON.stringify(this.currentAccount));
+        localStorage.setItem(CURRENT_USER, JSON.stringify(this.currentAccount));
         localStorage.setItem(redirectUrl, this.redirectURL);
     }
 
@@ -57,17 +56,16 @@ export class AppService {
 
     setCurrentAccount(credential: LoginResponse) {
         this.currentAccount = credential;
-        localStorage.setItem(currentUser, JSON.stringify(this.currentAccount));
+        localStorage.setItem(CURRENT_USER, JSON.stringify(this.currentAccount));
     }
 
     logout() {
         this.currentAccount = null;
         this.redirectURL = null;
+        localStorage.removeItem(CURRENT_USER);
     }
 
     isLoggedIn(): boolean {
-        console.log('isLoggedIn()', this.currentAccount);
-
         return this.currentAccount != null;
     }
 

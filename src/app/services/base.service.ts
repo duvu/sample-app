@@ -65,7 +65,7 @@ export class BaseService<T> {
         return this._http.post<T>(url, data);
     }
 
-    protected error(error: Response | any): Observable<any> {
+    error(error: Response | any): Observable<any> {
         console.log("Error", error);
         if (error) {
             this._router.navigate(['/login']);

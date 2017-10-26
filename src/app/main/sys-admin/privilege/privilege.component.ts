@@ -1,27 +1,27 @@
 import * as _ from 'lodash';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaseDataSource } from 'app/services/base-data-source';
-import { Device } from 'app/models/device';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Privilege } from 'app/models/privilege';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { AppService } from 'app/services/app.service';
+import { PrivilegeService } from 'app/services/privilege.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
-import { DeviceService } from 'app/services/device.service';
-import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
+import { OptionalColumnPrivilegeComponent } from 'app/main/sys-admin/privilege/optional-column-privilege/optional-column-privilege.component';
 import { Search } from 'app/models/search';
-import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';
+import { AddEditPrivilegeComponent } from 'app/main/sys-admin/privilege/add-edit-privilege/add-edit-privilege.component';
 import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
 
 @Component({
-    selector: 'app-device',
-    templateUrl: './device.component.html',
-    styleUrls: ['./device.component.scss']
+  selector: 'app-privilege',
+  templateUrl: './privilege.component.html',
+  styleUrls: ['./privilege.component.scss']
 })
-export class DeviceComponent implements OnInit {
+export class PrivilegeComponent implements OnInit {
 
-    dataSource: BaseDataSource<Device> | null;
+    dataSource: BaseDataSource<Privilege> | null;
     dataChange: BehaviorSubject<any>;
     searchingStatement: string;
 
@@ -30,34 +30,22 @@ export class DeviceComponent implements OnInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    displayedColumns = ['id', 'name', 'deviceId', 'accountName', 'vehicleName', 'protocol', 'createdBy', 'createdOn', 'actions'];
+    displayedColumns = ['id', 'name', 'description','createdBy', 'createdOn', 'actions'];
 
     columns = {
         id:                 {selected: false, order: 0},
         name:               {selected: false, order: 1},
-        deviceId:           {selected: false, order: 2},
-        accountId:          {selected: false, order: 3},
-        accountName:        {selected: false, order: 4},
-        vehicleId:          {selected: false, order: 5},
-        vehicleName:        {selected: false, order: 6},
-        ipAddress:          {selected: false, order: 7},
-        port:               {selected: false, order: 8},
-        protocol:           {selected: false, order: 9},
-        serialNumber:       {selected: false, order: 10},
-        modelName:          {selected: false, order: 11},
-        manufacturerName:   {selected: false, order: 12},
-        firmwareVersion:    {selected: false, order: 13},
-        originalCountry:    {selected: false, order: 14},
-        createdBy:          {selected: false, order: 15},
-        createdOn:          {selected: false, order: 16},
-        updatedBy:          {selected: false, order: 17},
-        updatedOn:          {selected: false, order: 18},
-        actions:            {selected: false, order: 19}
+        description:        {selected: false, order: 7},
+        createdBy:          {selected: false, order: 13},
+        createdOn:          {selected: false, order: 14},
+        updatedBy:          {selected: false, order: 15},
+        updatedOn:          {selected: false, order: 16},
+        actions:            {selected: false, order: 17}
     };
 
     constructor(private dialog: MatDialog,
                 private app: AppService,
-                private service: DeviceService,
+                private service: PrivilegeService,
                 private progress: ProgressBarService) { }
 
     ngOnInit() {
@@ -67,17 +55,16 @@ export class DeviceComponent implements OnInit {
         this.dataChange = new BehaviorSubject(0);
         this.sort.active = 'name';
         this.sort.direction = 'asc';
-        this.dataSource = new BaseDataSource<Device>(
+        this.dataSource = new BaseDataSource<Privilege>(
             this.service,
             this.progress,
             this.sort,
             this.paginator,
             this.dataChange);
     }
-
     initTableSettings(): void {
         try {
-            const displayeds = JSON.parse(localStorage.getItem('dev1-disp-cols'));
+            const displayeds = JSON.parse(localStorage.getItem('pri-disp-cols'));
             if (displayeds != null) {
                 this.displayedColumns = displayeds;
             }
@@ -94,7 +81,7 @@ export class DeviceComponent implements OnInit {
     }
 
     openDialogColumnOptions(): void {
-        const dialogRef = this.dialog.open(OptionalColumnDeviceComponent, {
+        const dialogRef = this.dialog.open(OptionalColumnPrivilegeComponent, {
             data: this.columns
         });
         dialogRef.afterClosed().subscribe(
@@ -107,7 +94,7 @@ export class DeviceComponent implements OnInit {
                         }
                     });
                 }
-                localStorage.setItem('dev1-disp-cols', JSON.stringify(this.displayedColumns));
+                localStorage.setItem('pri-disp-cols', JSON.stringify(this.displayedColumns));
             }
         );
     }
@@ -124,10 +111,8 @@ export class DeviceComponent implements OnInit {
     }
 
     openDialogNewObject(): void {
-        const data = new Device();
-        data.accountId = this.app.currentAccount.accountId;
-        const dialogRef = this.dialog.open(AddEditDeviceComponent, {
-            // width: '600px',
+        const data = new Privilege();
+        const dialogRef = this.dialog.open(AddEditPrivilegeComponent, {
             disableClose: true,
             data: data
         });
@@ -139,16 +124,16 @@ export class DeviceComponent implements OnInit {
         });
     }
 
-    create(device: Device): void {
-        this.service.create(device).subscribe(
+    create(privilege: Privilege): void {
+        this.service.create(privilege).subscribe(
             data => {
                 this.dataChange.next(data.id);
             }
         );
     }
 
-    openDialogEditing(data: Account): void {
-        const dialogRef = this.dialog.open(AddEditDeviceComponent, {
+    openDialogEditing(data: Privilege): void {
+        const dialogRef = this.dialog.open(AddEditPrivilegeComponent, {
             // width: '600px',
             disableClose: true,
             data: data
@@ -161,15 +146,21 @@ export class DeviceComponent implements OnInit {
         });
     }
 
-    update(account: Account): void {
-
+    update(privilege: Privilege): void {
+        this.service.update(privilege.id, privilege).subscribe(
+            data => {},
+            error => {},
+            () => {
+                this.dataChange.next(privilege.id);
+            }
+        );
     }
 
-    openDialogConfirmDelete(device: Device): void {
+    openDialogConfirmDelete(privilege: Privilege): void {
         const data = new DeleteEvent();
-        data.setId(device.id);
-        data.setName(device.nane);
-        data.setType('Device');
+        data.setId(privilege.id);
+        data.setName(privilege.name);
+        data.setType('Privilege');
         const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
             disableClose: true,
             data: data
@@ -182,8 +173,8 @@ export class DeviceComponent implements OnInit {
         });
     }
 
-    _delete(device: Device): void {
-        this.service._delete(device.id).subscribe(
+    _delete(privilege: Privilege): void {
+        this.service._delete(privilege.id).subscribe(
             data => {
                 this.dataChange.next(0);
             },
@@ -195,5 +186,4 @@ export class DeviceComponent implements OnInit {
             }
         );
     }
-
 }
