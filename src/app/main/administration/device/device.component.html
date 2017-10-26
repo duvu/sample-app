@@ -1,3 +1,141 @@
-<p>
-  device works!
-</p>
+<div class="x-container">
+    <div class="x-header">
+        <form>
+            <mat-form-field>
+                <input matInput i18n-placeholder placeholder="Search" [(ngModel)]="searchingStatement" (keyup)="search()" name="searching">
+                <button mat-icon-button matSuffix (click)="search()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+        </form>
+        <span class="fill-remain-space"></span>
+        <button mat-icon-button (click)="openDialogColumnOptions()">
+            <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button (click)="openDialogNewObject()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+
+    <div class="table-container">
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> ID </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="deviceId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Device ID</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.deviceId}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="accountId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Account ID </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.accountId}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="accountName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Account Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.accountName}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="vehicleId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Vehicle ID </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.vehicleId}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="vehicleName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Vehicle Name</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.vehicleName}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="ipAddress">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>IP Address</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.ipAddress}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="port">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Port</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.port}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="protocol">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Protocol</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.protocol}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="serialNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Serial Number</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.serialNumber}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="modelName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Model Name</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.modelName}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="manufacturerName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Manufacturer Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.manufacturerName}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="firmwareVersion">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Firmware Version </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.firmwareVersion}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="originalCountry">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Original Country </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.originalCountry}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="createdBy">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Created By </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.createdBy}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="createdOn">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Created On </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.createdOn | date:'short'}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="updatedBy">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Updated By </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.updatedBy}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="updatedOn">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Updated On </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.updatedOn | date:'short'}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef i18n> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="openDialogEditing(element)">
+                        <mat-icon color="accent">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="openDialogConfirmDelete(element)">
+                        <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{selected: row.selected}"></mat-row>
+
+        </mat-table>
+    </div>
+
+    <mat-paginator #paginator
+                   [length]="dataSource.length"
+                   [pageIndex]="0"
+                   [pageSize]="25"
+                   [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+</div>

@@ -178,11 +178,18 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
       }
     }
-  }
     .mat-header-row {
-        text-transform: uppercase;
+      text-transform: uppercase;
+      font-weight: 600;
     }
+
     .mat-sort-header-button {
-        text-transform: uppercase;
+      text-transform: uppercase;
+      font-weight: 600;
     }
+
+    .mat-column-actions {
+      min-width: 84px;
+    }
+  }
 }

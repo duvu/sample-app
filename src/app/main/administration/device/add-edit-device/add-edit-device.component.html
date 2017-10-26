@@ -1,0 +1,88 @@
+<div mat-dialog-title>
+    <span *ngIf="data.id" i18n>Modifying Device</span>
+    <span *ngIf="data.id==null" i18n>Creating Device</span>
+    <span> #{{data.accountId}}</span>
+    <span class="x-dialog-close-btn">
+        <button mat-icon-button (click)="cancel()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </span>
+</div>
+
+<div mat-dialog-content>
+    <div fxLayout="column">
+
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Name" name="dev-name" [(ngModel)]="data.name">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Device ID" name="dev-device-id" [(ngModel)]="data.deviceId">
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-form-field class="full-width">
+            <input matInput i18n-placeholder placeholder="Account" name="dev-device-id" [(ngModel)]="data.accountId">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <input matInput i18n-placeholder placeholder="Vehicle" name="dev-vehicle-id" [(ngModel)]="data.vehicleId">
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="IP Address" name="dev-ip-address" [(ngModel)]="data.ipAddress">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Port" name="dev-port" [(ngModel)]="data.port">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <mat-form-field class="full-width">
+            <input matInput i18n-placeholder placeholder="Protocol" name="dev-port" [(ngModel)]="data.protocol">
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Serial Number" name="dev-serial-number" [(ngModel)]="data.serialNumber">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Model Name" name="dev-model-name" [(ngModel)]="data.modelName">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Firmware Version" name="dev-firmware-version" [(ngModel)]="data.firmwareVersion">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Manufacturer Name" name="dev-manufacturer-name" [(ngModel)]="data.manufacturerName">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Original Country" name="dev-original-country" [(ngModel)]="data.originalCountry">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onSave()" i18n>Save</button>
+    <button mat-button (click)="cancel()" i18n>Cancel</button>
+</div>

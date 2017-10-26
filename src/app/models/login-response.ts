@@ -1,4 +1,13 @@
+import { Menu } from 'app/models/menu';
+
 export class LoginResponse {
+    get menuList(): Menu[] {
+        return this._menuList;
+    }
+
+    set menuList(value: Menu[]) {
+        this._menuList = value;
+    }
     private _access_token: string;
     private _accountId: number;
     private _accountName: string;
@@ -9,7 +18,8 @@ export class LoginResponse {
     private _organizationName: string;
     private _scope: string;
     private _token_type: string;
-
+    //private _menuSet: Menu[];
+    private _menuList: Menu[];
 
     get access_token(): string {
         return this._access_token;
