@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {AccountService} from 'app/services/account.service';
 import {ProgressBarService} from 'app/services/progress-bar.service';
-import {BaseDataSource} from 'app/services/base-data-source';
+import {BaseDataSource} from 'app/shared/base-data-source';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {FormControl} from '@angular/forms';
 import {Account} from 'app/models/account';
