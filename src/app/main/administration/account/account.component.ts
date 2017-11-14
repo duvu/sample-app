@@ -6,14 +6,13 @@ import {BaseDataSource} from 'app/services/base-data-source';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {FormControl} from '@angular/forms';
 import {Account} from 'app/models/account';
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import {Search} from 'app/models/search';
 import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
 import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
 import {AppService} from 'app/services/app.service';
 import {DeleteEvent} from 'app/models/delete-event';
 import {ConfirmDeleteComponent} from 'app/main/shared/confirm-delete/confirm-delete.component';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'app-account',
