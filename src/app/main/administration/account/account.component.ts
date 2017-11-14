@@ -1,18 +1,19 @@
 import * as _ from 'lodash';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AccountService} from '../../../services/account.service';
-import {ProgressBarService} from '../../../services/progress-bar.service';
-import {BaseDataSource} from '../../../services/base-data-source';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {AccountService} from 'app/services/account.service';
+import {ProgressBarService} from 'app/services/progress-bar.service';
+import {BaseDataSource} from 'app/services/base-data-source';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {FormControl} from '@angular/forms';
-import {Account} from '../../../models/account';
-import {MatDialog, MatPaginator, MatSort} from '@angular/material';
-import {Search} from '../../../models/search';
+import {Account} from 'app/models/account';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import {Search} from 'app/models/search';
 import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
 import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
-import {AppService} from '../../../services/app.service';
-import {DeleteEvent} from '../../../models/delete-event';
-import {ConfirmDeleteComponent} from '../../shared/confirm-delete/confirm-delete.component';
+import {AppService} from 'app/services/app.service';
+import {DeleteEvent} from 'app/models/delete-event';
+import {ConfirmDeleteComponent} from 'app/main/shared/confirm-delete/confirm-delete.component';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'app-account',
@@ -21,7 +22,7 @@ import {ConfirmDeleteComponent} from '../../shared/confirm-delete/confirm-delete
 })
 
 export class AccountComponent implements OnInit {
-    dataSource: BaseDataSource<Account> | null;
+    dataSource: BaseDataSource<Account>;
     dataChange: BehaviorSubject<any>;
     searchingStatement: string;
 
@@ -72,6 +73,8 @@ export class AccountComponent implements OnInit {
             this.paginator,
             this.dataChange);
     }
+
+
     initTableSettings(): void {
         try {
             const displayeds = JSON.parse(localStorage.getItem('acc-disp-cols'));

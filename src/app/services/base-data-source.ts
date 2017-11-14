@@ -5,6 +5,13 @@ import {ProgressBarService} from './progress-bar.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/switchMap';
+
 export class BaseDataSource<T> extends DataSource<T> {
     private _service: BaseService<T>;
     private _sort: MatSort;
