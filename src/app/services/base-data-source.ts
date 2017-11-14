@@ -34,6 +34,7 @@ export class BaseDataSource<T> extends DataSource<T> {
             this._dataChange
         ];
         return Observable.merge(... displayDataChanges)
+            .startWith(null)
             .switchMap(() => {
                 this._progress.show();
                 return this._service.searchAndSort(
@@ -48,7 +49,7 @@ export class BaseDataSource<T> extends DataSource<T> {
                 return dataObject.content;
             }).catch(error => {
                 this._progress.hide();
-                return Observable.throw(error);
+                return Observable.of([]);
             });
     }
 
