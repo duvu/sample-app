@@ -1,7 +1,7 @@
 import {CollectionViewer, DataSource} from '@angular/cdk/collections';
-import {BaseService} from './base.service';
+import {BaseService} from '../services/base.service';
 import {MatPaginator, MatSort} from '@angular/material';
-import {ProgressBarService} from './progress-bar.service';
+import {ProgressBarService} from '../services/progress-bar.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Observable';
 

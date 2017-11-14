@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { BaseDataSource } from 'app/services/base-data-source';
+import { BaseDataSource } from 'app/shared/base-data-source';
 import { Device } from 'app/models/device';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FormControl } from '@angular/forms';
