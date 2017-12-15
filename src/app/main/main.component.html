@@ -1,156 +1,48 @@
 <mat-progress-bar class="main-progress-bar" mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-<mat-sidenav-container class="side-nav-container" fullscreen>
-    <mat-sidenav #sideNav mode="side" opened="true" class="mat-elevation-z3">
-        <mat-card class="mat-elevation-z0">
-            Profile
-        </mat-card>
-        <mat-divider></mat-divider>
-        <div class="side-nav-menu">
-            <mat-accordion [multi]="true" [displayMode]="flat" class="mat-elevation-z0 side-nav-headers-align">
-                <mat-expansion-panel *ngFor="let menu of menuList">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <mat-icon>{{menu.matIcon}}</mat-icon>
-                        </mat-panel-title>
-                        <mat-panel-description>
-                            <span>{{menu.text}}</span>
-                        </mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <mat-nav-list>
-                        <mat-list-item *ngFor="let child of menu.children">
-                            <mat-icon mat-list-icon>{{child.matIcon}}</mat-icon>
-                            <a matLine [routerLink]=child.routeLink>{{child.text}}</a>
-                        </mat-list-item>
-                    </mat-nav-list>
-                </mat-expansion-panel>
-            </mat-accordion>
+<div class="main" fullscreen>
+    <mat-toolbar color="primary" class="header mat-elevation-z3">
+        <button mat-icon-button>
+            <mat-icon>home</mat-icon>
+        </button>
+        <span class="fill-remain-space"></span>
+        <button mat-button routerLink="live">
+            <mat-icon>map</mat-icon>
+            <span i18n>Live</span>
+        </button>
+        <button mat-button routerLink="report">
+            <mat-icon>report</mat-icon>
+            <span i18n>Reports</span>
+        </button>
+        <button mat-button routerLink="_admin">
+            <mat-icon>setting</mat-icon>
+            <span i18n>Administration</span>
+        </button>
 
-            <!--<mat-accordion [multi]="true" [displayMode]="flat" class="mat-elevation-z0 side-nav-headers-align">-->
-                <!--<mat-expansion-panel>-->
-                    <!--<mat-expansion-panel-header>-->
-                        <!--<mat-panel-title>-->
-                            <!--<mat-icon>map</mat-icon>-->
-                        <!--</mat-panel-title>-->
-                        <!--<mat-panel-description>-->
-                            <!--Dashboard-->
-                        <!--</mat-panel-description>-->
-                    <!--</mat-expansion-panel-header>-->
-                    <!--<mat-nav-list>-->
-                        <!--<mat-list-item>-->
-                            <!--<mat-icon mat-list-icon>sub-menu</mat-icon>-->
-                            <!--<a matLine [routerLink]="">Live Tracking</a>-->
-                        <!--</mat-list-item>-->
-                        <!--<mat-list-item>-->
-                            <!--<mat-icon mat-list-icon>sub-menu</mat-icon>-->
-                            <!--<a matLine [routerLink]="">Historical Tracking</a>-->
-                        <!--</mat-list-item>-->
-                    <!--</mat-nav-list>-->
-
-                <!--</mat-expansion-panel>-->
-
-                <!--<mat-expansion-panel>-->
-                    <!--<mat-expansion-panel-header>-->
-                        <!--<mat-panel-title>-->
-                            <!--<mat-icon>report</mat-icon>-->
-                        <!--</mat-panel-title>-->
-                        <!--<mat-panel-description>-->
-                            <!--Reports-->
-                        <!--</mat-panel-description>-->
-                    <!--</mat-expansion-panel-header>-->
-
-                    <!--<mat-nav-list>-->
-                        <!--<mat-list-item>-->
-                            <!--<mat-icon mat-list-icon>sub-menu</mat-icon>-->
-                            <!--<a matLine [routerLink]="">Live Tracking</a>-->
-                        <!--</mat-list-item>-->
-                        <!--<mat-list-item>-->
-                            <!--<mat-icon mat-list-icon>sub-menu</mat-icon>-->
-                            <!--<a matLine [routerLink]="">Historical Tracking</a>-->
-                        <!--</mat-list-item>-->
-                    <!--</mat-nav-list>-->
-
-                <!--</mat-expansion-panel>-->
-
-                <!--<mat-expansion-panel>-->
-                    <!--<mat-expansion-panel-header>-->
-                        <!--<mat-panel-title>-->
-                            <!--<mat-icon>settings</mat-icon>-->
-                        <!--</mat-panel-title>-->
-                        <!--<mat-panel-description>-->
-                            <!--Administration-->
-                        <!--</mat-panel-description>-->
-                    <!--</mat-expansion-panel-header>-->
-
-                    <!--<mat-nav-list>-->
-                        <!--<mat-list-item>-->
-                            <!--<mat-icon mat-list-icon>sub-menu</mat-icon>-->
-                            <!--<a matLine routerLink="_admin/_account" i18n>Account</a>-->
-                        <!--</mat-list-item>-->
-                        <!--<mat-list-item>-->
-                            <!--<mat-icon mat-list-icon>sub-menu</mat-icon>-->
-                            <!--<a matLine routerLink="_admin/_org" i18n>Organization</a>-->
-                        <!--</mat-list-item>-->
-                        <!--<mat-list-item>-->
-                            <!--<mat-icon mat-list-icon>sub-menu</mat-icon>-->
-                            <!--<a matLine routerLink="_admin/_pri" i18n>Privilege</a>-->
-                        <!--</mat-list-item>-->
-                        <!--<mat-list-item>-->
-                            <!--<mat-icon mat-list-icon>sub-menu</mat-icon>-->
-                            <!--<a matLine routerLink="_admin/_device">Device</a>-->
-                        <!--</mat-list-item>-->
-                    <!--</mat-nav-list>-->
-
-
-                <!--</mat-expansion-panel>-->
-            <!--</mat-accordion>-->
-        </div>
-
-    </mat-sidenav>
-    <div class="main">
-        <mat-toolbar color="primary" class="header mat-elevation-z3">
-            <button mat-icon-button (click)="toggleSideNav()">
-                <mat-icon>{{mainIcon}}</mat-icon>
+        <button mat-icon-button>
+            <mat-icon>mail</mat-icon>
+        </button>
+        <div *ngIf="profile!=null">
+            <button mat-button [matMenuTriggerFor]="menu">
+                <mat-icon>profile</mat-icon>
+                <span>{{profile.accountName}}</span>
             </button>
-            <span class="fill-remain-space"></span>
-            <button mat-button routerLink="live">
-                <mat-icon>map</mat-icon>
-                <span i18n>Live</span>
-            </button>
-            <button mat-button routerLink="report">
-                <mat-icon>report</mat-icon>
-                <span i18n>Reports</span>
-            </button>
-            <button mat-button routerLink="admin">
-                <mat-icon>setting</mat-icon>
-                <span i18n>Administration</span>
-            </button>
-
-            <button mat-icon-button>
-                <mat-icon>mail</mat-icon>
-            </button>
-            <div *ngIf="profile!=null">
-                <button mat-button [matMenuTriggerFor]="menu">
-                    <mat-icon>profile</mat-icon>
-                    <span>{{profile.accountName}}</span>
+            <mat-menu #menu="matMenu">
+                <div mat-menu-item class="profile-current">
+                    <span>{{profile.displayName || profile.contactName}}</span>
+                    <span>{{profile.totalDevices || 0}}</span>
+                </div>
+                <button mat-menu-item>
+                    <mat-icon>home</mat-icon>
+                    <span>Home</span>
                 </button>
-                <mat-menu #menu="matMenu">
-                    <div mat-menu-item class="profile-current">
-                        <span>{{profile.displayName || profile.contactName}}</span>
-                        <span>{{profile.totalDevices || 0}}</span>
-                    </div>
-                    <button mat-menu-item>
-                        <mat-icon>home</mat-icon>
-                        <span>Home</span>
-                    </button>
-                    <button mat-menu-item (click)="logout()">
-                        <mat-icon>logout</mat-icon>
-                        <span i18n>Logout</span>
-                    </button>
-                </mat-menu>
-            </div>
-        </mat-toolbar>
-        <div class="page-content">
-            <router-outlet></router-outlet>
+                <button mat-menu-item (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                    <span i18n>Logout</span>
+                </button>
+            </mat-menu>
         </div>
+    </mat-toolbar>
+    <div class="page-content">
+        <router-outlet></router-outlet>
     </div>
-</mat-sidenav-container>
+</div>
