@@ -8,8 +8,8 @@ import {
     MatButtonModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule,
     MatSidenavModule
 } from "@angular/material";
-import {DeviceService} from "../../services/device.service";
-import {EventService} from "../../services/event.service";
+import {DeviceService} from 'app/services/device.service';
+import {EventService} from 'app/services/event.service';
 
 
 @NgModule({
