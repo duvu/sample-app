@@ -1,10 +1,27 @@
 <mat-sidenav-container fullscreen>
     <mat-sidenav mode="side" opened="true" class="mat-elevation-z3">
-        <mat-list role="list">
-            <mat-list-item role="listitem">Item 1</mat-list-item>
-            <mat-list-item role="listitem">Item 2</mat-list-item>
-            <mat-list-item role="listitem">Item 3</mat-list-item>
-        </mat-list>
+        <mat-nav-list role="list">
+            <mat-list-item role="listitem">
+                <mat-icon matListIcon>account</mat-icon>
+                <a matLine routerLink="_account">Account</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <mat-icon matListIcon>device</mat-icon>
+                <a matLine routerLink="_device">Device</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <mat-icon matListIcon>vehicle</mat-icon>
+                <a matLine routerLink="_device">Vehicle</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <mat-icon matListIcon>geozone</mat-icon>
+                <a matLine routerLink="_device">Geozone</a>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+                <mat-icon matListIcon>alarm</mat-icon>
+                <a matLine routerLink="_device">ALert</a>
+            </mat-list-item>
+        </mat-nav-list>
     </mat-sidenav>
 
     <mat-sidenav-content>

@@ -1,18 +1,18 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 
 import * as L from 'leaflet';
 // import * from 'leaflet.markercluster';
 
-import {DeviceService} from "../../services/device.service";
-import {EventService} from "../../services/event.service";
-import {EventData} from "../../models/event-data";
+import {DeviceService} from '../../services/device.service';
+import {EventService} from '../../services/event.service';
+import {EventData} from '../../models/event-data';
 import * as _ from 'lodash';
 //import PointExpression = L.PointExpression;
-import {DatePipe} from "@angular/common";
-import {Observable} from "rxjs/Observable";
+import {DatePipe} from '@angular/common';
+import {Observable} from 'rxjs/Observable';
 
 
-const TILE_OSM = "http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png";
+const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
 
 @Component({
@@ -20,7 +20,28 @@ const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access
     templateUrl: './mapping.component.html',
     styleUrls: ['./mapping.component.scss']
 })
-export class MappingComponent implements OnInit, OnDestroy {
+export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
+    ngAfterViewInit(): void {
+        this.map = L.map('map-id', {
+            zoomControl: false,
+            center: L.latLng(21.731253, 105.996139),
+            zoom: 12,
+            minZoom: 1,
+            maxZoom: 19,
+
+            layers: [
+                L.tileLayer(TILE_MAPBOX, {
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>',
+                    id: 'mapbox.streets',
+                    accessToken: 'pk.eyJ1IjoiaG9haXZ1YmsiLCJhIjoiY2oya3YzbHFuMDAwMTJxazN6Y3k0Y2syNyJ9.4avYQphrtbrrniI_CT0XSA'
+                })]
+        });
+
+        L.control.scale().addTo(this.map);
+        // L.control.zoom({ position: "topright" }).addTo(this.map);
+        L.control.zoom().setPosition('bottomleft').addTo(this.map);
+        this.loadLivesEvent();
+    }
 
     liveEvents: EventData[];
     customDefault: L.Icon;
@@ -38,30 +59,11 @@ export class MappingComponent implements OnInit, OnDestroy {
         this.customDefault = L.icon({
             iconRetinaUrl: '/assets/images/marker-icon-2x.png',
             iconUrl: '/assets/images/marker-icon.png',
-            shadowUrl: '/assets/images/marker-shadow.png',
+            shadowUrl: '/assets/images/marker-shadow.png'
         });
-        this.map = L.map("map-id", {
-            zoomControl: false,
-            center: L.latLng(21.731253, 105.996139),
-            zoom: 12,
-            minZoom: 1,
-            maxZoom: 19,
-
-            layers: [
-                L.tileLayer(TILE_MAPBOX, {
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>',
-                    id: 'mapbox.streets',
-                    accessToken: 'pk.eyJ1IjoiaG9haXZ1YmsiLCJhIjoiY2oya3YzbHFuMDAwMTJxazN6Y3k0Y2syNyJ9.4avYQphrtbrrniI_CT0XSA'
-                })]
-        });
-
-        L.control.scale().addTo(this.map);
-        // L.control.zoom({ position: "topright" }).addTo(this.map);
-        L.control.zoom().setPosition("bottomleft").addTo(this.map);
-        this.loadLivesEvent();
     }
     ngOnDestroy(): void {
-        this.subcription.unsubscribe();
+        //this.subcription.unsubscribe();
     }
     loadLivesEvent(): void {
         // this.subcription = Observable.interval(10000).startWith(0)
@@ -129,7 +131,7 @@ export class MappingComponent implements OnInit, OnDestroy {
         let popup = L.popup();
         let htmlPopup = '';
 
-        let txtDate = this._datePipe.transform(event.timestamp * 1000, "MMM dd, yyyy hh:mm:ss");
+        let txtDate = this._datePipe.transform(event.timestamp * 1000, 'MMM dd, yyyy hh:mm:ss');
         htmlPopup += '<table>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'DeviceID:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.deviceID;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += txtDate;htmlPopup += '</td>';htmlPopup += '</tr>';

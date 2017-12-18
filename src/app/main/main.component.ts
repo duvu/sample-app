@@ -15,7 +15,6 @@ import { Menu } from 'app/models/menu';
 export class MainComponent implements OnInit, OnDestroy {
 
     profile: LoginResponse | any;
-    mainIcon: string;
     subscription: Subscription;
     loading: boolean;
 
@@ -26,9 +25,6 @@ export class MainComponent implements OnInit, OnDestroy {
     constructor(private app: AppService, private progress: ProgressBarService, private router: Router) {}
 
     ngOnInit() {
-        console.log('initing ...');
-        this.mainIcon = 'back';
-
         this.profile = this.app.getCurrentAccount();
 
         this.menuList = this.profile.menuList;
@@ -55,12 +51,4 @@ export class MainComponent implements OnInit, OnDestroy {
         this.router.navigate(['/login']);
     }
 
-    toggleSideNav(): void {
-        this.sideNav.toggle();
-        if (this.sideNav.opened) {
-            this.mainIcon = 'back';
-        } else {
-            this.mainIcon = 'menu';
-        }
-    }
 }
