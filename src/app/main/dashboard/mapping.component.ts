@@ -21,6 +21,25 @@ const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access
     styleUrls: ['./mapping.component.scss']
 })
 export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
+    liveEvents: EventData[];
+    customDefault: L.Icon;
+    map: L.Map;
+
+    isLoading: boolean = true;
+    numberOfLoad: number = 0;
+
+    selectedEvent: EventData = null;
+    inputSearch: string = null;
+    subcription: any;
+    constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
+
+    ngOnInit() {
+        this.customDefault = L.icon({
+            iconRetinaUrl: '/assets/images/marker-icon-2x.png',
+            iconUrl: '/assets/images/marker-icon.png',
+            shadowUrl: '/assets/images/marker-shadow.png'
+        });
+    }
     ngAfterViewInit(): void {
         this.map = L.map('map-id', {
             zoomControl: false,
@@ -42,41 +61,21 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         L.control.zoom().setPosition('bottomleft').addTo(this.map);
         this.loadLivesEvent();
     }
-
-    liveEvents: EventData[];
-    customDefault: L.Icon;
-    map: L.Map;
-
-    isLoading: boolean = true;
-    numberOfLoad: number = 0;
-
-    selectedEvent: EventData = null;
-    inputSearch: string = null;
-    subcription: any;
-    constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
-
-    ngOnInit() {
-        this.customDefault = L.icon({
-            iconRetinaUrl: '/assets/images/marker-icon-2x.png',
-            iconUrl: '/assets/images/marker-icon.png',
-            shadowUrl: '/assets/images/marker-shadow.png'
-        });
-    }
     ngOnDestroy(): void {
         //this.subcription.unsubscribe();
     }
     loadLivesEvent(): void {
-        // this.subcription = Observable.interval(10000).startWith(0)
-        //     .flatMap(() => this._event_service.getLiveEvents()).subscribe(
-        //     liveEvents => {
-        //         this.liveEvents = liveEvents;
-        //         this.isLoading = false;
-        //         this.numberOfLoad++;
-        //         // this.processEvents();
-        //     },
-        //     error => {},
-        //     () => {}
-        // );
+        this.subcription = Observable.interval(10000).startWith(0)
+            .flatMap(() => this._event_service.getLiveEvents()).subscribe(
+            liveEvents => {
+                this.liveEvents = liveEvents;
+                this.isLoading = false;
+                this.numberOfLoad++;
+                // this.processEvents();
+            },
+            error => {},
+            () => {}
+        );
     }
     // processEvents(): void {
     //     let icon = this.customDefault;

@@ -1,11 +1,11 @@
 {
   "/oauth": {
-    "target": "http://localhost:8081",
+    "target": "http://dev.gpshandle.com",
     "secure": false
   },
 
   "/api": {
-    "target": "http://localhost:8081",
+    "target": "http://dev.gpshandle.com",
     "secure": false
   }
 }
