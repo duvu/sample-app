@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {AccountService} from 'app/services/account.service';
 import {ProgressBarService} from 'app/services/progress-bar.service';
-import {BaseDataSource} from 'app/shared/base-data-source';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {FormControl} from '@angular/forms';
 import {Account} from 'app/models/account';
@@ -13,6 +12,10 @@ import {OptionalColumnAccountComponent} from './optional-column-account/optional
 import {AppService} from 'app/services/app.service';
 import {DeleteEvent} from 'app/models/delete-event';
 import {ConfirmDeleteComponent} from 'app/main/shared/confirm-delete/confirm-delete.component';
+import { merge } from 'rxjs/observable/merge';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
+import {of as observableOf} from 'rxjs/observable/of';
 
 @Component({
     selector: 'app-account',
@@ -21,9 +24,8 @@ import {ConfirmDeleteComponent} from 'app/main/shared/confirm-delete/confirm-del
 })
 
 export class AccountComponent implements OnInit, AfterViewInit {
-    dataSource: BaseDataSource<Account>;
+    dataSource: MatTableDataSource<Account>;
     dataChange: BehaviorSubject<any>;
-    searchingStatement: string;
 
     stateCtrl: FormControl;
 
@@ -53,6 +55,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
         actions:            {selected: false, order: 17}
     };
 
+    resultsLength = 0;
+
     constructor(private dialog: MatDialog,
                 private app: AppService,
                 private service: AccountService,
@@ -62,21 +66,40 @@ export class AccountComponent implements OnInit, AfterViewInit {
         this.stateCtrl = new FormControl();
         this.initTableSettings();
 
-        this.dataChange = new BehaviorSubject(0);
-        this.sort.active = 'name';
-        this.sort.direction = 'asc';
-        this.dataSource = new BaseDataSource<Account>(
-            this.service,
-            this.progress,
-            this.sort,
-            this.paginator,
-            this.dataChange);
+        this.dataSource = new MatTableDataSource();
     }
 
     ngAfterViewInit(): void {
+        this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
 
+        merge(this.sort.sortChange, this.paginator.page)
+            .pipe(
+                startWith({}),
+                switchMap(() => {
+                    this.progress.show();
+                    return this.service!.searchAndSort(
+                        this.paginator.pageIndex, this.paginator.pageSize,
+                        this.sort.active, this.sort.direction, null);
+                }),
+                map(data => {
+                    this.progress.hide();
+                    this.resultsLength = data.totalElements;
+
+                    return data.content;
+                }),
+                catchError(() => {
+                    this.progress.hide();
+                    return observableOf([]);
+                })
+            ).subscribe(data => this.dataSource.data = data);
     }
-
+    applyFilter(filterValue: string) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+        this.dataSource.filter = filterValue;
+    }
     initTableSettings(): void {
         try {
             const displayeds = JSON.parse(localStorage.getItem('acc-disp-cols'));
@@ -114,16 +137,16 @@ export class AccountComponent implements OnInit, AfterViewInit {
         );
     }
 
-    search(): void {
-        const searchs = [];
-        if (this.searchingStatement) {
-            const search = new Search();
-            search.column = 'name';
-            search.content = this.searchingStatement;
-            searchs.push(search);
-        }
-        this.dataChange.next({search: searchs});
-    }
+    // search(): void {
+    //     const searchs = [];
+    //     if (this.searchingStatement) {
+    //         const search = new Search();
+    //         search.column = 'name';
+    //         search.content = this.searchingStatement;
+    //         searchs.push(search);
+    //     }
+    //     this.dataChange.next({search: searchs});
+    // }
 
     openDialogNewObject(): void {
         const data = new Account();
