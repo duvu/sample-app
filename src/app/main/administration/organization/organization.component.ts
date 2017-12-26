@@ -8,11 +8,11 @@ import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { AppService } from 'app/services/app.service';
 import { OrganizationService } from 'app/services/organization.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
-import { OptionalColumnOrganizationComponent } from 'app/main/sys-admin/organization/optional-column-organization/optional-column-organization.component';
 import { Search } from 'app/models/search';
-import { AddEditOrganizationComponent } from 'app/main/sys-admin/organization/add-edit-organization/add-edit-organization.component';
 import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
+import { OptionalColumnOrganizationComponent } from 'app/main/administration/organization/optional-column-organization/optional-column-organization.component';
+import { AddEditOrganizationComponent } from 'app/main/administration/organization/add-edit-organization/add-edit-organization.component';
 
 @Component({
     selector: 'app-organization',

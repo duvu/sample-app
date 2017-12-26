@@ -12,6 +12,8 @@ import { OptionalColumnAccountComponent } from 'app/main/administration/account/
 import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
 import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';
 import { DeviceService } from 'app/services/device.service';
+import { OrganizationComponent } from './organization/organization.component';
+import { OrganizationService } from 'app/services/organization.service';
 
 @NgModule({
     imports: [
@@ -31,8 +33,10 @@ import { DeviceService } from 'app/services/device.service';
         DeviceComponent,
         OptionalColumnDeviceComponent,
         AddEditDeviceComponent,
+        OrganizationComponent,
     ],
     providers: [
+        OrganizationService,
         AccountService,
         DeviceService
     ],

@@ -8,11 +8,11 @@ import { MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { AppService } from 'app/services/app.service';
 import { PrivilegeService } from 'app/services/privilege.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
-import { OptionalColumnPrivilegeComponent } from 'app/main/sys-admin/privilege/optional-column-privilege/optional-column-privilege.component';
 import { Search } from 'app/models/search';
-import { AddEditPrivilegeComponent } from 'app/main/sys-admin/privilege/add-edit-privilege/add-edit-privilege.component';
 import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
+import { OptionalColumnPrivilegeComponent } from 'app/main/administration/privilege/optional-column-privilege/optional-column-privilege.component';
+import { AddEditPrivilegeComponent } from 'app/main/administration/privilege/add-edit-privilege/add-edit-privilege.component';
 
 @Component({
   selector: 'app-privilege',

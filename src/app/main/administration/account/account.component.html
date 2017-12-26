@@ -1,13 +1,11 @@
 <div class="x-container">
     <div class="x-header">
-        <form>
-            <mat-form-field>
-                <input matInput i18n-placeholder placeholder="Search" [(ngModel)]="searchingStatement" (keyup)="search()" name="searching">
-                <button mat-icon-button matSuffix (click)="search()">
-                    <mat-icon>search</mat-icon>
-                </button>
-            </mat-form-field>
-        </form>
+        <mat-form-field>
+            <input matInput i18n-placeholder placeholder="Search" [(ngModel)]="searchingStatement" (keyup)="search()" name="searching">
+            <button mat-icon-button matSuffix (click)="search()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
         <span class="fill-remain-space"></span>
         <button mat-icon-button (click)="openDialogColumnOptions()">
             <mat-icon>settings</mat-icon>

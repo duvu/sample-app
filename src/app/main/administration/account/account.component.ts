@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {AccountService} from 'app/services/account.service';
 import {ProgressBarService} from 'app/services/progress-bar.service';
 import {BaseDataSource} from 'app/shared/base-data-source';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {FormControl} from '@angular/forms';
 import {Account} from 'app/models/account';
-import { MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import {Search} from 'app/models/search';
 import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
 import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
@@ -20,7 +20,7 @@ import {ConfirmDeleteComponent} from 'app/main/shared/confirm-delete/confirm-del
     styleUrls: ['./account.component.scss']
 })
 
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, AfterViewInit {
     dataSource: BaseDataSource<Account>;
     dataChange: BehaviorSubject<any>;
     searchingStatement: string;
@@ -73,6 +73,9 @@ export class AccountComponent implements OnInit {
             this.dataChange);
     }
 
+    ngAfterViewInit(): void {
+
+    }
 
     initTableSettings(): void {
         try {
