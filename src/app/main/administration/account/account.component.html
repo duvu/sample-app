@@ -1,10 +1,7 @@
 <div class="x-container">
     <div class="x-header">
         <mat-form-field>
-            <input matInput i18n-placeholder placeholder="Search" [(ngModel)]="searchingStatement" (keyup)="search()" name="searching">
-            <button mat-icon-button matSuffix (click)="search()">
-                <mat-icon>search</mat-icon>
-            </button>
+            <input matInput i18n-placeholder placeholder="Search" (keyup)="applyFilter($event.target.value)">
         </mat-form-field>
         <span class="fill-remain-space"></span>
         <button mat-icon-button (click)="openDialogColumnOptions()">
@@ -121,7 +118,7 @@
     </div>
 
     <mat-paginator #paginator
-                   [length]="dataLength"
+                   [length]="resultsLength"
                    [pageIndex]="0"
                    [pageSize]="25"
                    [pageSizeOptions]="[5, 10, 25, 100]">
