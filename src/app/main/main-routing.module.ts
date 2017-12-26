@@ -22,11 +22,6 @@ const routes: Routes = [
                 path: '_admin',
                 loadChildren: 'app/main/administration/administration.module#AdministrationModule',
                 canActivate: [AuthGuard]
-            },
-            {
-                path: 'sys',
-                loadChildren: 'app/main/sys-admin/sys-admin.module#SysAdminModule',
-                canActivate: [AuthGuard] //- create Auth for system-admin
             }
         ]
     }
