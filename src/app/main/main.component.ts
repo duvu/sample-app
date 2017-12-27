@@ -5,7 +5,6 @@ import {MatSidenav} from '@angular/material';
 import {Subscription} from 'rxjs/Subscription';
 import {ProgressBarService} from '../services/progress-bar.service';
 import {LoginResponse} from '../models/login-response';
-import { Menu } from 'app/models/menu';
 
 @Component({
     selector: 'app-main',
@@ -18,8 +17,6 @@ export class MainComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     loading: boolean;
 
-    menuList: Menu[];
-
     @ViewChild(MatSidenav) sideNav: MatSidenav;
 
     constructor(private app: AppService, private progress: ProgressBarService, private router: Router) {}
@@ -27,9 +24,7 @@ export class MainComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.profile = this.app.getCurrentAccount();
 
-        this.menuList = this.profile.menuList;
         console.log('Profile', this.profile);
-        console.log('menuList', this.menuList);
 
         this.subscription = this.progress.showing$.subscribe(
             showing => {

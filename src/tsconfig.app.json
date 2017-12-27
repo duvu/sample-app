@@ -7,7 +7,8 @@
     "types": [
       "lodash",
       "leaflet",
-      "leaflet.markercluster"
+      "leaflet.markercluster",
+      "jwt-decode"
     ]
   },
   "exclude": [
