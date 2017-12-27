@@ -1,10 +1,8 @@
 import * as _ from 'lodash';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { BaseDataSource } from 'app/shared/base-data-source';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Organization } from 'app/models/organization';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { FormControl } from '@angular/forms';
-import { MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';
 import { OrganizationService } from 'app/services/organization.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
@@ -13,19 +11,22 @@ import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
 import { OptionalColumnOrganizationComponent } from 'app/main/administration/organization/optional-column-organization/optional-column-organization.component';
 import { AddEditOrganizationComponent } from 'app/main/administration/organization/add-edit-organization/add-edit-organization.component';
+import { merge } from 'rxjs/observable/merge';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
+import {of as observableOf} from 'rxjs/observable/of';
 
 @Component({
     selector: 'app-organization',
     templateUrl: './organization.component.html',
     styleUrls: ['./organization.component.scss']
 })
-export class OrganizationComponent implements OnInit {
+export class OrganizationComponent implements OnInit, AfterViewInit {
 
-    dataSource: BaseDataSource<Organization> | null;
+    dataSource: MatTableDataSource<Organization> | null;
     dataChange: BehaviorSubject<any>;
     searchingStatement: string;
-
-    stateCtrl: FormControl;
+    resultsLength = 0;
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -53,19 +54,42 @@ export class OrganizationComponent implements OnInit {
                 private progress: ProgressBarService) { }
 
     ngOnInit() {
-        this.stateCtrl = new FormControl();
         this.initTableSettings();
-
         this.dataChange = new BehaviorSubject(0);
-        this.sort.active = 'name';
-        this.sort.direction = 'asc';
-        this.dataSource = new BaseDataSource<Organization>(
-            this.service,
-            this.progress,
-            this.sort,
-            this.paginator,
-            this.dataChange);
+        this.dataSource = new MatTableDataSource();
     }
+    ngAfterViewInit(): void {
+        this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+
+        merge(this.sort.sortChange, this.paginator.page, this.dataChange)
+            .pipe(
+                startWith({}),
+                switchMap(() => {
+                    this.progress.show();
+                    return this.service!.searchAndSort(
+                        this.paginator.pageIndex, this.paginator.pageSize,
+                        this.sort.active, this.sort.direction, null);
+                }),
+                map(data => {
+                    this.progress.hide();
+                    this.resultsLength = data.totalElements;
+
+                    return data.content;
+                }),
+                catchError(() => {
+                    this.progress.hide();
+                    return observableOf([]);
+                })
+            ).subscribe(data => this.dataSource.data = data);
+    }
+    applyFilter(filterValue: string) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+        this.dataSource.filter = filterValue;
+    }
+
     initTableSettings(): void {
         try {
             const displayeds = JSON.parse(localStorage.getItem('org-disp-cols'));
@@ -101,17 +125,6 @@ export class OrganizationComponent implements OnInit {
                 localStorage.setItem('org-disp-cols', JSON.stringify(this.displayedColumns));
             }
         );
-    }
-
-    search(): void {
-        const searchs = [];
-        if (this.searchingStatement) {
-            const search = new Search();
-            search.column = 'name';
-            search.content = this.searchingStatement;
-            searchs.push(search);
-        }
-        this.dataChange.next({search: searchs});
     }
 
     openDialogNewObject(): void {

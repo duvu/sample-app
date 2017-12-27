@@ -27,8 +27,6 @@ export class AccountComponent implements OnInit, AfterViewInit {
     dataSource: MatTableDataSource<Account>;
     dataChange: BehaviorSubject<any>;
 
-    stateCtrl: FormControl;
-
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -63,9 +61,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
                 private progress: ProgressBarService) { }
 
     ngOnInit() {
-        this.stateCtrl = new FormControl();
         this.initTableSettings();
-
+        this.dataChange = new BehaviorSubject(0);
         this.dataSource = new MatTableDataSource();
     }
 
@@ -74,7 +71,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
 
-        merge(this.sort.sortChange, this.paginator.page)
+        merge(this.sort.sortChange, this.paginator.page, this.dataChange)
             .pipe(
                 startWith({}),
                 switchMap(() => {
@@ -100,6 +97,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
         filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
         this.dataSource.filter = filterValue;
     }
+
     initTableSettings(): void {
         try {
             const displayeds = JSON.parse(localStorage.getItem('acc-disp-cols'));
@@ -137,17 +135,6 @@ export class AccountComponent implements OnInit, AfterViewInit {
         );
     }
 
-    // search(): void {
-    //     const searchs = [];
-    //     if (this.searchingStatement) {
-    //         const search = new Search();
-    //         search.column = 'name';
-    //         search.content = this.searchingStatement;
-    //         searchs.push(search);
-    //     }
-    //     this.dataChange.next({search: searchs});
-    // }
-
     openDialogNewObject(): void {
         const data = new Account();
         data.organizationId = this.app.currentAccount.organizationId;
@@ -166,6 +153,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
     }
 
     create(account: Account): void {
+        this.progress.show();
         this.service.create(account).subscribe(
             data => {
                 this.dataChange.next(data.id);

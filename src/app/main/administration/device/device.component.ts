@@ -1,10 +1,8 @@
 import * as _ from 'lodash';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { BaseDataSource } from 'app/shared/base-data-source';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Device } from 'app/models/device';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { FormControl } from '@angular/forms';
-import { MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
 import { DeviceService } from 'app/services/device.service';
@@ -13,19 +11,20 @@ import { Search } from 'app/models/search';
 import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';
 import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
-
+import { merge } from 'rxjs/observable/merge';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
+import {of as observableOf} from 'rxjs/observable/of';
 @Component({
     selector: 'app-device',
     templateUrl: './device.component.html',
     styleUrls: ['./device.component.scss']
 })
-export class DeviceComponent implements OnInit {
-
-    dataSource: BaseDataSource<Device> | null;
+export class DeviceComponent implements OnInit, AfterViewInit {
+    dataSource: MatTableDataSource<Device> | null;
     dataChange: BehaviorSubject<any>;
     searchingStatement: string;
 
-    stateCtrl: FormControl;
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -54,6 +53,7 @@ export class DeviceComponent implements OnInit {
         updatedOn:          {selected: false, order: 18},
         actions:            {selected: false, order: 19}
     };
+    resultsLength = 0;
 
     constructor(private dialog: MatDialog,
                 private app: AppService,
@@ -61,18 +61,42 @@ export class DeviceComponent implements OnInit {
                 private progress: ProgressBarService) { }
 
     ngOnInit() {
-        this.stateCtrl = new FormControl();
         this.initTableSettings();
-
         this.dataChange = new BehaviorSubject(0);
-        this.sort.active = 'name';
-        this.sort.direction = 'asc';
-        this.dataSource = new BaseDataSource<Device>(
-            this.service,
-            this.progress,
-            this.sort,
-            this.paginator,
-            this.dataChange);
+        this.dataSource = new MatTableDataSource();
+    }
+
+    ngAfterViewInit(): void {
+        this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+
+        merge(this.sort.sortChange, this.paginator.page, this.dataChange)
+            .pipe(
+                startWith({}),
+                switchMap(() => {
+                    this.progress.show();
+                    return this.service!.searchAndSort(
+                        this.paginator.pageIndex, this.paginator.pageSize,
+                        this.sort.active, this.sort.direction, null);
+                }),
+                map(data => {
+                    this.progress.hide();
+                    this.resultsLength = data.totalElements;
+
+                    return data.content;
+                }),
+                catchError(() => {
+                    this.progress.hide();
+                    return observableOf([]);
+                })
+            ).subscribe(data => this.dataSource.data = data);
+    }
+
+    applyFilter(filterValue: string) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+        this.dataSource.filter = filterValue;
     }
 
     initTableSettings(): void {
