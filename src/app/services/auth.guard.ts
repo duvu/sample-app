@@ -8,7 +8,9 @@ import {AppService} from './app.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
+
     constructor(private app: AppService, private router: Router) {}
+
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
         return this.canActivate(childRoute, state);
     }
@@ -16,7 +18,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             return this.checkLogin(state.url);
     }
     checkLogin(url: string): boolean {
-        if (this.app.isLoggedIn()) {return true; }
+        if (this.app.isLoggedIn()) {
+            return true;
+        }
 
         // store the attempted URL for redirecting
         this.app.setRedirectURL(url);

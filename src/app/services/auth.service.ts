@@ -22,4 +22,6 @@ export class AuthService {
             'grant_type=password&scope=read%20write&username=' + username + '&password=' + password,
             options);
     }
+
+
 }

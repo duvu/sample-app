@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import { Account } from '../models/account';
 import {LoginResponse} from '../models/login-response';
+
+import * as jwt from 'jwt-decode';
 
 export const CURRENT_USER = 'vd5-current-user';
 export const redirectUrl = 'redirectUrl';
@@ -57,6 +58,7 @@ export class AppService {
     setCurrentAccount(credential: LoginResponse) {
         this.currentAccount = credential;
         localStorage.setItem(CURRENT_USER, JSON.stringify(this.currentAccount));
+        this._access_token = this.currentAccount.access_token;
     }
 
     logout() {
@@ -66,7 +68,12 @@ export class AppService {
     }
 
     isLoggedIn(): boolean {
-        return this.currentAccount != null;
+        if (this.currentAccount != null) {
+            const decoded: any = jwt(this.access_token)
+            return decoded.exp > Date.now()/1000;
+        } else {
+            return false;
+        }
     }
 
     isSysAdmin(): boolean {
