@@ -14,9 +14,12 @@ import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-
 import { DeviceService } from 'app/services/device.service';
 import { OrganizationComponent } from './organization/organization.component';
 import { OrganizationService } from 'app/services/organization.service';
-import { MyDirectivesModule } from 'app/directives/my-directives.module';
 import { RoleUpdateComponent } from './account/role-update/role-update.component';
-import {PrivilegeService} from "../../services/privilege.service";
+import { PrivilegeService} from '../../services/privilege.service';
+import { MyDirectivesModule } from 'app/shared/directives/my-directives.module';
+import { AddEditOrganizationComponent } from 'app/main/administration/organization/add-edit-organization/add-edit-organization.component';
+import { OptionalColumnOrganizationComponent } from 'app/main/administration/organization/optional-column-organization/optional-column-organization.component';
+import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
 
 @NgModule({
     imports: [
@@ -39,6 +42,11 @@ import {PrivilegeService} from "../../services/privilege.service";
         AddEditDeviceComponent,
         OrganizationComponent,
         RoleUpdateComponent,
+
+        AddEditOrganizationComponent,
+        OptionalColumnOrganizationComponent,
+
+        PrivilegeComponent
     ],
     providers: [
         OrganizationService,
@@ -51,8 +59,10 @@ import {PrivilegeService} from "../../services/privilege.service";
         AddEditDeviceComponent,
         RoleUpdateComponent,
 
+        AddEditOrganizationComponent,
         OptionalColumnAccountComponent,
-        OptionalColumnDeviceComponent
+        OptionalColumnDeviceComponent,
+        OptionalColumnOrganizationComponent
     ]
 })
 export class AdministrationModule { }
