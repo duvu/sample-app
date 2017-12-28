@@ -1,31 +1,30 @@
 import * as _ from 'lodash';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { BaseDataSource } from 'app/shared/base-data-source';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Privilege } from 'app/models/privilege';
-import { FormControl } from '@angular/forms';
-import { MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';
 import { PrivilegeService } from 'app/services/privilege.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
-import { Search } from 'app/models/search';
 import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
 import { OptionalColumnPrivilegeComponent } from 'app/main/administration/privilege/optional-column-privilege/optional-column-privilege.component';
 import { AddEditPrivilegeComponent } from 'app/main/administration/privilege/add-edit-privilege/add-edit-privilege.component';
+import { merge } from 'rxjs/observable/merge';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { startWith } from 'rxjs/operators';
+import {of as observableOf} from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-privilege',
   templateUrl: './privilege.component.html',
   styleUrls: ['./privilege.component.scss']
 })
-export class PrivilegeComponent implements OnInit {
+export class PrivilegeComponent implements OnInit, AfterViewInit {
 
-    dataSource: BaseDataSource<Privilege> | null;
+    dataSource: MatTableDataSource<Privilege> | null;
     dataChange: BehaviorSubject<any>;
     searchingStatement: string;
-
-    stateCtrl: FormControl;
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -43,25 +42,62 @@ export class PrivilegeComponent implements OnInit {
         actions:            {selected: false, order: 17}
     };
 
+    resultsLength = 0;
+
     constructor(private dialog: MatDialog,
                 private app: AppService,
                 private service: PrivilegeService,
                 private progress: ProgressBarService) { }
 
     ngOnInit() {
-        this.stateCtrl = new FormControl();
         this.initTableSettings();
-
         this.dataChange = new BehaviorSubject(0);
-        this.sort.active = 'name';
-        this.sort.direction = 'asc';
-        this.dataSource = new BaseDataSource<Privilege>(
-            this.service,
-            this.progress,
-            this.sort,
-            this.paginator,
-            this.dataChange);
+        this.dataSource = new MatTableDataSource();
+
+        // this.dataChange = new BehaviorSubject(0);
+        // this.sort.active = 'name';
+        // this.sort.direction = 'asc';
+        // this.dataSource = new BaseDataSource<Privilege>(
+        //     this.service,
+        //     this.progress,
+        //     this.sort,
+        //     this.paginator,
+        //     this.dataChange);
     }
+
+    ngAfterViewInit(): void {
+        this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+
+        merge(this.sort.sortChange, this.paginator.page, this.dataChange)
+            .pipe(
+                startWith({}),
+                switchMap(() => {
+                    this.progress.show();
+                    return this.service!.searchAndSort(
+                        this.paginator.pageIndex, this.paginator.pageSize,
+                        this.sort.active, this.sort.direction, null);
+                }),
+                map(data => {
+                    this.progress.hide();
+                    this.resultsLength = data.totalElements;
+
+                    return data.content;
+                }),
+                catchError(() => {
+                    this.progress.hide();
+                    return observableOf([]);
+                })
+            ).subscribe(data => this.dataSource.data = data);
+    }
+
+    applyFilter(filterValue: string) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+        this.dataSource.filter = filterValue;
+    }
+
     initTableSettings(): void {
         try {
             const displayeds = JSON.parse(localStorage.getItem('pri-disp-cols'));
@@ -97,17 +133,6 @@ export class PrivilegeComponent implements OnInit {
                 localStorage.setItem('pri-disp-cols', JSON.stringify(this.displayedColumns));
             }
         );
-    }
-
-    search(): void {
-        const searchs = [];
-        if (this.searchingStatement) {
-            const search = new Search();
-            search.column = 'name';
-            search.content = this.searchingStatement;
-            searchs.push(search);
-        }
-        this.dataChange.next({search: searchs});
     }
 
     openDialogNewObject(): void {

@@ -14,7 +14,10 @@ import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-
 import { DeviceService } from 'app/services/device.service';
 import { OrganizationComponent } from './organization/organization.component';
 import { OrganizationService } from 'app/services/organization.service';
-import { MyDirectivesModule } from 'app/directives/my-directives.module';
+import { MyDirectivesModule } from 'app/shared/directives/my-directives.module';
+import { AddEditOrganizationComponent } from 'app/main/administration/organization/add-edit-organization/add-edit-organization.component';
+import { OptionalColumnOrganizationComponent } from 'app/main/administration/organization/optional-column-organization/optional-column-organization.component';
+import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
 
 @NgModule({
     imports: [
@@ -36,6 +39,11 @@ import { MyDirectivesModule } from 'app/directives/my-directives.module';
         OptionalColumnDeviceComponent,
         AddEditDeviceComponent,
         OrganizationComponent,
+
+        AddEditOrganizationComponent,
+        OptionalColumnOrganizationComponent,
+
+        PrivilegeComponent,
     ],
     providers: [
         OrganizationService,
@@ -45,9 +53,10 @@ import { MyDirectivesModule } from 'app/directives/my-directives.module';
     entryComponents: [
         AddEditAccountComponent,
         AddEditDeviceComponent,
-
+        AddEditOrganizationComponent,
         OptionalColumnAccountComponent,
-        OptionalColumnDeviceComponent
+        OptionalColumnDeviceComponent,
+        OptionalColumnOrganizationComponent
     ]
 })
 export class AdministrationModule { }

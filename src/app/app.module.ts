@@ -16,13 +16,15 @@ import { AppRoutingModule} from 'app/app-routing.module';
 import { AuthService} from 'app/services/auth.service';
 import { AuthGuard} from 'app/services/auth.guard';
 import { PageNotFoundComponent } from 'app/pages/page-not-found/page-not-found.component';
+import { PageHomeComponent } from './pages/page-home/page-home.component';
 
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        PageHomeComponent
     ],
     imports: [
         BrowserModule,
