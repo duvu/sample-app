@@ -2,7 +2,7 @@
  * Created by beou on 3/30/17.
  */
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import {AuthGuard} from "./services/auth.guard";
 import {PageNotFoundComponent} from "./pages/page-not-found/page-not-found.component";
 import {LoginComponent} from "./login/login.component";
@@ -16,7 +16,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }
