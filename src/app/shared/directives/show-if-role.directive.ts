@@ -20,13 +20,12 @@ export class ShowIfRoleDirective implements OnInit {
     }
     ngOnInit(): void {
         this.appService.currentUser.subscribe(currentUser => {
-            console.log("###", this._roles);
-            if (_.includes(this._roles, "admin") && !this.hasView) {
+            console.log("###", currentUser);
+            if (!currentUser) return;
+            if (_.includes(currentUser.authorities, this._roles) && !this.hasView) {
                 this.viewContainer.createEmbeddedView(this.templateRef);
                 this.hasView = true;
-
-                console.log("###", this._roles);
-            } else if (!_.includes(this._roles, "admin") && this.hasView) {
+            } else if (!_.includes(currentUser.authorities, this._roles) && this.hasView) {
                 this.viewContainer.clear();
                 this.hasView = false;
             }
