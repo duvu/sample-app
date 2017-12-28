@@ -2,21 +2,21 @@ import 'hammerjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule} from '@angular/http';
-import { AppComponent } from './app.component';
-import { AppRoutingModule} from './app-routing.module';
-import { AuthService} from './services/auth.service';
-import { AuthGuard} from './services/auth.guard';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { CommonModule} from '@angular/common';
-import { LoginComponent} from './login/login.component';
+import { LoginComponent} from 'app/login/login.component';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
-import {MaterialShared} from './shared/material-shared';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {AuthInterceptor} from './services/auth-interceptor';
-import {ProgressBarService} from './services/progress-bar.service';
-import {AppService} from './services/app.service';
+import { MaterialShared} from 'app/shared/material-shared';
+import { AuthInterceptor} from 'app/services/auth-interceptor';
+import { ProgressBarService} from 'app/services/progress-bar.service';
+import { AppService} from 'app/services/app.service';
+import { AppComponent } from 'app/app.component';
+import { AppRoutingModule} from 'app/app-routing.module';
+import { AuthService} from 'app/services/auth.service';
+import { AuthGuard} from 'app/services/auth.guard';
+import { PageNotFoundComponent } from 'app/pages/page-not-found/page-not-found.component';
+
 
 @NgModule({
     declarations: [
@@ -29,7 +29,6 @@ import {AppService} from './services/app.service';
         BrowserAnimationsModule,
         CommonModule,
         FormsModule,
-        HttpModule,
         HttpClientModule,
 
         MaterialShared,
@@ -48,6 +47,6 @@ import {AppService} from './services/app.service';
         }
     ],
 
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
 export class AppModule { }

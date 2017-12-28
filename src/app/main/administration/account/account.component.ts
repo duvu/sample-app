@@ -137,8 +137,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
     openDialogNewObject(): void {
         const data = new Account();
-        data.organizationId = this.app.currentAccount.organizationId;
-        data.organizationName = this.app.currentAccount.organizationName;
+        data.organizationId = this.app.getCurrentAccount().organizationId;
+        data.organizationName = this.app.getCurrentAccount().organizationName;
         const dialogRef = this.dialog.open(AddEditAccountComponent, {
             // width: '600px',
             disableClose: true,
