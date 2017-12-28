@@ -15,6 +15,8 @@ import { DeviceService } from 'app/services/device.service';
 import { OrganizationComponent } from './organization/organization.component';
 import { OrganizationService } from 'app/services/organization.service';
 import { MyDirectivesModule } from 'app/directives/my-directives.module';
+import { RoleUpdateComponent } from './account/role-update/role-update.component';
+import {PrivilegeService} from "../../services/privilege.service";
 
 @NgModule({
     imports: [
@@ -36,15 +38,18 @@ import { MyDirectivesModule } from 'app/directives/my-directives.module';
         OptionalColumnDeviceComponent,
         AddEditDeviceComponent,
         OrganizationComponent,
+        RoleUpdateComponent,
     ],
     providers: [
         OrganizationService,
         AccountService,
-        DeviceService
+        DeviceService,
+        PrivilegeService
     ],
     entryComponents: [
         AddEditAccountComponent,
         AddEditDeviceComponent,
+        RoleUpdateComponent,
 
         OptionalColumnAccountComponent,
         OptionalColumnDeviceComponent
