@@ -5,6 +5,7 @@ export class Account {
     lastName: string;
     status: string;
     organizationId: number;
+    privilegeIds: Array<number>;
     organizationName: string;
     phoneNumber: string;
     photoUrl: string;

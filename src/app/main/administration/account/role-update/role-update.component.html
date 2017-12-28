@@ -1,0 +1,35 @@
+<div matDialogTitle>
+    <span *ngIf="data.id" i18n>Modifying Account</span>
+    <span *ngIf="data.id==null" i18n>Creating Account</span>
+    <span> #{{data.accountId}}</span>
+    <span class="x-dialog-close-btn">
+        <button mat-icon-button (click)="cancel()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </span>
+</div>
+
+<div mat-dialog-content>
+    <div fxLayout="column">
+
+        <mat-form-field class="full-width">
+              <input matInput i18n-placeholder placeholder="Account ID" name="acc-account-id" [(ngModel)]="data.accountId" [disabled]="data.accountId">
+        </mat-form-field>
+
+
+        <mat-form-field class="full-width">
+            <input matInput i18n-placeholder placeholder="Orgnization Name" name="acc-organization-name" [(ngModel)]="data.organizationName" [disabled]="data.organizationName">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+           <mat-select multiple [(ngModel)]="data.privilegeIds" matInput placeholder="Roles">
+              <mat-option *ngFor="let i of priveledges | async" [value]="i.id">{{i.description}}</mat-option>
+           </mat-select>
+         </mat-form-field>
+
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onSave()" i18n>Save</button>
+    <button mat-button (click)="cancel()" i18n>Cancel</button>
+</div>

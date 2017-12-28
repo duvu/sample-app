@@ -16,6 +16,7 @@ import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
+import {RoleUpdateComponent} from "./role-update/role-update.component";
 
 @Component({
     selector: 'app-account',
@@ -176,7 +177,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
     }
 
     update(account: Account): void {
-
+        console.log('Updating Account Record.....!');
     }
 
     openDialogConfirmDelete(account: Account): void {
@@ -209,5 +210,20 @@ export class AccountComponent implements OnInit, AfterViewInit {
             }
         );
     }
+
+    openDialogRoleUpdate(data: Account): void {
+        const dialogRef = this.dialog.open(RoleUpdateComponent, {
+            width: '500px',
+            disableClose: true,
+            data: data
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.update(result);
+            }
+        });
+    }
+
 
 }
