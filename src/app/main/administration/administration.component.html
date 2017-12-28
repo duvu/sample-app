@@ -6,7 +6,7 @@
                 <a matLine routerLink="_account">Account</a>
             </mat-list-item>
 
-            <mat-list-item role="listitem" *showIfRole="'ROLE_SYSTEM_ADMIN'">
+            <mat-list-item role="listitem" *showIfRole="'system-admin'">
                 <mat-icon matListIcon>account</mat-icon>
                 <a matLine routerLink="_organization">Organization</a>
             </mat-list-item>
@@ -26,6 +26,10 @@
             <mat-list-item role="listitem">
                 <mat-icon matListIcon>alarm</mat-icon>
                 <a matLine routerLink="_device">ALert</a>
+            </mat-list-item>
+            <mat-list-item role="listitem" *showIfRole="'system-admin'">
+                <mat-icon matListIcon>alarm</mat-icon>
+                <a matLine routerLink="_privilege">Privilege</a>
             </mat-list-item>
         </mat-nav-list>
     </mat-sidenav>

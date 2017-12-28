@@ -5,15 +5,17 @@ import {AuthGuard} from 'app/services/auth.guard';
 import {AccountComponent} from "./account/account.component";
 import {DeviceComponent} from "./device/device.component";
 import { OrganizationComponent } from 'app/main/administration/organization/organization.component';
+import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
 
 const routes: Routes = [
     {
         path: '',
         component: AdministrationComponent,
         children:[
-            { path: '_account', component: AccountComponent, canActivate: [AuthGuard]},
-            { path: '_organization',   component: OrganizationComponent,    canActivate: [AuthGuard]},
-            { path: '_device',   component: DeviceComponent,    canActivate: [AuthGuard]}
+            { path: '_account', component: AccountComponent, canActivate: [AuthGuard] },
+            { path: '_organization',   component: OrganizationComponent,    canActivate: [AuthGuard] },
+            { path: '_device',   component: DeviceComponent,    canActivate: [AuthGuard] },
+            { path: '_privilege',   component: PrivilegeComponent,    canActivate: [AuthGuard] }
         ]
     }
 ];
