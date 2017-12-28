@@ -6,7 +6,7 @@
                 <a matLine routerLink="_account">Account</a>
             </mat-list-item>
 
-            <mat-list-item role="listitem" *appIsAdmin="true">
+            <mat-list-item role="listitem" *showIfRole="'admin'">
                 <mat-icon matListIcon>account</mat-icon>
                 <a matLine routerLink="_organization">Organization</a>
             </mat-list-item>
