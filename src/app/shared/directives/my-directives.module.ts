@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IsAdminDirective } from './is-admin.directive';
 import { ShowIfRoleDirective } from './show-if-role.directive';
 
 @NgModule({
@@ -8,11 +7,9 @@ import { ShowIfRoleDirective } from './show-if-role.directive';
     CommonModule
   ],
   declarations: [
-      IsAdminDirective,
       ShowIfRoleDirective
   ],
   exports: [
-      IsAdminDirective,
       ShowIfRoleDirective
   ]
 })
