@@ -66,8 +66,8 @@ export class AppService {
     }
 
     isLoggedIn(): boolean {
-        if (this.getCurrentAccount() != null) {
-            const decoded: any = jwt(this.getCurrentAccount().access_token)
+        if (this.getCurrentAccount() != null && this.getCurrentAccount().access_token) {
+            const decoded: any = jwt(this.getCurrentAccount().access_token);
             return decoded.exp > Date.now()/1000;
         } else {
             return false;

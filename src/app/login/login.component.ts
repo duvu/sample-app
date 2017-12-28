@@ -1,8 +1,9 @@
 import { Component, OnInit} from '@angular/core';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import {ProgressBarService} from '../services/progress-bar.service';
-import {AppService} from '../services/app.service';
+
+import { AuthService } from 'app/services/auth.service';
+import { AppService} from 'app/services/app.service';
+import { ProgressBarService} from 'app/services/progress-bar.service';
 
 @Component({
     selector: 'app-login',
