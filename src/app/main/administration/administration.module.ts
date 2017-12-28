@@ -14,12 +14,14 @@ import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-
 import { DeviceService } from 'app/services/device.service';
 import { OrganizationComponent } from './organization/organization.component';
 import { OrganizationService } from 'app/services/organization.service';
+import { MyDirectivesModule } from 'app/directives/my-directives.module';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialShared,
         FormsModule,
+        MyDirectivesModule,
         ReactiveFormsModule,
         AdministrationRoutingModule
     ],

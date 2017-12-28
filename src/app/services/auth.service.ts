@@ -9,7 +9,7 @@ export class AuthService {
 
 
     private basicAuthHeader = 'Basic ' + btoa('webapp:123456');
-    constructor(private http: HttpClient, private _progress: ProgressBarService) {}
+    constructor(private http: HttpClient) {}
 
     login(username: string, password: string): Observable<LoginResponse> {
         const headers = new HttpHeaders({
