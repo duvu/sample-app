@@ -9,8 +9,13 @@ const routes: Routes = [
         component: MainComponent,
         children: [
             {
-                path: 'live',
-                loadChildren: 'app/main/dashboard/mapping.module#MappingModule',
+                path: 'dashboard',
+                loadChildren: 'app/main/dashboard/dashboard.module#DashboardModule',
+                canActivate: [AuthGuard]
+            },
+            {
+                path: 'tracking',
+                loadChildren: 'app/main/tracking/mapping.module#MappingModule',
                 canActivate: [AuthGuard]
             },
             {
