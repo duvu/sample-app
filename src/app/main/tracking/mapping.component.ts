@@ -7,10 +7,12 @@ import {DeviceService} from '../../services/device.service';
 import {EventService} from '../../services/event.service';
 import {EventData} from '../../models/event-data';
 import * as _ from 'lodash';
-//import PointExpression = L.PointExpression;
+// import PointExpression = L.PointExpression;
 import {DatePipe} from '@angular/common';
 import {Observable} from 'rxjs/Observable';
-
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/mergeMap';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';

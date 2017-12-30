@@ -12,11 +12,11 @@ export class EventService {
     constructor(http: HttpClient, router: Router) {
         this._router = router;
         this._http = http;
-        this._url = "/api/dashboard/"
+        this._url = '/api/track/'
     }
 
     getLiveEvents(): Observable<EventData[]> {
-        const url = this._url + '/all';
+        const url = this._url + '/live';
         return this._http.get<EventData[]>(url);
     }
 }
