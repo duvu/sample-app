@@ -16,7 +16,7 @@ export class EventService {
     }
 
     getLiveEvents(): Observable<EventData[]> {
-        const url = this._url + '/live';
+        const url = this._url + 'live';
         return this._http.get<EventData[]>(url);
     }
 }
