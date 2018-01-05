@@ -1,9 +1,8 @@
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
-import { Response } from "@angular/http";
 import { Router } from "@angular/router";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import {Search} from "../models/search";
 import {PageableResponse} from "../models/pageable-response";
 
@@ -19,19 +18,11 @@ export class BaseService<T> {
         this._http = http;
     }
 
-    searchAndSort(page: number, size: number, sort: string, order: string, searchList: Search[]): Observable<PageableResponse<T>> {
+    searchAndSort(page: number, size: number, sort: string, order: string): Observable<PageableResponse<T>> {
         let params = new HttpParams();
         params.append('page', String(page));
         params.append('size', String(size));
         params.append('sort', sort + ',' + order);
-
-        if (searchList && searchList.length > 0) {
-            _.forEach(searchList, (search) => {
-                if (search.column && search.content) {
-                    params.append(search.column, search.content);
-                }
-            });
-        }
         return this._http.get<PageableResponse<T>>(this._url, {params: params});
     }
 
@@ -65,15 +56,14 @@ export class BaseService<T> {
         return this._http.post<T>(url, data);
     }
 
-    error(error: Response | any): Observable<any> {
+    error(error: HttpErrorResponse | any): Observable<any> {
         console.log("Error", error);
         if (error) {
             this._router.navigate(['/login']);
         } else {
             let errMsg: string;
-            if (error instanceof Response) {
-                const body = error.json();
-                const err = body.message || JSON.stringify(body);
+            if (error instanceof HttpErrorResponse) {
+                const err = error.message || JSON.stringify(error);
                 errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
             } else {
                 errMsg = error.message ? error.message : error.toString();

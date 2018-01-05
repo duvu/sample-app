@@ -77,7 +77,7 @@ export class PrivilegeComponent implements OnInit, AfterViewInit {
                     this.progress.show();
                     return this.service!.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
-                        this.sort.active, this.sort.direction, null);
+                        this.sort.active, this.sort.direction);
                 }),
                 map(data => {
                     this.progress.hide();

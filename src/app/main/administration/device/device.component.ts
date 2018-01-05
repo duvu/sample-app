@@ -7,7 +7,6 @@ import { AppService } from 'app/services/app.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
 import { DeviceService } from 'app/services/device.service';
 import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
-import { Search } from 'app/models/search';
 import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';
 import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
@@ -78,7 +77,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
                     this.progress.show();
                     return this.service!.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
-                        this.sort.active, this.sort.direction, null);
+                        this.sort.active, this.sort.direction);
                 }),
                 map(data => {
                     this.progress.hide();
@@ -134,17 +133,6 @@ export class DeviceComponent implements OnInit, AfterViewInit {
                 localStorage.setItem('dev1-disp-cols', JSON.stringify(this.displayedColumns));
             }
         );
-    }
-
-    search(): void {
-        const searchs = [];
-        if (this.searchingStatement) {
-            const search = new Search();
-            search.column = 'name';
-            search.content = this.searchingStatement;
-            searchs.push(search);
-        }
-        this.dataChange.next({search: searchs});
     }
 
     openDialogNewObject(): void {

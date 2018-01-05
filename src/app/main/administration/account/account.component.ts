@@ -3,10 +3,8 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {AccountService} from 'app/services/account.service';
 import {ProgressBarService} from 'app/services/progress-bar.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {FormControl} from '@angular/forms';
 import {Account} from 'app/models/account';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import {Search} from 'app/models/search';
 import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
 import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
 import {AppService} from 'app/services/app.service';
@@ -47,6 +45,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
         addressLine1:       {selected: false, order: 10},
         addressLine2:       {selected: false, order: 11},
         notes:              {selected: false, order: 12},
+        roles:              {selected: false, order: 13},
         createdBy:          {selected: false, order: 13},
         createdOn:          {selected: false, order: 14},
         updatedBy:          {selected: false, order: 15},
@@ -79,7 +78,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
                     this.progress.show();
                     return this.service!.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
-                        this.sort.active, this.sort.direction, null);
+                        this.sort.active, this.sort.direction);
                 }),
                 map(data => {
                     this.progress.hide();
@@ -138,8 +137,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
     openDialogNewObject(): void {
         const data = new Account();
-        data.organizationId = this.app.getCurrentAccount().organizationId;
-        data.organizationName = this.app.getCurrentAccount().organizationName;
+        data.companyId = this.app.getCurrentAccount().organizationId;
+        data.companyName = this.app.getCurrentAccount().organizationName;
         const dialogRef = this.dialog.open(AddEditAccountComponent, {
             // width: '600px',
             disableClose: true,
