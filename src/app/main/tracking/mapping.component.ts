@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 
 import * as L from 'leaflet';
-// import * from 'leaflet.markercluster';
+import 'leaflet.markercluster';
 
 import {DeviceService} from '../../services/device.service';
 import {EventService} from '../../services/event.service';
@@ -73,31 +73,31 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.liveEvents = liveEvents;
                 this.isLoading = false;
                 this.numberOfLoad++;
-                // this.processEvents();
+                this.processEvents();
             },
             error => {},
             () => {}
         );
     }
-    // processEvents(): void {
-    //     let icon = this.customDefault;
-    //     let markersCluster = L.markerClusterGroup();
-    //     let latlngArray = [];
-    //     _.forEach(this.liveEvents, function (event) {
-    //         if (event.latitude && event.longitude) {
-    //             let marker = this.buildMarker(event);
-    //             let ll = L.latLng(event.latitude, event.longitude);
-    //             markersCluster.addLayer(marker);
-    //             latlngArray.push(ll);
-    //         }
-    //     }.bind(this));
-    //
-    //     let bounds = L.latLngBounds(latlngArray);
-    //     this.map.addLayer(markersCluster);
-    //     if (this.numberOfLoad <= 1) {
-    //         this.map.fitBounds(bounds);
-    //     }
-    // }
+    processEvents(): void {
+        let icon = this.customDefault;
+        let markersCluster = L.markerClusterGroup();
+        let latlngArray = [];
+        _.forEach(this.liveEvents, function (event) {
+            if (event.latitude && event.longitude) {
+                let marker = this.buildMarker(event);
+                let ll = L.latLng(event.latitude, event.longitude);
+                markersCluster.addLayer(marker);
+                latlngArray.push(ll);
+            }
+        }.bind(this));
+
+        let bounds = L.latLngBounds(latlngArray);
+        this.map.addLayer(markersCluster);
+        if (this.numberOfLoad <= 1) {
+            this.map.fitBounds(bounds);
+        }
+    }
 
     buildMarker(event: EventData): L.Marker {
         let ll = L.latLng(event.latitude, event.longitude);
