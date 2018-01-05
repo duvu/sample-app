@@ -14,10 +14,11 @@ export class LoginComponent implements OnInit {
     model: any = {};
     errorMessage: string;
 
+    loading: boolean = false;
+
     constructor(private auth: AuthService,
                 private router: Router,
-                private app: AppService,
-                private progress: ProgressBarService) {}
+                private app: AppService) {}
 
     ngOnInit() {
         if (this.app.isLoggedIn()) {
@@ -27,18 +28,18 @@ export class LoginComponent implements OnInit {
     }
 
     login(): void {
-        this.progress.show();
+        this.loading = true;
         this.auth.login(this.model.username, this.model.password).subscribe(
             result => {
                 this.app.setCurrentAccount(result);
             },
             error => {
                 this.errorMessage = 'Error' + error;
-                this.progress.hide();
+                this.loading = false;
             },
             () => {
                 const redirectUrl = this.app.getRedirectURL();
-                this.progress.hide();
+                this.loading = false;
                 this.router.navigate([redirectUrl]);
             }
         );
