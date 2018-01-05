@@ -1,12 +1,14 @@
+import { Privilege } from 'app/models/privilege';
+
 export class Account {
     id: number;
     accountId: string;
     firstName: string;
     lastName: string;
     status: string;
-    organizationId: number;
-    privilegeIds: Array<number>;
-    organizationName: string;
+    privileges: Array<Privilege>;
+    companyId: number;
+    companyName: string;
     phoneNumber: string;
     photoUrl: string;
     emailAddress: string;

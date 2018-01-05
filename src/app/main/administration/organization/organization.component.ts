@@ -6,7 +6,6 @@ import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/m
 import { AppService } from 'app/services/app.service';
 import { OrganizationService } from 'app/services/organization.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
-import { Search } from 'app/models/search';
 import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
 import { OptionalColumnOrganizationComponent } from 'app/main/administration/organization/optional-column-organization/optional-column-organization.component';
@@ -70,7 +69,7 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
                     this.progress.show();
                     return this.service!.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
-                        this.sort.active, this.sort.direction, null);
+                        this.sort.active, this.sort.direction);
                 }),
                 map(data => {
                     this.progress.hide();
