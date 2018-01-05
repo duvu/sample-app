@@ -6,7 +6,7 @@
   "description": "Gps Tracking System of Vu.",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host localhost --port 4201 --live-reload --watch --proxy-config proxy.conf.json",
+    "start": "ng serve --live-reload --watch --proxy-config proxy.conf.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
