@@ -1,29 +1,29 @@
 import { CompanyLittle } from 'app/shared/models/little/company-little';
 
 export class Device {
-    private id: number;
+    public id: number;
 
-    private name: string;
-    private deviceId: string;
+    public name: string;
+    public deviceId: string;
 
-    private company: CompanyLittle | any;
+    public company: CompanyLittle | any;
 
-    private vehicleId: number;
-    private vehicleName: string;
+    public vehicleId: number;
+    public vehicleName: string;
 
-    private ipAddress: string;
-    private port: number;
+    public ipAddress: string;
+    public port: number;
 
-    private protocol: string;
-    private serialNumber: string;
-    private modelName: string;
+    public protocol: string;
+    public serialNumber: string;
+    public modelName: string;
 
-    private manufacturerName: string;
-    private firmwareVersion: string;
-    private originalCountry: string;
-    private createdBy: string;
-    private createdOn: Date;
-    private updatedBy: string;
-    private updatedOn: Date;
+    public manufacturerName: string;
+    public firmwareVersion: string;
+    public originalCountry: string;
+    public createdBy: string;
+    public createdOn: Date;
+    public updatedBy: string;
+    public updatedOn: Date;
 
 }
