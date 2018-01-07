@@ -9,25 +9,35 @@
 </div>
 <mat-sidenav-container class="side-nav-container">
     <mat-sidenav mode="side" opened="true" align="end">
-        <form>
-            <mat-form-field class="map-search-device">
-                <mat-icon matPrefix>{{inputSearch ? 'cancel' : 'filter'}}</mat-icon>
-                <input matInput name="searching-device-input" [(ngModel)]="inputSearch">
-            </mat-form-field>
-        </form>
-        <mat-nav-list dense>
-            <mat-list-item *ngFor="let event of liveEvents">
-                <!--<mat-icon mat-list-icon [color]="event.isActive? 'primary' : ''">brightness_1</mat-icon>-->
-                <a matLine (click)="selectAnEvent(event)">{{ event.displayName }}</a>
-                <div matLine>Test</div>
-            </mat-list-item>
-        </mat-nav-list>
-        <table *ngIf="selectedEvent && inputSearch" class="table-device-detail">
-            <tr>
-                <td i18n>Device ID</td>
-                <td>{{selectedEvent.deviceId}}</td>
-            </tr>
-        </table>
+        <!--<form>-->
+            <!--<mat-form-field class="map-search-device">-->
+                <!--<mat-icon matPrefix>{{inputSearch ? 'cancel' : 'filter'}}</mat-icon>-->
+                <!--<input matInput name="searching-device-input" [(ngModel)]="inputSearch">-->
+            <!--</mat-form-field>-->
+        <!--</form>-->
+        <!--<mat-nav-list dense>-->
+            <!--<mat-list-item *ngFor="let event of liveEvents">-->
+                <!--&lt;!&ndash;<mat-icon mat-list-icon [color]="event.isActive? 'primary' : ''">brightness_1</mat-icon>&ndash;&gt;-->
+                <!--<a matLine (click)="selectAnEvent(event)">{{ event.displayName }}</a>-->
+                <!--<div matLine>Test</div>-->
+            <!--</mat-list-item>-->
+        <!--</mat-nav-list>-->
+        <!--<table *ngIf="selectedEvent && inputSearch" class="table-device-detail">-->
+            <!--<tr>-->
+                <!--<td i18n>Device ID</td>-->
+                <!--<td>{{selectedEvent.deviceId}}</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+        <div class="map-device-table">
+            <mat-table [dataSource]="dataSource">
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> Name. </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.deviceId}}</mat-cell>
+                </ng-container>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+
     </mat-sidenav>
 
     <div class="sidenav-content">

@@ -3,13 +3,9 @@ import { FormsModule } from "@angular/forms";
 import { MappingRoutingModule } from './mapping-routing.module';
 import { MappingComponent } from './mapping.component';
 import {CommonModule, DatePipe} from "@angular/common";
-import {
-    MatAutocompleteModule,
-    MatButtonModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule,
-    MatSidenavModule
-} from "@angular/material";
 import {DeviceService} from 'app/services/device.service';
 import {EventService} from 'app/services/event.service';
+import { MaterialShared } from 'app/shared/material-shared';
 
 
 @NgModule({
@@ -17,13 +13,7 @@ import {EventService} from 'app/services/event.service';
         CommonModule,
         FormsModule,
         MappingRoutingModule,
-        MatAutocompleteModule,
-        MatButtonModule,
-        MatListModule,
-        MatInputModule,
-        MatSidenavModule,
-        MatProgressSpinnerModule,
-        MatIconModule
+        MaterialShared
     ],
     providers: [
         DeviceService,
