@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { Company } from 'app/models/organization';
+import { Company } from 'app/models/company';
 import { CompanyService } from 'app/services/organization.service';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
@@ -43,6 +43,11 @@ export class AddEditDeviceComponent implements OnInit {
 
     filter(value: string): Company[] {
         return this.companyList.filter(co => co.name.toLowerCase().indexOf(value.toLowerCase()) === 0)
+    }
+
+
+    displayFn(company: Company): string | Company {
+        return company ? company.name : company;
     }
 
     cancel(): void {

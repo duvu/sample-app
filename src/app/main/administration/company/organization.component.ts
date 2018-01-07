@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Company } from 'app/models/organization';
+import { Company } from 'app/models/company';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';

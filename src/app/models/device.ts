@@ -1,11 +1,12 @@
+import { CompanyLittle } from 'app/models/little/company-little';
+
 export class Device {
     id: number;
 
     nane: string;
     deviceId: string;
 
-    companyId: number;
-    companyName: string;
+    company: CompanyLittle;
 
     vehicleId: number;
     vehicleName: string;

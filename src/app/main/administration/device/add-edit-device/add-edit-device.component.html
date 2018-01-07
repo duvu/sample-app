@@ -27,9 +27,9 @@
 
 
         <mat-form-field class="full-width">
-            <input type="text" placeholder="Company" aria-label="String" matInput [formControl]="companyControl" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let company of filteredCompanies | async" [value]="company.name">
+            <input type="text"  placeholder="Company" aria-label="Company" [(ngModel)]="data.company" matInput [formControl]="companyControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
                     {{company.name}}
                 </mat-option>
             </mat-autocomplete>
@@ -37,7 +37,7 @@
 
 
         <mat-form-field class="full-width">
-            <input matInput i18n-placeholder placeholder="Company" name="dev-company-id" [(ngModel)]="data.companyId">
+            <input matInput i18n-placeholder placeholder="Company" name="dev-company-id" [(ngModel)]="data.company.id">
         </mat-form-field>
 
 
