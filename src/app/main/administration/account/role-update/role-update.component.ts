@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {PrivilegeService} from '../../../../services/privilege.service';
-import {Privilege} from '../../../../models/privilege';
+import {Privilege} from '../../../../models/response/privilege';
 import {Observable} from 'rxjs/Observable';
 
 @Component({

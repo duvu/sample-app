@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {LoginResponse} from '../models/login-response';
+import {LoginResponse} from '../models/response/login-response';
 
 import * as jwt from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
