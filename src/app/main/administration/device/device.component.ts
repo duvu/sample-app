@@ -23,8 +23,6 @@ import { RequestDevice } from 'app/shared/models/request/request-device';
 export class DeviceComponent implements OnInit, AfterViewInit {
     dataSource: MatTableDataSource<Device> | null;
     dataChange: BehaviorSubject<any>;
-    searchingStatement: string;
-
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;

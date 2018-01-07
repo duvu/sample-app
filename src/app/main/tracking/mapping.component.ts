@@ -13,6 +13,8 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/mergeMap';
+import { MatTableDataSource } from '@angular/material';
+import { Device } from 'app/shared/models/response/device';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -33,6 +35,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     selectedEvent: EventData = null;
     inputSearch: string = null;
     subcription: any;
+
+    displayedColumns = ['name'];
+    dataSource: MatTableDataSource<Device> | null;
     constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
 
     ngOnInit() {
@@ -41,6 +46,17 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             iconUrl: '/assets/images/marker-icon.png',
             shadowUrl: '/assets/images/marker-shadow.png'
         });
+
+        this.dataSource = new MatTableDataSource();
+
+        this._device_service.getAll().subscribe(
+            response => {
+                this.dataSource.data = response;
+            },
+            error => {},
+            () => {}
+        );
+
     }
     ngAfterViewInit(): void {
         this.map = L.map('map-id', {
