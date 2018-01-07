@@ -1,6 +1,6 @@
 export class CompanyLittle {
-    private id: number;
-    private name: string;
+    public id: number;
+    public name: string;
     // emailAddress: string;
     // photoUrl: string;
     // phoneNumber: string;

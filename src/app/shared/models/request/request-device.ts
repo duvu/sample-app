@@ -1,21 +1,21 @@
 export class RequestDevice {
-    private id: number;
+    public id: number;
 
-    private name: string;
-    private deviceId: string;
+    public name: string;
+    public deviceId: string;
 
-    private companyId: number;
+    public companyId: number;
 
-    private vehicleId: number;
+    public vehicleId: number;
 
-    private ipAddress: string;
-    private port: number;
+    public ipAddress: string;
+    public port: number;
 
-    private protocol: string;
-    private serialNumber: string;
-    private modelName: string;
+    public protocol: string;
+    public serialNumber: string;
+    public modelName: string;
 
-    private manufacturerName: string;
-    private firmwareVersion: string;
-    private originalCountry: string;
+    public manufacturerName: string;
+    public firmwareVersion: string;
+    public originalCountry: string;
 }
