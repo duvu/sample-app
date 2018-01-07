@@ -137,7 +137,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
 
     openDialogNewObject(): void {
         const data = new Device();
-        data.accountId = this.app.getCurrentAccount().accountId;
+        data.companyId = this.app.getCurrentAccount().organizationId;
         const dialogRef = this.dialog.open(AddEditDeviceComponent, {
             // width: '600px',
             disableClose: true,
@@ -159,7 +159,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         );
     }
 
-    openDialogEditing(data: Account): void {
+    openDialogEditing(data: Device): void {
         const dialogRef = this.dialog.open(AddEditDeviceComponent, {
             // width: '600px',
             disableClose: true,
@@ -173,8 +173,12 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         });
     }
 
-    update(account: Account): void {
-
+    update(device: Device): void {
+        this.service.update(device.id, device).subscribe(
+            response => {
+                this.dataChange.next(0);
+            }
+        )
     }
 
     openDialogConfirmDelete(device: Device): void {

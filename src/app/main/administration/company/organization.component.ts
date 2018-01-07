@@ -1,30 +1,29 @@
 import * as _ from 'lodash';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Organization } from 'app/models/organization';
+import { Company } from 'app/models/organization';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';
-import { OrganizationService } from 'app/services/organization.service';
+import { CompanyService } from 'app/services/organization.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
 import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
-import { OptionalColumnOrganizationComponent } from 'app/main/administration/organization/optional-column-organization/optional-column-organization.component';
-import { AddEditOrganizationComponent } from 'app/main/administration/organization/add-edit-organization/add-edit-organization.component';
+import { OptionalColumnOrganizationComponent } from 'app/main/administration/company/optional-column-organization/optional-column-organization.component';
+import { AddEditOrganizationComponent } from 'app/main/administration/company/add-edit-organization/add-edit-organization.component';
 import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
-import {of as observableOf} from 'rxjs/observable/of';
+import { of as observableOf } from 'rxjs/observable/of';
 
 @Component({
     selector: 'app-organization',
     templateUrl: './organization.component.html',
     styleUrls: ['./organization.component.scss']
 })
-export class OrganizationComponent implements OnInit, AfterViewInit {
+export class CompanyComponent implements OnInit, AfterViewInit {
 
-    dataSource: MatTableDataSource<Organization> | null;
+    dataSource: MatTableDataSource<Company> | null;
     dataChange: BehaviorSubject<any>;
-    searchingStatement: string;
     resultsLength = 0;
 
     @ViewChild(MatSort) sort: MatSort;
@@ -49,7 +48,7 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
 
     constructor(private dialog: MatDialog,
                 private app: AppService,
-                private service: OrganizationService,
+                private service: CompanyService,
                 private progress: ProgressBarService) { }
 
     ngOnInit() {
@@ -127,7 +126,7 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
     }
 
     openDialogNewObject(): void {
-        const data = new Organization();
+        const data = new Company();
         const dialogRef = this.dialog.open(AddEditOrganizationComponent, {
             disableClose: true,
             data: data
@@ -140,7 +139,7 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
         });
     }
 
-    create(organiation: Organization): void {
+    create(organiation: Company): void {
         this.service.create(organiation).subscribe(
             data => {
                 this.dataChange.next(data.id);
@@ -148,7 +147,7 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
         );
     }
 
-    openDialogEditing(data: Organization): void {
+    openDialogEditing(data: Company): void {
         const dialogRef = this.dialog.open(AddEditOrganizationComponent, {
             // width: '600px',
             disableClose: true,
@@ -162,7 +161,7 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
         });
     }
 
-    update(organization: Organization): void {
+    update(organization: Company): void {
         this.service.update(organization.id, organization).subscribe(
             data => {},
             error => {},
@@ -172,11 +171,11 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
         );
     }
 
-    openDialogConfirmDelete(organization: Organization): void {
+    openDialogConfirmDelete(organization: Company): void {
         const data = new DeleteEvent();
         data.setId(organization.id);
         data.setName(organization.name);
-        data.setType('Organization');
+        data.setType('Company');
         const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
             disableClose: true,
             data: data
@@ -189,7 +188,7 @@ export class OrganizationComponent implements OnInit, AfterViewInit {
         });
     }
 
-    _delete(organization: Organization): void {
+    _delete(organization: Company): void {
         this.service._delete(organization.id).subscribe(
             data => {
                 this.dataChange.next(0);

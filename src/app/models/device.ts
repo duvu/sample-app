@@ -1,10 +1,11 @@
 export class Device {
     id: number;
+
     nane: string;
     deviceId: string;
 
-    accountId: number;
-    accountName: string;
+    companyId: number;
+    companyName: string;
 
     vehicleId: number;
     vehicleName: string;

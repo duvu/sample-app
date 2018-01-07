@@ -12,13 +12,13 @@ import { OptionalColumnAccountComponent } from 'app/main/administration/account/
 import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
 import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';
 import { DeviceService } from 'app/services/device.service';
-import { OrganizationComponent } from './organization/organization.component';
-import { OrganizationService } from 'app/services/organization.service';
+import { CompanyComponent } from './company/organization.component';
+import { CompanyService } from 'app/services/organization.service';
 import { RoleUpdateComponent } from './account/role-update/role-update.component';
-import { PrivilegeService} from '../../services/privilege.service';
+import { PrivilegeService} from 'app/services/privilege.service';
 import { MyDirectivesModule } from 'app/shared/directives/my-directives.module';
-import { AddEditOrganizationComponent } from 'app/main/administration/organization/add-edit-organization/add-edit-organization.component';
-import { OptionalColumnOrganizationComponent } from 'app/main/administration/organization/optional-column-organization/optional-column-organization.component';
+import { AddEditOrganizationComponent } from 'app/main/administration/company/add-edit-organization/add-edit-organization.component';
+import { OptionalColumnOrganizationComponent } from 'app/main/administration/company/optional-column-organization/optional-column-organization.component';
 import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
 
 @NgModule({
@@ -40,7 +40,7 @@ import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.
         DeviceComponent,
         OptionalColumnDeviceComponent,
         AddEditDeviceComponent,
-        OrganizationComponent,
+        CompanyComponent,
         RoleUpdateComponent,
 
         AddEditOrganizationComponent,
@@ -49,7 +49,7 @@ import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.
         PrivilegeComponent
     ],
     providers: [
-        OrganizationService,
+        CompanyService,
         AccountService,
         DeviceService,
         PrivilegeService

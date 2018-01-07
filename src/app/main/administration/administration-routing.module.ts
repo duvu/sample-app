@@ -4,7 +4,7 @@ import {AdministrationComponent} from "./administration.component";
 import {AuthGuard} from 'app/services/auth.guard';
 import {AccountComponent} from "./account/account.component";
 import {DeviceComponent} from "./device/device.component";
-import { OrganizationComponent } from 'app/main/administration/organization/organization.component';
+import { CompanyComponent } from 'app/main/administration/company/organization.component';
 import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
         component: AdministrationComponent,
         children:[
             { path: '_account', component: AccountComponent, canActivate: [AuthGuard] },
-            { path: '_organization',   component: OrganizationComponent,    canActivate: [AuthGuard] },
+            { path: '_company',   component: CompanyComponent,    canActivate: [AuthGuard] },
             { path: '_device',   component: DeviceComponent,    canActivate: [AuthGuard] },
             { path: '_privilege',   component: PrivilegeComponent,    canActivate: [AuthGuard] }
         ]
