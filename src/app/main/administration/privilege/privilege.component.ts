@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Privilege } from 'app/models/privilege';
+import { Privilege } from 'app/models/response/privilege';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';
 import { PrivilegeService } from 'app/services/privilege.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
-import { DeleteEvent } from 'app/models/delete-event';
+import { DeleteEvent } from 'app/models/response/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
 import { OptionalColumnPrivilegeComponent } from 'app/main/administration/privilege/optional-column-privilege/optional-column-privilege.component';
 import { AddEditPrivilegeComponent } from 'app/main/administration/privilege/add-edit-privilege/add-edit-privilege.component';

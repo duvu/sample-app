@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Account} from '../models/account';
+import {Account} from '../models/response/account';
 import {Router} from '@angular/router';
 import {BaseService} from './base.service';
 import {HttpClient} from '@angular/common/http';

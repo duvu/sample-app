@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Device } from 'app/models/device';
+import { Device } from 'app/models/response/device';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';
@@ -8,12 +8,13 @@ import { ProgressBarService } from 'app/services/progress-bar.service';
 import { DeviceService } from 'app/services/device.service';
 import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
 import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';
-import { DeleteEvent } from 'app/models/delete-event';
+import { DeleteEvent } from 'app/models/response/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
 import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
+import { RequestDevice } from 'app/models/request/request-device';
 @Component({
     selector: 'app-device',
     templateUrl: './device.component.html',
@@ -137,7 +138,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
 
     openDialogNewObject(): void {
         const data = new Device();
-        data.companyId = this.app.getCurrentAccount().organizationId;
+        //data.companyId = this.app.getCurrentAccount().organizationId;
         const dialogRef = this.dialog.open(AddEditDeviceComponent, {
             // width: '600px',
             disableClose: true,
@@ -151,7 +152,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         });
     }
 
-    create(device: Device): void {
+    create(device: RequestDevice): void {
         this.service.create(device).subscribe(
             data => {
                 this.dataChange.next(data.id);
@@ -160,6 +161,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     }
 
     openDialogEditing(data: Device): void {
+        if (data.company === null) data.company = {};
         const dialogRef = this.dialog.open(AddEditDeviceComponent, {
             // width: '600px',
             disableClose: true,
@@ -174,7 +176,22 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     }
 
     update(device: Device): void {
-        this.service.update(device.id, device).subscribe(
+        let request = new RequestDevice();
+        request.name = device.name;
+        request.deviceId = device.deviceId;
+        request.companyId = device.company ? device.company.id : null;
+        request.vehicleId = device.vehicleId;
+        request.ipAddress = device.ipAddress;
+        request.port = device.port;
+        request.protocol = device.protocol;
+        request.serialNumber = device.serialNumber;
+        request.modelName = device.modelName;
+        request.manufacturerName = device.manufacturerName;
+        request.firmwareVersion = device.firmwareVersion;
+        request.originalCountry = device.originalCountry;
+
+
+        this.service.update(device.id, request).subscribe(
             response => {
                 this.dataChange.next(0);
             }
@@ -184,7 +201,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     openDialogConfirmDelete(device: Device): void {
         const data = new DeleteEvent();
         data.setId(device.id);
-        data.setName(device.nane);
+        data.setName(device.name);
         data.setType('Device');
         const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
             disableClose: true,
