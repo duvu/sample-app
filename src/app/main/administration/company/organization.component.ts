@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Company } from 'app/models/response/company';
+import { Company } from 'app/shared/models/response/company';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';
 import { CompanyService } from 'app/services/organization.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
-import { DeleteEvent } from 'app/models/response/delete-event';
+import { DeleteEvent } from 'app/shared/models/response/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
 import { OptionalColumnOrganizationComponent } from 'app/main/administration/company/optional-column-organization/optional-column-organization.component';
 import { AddEditOrganizationComponent } from 'app/main/administration/company/add-edit-organization/add-edit-organization.component';

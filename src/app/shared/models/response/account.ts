@@ -1,4 +1,4 @@
-import { Privilege } from 'app/models/response/privilege';
+import { Privilege } from 'app/shared/models/response/privilege';
 
 export class Account {
     id: number;

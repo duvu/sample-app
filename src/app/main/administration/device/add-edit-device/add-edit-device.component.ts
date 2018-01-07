@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { Company } from 'app/models/response/company';
+import { Company } from 'app/shared/models/response/company';
 import { CompanyService } from 'app/services/organization.service';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';

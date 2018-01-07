@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { EventData } from 'app/models/response/event-data';
+import { EventData } from 'app/shared/models/response/event-data';
 @Injectable()
 export class EventService {
     private _http: HttpClient;

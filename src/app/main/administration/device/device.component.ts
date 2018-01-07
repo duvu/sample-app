@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Device } from 'app/models/response/device';
+import { Device } from 'app/shared/models/response/device';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';
@@ -8,13 +8,13 @@ import { ProgressBarService } from 'app/services/progress-bar.service';
 import { DeviceService } from 'app/services/device.service';
 import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
 import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';
-import { DeleteEvent } from 'app/models/response/delete-event';
+import { DeleteEvent } from 'app/shared/models/response/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
 import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
-import { RequestDevice } from 'app/models/request/request-device';
+import { RequestDevice } from 'app/shared/models/request/request-device';
 @Component({
     selector: 'app-device',
     templateUrl: './device.component.html',
