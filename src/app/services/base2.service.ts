@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import {PageableResponse} from 'app/models/response/pageable-response';
+import {PageableResponse} from 'app/shared/models/response/pageable-response';
 
 @Injectable()
 export class Base2Service<I, O> {

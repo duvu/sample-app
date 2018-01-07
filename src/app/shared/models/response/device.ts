@@ -1,4 +1,4 @@
-import { CompanyLittle } from 'app/models/little/company-little';
+import { CompanyLittle } from 'app/shared/models/little/company-little';
 
 export class Device {
     private id: number;
