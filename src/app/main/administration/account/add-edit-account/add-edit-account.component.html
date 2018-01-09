@@ -23,18 +23,18 @@
                 </mat-form-field>
             </div>
         </div>
-        <!--<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">-->
-            <!--<div fxFlex="50">-->
-                <!--<mat-form-field class="full-width">-->
-                    <!--<input type="password" matInput i18n-placeholder placeholder="Password" name="acc-password" [(ngModel)]="data.password">-->
-                <!--</mat-form-field>-->
-            <!--</div>-->
-            <!--<div fxFlex="50">-->
-                <!--<mat-form-field class="full-width">-->
-                    <!--<input type="password" matInput i18n-placeholder placeholder="Re-type Password" name="acc-re-password" [(ngModel)]="data.password">-->
-                <!--</mat-form-field>-->
-            <!--</div>-->
-        <!--</div>-->
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input type="password" matInput i18n-placeholder placeholder="Password" name="acc-password" [(ngModel)]="password">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input type="password" matInput i18n-placeholder placeholder="Re-type Password" name="acc-re-password" [(ngModel)]="re_password">
+                </mat-form-field>
+            </div>
+        </div>
 
         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
             <div fxFlex="50">
@@ -54,7 +54,7 @@
                 <mat-form-field class="full-width">
                     <input type="text"  placeholder="Company" aria-label="Company" [(ngModel)]="data.company" matInput [formControl]="companyControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                        <mat-option *ngFor="let company of filteredCompanies | async" [value]="company.id">
+                        <mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
                             {{company.name}}
                         </mat-option>
                     </mat-autocomplete>

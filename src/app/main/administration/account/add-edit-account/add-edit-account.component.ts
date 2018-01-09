@@ -13,6 +13,8 @@ import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { pipe } from 'rxjs/Rx';
 import { AccountRequest } from 'app/shared/models/request/request-account';
+import { Account } from 'app/shared/models/account';
+import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
 
 @Component({
     selector: 'app-add-edit-account',
@@ -20,9 +22,9 @@ import { AccountRequest } from 'app/shared/models/request/request-account';
     styleUrls: ['./add-edit-account.component.scss']
 })
 export class AddEditAccountComponent implements OnInit {
-
-    data1: AccountRequest;
-    company: Company;
+    privilegeIds: number[];
+    password: string;
+    re_password: string;
     filteredCompanies: Observable<Company[]>;
     companyControl: FormControl = new FormControl();
     companyList: Company[];
@@ -36,9 +38,9 @@ export class AddEditAccountComponent implements OnInit {
                 @Inject(MAT_DIALOG_DATA) public data: Account | any) { }
 
     ngOnInit() {
-        this.data1 = new AccountRequest(this.data);
-        this.company = this.data.company;
-
+        this.privilegeIds = _.map(this.data.privileges, (privilege: PrivilegeLittle) => {
+            return privilege.id;
+        });
         this.isEditing = this.data.accountId ? true : false;
         this.privilegeList = this.privilegeService.getAll();
         this.companyService.getAll().subscribe(
@@ -60,8 +62,10 @@ export class AddEditAccountComponent implements OnInit {
     }
 
     onSave(): void {
-        this.data1.companyId = this.company.id;
-        this.dialogRef.close(this.data1);
+        let data1 = new AccountRequest(this.data);
+        data1.privilegeIds = this.privilegeIds;
+        data1.password = this.password;
+        this.dialogRef.close(data1);
     }
 
     filter(value: string): Company[] {

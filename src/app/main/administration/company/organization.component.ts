@@ -14,6 +14,7 @@ import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs/observable/of';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Component({
     selector: 'app-organization',
@@ -23,7 +24,7 @@ import { of as observableOf } from 'rxjs/observable/of';
 export class CompanyComponent implements OnInit, AfterViewInit {
 
     dataSource: MatTableDataSource<Company> | null;
-    dataChange: BehaviorSubject<any>;
+    dataChange: ReplaySubject<number>;
     resultsLength = 0;
 
     @ViewChild(MatSort) sort: MatSort;
@@ -53,7 +54,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.initTableSettings();
-        this.dataChange = new BehaviorSubject(0);
+        this.dataChange = new ReplaySubject(1);
         this.dataSource = new MatTableDataSource();
     }
     ngAfterViewInit(): void {

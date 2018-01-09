@@ -14,7 +14,6 @@ import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-
 import { DeviceService } from 'app/services/device.service';
 import { CompanyComponent } from './company/organization.component';
 import { CompanyService } from 'app/services/organization.service';
-import { RoleUpdateComponent } from './account/role-update/role-update.component';
 import { PrivilegeService} from 'app/services/privilege.service';
 import { MyDirectivesModule } from 'app/shared/directives/my-directives.module';
 import { AddEditOrganizationComponent } from 'app/main/administration/company/add-edit-organization/add-edit-organization.component';
@@ -44,7 +43,6 @@ import { CustomPipeModule } from 'app/shared/pipes/custom-pipe.module';
         OptionalColumnDeviceComponent,
         AddEditDeviceComponent,
         CompanyComponent,
-        RoleUpdateComponent,
 
         AddEditOrganizationComponent,
         OptionalColumnOrganizationComponent,
@@ -60,7 +58,6 @@ import { CustomPipeModule } from 'app/shared/pipes/custom-pipe.module';
     entryComponents: [
         AddEditAccountComponent,
         AddEditDeviceComponent,
-        RoleUpdateComponent,
 
         AddEditOrganizationComponent,
         OptionalColumnAccountComponent,

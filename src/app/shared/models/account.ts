@@ -9,11 +9,7 @@ export class Account {
     lastName: string;
     status: string;
     privileges: Array<PrivilegeLittle>;
-    // companyId: number;
-    // companyName: string;
-
     company: CompanyLittle | any;
-
     phoneNumber: string;
     photoUrl: string;
     emailAddress: string;

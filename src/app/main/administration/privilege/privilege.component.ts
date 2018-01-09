@@ -14,6 +14,7 @@ import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Component({
   selector: 'app-privilege',
@@ -23,9 +24,7 @@ import {of as observableOf} from 'rxjs/observable/of';
 export class PrivilegeComponent implements OnInit, AfterViewInit {
 
     dataSource: MatTableDataSource<Privilege> | null;
-    dataChange: BehaviorSubject<any>;
-    searchingStatement: string;
-
+    dataChange: ReplaySubject<number> | null;
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -51,7 +50,7 @@ export class PrivilegeComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.initTableSettings();
-        this.dataChange = new BehaviorSubject(0);
+        this.dataChange = new ReplaySubject(1);
         this.dataSource = new MatTableDataSource();
 
         // this.dataChange = new BehaviorSubject(0);
@@ -69,6 +68,7 @@ export class PrivilegeComponent implements OnInit, AfterViewInit {
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         this.dataSource.sort = this.sort;
         //this.dataSource.paginator = this.paginator;
+
 
         merge(this.sort.sortChange, this.paginator.page, this.dataChange)
             .pipe(
