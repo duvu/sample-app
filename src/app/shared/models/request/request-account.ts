@@ -6,6 +6,7 @@ export class AccountRequest {
     accountId: string;
     firstName: string;
     lastName: string;
+    password: string;
     status: string;
     privilegeIds: Array<number>;
     companyId: number;

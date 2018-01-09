@@ -19,6 +19,7 @@ import {catchError} from 'rxjs/operators/catchError';
 import {map} from 'rxjs/operators/map';
 import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Component({
     selector: 'app-device',
@@ -57,9 +58,8 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     };
 
     resultsLength = 0;
-    dataSource = new MatTableDataSource();
-    //dataSource: MatTableDataSource<Device> | null;
-    dataChange: BehaviorSubject<any>;
+    dataSource: MatTableDataSource<Device> | null;
+    dataChange: ReplaySubject<number>;
 
 
     constructor(private dialog: MatDialog,
@@ -69,7 +69,8 @@ export class DeviceComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.initTableSettings();
-        this.dataChange = new BehaviorSubject(0);
+        this.dataSource = new MatTableDataSource();
+        this.dataChange = new ReplaySubject(1);
 
     }
 
@@ -77,7 +78,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         this.dataSource.sort = this.sort;
 
-        merge(this.sort.sortChange, this.paginator.page)
+        merge(this.sort.sortChange, this.paginator.page, this.dataChange)
             .pipe(
                 startWith({}),
                 switchMap(() => {

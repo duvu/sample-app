@@ -14,8 +14,8 @@ import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
-import {RoleUpdateComponent} from "./role-update/role-update.component";
 import { AccountRequest } from 'app/shared/models/request/request-account';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Component({
     selector: 'app-account',
@@ -25,7 +25,7 @@ import { AccountRequest } from 'app/shared/models/request/request-account';
 
 export class AccountComponent implements OnInit, AfterViewInit {
     dataSource: MatTableDataSource<Account>;
-    dataChange: BehaviorSubject<any>;
+    dataChange: ReplaySubject<any>;
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -63,7 +63,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.initTableSettings();
-        this.dataChange = new BehaviorSubject(0);
+        this.dataChange = new ReplaySubject(1);
         this.dataSource = new MatTableDataSource();
     }
 
@@ -154,12 +154,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
         });
     }
 
-    create(account: Account): void {
-
-        let request = new AccountRequest();
-
+    create(account: AccountRequest): void {
         this.progress.show();
-        this.service.create(request).subscribe(
+        this.service.create(account).subscribe(
             data => {
                 this.dataChange.next(data.id);
             }
@@ -175,13 +172,18 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.update(result);
+                this.update(data.id, result);
             }
         });
     }
 
-    update(account: Account): void {
-        console.log('Updating Account Record.....!');
+    update(id: number, account: AccountRequest): void {
+        console.log('Updating Account Record.....!', account);
+        this.service.update(id, account).subscribe(
+            result => {
+                console.log('-', result);
+            }
+        );
     }
 
     openDialogConfirmDelete(account: Account): void {
