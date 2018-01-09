@@ -5,13 +5,13 @@ import { CommonModule} from '@angular/common';
 import { FormsModule} from '@angular/forms';
 import { MaterialShared} from '../shared/material-shared';
 import { ConfirmDeleteComponent } from './shared/confirm-delete/confirm-delete.component';
+import { FlattenPipe } from 'app/shared/pipes/flatten.pipe';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         MaterialShared,
-
         MainRoutingModule
     ],
     declarations: [

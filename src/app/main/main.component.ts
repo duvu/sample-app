@@ -4,7 +4,7 @@ import {AppService} from '../services/app.service';
 import {MatSidenav} from '@angular/material';
 import {Subscription} from 'rxjs/Subscription';
 import {ProgressBarService} from '../services/progress-bar.service';
-import {LoginResponse} from '../shared/models/response/login-response';
+import {LoginResponse} from '../shared/models/login-response';
 
 @Component({
     selector: 'app-main',

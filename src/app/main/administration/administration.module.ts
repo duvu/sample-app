@@ -20,9 +20,12 @@ import { MyDirectivesModule } from 'app/shared/directives/my-directives.module';
 import { AddEditOrganizationComponent } from 'app/main/administration/company/add-edit-organization/add-edit-organization.component';
 import { OptionalColumnOrganizationComponent } from 'app/main/administration/company/optional-column-organization/optional-column-organization.component';
 import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
+import { FlattenPipe } from 'app/shared/pipes/flatten.pipe';
+import { CustomPipeModule } from 'app/shared/pipes/custom-pipe.module';
 
 @NgModule({
     imports: [
+        CustomPipeModule,
         CommonModule,
         MaterialShared,
         FormsModule,

@@ -1,12 +1,12 @@
 import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Privilege } from 'app/shared/models/response/privilege';
+import { Privilege } from 'app/shared/models/privilege';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';
 import { PrivilegeService } from 'app/services/privilege.service';
 import { ProgressBarService } from 'app/services/progress-bar.service';
-import { DeleteEvent } from 'app/shared/models/response/delete-event';
+import { DeleteEvent } from 'app/shared/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
 import { OptionalColumnPrivilegeComponent } from 'app/main/administration/privilege/optional-column-privilege/optional-column-privilege.component';
 import { AddEditPrivilegeComponent } from 'app/main/administration/privilege/add-edit-privilege/add-edit-privilege.component';
@@ -68,7 +68,7 @@ export class PrivilegeComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
+        //this.dataSource.paginator = this.paginator;
 
         merge(this.sort.sortChange, this.paginator.page, this.dataChange)
             .pipe(
