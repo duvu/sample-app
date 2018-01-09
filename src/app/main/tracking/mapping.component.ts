@@ -38,6 +38,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     displayedColumns = ['name'];
     dataSource: MatTableDataSource<Device> | null;
+
     constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
 
     ngOnInit() {
