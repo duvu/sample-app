@@ -39,15 +39,16 @@
                 <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="organizationId">
+            <ng-container matColumnDef="companyId">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Company ID </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.companyId}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.company !== null ? element.company.id : ''}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="organizationName">
+            <ng-container matColumnDef="companyName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Company Name </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.companyName}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.company !== null ? element.company.name: ''}} </mat-cell>
             </ng-container>
+
 
             <ng-container matColumnDef="phoneNumber">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Phone Number </mat-header-cell>
@@ -81,7 +82,7 @@
 
             <ng-container matColumnDef="roles" *showIfRole="'lord, system-admin'">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Roles </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.privileges}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.privileges | flatten: 'name'}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="createdBy">
@@ -107,9 +108,6 @@
             <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef i18n> Actions </mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <button mat-icon-button (click)="openDialogRoleUpdate(element)" *showIfRole="'lord,system-admin'">
-                        <mat-icon color="accent">key</mat-icon>
-                    </button>
                     <button mat-icon-button (click)="openDialogEditing(element)">
                         <mat-icon color="accent">edit</mat-icon>
                     </button>

@@ -3,18 +3,19 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {AccountService} from 'app/services/account.service';
 import {ProgressBarService} from 'app/services/progress-bar.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Account} from 'app/shared/models/response/account';
+import {Account} from 'app/shared/models/account';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
 import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
 import {AppService} from 'app/services/app.service';
-import {DeleteEvent} from 'app/shared/models/response/delete-event';
+import {DeleteEvent} from 'app/shared/models/delete-event';
 import {ConfirmDeleteComponent} from 'app/main/shared/confirm-delete/confirm-delete.component';
 import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
 import {RoleUpdateComponent} from "./role-update/role-update.component";
+import { AccountRequest } from 'app/shared/models/request/request-account';
 
 @Component({
     selector: 'app-account',
@@ -29,7 +30,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    displayedColumns = ['id', 'accountId', 'firstName', 'lastName', 'organizationName', 'notes', 'createdBy', 'createdOn', 'actions'];
+    displayedColumns = ['id', 'accountId', 'firstName', 'lastName', 'companyName', 'notes', 'createdBy', 'createdOn', 'actions'];
 
     columns = {
         id:                 {selected: false, order: 0},
@@ -37,8 +38,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
         firstName:          {selected: false, order: 2},
         lastName:           {selected: false, order: 3},
         status:             {selected: false, order: 4},
-        organizationId:     {selected: false, order: 5},
-        organizationName:   {selected: false, order: 6},
+        companyId:     {selected: false, order: 5},
+        companyName:   {selected: false, order: 6},
         phoneNumber:        {selected: false, order: 7},
         photoUrl:           {selected: false, order: 8},
         emailAddress:       {selected: false, order: 9},
@@ -69,7 +70,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
     ngAfterViewInit(): void {
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
+        //this.dataSource.paginator = this.paginator;
 
         merge(this.sort.sortChange, this.paginator.page, this.dataChange)
             .pipe(
@@ -137,8 +138,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
     openDialogNewObject(): void {
         const data = new Account();
-        data.companyId = this.app.getCurrentAccount().organizationId;
-        data.companyName = this.app.getCurrentAccount().organizationName;
+        data.company = {};
+        // data.companyId = this.app.getCurrentAccount().organizationId;
+        // data.companyName = this.app.getCurrentAccount().organizationName;
         const dialogRef = this.dialog.open(AddEditAccountComponent, {
             // width: '600px',
             disableClose: true,
@@ -153,8 +155,11 @@ export class AccountComponent implements OnInit, AfterViewInit {
     }
 
     create(account: Account): void {
+
+        let request = new AccountRequest();
+
         this.progress.show();
-        this.service.create(account).subscribe(
+        this.service.create(request).subscribe(
             data => {
                 this.dataChange.next(data.id);
             }
@@ -163,7 +168,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
     openDialogEditing(data: Account): void {
         const dialogRef = this.dialog.open(AddEditAccountComponent, {
-            // width: '600px',
+            width: '600px',
             disableClose: true,
             data: data
         });
@@ -210,19 +215,19 @@ export class AccountComponent implements OnInit, AfterViewInit {
         );
     }
 
-    openDialogRoleUpdate(data: Account): void {
-        const dialogRef = this.dialog.open(RoleUpdateComponent, {
-            width: '500px',
-            disableClose: true,
-            data: data
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.update(result);
-            }
-        });
-    }
+    // openDialogRoleUpdate(data: Account): void {
+    //     const dialogRef = this.dialog.open(RoleUpdateComponent, {
+    //         width: '500px',
+    //         disableClose: true,
+    //         data: data
+    //     });
+    //
+    //     dialogRef.afterClosed().subscribe(result => {
+    //         if (result) {
+    //             this.update(result);
+    //         }
+    //     });
+    // }
 
 
 }

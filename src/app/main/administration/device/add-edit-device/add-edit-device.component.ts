@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { Company } from 'app/shared/models/response/company';
+import { Company } from 'app/shared/models/company';
 import { CompanyService } from 'app/services/organization.service';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
@@ -15,11 +15,8 @@ import { map } from 'rxjs/operators/map';
 })
 export class AddEditDeviceComponent implements OnInit {
 
-
     filteredCompanies: Observable<Company[]>;
-
     companyControl: FormControl = new FormControl();
-
     companyList: Company[];
 
     constructor(private companyService: CompanyService,

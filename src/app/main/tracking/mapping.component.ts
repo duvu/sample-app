@@ -5,7 +5,7 @@ import 'leaflet.markercluster';
 
 import {DeviceService} from '../../services/device.service';
 import {EventService} from '../../services/event.service';
-import {EventData} from '../../shared/models/response/event-data';
+import {EventData} from '../../shared/models/event-data';
 import * as _ from 'lodash';
 // import PointExpression = L.PointExpression;
 import {DatePipe} from '@angular/common';
@@ -14,7 +14,7 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/mergeMap';
 import { MatTableDataSource } from '@angular/material';
-import { Device } from 'app/shared/models/response/device';
+import { Device } from 'app/shared/models/device';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';

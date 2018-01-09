@@ -1,4 +1,6 @@
-import { Privilege } from 'app/shared/models/response/privilege';
+import { Privilege } from 'app/shared/models/privilege';
+import { CompanyLittle } from 'app/shared/models/little/company-little';
+import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
 
 export class Account {
     id: number;
@@ -6,9 +8,12 @@ export class Account {
     firstName: string;
     lastName: string;
     status: string;
-    privileges: Array<Privilege>;
-    companyId: number;
-    companyName: string;
+    privileges: Array<PrivilegeLittle>;
+    // companyId: number;
+    // companyName: string;
+
+    company: CompanyLittle | any;
+
     phoneNumber: string;
     photoUrl: string;
     emailAddress: string;

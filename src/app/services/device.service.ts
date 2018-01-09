@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {Device} from 'app/shared/models/response/device';
+import {Device} from 'app/shared/models/device';
 import { Base2Service } from 'app/services/base2.service';
 import { RequestDevice } from 'app/shared/models/request/request-device';
 

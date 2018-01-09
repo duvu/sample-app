@@ -1,6 +1,6 @@
 <div matDialogTitle>
-    <span *ngIf="data.id" i18n>Modifying Account</span>
-    <span *ngIf="data.id==null" i18n>Creating Account</span>
+    <span *ngIf="isEditing" i18n>Modifying Account</span>
+    <span *ngIf="!isEditing" i18n>Creating Account</span>
     <span> #{{data.accountId}}</span>
     <span class="x-dialog-close-btn">
         <button mat-icon-button (click)="cancel()">
@@ -14,39 +14,28 @@
         <div fxLayout="row" fxLayoutGap="16px">
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input matInput i18n-placeholder placeholder="Account ID" name="acc-account-id" [(ngModel)]="data.accountId" required>
+                    <input matInput i18n-placeholder placeholder="Account ID" name="acc-account-id" [(ngModel)]="data.accountId" required [disabled]="isEditing">
                 </mat-form-field>
             </div>
             <div fxFlex="50">
                 <mat-form-field class="full-width">
                     <input matInput i18n-placeholder placeholder="Status" name="acc-status" [(ngModel)]="data.status">
                 </mat-form-field>
-
-                <!--mat-form-field class="full-width">
-                    <input matInput placeholder="State" aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
-                            <img style="vertical-align:middle;" aria-hidden src="{{state.flag}}" height="25" />
-                            <span>{{ state.name }}</span> |
-                            <small>Population: {{state.population}}</small>
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field-->
-
             </div>
         </div>
-        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
-            <div fxFlex="50">
-                <mat-form-field class="full-width">
-                    <input type="password" matInput i18n-placeholder placeholder="Password" name="acc-password" [(ngModel)]="data.password">
-                </mat-form-field>
-            </div>
-            <div fxFlex="50">
-                <mat-form-field class="full-width">
-                    <input type="password" matInput i18n-placeholder placeholder="Re-type Password" name="acc-re-password" [(ngModel)]="data.password">
-                </mat-form-field>
-            </div>
-        </div>
+        <!--<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">-->
+            <!--<div fxFlex="50">-->
+                <!--<mat-form-field class="full-width">-->
+                    <!--<input type="password" matInput i18n-placeholder placeholder="Password" name="acc-password" [(ngModel)]="data.password">-->
+                <!--</mat-form-field>-->
+            <!--</div>-->
+            <!--<div fxFlex="50">-->
+                <!--<mat-form-field class="full-width">-->
+                    <!--<input type="password" matInput i18n-placeholder placeholder="Re-type Password" name="acc-re-password" [(ngModel)]="data.password">-->
+                <!--</mat-form-field>-->
+            <!--</div>-->
+        <!--</div>-->
+
         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
             <div fxFlex="50">
                 <mat-form-field class="full-width">
@@ -60,10 +49,30 @@
             </div>
         </div>
 
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="80">
+                <mat-form-field class="full-width">
+                    <input type="text"  placeholder="Company" aria-label="Company" [(ngModel)]="data.company" matInput [formControl]="companyControl" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngFor="let company of filteredCompanies | async" [value]="company.id">
+                            {{company.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+            <div fxFlex="20">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Company ID" name="dev-company-id" [(ngModel)]="data.company.id" disabled>
+                </mat-form-field>
+            </div>
+        </div>
 
         <mat-form-field class="full-width">
-            <input matInput i18n-placeholder placeholder="Orgnization Name" name="acc-organization-name" [(ngModel)]="data.organizationName" [disabled]="data.organizationName">
+            <mat-select multiple matInput placeholder="Roles" [(ngModel)]="privilegeIds">
+                <mat-option *ngFor="let pri of privilegeList | async" [value]="pri.id">{{pri.description}}</mat-option>
+            </mat-select>
         </mat-form-field>
+
 
 
         <div fxLayout="row" fxLayoutGap="16px">

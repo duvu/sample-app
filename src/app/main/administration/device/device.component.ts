@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Device } from 'app/shared/models/response/device';
+import { Device } from 'app/shared/models/device';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/services/app.service';
@@ -8,21 +8,25 @@ import { ProgressBarService } from 'app/services/progress-bar.service';
 import { DeviceService } from 'app/services/device.service';
 import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
 import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';
-import { DeleteEvent } from 'app/shared/models/response/delete-event';
+import { DeleteEvent } from 'app/shared/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
-import { merge } from 'rxjs/observable/merge';
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { startWith } from 'rxjs/operators';
-import {of as observableOf} from 'rxjs/observable/of';
 import { RequestDevice } from 'app/shared/models/request/request-device';
+
+import {Observable} from 'rxjs/Observable';
+import {merge} from 'rxjs/observable/merge';
+import {of as observableOf} from 'rxjs/observable/of';
+import {catchError} from 'rxjs/operators/catchError';
+import {map} from 'rxjs/operators/map';
+import {startWith} from 'rxjs/operators/startWith';
+import {switchMap} from 'rxjs/operators/switchMap';
+
 @Component({
     selector: 'app-device',
     templateUrl: './device.component.html',
     styleUrls: ['./device.component.scss']
 })
 export class DeviceComponent implements OnInit, AfterViewInit {
-    dataSource: MatTableDataSource<Device> | null;
-    dataChange: BehaviorSubject<any>;
+
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -51,7 +55,12 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         updatedOn:          {selected: false, order: 18},
         actions:            {selected: false, order: 19}
     };
+
     resultsLength = 0;
+    dataSource = new MatTableDataSource();
+    //dataSource: MatTableDataSource<Device> | null;
+    dataChange: BehaviorSubject<any>;
+
 
     constructor(private dialog: MatDialog,
                 private app: AppService,
@@ -61,20 +70,19 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.initTableSettings();
         this.dataChange = new BehaviorSubject(0);
-        this.dataSource = new MatTableDataSource();
+
     }
 
     ngAfterViewInit(): void {
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
 
-        merge(this.sort.sortChange, this.paginator.page, this.dataChange)
+        merge(this.sort.sortChange, this.paginator.page)
             .pipe(
                 startWith({}),
                 switchMap(() => {
                     this.progress.show();
-                    return this.service!.searchAndSort(
+                    return this.service.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
                         this.sort.active, this.sort.direction);
                 }),
@@ -82,13 +90,18 @@ export class DeviceComponent implements OnInit, AfterViewInit {
                     this.progress.hide();
                     this.resultsLength = data.totalElements;
 
+                    console.log('Length: ', this.resultsLength);
+
                     return data.content;
                 }),
                 catchError(() => {
                     this.progress.hide();
                     return observableOf([]);
                 })
-            ).subscribe(data => this.dataSource.data = data);
+            ).subscribe(data => {
+                this.dataSource.data = data;
+                console.log('Data', data);
+            });
     }
 
     applyFilter(filterValue: string) {
