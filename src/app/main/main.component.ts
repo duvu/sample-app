@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {AppService} from '../services/app.service';
+import {AppService} from '../shared/services/app.service';
 import {MatSidenav} from '@angular/material';
 import {Subscription} from 'rxjs/Subscription';
-import {ProgressBarService} from '../services/progress-bar.service';
+import {ProgressBarService} from '../shared/services/progress-bar.service';
 import {LoginResponse} from '../shared/models/login-response';
 
 @Component({

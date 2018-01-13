@@ -3,8 +3,8 @@ import { FormsModule } from "@angular/forms";
 import { MappingRoutingModule } from './mapping-routing.module';
 import { MappingComponent } from './mapping.component';
 import {CommonModule, DatePipe} from "@angular/common";
-import {DeviceService} from 'app/services/device.service';
-import {EventService} from 'app/services/event.service';
+import {DeviceService} from 'app/shared/services/device.service';
+import {EventService} from 'app/shared/services/event.service';
 import { MaterialShared } from 'app/shared/material-shared';
 
 

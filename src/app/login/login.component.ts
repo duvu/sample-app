@@ -1,9 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from 'app/services/auth.service';
-import { AppService} from 'app/services/app.service';
-import { ProgressBarService} from 'app/services/progress-bar.service';
+import { AuthService } from 'app/shared/services/auth.service';
+import { AppService} from 'app/shared/services/app.service';
+import { ProgressBarService} from 'app/shared/services/progress-bar.service';
 
 @Component({
     selector: 'app-login',
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
                 this.app.setCurrentAccount(result);
             },
             error => {
-                this.errorMessage = 'Error' + error;
+                this.errorMessage = 'Error' + error.message;
                 this.loading = false;
             },
             () => {

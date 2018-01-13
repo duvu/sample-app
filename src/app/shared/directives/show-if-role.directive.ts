@@ -1,5 +1,5 @@
 import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { AppService } from 'app/services/app.service';
+import { AppService } from 'app/shared/services/app.service';
 
 import * as _ from 'lodash';
 import { forEach } from '@angular/router/src/utils/collection';
