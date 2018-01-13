@@ -15,7 +15,8 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/mergeMap';
 import { MatTableDataSource } from '@angular/material';
 import { Device } from 'app/shared/models/device';
-
+import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import 'rxjs/add/operator/takeWhile';
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
 
@@ -39,6 +40,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     displayedColumns = ['name'];
     dataSource: MatTableDataSource<Device> | null;
 
+    private alive: boolean;
+
     constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
 
     ngOnInit() {
@@ -47,7 +50,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             iconUrl: '/assets/images/marker-icon.png',
             shadowUrl: '/assets/images/marker-shadow.png'
         });
-
+        this.alive = true;
         this.dataSource = new MatTableDataSource();
 
         this._device_service.getAll().subscribe(
@@ -76,25 +79,27 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         });
 
         L.control.scale().addTo(this.map);
-        // L.control.zoom({ position: "topright" }).addTo(this.map);
         L.control.zoom().setPosition('bottomleft').addTo(this.map);
         this.loadLivesEvent();
     }
     ngOnDestroy(): void {
-        //this.subcription.unsubscribe();
+        this.alive = false;
     }
     loadLivesEvent(): void {
-        this.subcription = Observable.interval(10000).startWith(0)
-            .flatMap(() => this._event_service.getLiveEvents()).subscribe(
-            liveEvents => {
-                this.liveEvents = liveEvents;
-                this.isLoading = false;
-                this.numberOfLoad++;
-                this.processEvents();
-            },
-            error => {},
-            () => {}
-        );
+        TimerObservable.create(0, 10000)
+            .takeWhile(() => this.alive)
+            .subscribe(() => {
+                this._event_service.getLiveEvents().subscribe(
+                    liveEvents => {
+                        this.liveEvents = liveEvents;
+                        this.isLoading = false;
+                        this.numberOfLoad++;
+                        this.processEvents();
+                    },
+                    error => {},
+                    () => {}
+                );
+            });
     }
     processEvents(): void {
         let icon = this.customDefault;
@@ -111,7 +116,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         let bounds = L.latLngBounds(latlngArray);
         this.map.addLayer(markersCluster);
-        if (this.numberOfLoad <= 1) {
+        if (this.numberOfLoad <= 1 && latlngArray.length > 0) {
             this.map.fitBounds(bounds);
         }
     }
