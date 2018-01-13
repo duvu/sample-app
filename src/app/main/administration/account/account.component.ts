@@ -159,6 +159,12 @@ export class AccountComponent implements OnInit, AfterViewInit {
         this.service.create(account).subscribe(
             data => {
                 this.dataChange.next(data.id);
+            },
+            error => {
+                this.progress.hide();
+            },
+            () => {
+                this.progress.hide();
             }
         );
     }

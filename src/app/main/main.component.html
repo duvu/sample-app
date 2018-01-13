@@ -22,11 +22,24 @@
             <mat-icon>setting</mat-icon>
             <span i18n>Administration</span>
         </button>
-        <button mat-button routerLink="usage">
+        <button mat-button [matMenuTriggerFor]="menu">
             <mat-icon>help</mat-icon>
             <span i18n>Help</span>
         </button>
-
+        <mat-menu #menu="matMenu" overlapTrigger="false">
+            <button mat-menu-item routerLink="usage">
+                <mat-icon>help</mat-icon>
+                <span>Help</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>voicemail</mat-icon>
+                <span>Development Plan</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>mail</mat-icon>
+                <span>Event Logger</span>
+            </button>
+        </mat-menu>
         <span class="fill-remain-space"></span>
 
         <button mat-icon-button>
