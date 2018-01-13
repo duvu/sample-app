@@ -1,13 +1,13 @@
 import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import {AccountService} from 'app/services/account.service';
-import {ProgressBarService} from 'app/services/progress-bar.service';
+import {AccountService} from 'app/shared/services/account.service';
+import {ProgressBarService} from 'app/shared/services/progress-bar.service';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Account} from 'app/shared/models/account';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
 import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
-import {AppService} from 'app/services/app.service';
+import {AppService} from 'app/shared/services/app.service';
 import {DeleteEvent} from 'app/shared/models/delete-event';
 import {ConfirmDeleteComponent} from 'app/main/shared/confirm-delete/confirm-delete.component';
 import { merge } from 'rxjs/observable/merge';

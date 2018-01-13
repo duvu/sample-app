@@ -1,4 +1,3 @@
-import { Privilege } from 'app/shared/models/privilege';
 import { CompanyLittle } from 'app/shared/models/little/company-little';
 import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
 

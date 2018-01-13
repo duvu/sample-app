@@ -8,13 +8,13 @@ import { LoginComponent} from 'app/login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { MaterialShared} from 'app/shared/material-shared';
-import { AuthInterceptor} from 'app/services/auth-interceptor';
-import { ProgressBarService} from 'app/services/progress-bar.service';
-import { AppService} from 'app/services/app.service';
+import { AuthInterceptor} from 'app/shared/services/auth-interceptor';
+import { ProgressBarService} from 'app/shared/services/progress-bar.service';
+import { AppService} from 'app/shared/services/app.service';
 import { AppComponent } from 'app/app.component';
 import { AppRoutingModule} from 'app/app-routing.module';
-import { AuthService} from 'app/services/auth.service';
-import { AuthGuard} from 'app/services/auth.guard';
+import { AuthService} from 'app/shared/services/auth.service';
+import { AuthGuard} from 'app/shared/services/auth.guard';
 import { PageNotFoundComponent } from 'app/pages/page-not-found/page-not-found.component';
 import { PageHomeComponent } from './pages/page-home/page-home.component';
 

@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AppService} from './services/app.service';
+import {AppService} from './shared/services/app.service';
 
 @Component({
   selector: 'app-root',

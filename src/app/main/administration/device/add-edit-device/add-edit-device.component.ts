@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Company } from 'app/shared/models/company';
-import { CompanyService } from 'app/services/organization.service';
+import { CompanyService } from 'app/shared/services/organization.service';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 

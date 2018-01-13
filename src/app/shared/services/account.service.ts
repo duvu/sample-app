@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Account} from '../shared/models/account';
+import {Account} from 'app/shared/models/account';
 import {Router} from '@angular/router';
-import {BaseService} from './base.service';
 import {HttpClient} from '@angular/common/http';
-import { Base2Service } from 'app/services/base2.service';
+import { Base2Service } from 'app/shared/services/base2.service';
 import { AccountRequest } from 'app/shared/models/request/request-account';
 
 export const ACCOUNT_API_URL = '/api/account';

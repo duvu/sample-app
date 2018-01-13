@@ -3,8 +3,8 @@ import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 
-import {DeviceService} from '../../services/device.service';
-import {EventService} from '../../services/event.service';
+import {DeviceService} from '../../shared/services/device.service';
+import {EventService} from '../../shared/services/event.service';
 import {EventData} from '../../shared/models/event-data';
 import * as _ from 'lodash';
 // import PointExpression = L.PointExpression;
