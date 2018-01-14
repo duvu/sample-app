@@ -36,11 +36,31 @@
                     </mat-autocomplete>
                 </mat-form-field>
             </div>
-            <div fxFlex="20">
+            <!--div fxFlex="20">
                 <mat-form-field class="full-width">
                     <input matInput i18n-placeholder placeholder="Company ID" name="dev-company-id" [(ngModel)]="data.company.id" disabled>
                 </mat-form-field>
+            </div-->
+
+            <div fxFlex="80">
+                <mat-form-field class="full-width">
+                    <!--input type="text"  placeholder="Account" aria-label="Account" [(ngModel)]="data.company" matInput [formControl]="companyControl" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
+                            {{company.name}}
+                        </mat-option>
+                    </mat-autocomplete-->
+
+                    <mat-select multiple matInput placeholder="Accounts" [(ngModel)]="accountIds">
+                        <mat-option *ngFor="let acc of accountList | async" [value]="acc.id">{{acc.accountId}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
+            <!--div fxFlex="20">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Company ID" name="dev-company-id" [(ngModel)]="data.company.id" disabled>
+                </mat-form-field>
+            </div-->
         </div>
 
         <mat-form-field class="full-width">

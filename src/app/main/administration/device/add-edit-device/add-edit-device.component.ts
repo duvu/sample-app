@@ -4,9 +4,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Company } from 'app/shared/models/company';
+import { Account } from 'app/shared/models/account';
 import { CompanyService } from 'app/shared/services/organization.service';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
+import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
+import { AccountLittle } from 'app/shared/models/little/account-little';
+import { AccountService } from 'app/shared/services/account.service';
+import { AccountRequest } from 'app/shared/models/request/request-account';
+import { RequestDevice } from 'app/shared/models/request/request-device';
 
 @Component({
   selector: 'app-add-edit-device',
@@ -19,11 +25,19 @@ export class AddEditDeviceComponent implements OnInit {
     companyControl: FormControl = new FormControl();
     companyList: Company[];
 
-    constructor(private companyService: CompanyService,
+    accountList: Observable<Account[]>;
+    accountIds: number[];
+    constructor(private companyService: CompanyService, private accountService: AccountService,
         public dialogRef: MatDialogRef<AddEditDeviceComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
+        this.accountIds = _.map(this.data.accounts, (acc: AccountLittle) => {
+            return acc.id;
+        });
+
+        this.accountList = this.accountService.getAll();
+
         this.companyService.getAll().subscribe(
             response => {
                 this.companyList = response;
@@ -57,7 +71,10 @@ export class AddEditDeviceComponent implements OnInit {
     }
 
     onSave(): void {
-        this.dialogRef.close(this.data);
+        let data1 = new RequestDevice(this.data);
+        data1.accountIds = this.accountIds;
+        this.dialogRef.close(data1);
+        //this.dialogRef.close(this.data);
     }
 
 }
