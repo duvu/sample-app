@@ -1,4 +1,5 @@
 import { CompanyLittle } from 'app/shared/models/little/company-little';
+import { AccountLittle } from 'app/shared/models/little/account-little';
 
 export class Device {
     public id: number;
@@ -7,6 +8,7 @@ export class Device {
     public deviceId: string;
 
     public company: CompanyLittle | any;
+    public accounts: Array<AccountLittle>;
 
     public vehicleId: number;
     public vehicleName: string;

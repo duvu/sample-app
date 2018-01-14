@@ -187,23 +187,8 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         });
     }
 
-    update(device: Device): void {
-        let request = new RequestDevice();
-        request.name = device.name;
-        request.deviceId = device.deviceId;
-        request.companyId = device.company ? device.company.id : null;
-        request.vehicleId = device.vehicleId;
-        request.ipAddress = device.ipAddress;
-        request.port = device.port;
-        request.protocol = device.protocol;
-        request.serialNumber = device.serialNumber;
-        request.modelName = device.modelName;
-        request.manufacturerName = device.manufacturerName;
-        request.firmwareVersion = device.firmwareVersion;
-        request.originalCountry = device.originalCountry;
-
-
-        this.service.update(device.id, request).subscribe(
+    update(device: RequestDevice): void {
+        this.service.update(device.id, device).subscribe(
             response => {
                 this.dataChange.next(0);
             }

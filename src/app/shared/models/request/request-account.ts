@@ -26,9 +26,11 @@ export class AccountRequest {
             this.firstName = account.firstName;
             this.lastName = account.lastName;
             this.status = account.status;
+
             this.privilegeIds = _.map(account.privileges, (privilege) => {
                 return privilege.id;
             });
+
             this.companyId = account.company ? account.company.id : null;
             this.companyName = account.company ? account.company.name : null;
             this.phoneNumber = account.phoneNumber;
