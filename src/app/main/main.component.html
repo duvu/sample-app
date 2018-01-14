@@ -40,31 +40,16 @@
                 <span>Event Logger</span>
             </button>
         </mat-menu>
+
         <span class="fill-remain-space"></span>
 
-        <button mat-icon-button>
-            <mat-icon>mail</mat-icon>
-        </button>
-        <div *ngIf="profile!=null">
-            <button mat-button [matMenuTriggerFor]="menu">
-                <mat-icon>profile</mat-icon>
-                <span>{{profile.accountName}}</span>
+            <button mat-icon-button>
+                <mat-icon>mail</mat-icon>
             </button>
-            <mat-menu #menu="matMenu">
-                <div mat-menu-item class="profile-current">
-                    <span>{{profile.displayName || profile.contactName}}</span>
-                    <span>{{profile.totalDevices || 0}}</span>
-                </div>
-                <button mat-menu-item>
-                    <mat-icon>home</mat-icon>
-                    <span>Home</span>
-                </button>
-                <button mat-menu-item (click)="logout()">
-                    <mat-icon>logout</mat-icon>
-                    <span i18n>Logout</span>
-                </button>
-            </mat-menu>
-        </div>
+            <button mat-button (click)="logout()">
+                <span>{{profile.accountName}}</span>
+                <mat-icon>logout</mat-icon>
+            </button>
     </mat-toolbar>
     <div class="page-content">
         <router-outlet></router-outlet>
