@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as d3 from 'd3';
 import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 
 import * as L from 'leaflet';
@@ -16,6 +17,8 @@ import 'rxjs/add/operator/takeWhile';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/mergeMap';
+import { MarkerClusterGroup } from "leaflet";
+import { LatLngBounds } from 'leaflet';
 
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -33,6 +36,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     isLoading: boolean = true;
     numberOfLoad: number = 0;
+    markersCluster: MarkerClusterGroup;
+    bounds: LatLngBounds;
 
     selectedEvent: EventData = null;
     inputSearch: string = null;
@@ -41,6 +46,13 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     dataSource: MatTableDataSource<Device> | null;
 
     private alive: boolean;
+
+    //-- chart
+    private arc: any;
+    private labelArc: any;
+    private pie: any;
+    private color: any;
+    private svg: any;
 
     constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
 
@@ -60,6 +72,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             error => {},
             () => {}
         );
+
+        this.markersCluster = L.markerClusterGroup();
+        this.initSvg();
 
     }
     ngAfterViewInit(): void {
@@ -85,6 +100,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnDestroy(): void {
         this.alive = false;
     }
+
     loadLivesEvent(): void {
         TimerObservable.create(0, 10000)
             .takeWhile(() => this.alive)
@@ -95,29 +111,30 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                         this.isLoading = false;
                         this.numberOfLoad++;
                         this.processEvents();
+                        this.drawPie();
                     },
                     error => {},
-                    () => {}
+                    () => {
+
+                    }
                 );
             });
     }
+
     processEvents(): void {
         let icon = this.customDefault;
-        let markersCluster = L.markerClusterGroup();
-        let latlngArray = [];
+        this.markersCluster.clearLayers()
         _.forEach(this.liveEvents, function (event) {
             if (event.latitude && event.longitude) {
                 let marker = this.buildMarker(event);
-                let ll = L.latLng(event.latitude, event.longitude);
-                markersCluster.addLayer(marker);
-                latlngArray.push(ll);
+                this.markersCluster.addLayer(marker);
             }
         }.bind(this));
 
-        let bounds = L.latLngBounds(latlngArray);
-        this.map.addLayer(markersCluster);
-        if (this.numberOfLoad <= 1 && latlngArray.length > 0) {
-            this.map.fitBounds(bounds);
+        this.bounds = this.markersCluster.getBounds();//L.latLngBounds(latlngArray);
+        this.map.addLayer(this.markersCluster);
+        if (this.numberOfLoad <= 1) {
+            this.map.fitBounds(this.bounds);
         }
     }
 
@@ -190,5 +207,44 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         let center = L.latLng(evdt.latitude, evdt.longitude);
         this.map.setView(center, 15);
+    }
+
+    initSvg(): void {
+        this.color = d3.scaleOrdinal()
+            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+        this.arc = d3.arc()
+            .outerRadius(115)
+            .innerRadius(0);
+        this.labelArc = d3.arc()
+            .outerRadius(75)
+            .innerRadius(75);
+        this.pie = d3.pie()
+            .sort(null)
+            .value((d: any) => d.population);
+        this.svg = d3.select("svg")
+            .append("g")
+            .attr("transform", "translate(" + 125 + "," + 125 + ")");
+    }
+
+    private drawPie() {
+
+        let Stats = [
+            {age: "<5", population: 2704659},
+            {age: "5-13", population: 4499890},
+            {age: "14-17", population: 2159981},
+            {age: "18-24", population: 3853788},
+            {age: "25-44", population: 14106543},
+            {age: "45-64", population: 8819342},
+            {age: "≥65", population: 612463}
+        ];
+        let g = this.svg.selectAll(".arc")
+            .data(this.pie(Stats))
+            .enter().append("g")
+            .attr("class", "arc");
+        g.append("path").attr("d", this.arc)
+            .style("fill", (d: any) => this.color(d.data.age) );
+        g.append("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
+            .attr("dy", ".35em")
+            .text((d: any) => d.data.age);
     }
 }
