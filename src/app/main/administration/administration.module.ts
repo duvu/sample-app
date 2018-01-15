@@ -21,6 +21,7 @@ import { OptionalColumnOrganizationComponent } from 'app/main/administration/com
 import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
 import { FlattenPipe } from 'app/shared/pipes/flatten.pipe';
 import { CustomPipeModule } from 'app/shared/pipes/custom-pipe.module';
+import { DcsComponent } from './dcs/dcs.component';
 
 @NgModule({
     imports: [
@@ -47,7 +48,9 @@ import { CustomPipeModule } from 'app/shared/pipes/custom-pipe.module';
         AddEditOrganizationComponent,
         OptionalColumnOrganizationComponent,
 
-        PrivilegeComponent
+        PrivilegeComponent,
+
+        DcsComponent
     ],
     providers: [
         CompanyService,
