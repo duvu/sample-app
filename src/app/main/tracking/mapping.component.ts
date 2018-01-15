@@ -19,6 +19,8 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/mergeMap';
 import { MarkerClusterGroup } from "leaflet";
 import { LatLngBounds } from 'leaflet';
+import { arc } from 'd3-shape';
+import { StatusPieChart } from 'app/shared/models/status-pie-chart';
 
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -53,6 +55,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     private pie: any;
     private color: any;
     private svg: any;
+    private stats: any;
+    private totalDevice: number;
 
     constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
 
@@ -111,7 +115,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                         this.isLoading = false;
                         this.numberOfLoad++;
                         this.processEvents();
-                        this.drawPie();
                     },
                     error => {},
                     () => {
@@ -123,12 +126,28 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     processEvents(): void {
         let icon = this.customDefault;
-        this.markersCluster.clearLayers()
+        this.stats = [];
+        let liveDev = new StatusPieChart("Live", 0);
+        let idleDev = new StatusPieChart("Idle", 0);
+        let stopDev = new StatusPieChart("Stop", 0);
+
+        let timestampNow = (new Date()).getTime();
+
+        this.markersCluster.clearLayers();
         _.forEach(this.liveEvents, function (event) {
             if (event.latitude && event.longitude) {
                 let marker = this.buildMarker(event);
                 this.markersCluster.addLayer(marker);
             }
+
+            if (timestampNow - event.timestamp <= 300000 /*300 seconds*/) {
+                liveDev.increase();
+            } else if (timestampNow - event.timestamp <= 30*60*1000) {
+                idleDev.increase();
+            } else {
+                stopDev.increase();
+            }
+
         }.bind(this));
 
         this.bounds = this.markersCluster.getBounds();//L.latLngBounds(latlngArray);
@@ -136,6 +155,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         if (this.numberOfLoad <= 1) {
             this.map.fitBounds(this.bounds);
         }
+        this.totalDevice = this.liveEvents.length;
+        this.stats.push(liveDev, idleDev, stopDev);
+        this.drawPie();
     }
 
     buildMarker(event: EventData): L.Marker {
@@ -211,40 +233,55 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     initSvg(): void {
         this.color = d3.scaleOrdinal()
-            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+            .range(["#00e80e", "#e23015", "#ffb403"]);
         this.arc = d3.arc()
             .outerRadius(115)
-            .innerRadius(0);
+            .innerRadius(50);
         this.labelArc = d3.arc()
             .outerRadius(75)
             .innerRadius(75);
         this.pie = d3.pie()
             .sort(null)
-            .value((d: any) => d.population);
+            .value((d: any) => d.count);
         this.svg = d3.select("svg")
             .append("g")
             .attr("transform", "translate(" + 125 + "," + 125 + ")");
     }
 
     private drawPie() {
-
-        let Stats = [
-            {age: "<5", population: 2704659},
-            {age: "5-13", population: 4499890},
-            {age: "14-17", population: 2159981},
-            {age: "18-24", population: 3853788},
-            {age: "25-44", population: 14106543},
-            {age: "45-64", population: 8819342},
-            {age: "≥65", population: 612463}
-        ];
         let g = this.svg.selectAll(".arc")
-            .data(this.pie(Stats))
+            .data(this.pie(this.stats))
             .enter().append("g")
             .attr("class", "arc");
         g.append("path").attr("d", this.arc)
-            .style("fill", (d: any) => this.color(d.data.age) );
+            .style("fill", (d: any) => this.color(d.data.name) );
         g.append("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
             .attr("dy", ".35em")
-            .text((d: any) => d.data.age);
+            .text((d: any) => d.data.name);
+
+        // g.append("text")
+        //     .attr("transform", (d:any) => {
+        //
+        //
+        //
+        //         let _d = this.arc.centroid(d);
+        //         _d[0] *= 1.5;	//multiply by a constant factor
+        //         _d[1] *= 1.5;	//multiply by a constant factor
+        //         return "translate(" + _d + ")";
+        //     })
+        //     .attr("dy", ".50em")
+        //     .style("text-anchor", "middle")
+        //     .text(function(d) {
+        //         if(d.data.percentage < 8) {
+        //             return '';
+        //         }
+        //         return d.data.percentage + '%';
+        //     });
+
+        g.append("text")
+            .attr("text-anchor", "middle")
+            .attr('font-size', '1.5em')
+            .attr('y', 10)
+            .text(this.totalDevice);
     }
 }
