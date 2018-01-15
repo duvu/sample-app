@@ -3,11 +3,16 @@
  */
 export interface EventData {
     id: number;
+    companyId: number; // company-id in db
+    companyName: string;
+    devId: number; // device-id in db
     deviceId: string,
-    displayName: string,
+    deviceName: string,
     latitude: number;
     longitude: number;
+    altitude: number;
     address: string;
     timestamp: number
-    icon: string;
+    speedKPH: number;
+    heading: number;
 }

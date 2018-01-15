@@ -1,22 +1,23 @@
+import * as _ from 'lodash';
 import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 
-import {DeviceService} from '../../shared/services/device.service';
-import {EventService} from '../../shared/services/event.service';
-import {EventData} from '../../shared/models/event-data';
-import * as _ from 'lodash';
-// import PointExpression = L.PointExpression;
+import {DeviceService} from 'app/shared/services/device.service';
+import {EventService} from 'app/shared/services/event.service';
+import {EventData} from 'app/shared/models/event-data';
 import {DatePipe} from '@angular/common';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/mergeMap';
 import { MatTableDataSource } from '@angular/material';
 import { Device } from 'app/shared/models/device';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
+
 import 'rxjs/add/operator/takeWhile';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/mergeMap';
+
+
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
 
@@ -35,7 +36,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     selectedEvent: EventData = null;
     inputSearch: string = null;
-    subcription: any;
 
     displayedColumns = ['name'];
     dataSource: MatTableDataSource<Device> | null;
@@ -126,7 +126,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         let icon = this.buildIcon(event);
         let popup = this.buildPopup(event);
         return L.marker(ll, {icon: icon})
-            .bindTooltip(event.displayName, {
+            .bindTooltip(event.deviceName, {
                 permanent: true,
                 direction: 'bottom',
                 offset: L.point(0, 6),
@@ -175,8 +175,20 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     selectAnEvent(event: EventData): void{
         this.selectedEvent = event;
-        this.inputSearch = event.displayName;
+        this.inputSearch = event.deviceName;
         let center = L.latLng(event.latitude, event.longitude);
+        this.map.setView(center, 15);
+    }
+
+
+    selectThisDevice(device: Device): void {
+        device.selected = !device.selected;
+        let evdt = _.find(this.liveEvents, function (e) {
+            return device.id === e.devId;
+        });
+
+
+        let center = L.latLng(evdt.latitude, evdt.longitude);
         this.map.setView(center, 15);
     }
 }
