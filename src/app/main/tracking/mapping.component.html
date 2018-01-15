@@ -13,10 +13,10 @@
             <mat-table [dataSource]="dataSource">
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef> Device ID </mat-header-cell>
-                    <mat-cell *matCellDef="let element">{{element.deviceId}}</mat-cell>
+                    <mat-cell *matCellDef="let element" (click)="selectThisDevice(element)">{{element.deviceId}}</mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns" style="display: none"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{selected: row.selected}"></mat-row>
             </mat-table>
         </div>
     </mat-sidenav>
