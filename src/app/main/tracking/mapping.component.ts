@@ -32,6 +32,9 @@ const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access
     styleUrls: ['./mapping.component.scss']
 })
 export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
+
+    now: number;
+
     liveEvents: EventData[];
     customDefault: L.Icon;
     map: L.Map;
@@ -87,7 +90,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             center: L.latLng(21.731253, 105.996139),
             zoom: 12,
             minZoom: 1,
-            maxZoom: 19,
+            maxZoom: 18,
 
             layers: [
                 L.tileLayer(TILE_MAPBOX, {
@@ -131,7 +134,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         let idleDev = new StatusPieChart("Idle", 0);
         let stopDev = new StatusPieChart("Stop", 0);
 
-        let timestampNow = (new Date()).getTime();
+        this.now = (new Date()).getTime();
 
         this.markersCluster.clearLayers();
         _.forEach(this.liveEvents, function (event) {
@@ -140,9 +143,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.markersCluster.addLayer(marker);
             }
 
-            if (timestampNow - event.timestamp <= 300000 /*300 seconds*/) {
+            if (this.now - event.timestamp <= 300000 /*300 seconds*/) {
                 liveDev.increase();
-            } else if (timestampNow - event.timestamp <= 30*60*1000) {
+            } else if (this.now - event.timestamp <= 30*60*1000) {
                 idleDev.increase();
             } else {
                 stopDev.increase();
@@ -164,8 +167,11 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         let ll = L.latLng(event.latitude, event.longitude);
         let icon = this.buildIcon(event);
         let popup = this.buildPopup(event);
+
+        let devName = event.deviceName ? event.deviceName : event.deviceId;
+
         return L.marker(ll, {icon: icon})
-            .bindTooltip(event.deviceName, {
+            .bindTooltip(devName, {
                 permanent: true,
                 direction: 'bottom',
                 offset: L.point(0, 6),
@@ -175,8 +181,16 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     buildIcon(event: EventData): L.DivIcon {
-
         let htmlIcon = '';
+        if (this.now - event.timestamp <= 300000 /*300 seconds*/) {
+            htmlIcon = '<div style="background-color: lawngreen; width: 100%; height: 100%;"></div>';
+        } else if (this.now - event.timestamp <= 30*60*1000) {
+            htmlIcon = '<div style="background-color: orange; width: 100%; height: 100%;"></div>';
+        } else {
+            htmlIcon = '<div style="background-color: red; width: 100%; height: 100%;"></div>';
+        }
+
+
 
         // html?: string | false;
         // bgPos?: PointExpression;
@@ -196,6 +210,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         let txtDate = this._datePipe.transform(event.timestamp, 'MMM dd, yyyy hh:mm:ss');
         htmlPopup += '<table>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'DeviceID:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.deviceId;htmlPopup += '</td>';htmlPopup += '</tr>';
+        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'SpeedKPH:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.speedKPH;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += txtDate;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Lat/Lng:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.latitude + '/' + event.longitude;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Address:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.address;htmlPopup += '</td>';htmlPopup += '</tr>';
