@@ -16,6 +16,7 @@ import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
 import { AccountRequest } from 'app/shared/models/request/request-account';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { CompanyLittle } from 'app/shared/models/little/company-little';
 
 @Component({
     selector: 'app-account',
@@ -170,6 +171,9 @@ export class AccountComponent implements OnInit, AfterViewInit {
     }
 
     openDialogEditing(data: Account): void {
+        if (!data.company) {
+            data.company = new CompanyLittle();
+        }
         const dialogRef = this.dialog.open(AddEditAccountComponent, {
             width: '600px',
             disableClose: true,

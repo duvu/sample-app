@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 import { Company } from 'app/shared/models/company';
@@ -15,13 +15,15 @@ import { pipe } from 'rxjs/Rx';
 import { AccountRequest } from 'app/shared/models/request/request-account';
 import { Account } from 'app/shared/models/account';
 import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
+import { CompanyLittle } from 'app/shared/models/little/company-little';
 
 @Component({
     selector: 'app-add-edit-account',
     templateUrl: './add-edit-account.component.html',
     styleUrls: ['./add-edit-account.component.scss']
 })
-export class AddEditAccountComponent implements OnInit {
+export class AddEditAccountComponent implements OnInit, AfterViewInit {
+
     privilegeIds: number[];
     password: string;
     re_password: string;
@@ -41,6 +43,7 @@ export class AddEditAccountComponent implements OnInit {
         this.privilegeIds = _.map(this.data.privileges, (privilege: PrivilegeLittle) => {
             return privilege.id;
         });
+
         this.isEditing = this.data.accountId ? true : false;
         this.privilegeList = this.privilegeService.getAll();
         this.companyService.getAll().subscribe(
@@ -57,6 +60,10 @@ export class AddEditAccountComponent implements OnInit {
             }
         );
     }
+
+    ngAfterViewInit(): void {
+    }
+
     cancel(): void {
         this.dialogRef.close();
     }
