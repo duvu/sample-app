@@ -61,6 +61,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     private stats: any;
     private totalDevice: number;
 
+    private chart: any;
+
     constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
 
     ngOnInit() {
@@ -159,8 +161,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             this.map.fitBounds(this.bounds);
         }
         this.totalDevice = this.liveEvents.length;
+
         this.stats.push(liveDev, idleDev, stopDev);
-        this.drawPie();
+        this.draw();
     }
 
     buildMarker(event: EventData): L.Marker {
@@ -261,42 +264,46 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.svg = d3.select("svg")
             .append("g")
             .attr("transform", "translate(" + 125 + "," + 125 + ")");
+
+        //this.createPie();
     }
 
-    private drawPie() {
-        let g = this.svg.selectAll(".arc")
-            .data(this.pie(this.stats))
-            .enter().append("g")
-            .attr("class", "arc");
-        g.append("path").attr("d", this.arc)
-            .style("fill", (d: any) => this.color(d.data.name) );
-        g.append("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
-            .attr("dy", ".35em")
-            .text((d: any) => d.data.name);
+    private draw() {
+        if (this.chart) {
+            this.updatePie();
+        } else {
+            this.createPie();
+        }
+    }
 
-        // g.append("text")
-        //     .attr("transform", (d:any) => {
-        //
-        //
-        //
-        //         let _d = this.arc.centroid(d);
-        //         _d[0] *= 1.5;	//multiply by a constant factor
-        //         _d[1] *= 1.5;	//multiply by a constant factor
-        //         return "translate(" + _d + ")";
-        //     })
-        //     .attr("dy", ".50em")
-        //     .style("text-anchor", "middle")
-        //     .text(function(d) {
-        //         if(d.data.percentage < 8) {
-        //             return '';
-        //         }
-        //         return d.data.percentage + '%';
-        //     });
-
-        g.append("text")
+    private createPie() {
+        console.log('createPie', this.stats);
+        this.svg.append("text")
             .attr("text-anchor", "middle")
             .attr('font-size', '1.5em')
             .attr('y', 10)
             .text(this.totalDevice);
+
+
+        this.chart = this.svg.selectAll(".arc")
+            .data(this.pie(this.stats))
+            .enter().append("g")
+            .attr("class", "arc");
+
+        this.chart.append("path")
+            .attr("d", this.arc)
+            .style("fill", (d: any) => this.color(d.data.name));
+
+        this.chart.append("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
+            .attr("dy", ".35em")
+            .text((d: any) => d.data.count);
+    }
+
+    private updatePie() {
+        console.log('updatePie', this.stats);
+        this.svg.select("text").text(() => this.totalDevice);
+        this.chart = this.svg.selectAll(".arc").data(this.pie(this.stats));
+        this.chart.select("path").attr("d", this.arc);
+        this.chart.select("text").text((d: any) => d.data.count);
     }
 }
