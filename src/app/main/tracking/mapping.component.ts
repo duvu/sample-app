@@ -145,6 +145,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.markersCluster.clearLayers();
         _.forEach(this.liveEvents, function (event) {
 
+            console.log('Now - Timestamp: ' + this.now + '-' + event.timestamp + '=', this.now - event.timestamp)
             let d = _.find(this.dataSource.data, function (dt) {
                 return event.devId === dt.id;
             });
@@ -320,6 +321,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.svg.select("text").text(() => this.totalDevice);
         this.chart = this.svg.selectAll(".arc").data(this.pie(this.stats));
         this.chart.select("path").attr("d", this.arc);
-        this.chart.select("text").text((d: any) => d.data.count);
+        this.chart.select("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")").text((d: any) => d.data.count);
     }
 }
