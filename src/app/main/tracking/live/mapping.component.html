@@ -14,8 +14,15 @@
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef> Device ID </mat-header-cell>
                     <mat-cell *matCellDef="let element" (click)="selectThisDevice(element)">
-                        <span [ngClass]="{'device-stop': element.state==0, 'device-idle': element.state==1, 'device-live': element.state==2}"></span>
-                        <span>{{element.deviceId}}</span>
+                        <mat-accordion>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <span [ngClass]="{'device-stop': element.state==0, 'device-idle': element.state==1, 'device-live': element.state==2}"></span>
+                                    <span>{{element.deviceId}}</span>
+                                </mat-expansion-panel-header>
+                                <a [routerLink]="['history', element.id]">history >></a>
+                            </mat-expansion-panel>
+                        </mat-accordion>
                     </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns" style="display: none"></mat-header-row>
