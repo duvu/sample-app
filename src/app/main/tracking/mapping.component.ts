@@ -21,6 +21,7 @@ import { MarkerClusterGroup } from "leaflet";
 import { LatLngBounds } from 'leaflet';
 import { arc } from 'd3-shape';
 import { StatusPieChart } from 'app/shared/models/status-pie-chart';
+import { DeviceLittle } from 'app/shared/models/little/device-little';
 
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -48,7 +49,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     inputSearch: string = null;
 
     displayedColumns = ['name'];
-    dataSource: MatTableDataSource<Device> | null;
+    dataSource: MatTableDataSource<DeviceLittle> | null;
 
     private alive: boolean;
 
@@ -62,8 +63,11 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     private totalDevice: number;
 
     private chart: any;
+    private oldSelectedDevice: DeviceLittle;
 
-    constructor(private _datePipe: DatePipe ,private _device_service: DeviceService, private _event_service: EventService) { }
+    constructor(private _datePipe: DatePipe,
+                private deviceService: DeviceService,
+                private eventService: EventService) { }
 
     ngOnInit() {
         this.customDefault = L.icon({
@@ -74,7 +78,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.alive = true;
         this.dataSource = new MatTableDataSource();
 
-        this._device_service.getAll().subscribe(
+        this.deviceService.getAllLittle().subscribe(
             response => {
                 this.dataSource.data = response;
             },
@@ -114,7 +118,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         TimerObservable.create(0, 10000)
             .takeWhile(() => this.alive)
             .subscribe(() => {
-                this._event_service.getLiveEvents().subscribe(
+                this.eventService.getLiveEvents().subscribe(
                     liveEvents => {
                         this.liveEvents = liveEvents;
                         this.isLoading = false;
@@ -132,14 +136,19 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     processEvents(): void {
         let icon = this.customDefault;
         this.stats = [];
-        let liveDev = new StatusPieChart("Live", 0);
-        let idleDev = new StatusPieChart("Idle", 0);
-        let stopDev = new StatusPieChart("Stop", 0);
+        let liveDev = new StatusPieChart(1,"Live", 0);
+        let idleDev = new StatusPieChart(2,"Idle", 0);
+        let stopDev = new StatusPieChart(3,"Stop", 0);
 
         this.now = (new Date()).getTime();
 
         this.markersCluster.clearLayers();
         _.forEach(this.liveEvents, function (event) {
+
+            let d = _.find(this.dataSource.data, function (dt) {
+                return event.devId === dt.id;
+            });
+
             if (event.latitude && event.longitude) {
                 let marker = this.buildMarker(event);
                 this.markersCluster.addLayer(marker);
@@ -147,10 +156,13 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
             if (this.now - event.timestamp <= 300000 /*300 seconds*/) {
                 liveDev.increase();
+                d.state = 2; //living
             } else if (this.now - event.timestamp <= 30*60*1000) {
                 idleDev.increase();
+                d.state = 1; //idle
             } else {
                 stopDev.increase();
+                d.state = 0; //stop
             }
 
         }.bind(this));
@@ -238,20 +250,24 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
 
-    selectThisDevice(device: Device): void {
+    selectThisDevice(device: DeviceLittle): void {
+        if (this.oldSelectedDevice) {
+            this.oldSelectedDevice.selected = false;
+        }
         device.selected = !device.selected;
+
         let evdt = _.find(this.liveEvents, function (e) {
             return device.id === e.devId;
         });
-
-
         let center = L.latLng(evdt.latitude, evdt.longitude);
         this.map.setView(center, 15);
+
+        this.oldSelectedDevice = device;
     }
 
     initSvg(): void {
         this.color = d3.scaleOrdinal()
-            .range(["#00e80e", "#e23015", "#ffb403"]);
+            .range(["#00e80e", "#ffb403", "#e23015"]);
         this.arc = d3.arc()
             .outerRadius(115)
             .innerRadius(50);
@@ -292,7 +308,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.chart.append("path")
             .attr("d", this.arc)
-            .style("fill", (d: any) => this.color(d.data.name));
+            .style("fill", (d: any) => this.color(d.data.idx));
 
         this.chart.append("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
             .attr("dy", ".35em")

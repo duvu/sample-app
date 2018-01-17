@@ -28,5 +28,5 @@ export class Device {
     public updatedBy: string;
     public updatedOn: Date;
 
-    public selected: boolean;
+
 }
