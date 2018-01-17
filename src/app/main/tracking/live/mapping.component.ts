@@ -1,10 +1,12 @@
-///<reference path="../../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import * as _ from 'lodash';
 import * as d3 from 'd3';
 import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
+import { MarkerClusterGroup } from "leaflet";
+import { LatLngBounds } from 'leaflet';
+
 
 import {DeviceService} from 'app/shared/services/device.service';
 import {EventService} from 'app/shared/services/event.service';
@@ -18,8 +20,7 @@ import 'rxjs/add/operator/takeWhile';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/mergeMap';
-import { MarkerClusterGroup } from "leaflet";
-import { LatLngBounds } from 'leaflet';
+
 import { arc } from 'd3-shape';
 import { StatusPieChart } from 'app/shared/models/status-pie-chart';
 import { DeviceLittle } from 'app/shared/models/little/device-little';
