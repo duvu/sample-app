@@ -1,3 +1,4 @@
+///<reference path="../../../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import * as _ from 'lodash';
 import * as d3 from 'd3';
 import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
@@ -144,8 +145,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.markersCluster.clearLayers();
         _.forEach(this.liveEvents, function (event) {
-
-            console.log('Now - Timestamp: ' + this.now + '-' + event.timestamp + '=', this.now - event.timestamp)
             let d = _.find(this.dataSource.data, function (dt) {
                 return event.devId === dt.id;
             });
@@ -294,7 +293,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private createPie() {
-        console.log('createPie', this.stats);
+        // console.log('createPie', this.stats);
         this.svg.append("text")
             .attr("text-anchor", "middle")
             .attr('font-size', '1.5em')
@@ -317,7 +316,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private updatePie() {
-        console.log('updatePie', this.stats);
+        // console.log('updatePie', this.stats);
         this.svg.select("text").text(() => this.totalDevice);
         this.chart = this.svg.selectAll(".arc").data(this.pie(this.stats));
         this.chart.select("path").attr("d", this.arc);
