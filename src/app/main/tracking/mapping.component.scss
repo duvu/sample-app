@@ -27,10 +27,33 @@ $side-nav-width: 250px;
       background-color: #ffffff;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: #9b9b9b;
+      background-color: #eeeeee;
+    }
+
+    .device-stop {
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .device-idle {
+      width: 10px;
+      height: 10px;
+      background-color: orange;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .device-live {
+      width: 10px;
+      height: 10px;
+      background-color: lightgreen;
+      border-radius: 50%;
+      display: inline-block;
     }
   }
   .chart-overview {
+    background-color: #9b9b9b;
     min-height: $side-nav-width;
     max-height: $side-nav-width;
     min-width: $side-nav-width;

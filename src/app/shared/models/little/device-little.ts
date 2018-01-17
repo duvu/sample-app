@@ -3,4 +3,8 @@ export class DeviceLittle {
 
     public name: string;
     public deviceId: string;
+
+    //--additional
+    public selected: boolean;
+    public state: number; //stopped, living, idle
 }
