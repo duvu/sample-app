@@ -13,6 +13,8 @@ import * as _ from 'lodash';
 import { LatLng, Polyline } from 'leaflet';
 import { MatTableDataSource } from '@angular/material';
 
+import * as d3 from 'd3';
+import { Stocks } from './shared/data';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -38,8 +40,20 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     dataSource: MatTableDataSource<EventData> | null;
     displayedColumns = ['id', 'deviceId', 'deviceName', 'latitude', 'longitude', 'altitude', 'heading', 'speedKPH', 'address', 'timestamp'];
 
+
+    //charting
+    private margin = {top: 20, right: 20, bottom: 30, left: 50};
+    private width: number;
+    private height: number;
+    private x: any;
+    private y: any;
+    private svg: any;
+    private line: d3.Line<[number, number]>;
+
     constructor(private route: ActivatedRoute,
-                private eventService: EventService) { }
+                private eventService: EventService) {
+
+    }
 
     ngOnInit() {
         this.id = this.route.snapshot.paramMap.get('id');
@@ -52,6 +66,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource();
         this.timeFrom = this.timeFrom ? this.timeFrom : 0;
         this.timeTo = this.timeTo ? this.timeTo : 0;
+
     }
     ngAfterViewInit(): void {
         console.log('afterView');
@@ -124,6 +139,11 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         L.easyBar(range).addTo(this.map);
 
         this.loadHistoryEvents();
+
+        this.initSvg();
+        this.initAxis();
+        this.drawAxis();
+        this.drawLine();
     }
 
     private loadHistoryEvents(): void {
@@ -161,5 +181,68 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 {offset: 25, repeat: 50, symbol: L.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, weight: 0}})}
             ]
         }).addTo(this.map);
+    }
+
+
+    private initSvg() {
+        let parentDiv = document.getElementById('parent-div');
+
+        // this.width = 900 - this.margin.left - this.margin.right;
+        // this.height = 500 - this.margin.top - this.margin.bottom;
+
+        this.width = parentDiv.clientWidth;
+        this.height = parentDiv.clientHeight;
+        this.svg = d3.select("svg")
+            .datum(Stocks)
+            .attr("width", '100%')
+            .attr("height", '100%')
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .attr("viewBox", '0 0 '+ this.width+' '+ this.height)
+            .append("g")
+            //.attr("transform", "translate(" + Math.min(this.width,this.height)/2 + "," + Math.min(this.width,this.height)/2 + ")");
+            // .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+            .attr("transform", "translate(40, -30)");
+    }
+
+    private initAxis() {
+        this.x = d3.scaleTime().rangeRound([0, this.width]);
+        this.y = d3.scaleLinear().rangeRound([this.height, 0]);
+        this.x.domain(d3.extent(Stocks, (d) => d.date ));
+        this.y.domain(d3.extent(Stocks, (d) => d.value ));
+    }
+
+    private drawAxis() {
+
+        this.svg.append("g")
+            // .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + this.height + ")")
+            .call(d3.axisBottom(this.x));
+
+        this.svg.append("g")
+            // .attr("class", "axis axis--y")
+            .call(d3.axisLeft(this.y));
+            // .append("text")
+            // .attr("class", "axis-title")
+            // .attr("transform", "rotate(-90)")
+            // .attr("y", 6)
+            // .attr("dy", ".71em")
+            // .style("text-anchor", "end")
+            // .text("Price ($)");
+    }
+
+    private drawLine() {
+        this.line = d3.line()
+            .x( (d: any) => this.x(d.date) )
+            .y( (d: any) => this.y(d.value) );
+
+        this.svg
+            .append("path")
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .attr("stroke-width", 1.5)
+            .attr("class", "line")
+            .attr("d", this.line);
     }
 }

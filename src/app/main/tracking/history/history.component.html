@@ -4,7 +4,11 @@
     </div>
     <div fxFlex="40">
         <div fxLayout="row" class="history-details">
-            <div fxFlex="50"></div>
+            <div fxFlex="50">
+                <div id="parent-div" class="history-table">
+                    <svg></svg>
+                </div>
+            </div>
             <div fxFlex="50">
                 <div class="history-table">
                     <mat-table [dataSource]="dataSource">
