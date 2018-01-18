@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { EventData } from 'app/shared/models/event-data';
@@ -18,5 +18,12 @@ export class EventService {
     getLiveEvents(): Observable<EventData[]> {
         const url = this._url + 'live';
         return this._http.get<EventData[]>(url);
+    }
+    getHistoryEvents(deviceId: string, timeFrom: number, timeTo: number): Observable<EventData[]> {
+        const url = this._url +'history/' + deviceId;
+        let params = new HttpParams();
+        params = params.append('timeFrom', String(timeFrom));
+        params = params.append('timeTo', String(timeTo));
+        return this._http.get<EventData[]>(url, {params: params});
     }
 }

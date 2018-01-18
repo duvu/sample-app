@@ -22,8 +22,6 @@ export class Base2Service<I, O> {
         params = params.append('size', String(size));
         sort = sort ? sort : '';
         params = params.append('sort', sort + ',' + order);
-
-        console.log('Params: ', params);
         return this._http.get<PageableResponse<O>>(this._url, {params: params});
     }
 
