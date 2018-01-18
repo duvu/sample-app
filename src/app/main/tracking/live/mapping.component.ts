@@ -92,6 +92,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.initSvg();
 
     }
+
     ngAfterViewInit(): void {
         this.map = L.map('map-id', {
             zoomControl: false,
@@ -112,6 +113,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         L.control.zoom().setPosition('bottomleft').addTo(this.map);
         this.loadLivesEvent();
     }
+
     ngOnDestroy(): void {
         this.alive = false;
     }

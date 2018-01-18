@@ -9,6 +9,7 @@
       "lodash",
       "leaflet",
       "leaflet.markercluster",
+      "leaflet-polylinedecorator",
       "jwt-decode"
     ]
   },
