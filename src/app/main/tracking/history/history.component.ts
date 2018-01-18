@@ -10,6 +10,7 @@ import { EventData } from 'app/shared/models/event-data';
 import * as _ from 'lodash';
 import { LatLngBounds } from 'leaflet';
 import { LatLng } from 'leaflet';
+import { MatTableDataSource } from '@angular/material';
 
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -27,7 +28,9 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     private map: L.Map;
     private historyEvents: EventData[];
     private customDefault: L.Icon;
-    private bounds: LatLngBounds;
+
+    dataSource: MatTableDataSource<EventData> | null;
+    displayedColumns = ['id', 'deviceId', 'deviceName', 'latitude', 'longitude', 'altitude', 'heading', 'speedKPH', 'address'];
 
     constructor(private route: ActivatedRoute,
                 private eventService: EventService) { }
@@ -39,6 +42,8 @@ export class HistoryComponent implements OnInit, AfterViewInit {
             iconUrl: '/assets/images/marker-icon.png',
             shadowUrl: '/assets/images/marker-shadow.png'
         });
+
+        this.dataSource = new MatTableDataSource();
     }
     ngAfterViewInit(): void {
         console.log('afterView');
@@ -67,6 +72,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
             data => {
                 //console.log('Data', data);
                 this.historyEvents = data;
+                this.dataSource.data = data;
                 this.processEvents();
 
             },

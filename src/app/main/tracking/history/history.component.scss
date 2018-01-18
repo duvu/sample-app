@@ -1,3 +1,20 @@
-.main-map {
+.page-history {
   height: 100%;
+
+  .main-map {
+    height: 100%;
+  }
+
+  .history-table {
+    overflow-y: auto;
+    height: 100%;
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: #ffffff;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #eeeeee;
+    }
+
+  }
 }
