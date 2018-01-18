@@ -43,6 +43,12 @@
                     <mat-cell *matCellDef="let element">{{element.address}}</mat-cell>
                 </ng-container>
 
+                <ng-container matColumnDef="timestamp">
+                    <mat-header-cell *matHeaderCellDef> Date/Time </mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.timestamp | date: 'short'}}</mat-cell>
+                </ng-container>
+
+
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{selected: row.selected}"></mat-row>
             </mat-table>
