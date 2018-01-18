@@ -232,6 +232,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += txtDate;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Lat/Lng:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.latitude + '/' + event.longitude;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Address:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.address;htmlPopup += '</td>';htmlPopup += '</tr>';
+        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title" colspan="2">';htmlPopup += '<a href=\'main/tracking/history/'; htmlPopup += event.devId; htmlPopup+= '\'> history>>'; htmlPopup+='</a>'; htmlPopup += '</td>';
         htmlPopup += '</table>';
         popup.setContent(htmlPopup);
         popup.options.offset = L.point(0, 0);
