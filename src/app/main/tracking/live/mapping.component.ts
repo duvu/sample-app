@@ -280,10 +280,10 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             .range(["#00e80e", "#ffb403", "#e23015"]);
         this.arc = d3.arc()
             .outerRadius(115)
-            .innerRadius(50);
-        this.labelArc = d3.arc()
-            .outerRadius(75)
             .innerRadius(75);
+        this.labelArc = d3.arc()
+            .outerRadius(95)
+            .innerRadius(95);
         this.pie = d3.pie()
             .sort(null)
             .value((d: any) => d.count);

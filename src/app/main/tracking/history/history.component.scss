@@ -25,4 +25,40 @@
   .mat-header-row {
     position: sticky;
   }
+
+  #parent-div {
+    height: calc(100% - 10px); /** output container is small for display */
+    width: 100%;
+    display: block;
+    //border: 1px solid red;
+  }
+
+  .axis {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .axis-title {
+    fill: none;
+    stroke: black;
+    stroke-width: 0.5px;
+  }
+
+
+  .axis--x path {
+    /*display: none;*/
+  }
+
+  .line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+
 }
