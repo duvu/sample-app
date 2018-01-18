@@ -24,6 +24,7 @@ import 'rxjs/add/operator/mergeMap';
 import { arc } from 'd3-shape';
 import { StatusPieChart } from 'app/shared/models/status-pie-chart';
 import { DeviceLittle } from 'app/shared/models/little/device-little';
+import { LinkPopupService } from 'app/main/tracking/LinkPopupService';
 
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -69,7 +70,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     constructor(private _datePipe: DatePipe,
                 private deviceService: DeviceService,
-                private eventService: EventService) { }
+                private eventService: EventService,
+
+                private popupLink: LinkPopupService) { }
 
     ngOnInit() {
         this.customDefault = L.icon({
@@ -188,7 +191,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         let devName = event.deviceName ? event.deviceName : event.deviceId;
 
-        return L.marker(ll, {icon: icon})
+        let m = L.marker(ll, {icon: icon})
             .bindTooltip(devName, {
                 permanent: true,
                 direction: 'bottom',
@@ -196,6 +199,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 opacity: 1,
                 className: 'marker-label'
             }).bindPopup(popup);
+
+        //this.popupLink.register(m, '/test');
+        return m;
     }
 
     buildIcon(event: EventData): L.DivIcon {
@@ -232,7 +238,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += txtDate;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Lat/Lng:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.latitude + '/' + event.longitude;htmlPopup += '</td>';htmlPopup += '</tr>';
         htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Address:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.address;htmlPopup += '</td>';htmlPopup += '</tr>';
-        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title" colspan="2">';htmlPopup += '<a href=\'main/tracking/history/'; htmlPopup += event.devId; htmlPopup+= '\'> history>>'; htmlPopup+='</a>'; htmlPopup += '</td>';
+        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title" colspan="2">';htmlPopup += '<a routeLink=\'history/'; htmlPopup += event.devId; htmlPopup+= '\'> history>>'; htmlPopup+='</a>'; htmlPopup += '</td>';
         htmlPopup += '</table>';
         popup.setContent(htmlPopup);
         popup.options.offset = L.point(0, 0);
