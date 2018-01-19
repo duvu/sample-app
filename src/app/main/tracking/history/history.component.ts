@@ -205,8 +205,8 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     }
 
     private initAxis() {
-        this.x = d3.scaleTime().rangeRound([0, this.width]);
-        this.y = d3.scaleLinear().rangeRound([this.height, 0]);
+        this.x = d3.scaleTime().rangeRound([0, this.width - 50]);
+        this.y = d3.scaleLinear().rangeRound([this.height, 40]);
         this.x.domain(d3.extent(Stocks, (d) => d.date ));
         this.y.domain(d3.extent(Stocks, (d) => d.value ));
     }
