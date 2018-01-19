@@ -38,7 +38,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         id:                 {selected: false, order: 0},
         name:               {selected: false, order: 1},
         deviceId:           {selected: false, order: 2},
-        comapnyId:          {selected: false, order: 3},
+        companyId:          {selected: false, order: 3},
         companyName:        {selected: false, order: 4},
         vehicleId:          {selected: false, order: 5},
         vehicleName:        {selected: false, order: 6},
@@ -113,7 +113,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
 
     initTableSettings(): void {
         try {
-            const displayeds = JSON.parse(localStorage.getItem('dev1-disp-cols'));
+            const displayeds = JSON.parse(localStorage.getItem('dev12-disp-cols'));
             if (displayeds != null) {
                 this.displayedColumns = displayeds;
             }

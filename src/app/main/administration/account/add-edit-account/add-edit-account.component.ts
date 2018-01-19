@@ -16,6 +16,7 @@ import { AccountRequest } from 'app/shared/models/request/request-account';
 import { Account } from 'app/shared/models/account';
 import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
 import { CompanyLittle } from 'app/shared/models/little/company-little';
+import { AccountService } from 'app/shared/services/account.service';
 
 @Component({
     selector: 'app-add-edit-account',
@@ -27,14 +28,20 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
     privilegeIds: number[];
     password: string;
     re_password: string;
-    filteredCompanies: Observable<Company[]>;
-    companyControl: FormControl = new FormControl();
     companyList: Company[];
+    statusList: string[];
+
+    filteredCompanies: Observable<Company[]>;
+    filteredStatus: Observable<string[]>;
+
+    companyControl: FormControl = new FormControl();
+    statusControl: FormControl = new FormControl();
 
     isEditing = false;
     privilegeList: Observable<Privilege[]>;
 
     constructor(private companyService: CompanyService,
+                private accountService: AccountService,
                 private privilegeService: PrivilegeService,
                 public dialogRef: MatDialogRef<AddEditAccountComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: Account | any) { }
@@ -56,6 +63,22 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
                     .pipe(
                         startWith(''),
                         map(value => this.filter(value))
+                    );
+            }
+        );
+
+        this.accountService.getAllStatus().subscribe(
+            response => {
+                this.statusList = response;
+            },
+            error => {},
+            () => {
+                this.filteredStatus = this.statusControl.valueChanges
+                    .pipe(
+                        startWith(''),
+                        map(value => {
+                            return this.statusList.filter(opt => opt.toLowerCase().indexOf(value.toLowerCase()) === 0);
+                        })
                     );
             }
         );

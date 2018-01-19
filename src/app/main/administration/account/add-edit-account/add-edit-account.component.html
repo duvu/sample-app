@@ -18,9 +18,19 @@
                 </mat-form-field>
             </div>
             <div fxFlex="50">
+                <!--<mat-form-field class="full-width">-->
+                    <!--<input matInput i18n-placeholder placeholder="Status" name="acc-status" [(ngModel)]="data.status">-->
+                <!--</mat-form-field>-->
+
                 <mat-form-field class="full-width">
-                    <input matInput i18n-placeholder placeholder="Status" name="acc-status" [(ngModel)]="data.status">
+                    <input type="text"  placeholder="Status" aria-label="Status" [(ngModel)]="data.status" matInput [formControl]="statusControl" [matAutocomplete]="autoStatus">
+                    <mat-autocomplete #autoStatus="matAutocomplete">
+                        <mat-option *ngFor="let status of filteredStatus | async" [value]="status">
+                            {{status}}
+                        </mat-option>
+                    </mat-autocomplete>
                 </mat-form-field>
+
             </div>
         </div>
         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
