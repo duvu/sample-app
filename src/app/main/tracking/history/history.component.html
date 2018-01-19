@@ -3,7 +3,17 @@
         <div id="map-id" class="main-map"></div>
     </div>
     <div fxFlex="40" class="history-details">
-        <mat-toolbar></mat-toolbar>
+        <mat-toolbar>
+            <span class="fill-remain-space"></span>
+            <button mat-button>
+                <mat-icon>excel</mat-icon>
+                <span>Excel</span>
+            </button>
+            <button mat-button>
+                <mat-icon>pdf</mat-icon>
+                <span>PDF</span>
+            </button>
+        </mat-toolbar>
         <div fxLayout="row" class="history-details-content">
             <div fxFlex="50">
                 <div id="parent-div" class="history-speed-chart">
