@@ -259,6 +259,12 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.map.setView(center, 15);
     }
 
+    applyFilter(filterValue: string) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+        this.dataSource.filter = filterValue;
+    }
+
 
     selectThisDevice(device: DeviceLittle): void {
         if (this.oldSelectedDevice) {

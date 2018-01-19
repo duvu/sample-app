@@ -9,28 +9,35 @@
 </div>
 <mat-sidenav-container class="side-nav-container">
     <mat-sidenav mode="side" opened="true" align="end">
-        <div class="map-device-table">
-            <mat-table [dataSource]="dataSource">
-                <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef> Device ID </mat-header-cell>
-                    <mat-cell *matCellDef="let element" (click)="selectThisDevice(element)">
-                        <mat-accordion>
-                            <mat-expansion-panel>
-                                <mat-expansion-panel-header>
-                                    <span [ngClass]="{'device-stop': element.state==0, 'device-idle': element.state==1, 'device-live': element.state==2}"></span>
-                                    <span>{{element.deviceId}}</span>
-                                </mat-expansion-panel-header>
-                                <a [routerLink]="['history', element.id]">history >></a>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-                    </mat-cell>
-                </ng-container>
-                <mat-header-row *matHeaderRowDef="displayedColumns" style="display: none"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{selected: row.selected}"></mat-row>
-            </mat-table>
-        </div>
-        <div class="chart-overview mat-elevation-z6">
-            <svg width="250" height="250" id="chart"></svg>
+        <div class="map-device">
+            <div class="map-device-header">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+            </div>
+            <div class="map-device-table">
+                <mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef> Device ID </mat-header-cell>
+                        <mat-cell *matCellDef="let element" (click)="selectThisDevice(element)">
+                            <mat-accordion>
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <span [ngClass]="{'device-stop': element.state==0, 'device-idle': element.state==1, 'device-live': element.state==2}"></span>
+                                        <span>{{element.deviceId}}</span>
+                                    </mat-expansion-panel-header>
+                                    <a [routerLink]="['history', element.id]">history >></a>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns" style="display: none"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{selected: row.selected}"></mat-row>
+                </mat-table>
+            </div>
+            <div class="chart-overview mat-elevation-z6">
+                <svg width="250" height="250" id="chart"></svg>
+            </div>
         </div>
     </mat-sidenav>
 
