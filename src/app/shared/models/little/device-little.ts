@@ -7,4 +7,7 @@ export class DeviceLittle {
     //--additional
     public selected: boolean;
     public state: number; //stopped, living, idle
+    public address: string;
+    public latitude: number;
+    public longitude: number;
 }

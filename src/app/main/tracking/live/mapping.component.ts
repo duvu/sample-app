@@ -155,6 +155,10 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 return event.devId === dt.id;
             });
 
+            d.address = event.address;
+            d.latitude = event.latitude;
+            d.longitude = event.longitude;
+
             if (event.latitude && event.longitude) {
                 let marker = this.buildMarker(event);
                 this.markersCluster.addLayer(marker);
@@ -266,7 +270,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
 
-    selectThisDevice(device: DeviceLittle): void {
+    selectThisDevice(event: any, device: DeviceLittle): void {
+        event.stopPropagation();
         if (this.oldSelectedDevice) {
             this.oldSelectedDevice.selected = false;
         }
