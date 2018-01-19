@@ -23,8 +23,12 @@
                             <mat-accordion>
                                 <mat-expansion-panel>
                                     <mat-expansion-panel-header>
-                                        <span [ngClass]="{'device-stop': element.state==0, 'device-idle': element.state==1, 'device-live': element.state==2}"></span>
-                                        <span>{{element.deviceId}}</span>
+                                        <mat-panel-title>
+                                            <span [ngClass]="{'device-stop': element.state==0, 'device-idle': element.state==1, 'device-live': element.state==2}"></span>
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            <span>{{element.deviceId}}</span>
+                                        </mat-panel-description>
                                     </mat-expansion-panel-header>
                                     <a [routerLink]="['history', element.id]">history >></a>
                                 </mat-expansion-panel>
