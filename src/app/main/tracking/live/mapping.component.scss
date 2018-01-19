@@ -19,46 +19,64 @@ $side-nav-width: 250px;
     flex-direction: column;
   }
 
-  .map-device-table {
-    overflow-y: auto;
+  .map-device {
     height: 100%;
-    &::-webkit-scrollbar {
-      width: 6px;
-      background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+
+    .map-device-header {
+      min-height: 64px;
+      padding: 8px 24px 0;
+
+      .mat-form-field {
+        font-size: 14px;
+        width: 100%;
+      }
     }
-    &::-webkit-scrollbar-thumb {
-      background-color: #eeeeee;
+    .map-device-table {
+      overflow-y: auto;
+      height: 100%;
+      &::-webkit-scrollbar {
+        width: 6px;
+        background-color: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #eeeeee;
+      }
+
+      .device-stop {
+        width: 10px;
+        height: 10px;
+        background-color: red;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .device-idle {
+        width: 10px;
+        height: 10px;
+        background-color: orange;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .device-live {
+        width: 10px;
+        height: 10px;
+        background-color: lightgreen;
+        border-radius: 50%;
+        display: inline-block;
+      }
     }
 
-    .device-stop {
-      width: 10px;
-      height: 10px;
-      background-color: red;
-      border-radius: 50%;
-      display: inline-block;
-    }
-    .device-idle {
-      width: 10px;
-      height: 10px;
-      background-color: orange;
-      border-radius: 50%;
-      display: inline-block;
-    }
-    .device-live {
-      width: 10px;
-      height: 10px;
-      background-color: lightgreen;
-      border-radius: 50%;
-      display: inline-block;
+    .chart-overview {
+      background-color: #9b9b9b;
+      min-height: $side-nav-width;
+      max-height: $side-nav-width;
+      min-width: $side-nav-width;
+      max-width: $side-nav-width;
     }
   }
-  .chart-overview {
-    background-color: #9b9b9b;
-    min-height: $side-nav-width;
-    max-height: $side-nav-width;
-    min-width: $side-nav-width;
-    max-width: $side-nav-width;
-  }
+
+
 
   //Override css mapping
   .marker-label {

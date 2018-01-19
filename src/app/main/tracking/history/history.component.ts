@@ -183,7 +183,6 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         }).addTo(this.map);
     }
 
-
     private initSvg() {
         let parentDiv = document.getElementById('parent-div');
 
