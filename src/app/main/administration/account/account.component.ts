@@ -9,7 +9,7 @@ import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-
 import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
 import {AppService} from 'app/shared/services/app.service';
 import {DeleteEvent} from 'app/shared/models/delete-event';
-import {ConfirmDeleteComponent} from 'app/main/shared/confirm-delete/confirm-delete.component';
+import {ConfirmDeleteComponent} from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';

@@ -7,7 +7,7 @@ import { AppService } from 'app/shared/services/app.service';
 import { PrivilegeService } from 'app/shared/services/privilege.service';
 import { ProgressBarService } from 'app/shared/services/progress-bar.service';
 import { DeleteEvent } from 'app/shared/models/delete-event';
-import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
+import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { OptionalColumnPrivilegeComponent } from 'app/main/administration/privilege/optional-column-privilege/optional-column-privilege.component';
 import { AddEditPrivilegeComponent } from 'app/main/administration/privilege/add-edit-privilege/add-edit-privilege.component';
 import { merge } from 'rxjs/observable/merge';

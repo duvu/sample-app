@@ -22,6 +22,8 @@ import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.
 import { FlattenPipe } from 'app/shared/pipes/flatten.pipe';
 import { CustomPipeModule } from 'app/shared/pipes/custom-pipe.module';
 import { DcsComponent } from './dcs/dcs.component';
+import { GeozoneComponent } from './geozone/geozone.component';
+import { AlertRuleComponent } from './alert-rule/alert-rule.component';
 
 @NgModule({
     imports: [
@@ -47,10 +49,10 @@ import { DcsComponent } from './dcs/dcs.component';
 
         AddEditOrganizationComponent,
         OptionalColumnOrganizationComponent,
-
         PrivilegeComponent,
-
-        DcsComponent
+        DcsComponent,
+        GeozoneComponent,
+        AlertRuleComponent
     ],
     providers: [
         CompanyService,

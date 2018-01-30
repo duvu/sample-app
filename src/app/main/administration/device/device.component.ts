@@ -9,7 +9,7 @@ import { DeviceService } from 'app/shared/services/device.service';
 import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
 import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';
 import { DeleteEvent } from 'app/shared/models/delete-event';
-import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
+import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { RequestDevice } from 'app/shared/models/request/request-device';
 
 import {Observable} from 'rxjs/Observable';
@@ -35,7 +35,6 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     displayedColumns = ['toggle', 'id', 'name', 'deviceId', 'companyName', 'vehicleName', 'protocol', 'expiredOn', 'createdBy', 'createdOn', 'actions'];
 
     columns = {
-        toggle:             {selected: false, order: 0},
         id:                 {selected: false, order: 0},
         name:               {selected: false, order: 1},
         deviceId:           {selected: false, order: 2},
