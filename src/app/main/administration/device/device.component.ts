@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Device } from 'app/shared/models/device';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
 import { AppService } from 'app/shared/services/app.service';
 import { ProgressBarService } from 'app/shared/services/progress-bar.service';
 import { DeviceService } from 'app/shared/services/device.service';
@@ -67,6 +67,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     constructor(private dialog: MatDialog,
                 private app: AppService,
                 private service: DeviceService,
+                public snackBar: MatSnackBar,
                 private progress: ProgressBarService) { }
 
     ngOnInit() {
@@ -240,7 +241,10 @@ export class DeviceComponent implements OnInit, AfterViewInit {
             data => {},
             error => {},
             () => {
-                console.log('updated');
+                this.snackBar.open('Updated device!', null, {
+                    duration: 2000,
+                    horizontalPosition: 'right'
+                })
             }
         )
     }
