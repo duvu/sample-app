@@ -10,6 +10,9 @@ export class RequestDevice {
     public companyId: number;
     public accountIds: Array<number>;
 
+    public expiredOn: Date;
+    public status;
+
     public vehicleId: number;
 
     public ipAddress: string;
@@ -32,6 +35,9 @@ export class RequestDevice {
         this.accountIds = _.map(device.accounts, (acc) => {
             return acc.id;
         });
+
+        this.expiredOn = device.expiredOn;
+        this.status = device.status;
 
         this.vehicleId = device.vehicleId;
         this.ipAddress = device.ipAddress;

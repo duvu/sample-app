@@ -32,9 +32,10 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    displayedColumns = ['id', 'name', 'deviceId', 'companyName', 'vehicleName', 'protocol', 'createdBy', 'createdOn', 'actions'];
+    displayedColumns = ['toggle', 'id', 'name', 'deviceId', 'companyName', 'vehicleName', 'protocol', 'expiredOn', 'createdBy', 'createdOn', 'actions'];
 
     columns = {
+        toggle:             {selected: false, order: 0},
         id:                 {selected: false, order: 0},
         name:               {selected: false, order: 1},
         deviceId:           {selected: false, order: 2},
@@ -45,6 +46,8 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         ipAddress:          {selected: false, order: 7},
         port:               {selected: false, order: 8},
         protocol:           {selected: false, order: 9},
+        status:             {selected: false, order: 9},
+        expiredOn:          {selected: false, order: 9},
         serialNumber:       {selected: false, order: 10},
         modelName:          {selected: false, order: 11},
         manufacturerName:   {selected: false, order: 12},
@@ -71,7 +74,6 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         this.initTableSettings();
         this.dataSource = new MatTableDataSource();
         this.dataChange = new ReplaySubject(1);
-
     }
 
     ngAfterViewInit(): void {
@@ -90,9 +92,6 @@ export class DeviceComponent implements OnInit, AfterViewInit {
                 map(data => {
                     this.progress.hide();
                     this.resultsLength = data.totalElements;
-
-                    console.log('Length: ', this.resultsLength);
-
                     return data.content;
                 }),
                 catchError(() => {
@@ -113,7 +112,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
 
     initTableSettings(): void {
         try {
-            const displayeds = JSON.parse(localStorage.getItem('dev12-disp-cols'));
+            const displayeds = JSON.parse(localStorage.getItem('dev-disp-cols'));
             if (displayeds != null) {
                 this.displayedColumns = displayeds;
             }
@@ -143,7 +142,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
                         }
                     });
                 }
-                localStorage.setItem('dev1-disp-cols', JSON.stringify(this.displayedColumns));
+                localStorage.setItem('dev-disp-cols', JSON.stringify(this.displayedColumns));
             }
         );
     }
@@ -224,6 +223,27 @@ export class DeviceComponent implements OnInit, AfterViewInit {
                 this.dataChange.next(1);
             }
         );
+    }
+
+    checkStatus(device: Device): boolean {
+        return _.toLower(device.status) === 'enabled';
+    }
+
+    toggleStatus(device: Device) {
+        if (this.checkStatus(device)) {
+            device.status = 'disabled';
+        } else {
+            device.status = 'enabled';
+        }
+
+        let request = new RequestDevice(device)
+        this.service.update(device.id, request).subscribe(
+            data => {},
+            error => {},
+            () => {
+                console.log('updated');
+            }
+        )
     }
 
 }
