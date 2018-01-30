@@ -14,6 +14,16 @@
 
     <div class="table-container">
         <mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="toggle">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>#</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+
+                    <mat-slide-toggle [checked]="checkStatus(element)" (change)="toggleStatus(element)"></mat-slide-toggle>
+                    <!--<mat-slide-toggle (checked)="checkStatus(element)" (change)="toggleStatus(element)"></mat-slide-toggle>-->
+                </mat-cell>
+            </ng-container>
+
             <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n> ID </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
@@ -63,6 +73,16 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Protocol</mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.protocol}} </mat-cell>
             </ng-container>
+
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Status</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="expiredOn">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Expired On</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.expiredOn | date:'shortDate'}} </mat-cell>
+            </ng-container>
+
 
             <ng-container matColumnDef="serialNumber">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Serial Number</mat-header-cell>

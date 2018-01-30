@@ -9,6 +9,10 @@
 <div mat-dialog-content>
     <mat-list>
         <mat-list-item>
+            <span matLine i18n>#</span>
+            <mat-checkbox [(ngModel)]="data.toggle.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
             <span matLine i18n>ID</span>
             <mat-checkbox [(ngModel)]="data.id.selected"></mat-checkbox>
         </mat-list-item>
@@ -48,6 +52,15 @@
             <span matLine i18n>Protocol</span>
             <mat-checkbox [(ngModel)]="data.protocol.selected"></mat-checkbox>
         </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Status</span>
+            <mat-checkbox [(ngModel)]="data.status.selected"></mat-checkbox>
+        </mat-list-item>
+        <mat-list-item>
+            <span matLine i18n>Expired On</span>
+            <mat-checkbox [(ngModel)]="data.expiredOn.selected"></mat-checkbox>
+        </mat-list-item>
+
         <mat-list-item>
             <span matLine i18n>Serial Number</span>
             <mat-checkbox [(ngModel)]="data.serialNumber.selected"></mat-checkbox>

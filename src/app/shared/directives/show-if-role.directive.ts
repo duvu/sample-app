@@ -2,8 +2,6 @@ import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angula
 import { AppService } from 'app/shared/services/app.service';
 
 import * as _ from 'lodash';
-import { forEach } from '@angular/router/src/utils/collection';
-import { el } from '@angular/platform-browser/testing/src/browser_util';
 
 @Directive({
   selector: '[showIfRole]'
@@ -38,7 +36,7 @@ export class ShowIfRoleDirective implements OnInit {
 
         if (rolesArray && rolesArray.length > 0) {
             for (let i = 0; i < rolesArray.length; i++) {
-                let role = this.nomalize(rolesArray[i]);
+                let role = ShowIfRoleDirective.nomalize(rolesArray[i]);
                 if (_.includes(authorities, role)) {
                     return true;
                 }
@@ -47,7 +45,7 @@ export class ShowIfRoleDirective implements OnInit {
         return false;
     }
 
-    nomalize(role: string): string {
+    static nomalize(role: string): string {
         //0. snakeCase
         role = _.snakeCase(role);
         //1. toUpper

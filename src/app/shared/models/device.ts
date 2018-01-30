@@ -1,5 +1,6 @@
 import { CompanyLittle } from 'app/shared/models/little/company-little';
 import { AccountLittle } from 'app/shared/models/little/account-little';
+import * as _ from 'lodash';
 
 export class Device {
     public id: number;
@@ -9,6 +10,9 @@ export class Device {
 
     public company: CompanyLittle | any;
     public accounts: Array<AccountLittle>;
+
+    status: string;
+    expiredOn: Date;
 
     public vehicleId: number;
     public vehicleName: string;
@@ -27,6 +31,4 @@ export class Device {
     public createdOn: Date;
     public updatedBy: string;
     public updatedOn: Date;
-
-
 }
