@@ -7,7 +7,7 @@ import { AppService } from 'app/shared/services/app.service';
 import { CompanyService } from 'app/shared/services/organization.service';
 import { ProgressBarService } from 'app/shared/services/progress-bar.service';
 import { DeleteEvent } from 'app/shared/models/delete-event';
-import { ConfirmDeleteComponent } from 'app/main/shared/confirm-delete/confirm-delete.component';
+import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { OptionalColumnOrganizationComponent } from 'app/main/administration/company/optional-column-organization/optional-column-organization.component';
 import { AddEditOrganizationComponent } from 'app/main/administration/company/add-edit-organization/add-edit-organization.component';
 import { merge } from 'rxjs/observable/merge';
