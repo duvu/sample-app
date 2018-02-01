@@ -23,14 +23,12 @@ export class MainComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.profile = this.app.getCurrentAccount();
-
-        console.log('Profile', this.profile);
-
         this.subscription = this.progress.showing$.subscribe(
             showing => {
                 setTimeout(_ => this.showLoading(showing));
             }
         );
+        this.router.navigate(['main', 'tracking']);
     }
 
     ngOnDestroy(): void {
