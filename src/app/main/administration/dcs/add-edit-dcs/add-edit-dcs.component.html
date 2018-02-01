@@ -1,0 +1,104 @@
+<div matDialogTitle>
+    <span *ngIf="isEditing" i18n>Modifying Dcs</span>
+    <span *ngIf="!isEditing" i18n>Creating Dcs</span>
+    <span> #{{data.id}}</span>
+    <span class="x-dialog-close-btn">
+        <button mat-icon-button (click)="cancel()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </span>
+</div>
+
+<div mat-dialog-content>
+    <div fxLayout="column">
+        <mat-form-field class="full-width">
+            <input matInput i18n-placeholder placeholder="Name" name="dcs-name" [(ngModel)]="data.name">
+        </mat-form-field>
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
+            <div fxFlex="50">
+                <mat-slide-toggle  [(ngModel)]="data.duplex" name="dcs-duplex" i18n>Duplex</mat-slide-toggle>
+            </div>
+            <div fxFlex="50">
+                <mat-slide-toggle  [(ngModel)]="data.enabled" name="dcs-enabled" i18n>Enabled</mat-slide-toggle>
+            </div>
+        </div>
+
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="16px" fxLayoutGap.xs="0px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Address" name="dcs-address" [(ngModel)]="data.address">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput i18n-placeholder placeholder="Port" name="dcs-port" [(ngModel)]="data.port">
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-form-field class="full-width">
+            <input matInput i18n-placeholder placeholder="Class Name" name="dcs-class-name" [(ngModel)]="data.className">
+        </mat-form-field>
+
+        <!--<div fxLayout="row" fxLayoutGap="16px">-->
+            <!--<div fxFlex="80">-->
+                <!--<mat-form-field class="full-width">-->
+                    <!--<input type="text"  placeholder="Company" aria-label="Company" [(ngModel)]="data.company" matInput [formControl]="companyControl" [matAutocomplete]="auto">-->
+                    <!--<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">-->
+                        <!--<mat-option *ngFor="let company of filteredCompanies | async" [value]="company">-->
+                            <!--{{company.name}}-->
+                        <!--</mat-option>-->
+                    <!--</mat-autocomplete>-->
+                <!--</mat-form-field>-->
+            <!--</div>-->
+            <!--<div fxFlex="20">-->
+                <!--<mat-form-field class="full-width">-->
+                    <!--<input matInput i18n-placeholder placeholder="Company ID" name="dev-company-id" [(ngModel)]="data.company.id" disabled>-->
+                <!--</mat-form-field>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<mat-form-field class="full-width">-->
+            <!--<mat-select multiple matInput placeholder="Roles" [(ngModel)]="privilegeIds">-->
+                <!--<mat-option *ngFor="let pri of privilegeList | async" [value]="pri.id">{{pri.description}}</mat-option>-->
+            <!--</mat-select>-->
+        <!--</mat-form-field>-->
+
+        <!--<mat-form-field class="full-width">-->
+            <!--<input type="text"  placeholder="Status" aria-label="Status" [(ngModel)]="data.status" matInput [formControl]="statusControl" [matAutocomplete]="autoStatus">-->
+            <!--<mat-autocomplete #autoStatus="matAutocomplete">-->
+                <!--<mat-option *ngFor="let status of filteredStatus | async" [value]="status">-->
+                    <!--{{status}}-->
+                <!--</mat-option>-->
+            <!--</mat-autocomplete>-->
+        <!--</mat-form-field>-->
+
+
+        <!--<div fxLayout="row" fxLayoutGap="16px">-->
+            <!--<div fxFlex="50">-->
+                <!--<mat-form-field class="full-width">-->
+                    <!--<input matInput i18n-placeholder placeholder="Phone Number" name="acc-phone-number" [(ngModel)]="data.phoneNumber">-->
+                <!--</mat-form-field>-->
+            <!--</div>-->
+            <!--<div fxFlex="50">-->
+                <!--<mat-form-field class="full-width">-->
+                    <!--<input matInput i18n-placeholder placeholder="Email Address" name="acc-email-address" [(ngModel)]="data.emailAddress" required>-->
+                <!--</mat-form-field>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<mat-form-field class="full-width">-->
+            <!--<input matInput i18n-placeholder placeholder="Address Line1" name="acc-address-line1" [(ngModel)]="data.addressLine1">-->
+        <!--</mat-form-field>-->
+        <!--<mat-form-field class="full-width">-->
+            <!--<input matInput i18n-placeholder placeholder="Address Line2" name="acc-address-line2" [(ngModel)]="data.addressLine2">-->
+        <!--</mat-form-field>-->
+
+        <!--<mat-form-field class="full-width">-->
+            <!--<input matInput i18n-placeholder placeholder="Notes" name="acc-notes" [(ngModel)]="data.notes">-->
+        <!--</mat-form-field>-->
+
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onSave()" i18n>Save</button>
+    <button mat-button (click)="cancel()" i18n>Cancel</button>
+</div>

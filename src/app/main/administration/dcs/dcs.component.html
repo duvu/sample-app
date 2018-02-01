@@ -1,3 +1,76 @@
-<p>
-  dcs works!
-</p>
+<div class="x-container">
+    <div class="x-header">
+        <mat-form-field>
+            <input matInput i18n-placeholder placeholder="Search" (keyup)="applyFilter($event.target.value)">
+        </mat-form-field>
+        <span class="fill-remain-space"></span>
+        <button mat-icon-button (click)="openDialogNewObject()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+
+    <div class="table-container">
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="toggle">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>#</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-slide-toggle [(ngModel)]="element.enabled" (change)="toggleStatus(element)"></mat-slide-toggle>
+                </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> ID </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="duplex">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Duplex </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.duplex}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="address">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Address </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="port">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Port </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.port}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="className">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Class Name </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.className}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef i18n> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="openDialogEditing(element)">
+                        <mat-icon color="accent">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="openDialogConfirmDelete(element)">
+                        <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{selected: row.selected}"></mat-row>
+
+        </mat-table>
+    </div>
+
+    <mat-paginator #paginator
+                   [length]="resultsLength"
+                   [pageIndex]="0"
+                   [pageSize]="25"
+                   [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+</div>
