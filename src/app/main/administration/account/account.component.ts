@@ -140,8 +140,6 @@ export class AccountComponent implements OnInit, AfterViewInit {
     openDialogNewObject(): void {
         const data = new Account();
         data.company = {};
-        // data.companyId = this.app.getCurrentAccount().organizationId;
-        // data.companyName = this.app.getCurrentAccount().organizationName;
         const dialogRef = this.dialog.open(AddEditAccountComponent, {
             // width: '600px',
             disableClose: true,
@@ -175,7 +173,6 @@ export class AccountComponent implements OnInit, AfterViewInit {
             data.company = new CompanyLittle();
         }
         const dialogRef = this.dialog.open(AddEditAccountComponent, {
-            width: '600px',
             disableClose: true,
             data: data
         });

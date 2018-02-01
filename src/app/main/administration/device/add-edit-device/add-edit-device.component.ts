@@ -74,7 +74,6 @@ export class AddEditDeviceComponent implements OnInit {
         let data1 = new RequestDevice(this.data);
         data1.accountIds = this.accountIds;
         this.dialogRef.close(data1);
-        //this.dialogRef.close(this.data);
     }
 
 }

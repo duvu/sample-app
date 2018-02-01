@@ -19,11 +19,12 @@ import { MyDirectivesModule } from 'app/shared/directives/my-directives.module';
 import { AddEditOrganizationComponent } from 'app/main/administration/company/add-edit-organization/add-edit-organization.component';
 import { OptionalColumnOrganizationComponent } from 'app/main/administration/company/optional-column-organization/optional-column-organization.component';
 import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
-import { FlattenPipe } from 'app/shared/pipes/flatten.pipe';
 import { CustomPipeModule } from 'app/shared/pipes/custom-pipe.module';
 import { DcsComponent } from './dcs/dcs.component';
 import { GeozoneComponent } from './geozone/geozone.component';
 import { AlertRuleComponent } from './alert-rule/alert-rule.component';
+import { DcsService } from 'app/shared/services/dcs.service';
+import { AddEditDcsComponent } from './dcs/add-edit-dcs/add-edit-dcs.component';
 
 @NgModule({
     imports: [
@@ -52,18 +53,20 @@ import { AlertRuleComponent } from './alert-rule/alert-rule.component';
         PrivilegeComponent,
         DcsComponent,
         GeozoneComponent,
-        AlertRuleComponent
+        AlertRuleComponent,
+        AddEditDcsComponent
     ],
     providers: [
         CompanyService,
         AccountService,
         DeviceService,
-        PrivilegeService
+        PrivilegeService,
+        DcsService
     ],
     entryComponents: [
         AddEditAccountComponent,
         AddEditDeviceComponent,
-
+        AddEditDcsComponent,
         AddEditOrganizationComponent,
         OptionalColumnAccountComponent,
         OptionalColumnDeviceComponent,
