@@ -200,11 +200,11 @@ export class HistoryComponent implements OnInit, AfterViewInit {
             .append("g")
             //.attr("transform", "translate(" + Math.min(this.width,this.height)/2 + "," + Math.min(this.width,this.height)/2 + ")");
             // .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
-            .attr("transform", "translate(40, -30)");
+            .attr("transform", "translate(30, -30)");
     }
 
     private initAxis() {
-        this.x = d3.scaleTime().rangeRound([0, this.width - 50]);
+        this.x = d3.scaleTime().rangeRound([0, this.width - 40]);
         this.y = d3.scaleLinear().rangeRound([this.height, 40]);
         this.x.domain(d3.extent(Stocks, (d) => d.date ));
         this.y.domain(d3.extent(Stocks, (d) => d.value ));
