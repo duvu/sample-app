@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AccountRequest } from 'app/shared/models/request/request-account';
-import { AddEditAccountComponent } from 'app/main/administration/account/add-edit-account/add-edit-account.component';
-import { Account } from 'app/shared/models/account';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Dcs } from 'app/shared/models/dcs';
 
 @Component({
   selector: 'app-add-edit-dcs',
@@ -12,7 +10,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 export class AddEditDcsComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddEditDcsComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: Account | any) { }
+              @Inject(MAT_DIALOG_DATA) public data: Dcs | any) { }
 
   ngOnInit() {
   }
