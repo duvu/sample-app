@@ -10,7 +10,7 @@ import { PageHomeComponent } from 'app/pages/page-home/page-home.component';
 
 
 const routes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: 'full'},
+    { path: '', redirectTo: '/login', pathMatch: 'full'},
     { path: 'home', component: PageHomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'main', loadChildren: 'app/main/main.module#MainModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
