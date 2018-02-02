@@ -20,6 +20,7 @@ import {map} from 'rxjs/operators/map';
 import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ToastService } from 'app/shared/toast.service';
 
 @Component({
     selector: 'app-device',
@@ -67,7 +68,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     constructor(private dialog: MatDialog,
                 private app: AppService,
                 private service: DeviceService,
-                public snackBar: MatSnackBar,
+                private toast: ToastService,
                 private progress: ProgressBarService) { }
 
     ngOnInit() {
@@ -241,10 +242,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
             data => {},
             error => {},
             () => {
-                this.snackBar.open('Updated device!', null, {
-                    duration: 2000,
-                    horizontalPosition: 'right'
-                })
+                this.toast.info("Updated device!");
             }
         )
     }
