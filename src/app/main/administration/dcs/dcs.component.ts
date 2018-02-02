@@ -10,6 +10,8 @@ import { ProgressBarService } from 'app/shared/services/progress-bar.service';
 import { AddEditDcsComponent } from 'app/main/administration/dcs/add-edit-dcs/add-edit-dcs.component';
 import { DcsRequest } from 'app/shared/models/request/dcs-request';
 import { ToastService } from 'app/shared/toast.service';
+import { DeleteEvent } from 'app/shared/models/delete-event';
+import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
 
 @Component({
     selector: 'app-dcs',
@@ -110,14 +112,59 @@ export class DcsComponent implements OnInit, AfterViewInit {
     }
 
     openDialogConfirmDelete(dcs: Dcs): void {
+        const data = new DeleteEvent();
+        data.setId(dcs.id);
+        data.setName(dcs.name);
+        data.setType('Dcs');
+        const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+            disableClose: true,
+            data: data
+        });
 
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.delete(result);
+            }
+        });
     }
 
     create(dcs: Dcs) {
+        this.service.create(new DcsRequest(dcs)).subscribe(
+            data => {
+                this.toast.info('Created dcs!');
+                this.dataChange.next(data.id);
+            },
+            error => {
+                this.toast.error('Error!')
+            },
+            () => {
 
+            }
+        );
     }
 
     update(dcs: Dcs) {
+        this.service.update(dcs.id, new DcsRequest(dcs)).subscribe(
+            data => {},
+            error => {
+                this.toast.error('Error!');
+            },
+            () => {
+                this.toast.info('Updated');
+            }
+        );
+    }
 
+    delete(dcs: Dcs) {
+        this.service._delete(dcs.id).subscribe(
+            data => {},
+            error => {
+                this.toast.error('Error!');
+            },
+            () => {
+                this.dataChange.next(1);
+                this.toast.info('Deleted!');
+            }
+        )
     }
 }

@@ -14,7 +14,7 @@ export class ConfirmDeleteComponent implements OnInit {
     ngOnInit() {
     }
 
-    onSave(): void {
+    onDelete(): void {
         this.dialogRef.close(this.data);
     }
 
