@@ -17,6 +17,7 @@ import { AuthService} from 'app/shared/services/auth.service';
 import { AuthGuard} from 'app/shared/services/auth.guard';
 import { PageNotFoundComponent } from 'app/pages/page-not-found/page-not-found.component';
 import { PageHomeComponent } from './pages/page-home/page-home.component';
+import { ToastService } from 'app/shared/toast.service';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { PageHomeComponent } from './pages/page-home/page-home.component';
         AuthGuard,
         AppService,
         ProgressBarService,
+        ToastService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

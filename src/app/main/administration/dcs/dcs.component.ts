@@ -9,6 +9,7 @@ import { of as observableOf } from 'rxjs/observable/of';
 import { ProgressBarService } from 'app/shared/services/progress-bar.service';
 import { AddEditDcsComponent } from 'app/main/administration/dcs/add-edit-dcs/add-edit-dcs.component';
 import { DcsRequest } from 'app/shared/models/request/dcs-request';
+import { ToastService } from 'app/shared/toast.service';
 
 @Component({
     selector: 'app-dcs',
@@ -28,6 +29,7 @@ export class DcsComponent implements OnInit, AfterViewInit {
 
     constructor(private service: DcsService,
                 private dialog: MatDialog,
+                private toast: ToastService,
                 private progress: ProgressBarService) { }
 
     ngOnInit() {
@@ -68,7 +70,16 @@ export class DcsComponent implements OnInit, AfterViewInit {
     }
 
     toggleStatus(dcs: Dcs): void {
-
+        let request = new DcsRequest(dcs);
+        this.service.update(dcs.id, request).subscribe(
+            data => {},
+            error => {
+                this.toast.error("Error!");
+            },
+            () => {
+                this.toast.info("Update Dcs!");
+            }
+        )
     }
 
     openDialogNewObject(): void {
