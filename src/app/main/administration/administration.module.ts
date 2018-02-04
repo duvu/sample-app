@@ -25,6 +25,8 @@ import { GeozoneComponent } from './geozone/geozone.component';
 import { AlertRuleComponent } from './alert-rule/alert-rule.component';
 import { DcsService } from 'app/shared/services/dcs.service';
 import { AddEditDcsComponent } from './dcs/add-edit-dcs/add-edit-dcs.component';
+import { OptionalColumnPrivilegeComponent } from 'app/main/administration/privilege/optional-column-privilege/optional-column-privilege.component';
+import { AddEditPrivilegeComponent } from 'app/main/administration/privilege/add-edit-privilege/add-edit-privilege.component';
 
 @NgModule({
     imports: [
@@ -38,23 +40,24 @@ import { AddEditDcsComponent } from './dcs/add-edit-dcs/add-edit-dcs.component';
     ],
     declarations: [
         AdministrationComponent,
-
         AccountComponent,
-        AddEditAccountComponent,
-        OptionalColumnAccountComponent,
-
-        DeviceComponent,
-        OptionalColumnDeviceComponent,
-        AddEditDeviceComponent,
         CompanyComponent,
-
-        AddEditOrganizationComponent,
-        OptionalColumnOrganizationComponent,
+        DeviceComponent,
         PrivilegeComponent,
         DcsComponent,
         GeozoneComponent,
         AlertRuleComponent,
-        AddEditDcsComponent
+
+        AddEditDeviceComponent,
+        AddEditPrivilegeComponent,
+        AddEditOrganizationComponent,
+        AddEditAccountComponent,
+        AddEditDcsComponent,
+
+        OptionalColumnDeviceComponent,
+        OptionalColumnAccountComponent,
+        OptionalColumnOrganizationComponent,
+        OptionalColumnPrivilegeComponent,
     ],
     providers: [
         CompanyService,
@@ -68,9 +71,11 @@ import { AddEditDcsComponent } from './dcs/add-edit-dcs/add-edit-dcs.component';
         AddEditDeviceComponent,
         AddEditDcsComponent,
         AddEditOrganizationComponent,
+        AddEditPrivilegeComponent,
         OptionalColumnAccountComponent,
         OptionalColumnDeviceComponent,
-        OptionalColumnOrganizationComponent
+        OptionalColumnOrganizationComponent,
+        OptionalColumnPrivilegeComponent
     ]
 })
 export class AdministrationModule { }

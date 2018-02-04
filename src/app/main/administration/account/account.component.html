@@ -41,12 +41,12 @@
 
             <ng-container matColumnDef="companyId">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Company ID </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.company !== null ? element.company.id : ''}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.company ? element.company.id : ''}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="companyName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Company Name </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.company !== null ? element.company.name: ''}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.company ? element.company.name: ''}} </mat-cell>
             </ng-container>
 
 
@@ -80,7 +80,7 @@
                 <mat-cell *matCellDef="let element"> {{element.notes}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="roles" *showIfRole="'lord, system-admin'">
+            <ng-container matColumnDef="roles">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n> Roles </mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.privileges | flatten: 'name'}} </mat-cell>
             </ng-container>
