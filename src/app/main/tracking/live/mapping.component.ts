@@ -46,7 +46,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     isLoading: boolean = true;
     numberOfLoad: number = 0;
     markersCluster: MarkerClusterGroup;
-    bounds: LatLngBounds;
 
     selectedEvent: EventData = null;
     inputSearch: string = null;
@@ -177,10 +176,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         }.bind(this));
 
-        this.bounds = this.markersCluster.getBounds();//L.latLngBounds(latlngArray);
         this.map.addLayer(this.markersCluster);
         if (this.numberOfLoad <= 1) {
-            this.map.fitBounds(this.bounds);
+            this.map.fitBounds(this.markersCluster.getBounds());
         }
         this.totalDevice = this.liveEvents.length;
 

@@ -17,6 +17,7 @@ import { Account } from 'app/shared/models/account';
 import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
 import { CompanyLittle } from 'app/shared/models/little/company-little';
 import { AccountService } from 'app/shared/services/account.service';
+import { AppService } from 'app/shared/services/app.service';
 
 @Component({
     selector: 'app-add-edit-account',
@@ -24,7 +25,6 @@ import { AccountService } from 'app/shared/services/account.service';
     styleUrls: ['./add-edit-account.component.scss']
 })
 export class AddEditAccountComponent implements OnInit, AfterViewInit {
-
     privilegeIds: number[];
     password: string;
     re_password: string;
@@ -38,10 +38,12 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
     statusControl: FormControl = new FormControl();
 
     isEditing = false;
+    isCurrentLoggedInAccount = false;
     privilegeList: Observable<Privilege[]>;
 
     constructor(private companyService: CompanyService,
                 private accountService: AccountService,
+                private app: AppService,
                 private privilegeService: PrivilegeService,
                 public dialogRef: MatDialogRef<AddEditAccountComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: Account | any) { }
@@ -51,7 +53,9 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
             return privilege.id;
         });
 
-        this.isEditing = this.data.accountId ? true : false;
+        this.isEditing = !!this.data.accountId;
+        this.isCurrentLoggedInAccount = (this.data.id === this.app.getCurrentAccount().accountId);
+
         this.privilegeList = this.privilegeService.getAll();
         this.companyService.getAll().subscribe(
             response => {
