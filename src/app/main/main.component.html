@@ -22,12 +22,12 @@
             <mat-icon>setting</mat-icon>
             <span i18n>Administration</span>
         </button>
-        <button mat-button [matMenuTriggerFor]="menu">
+        <button mat-button [matMenuTriggerFor]="menuHelp">
             <mat-icon>help</mat-icon>
             <span i18n>Help</span>
         </button>
 
-        <mat-menu #menu="matMenu" overlapTrigger="false">
+        <mat-menu #menuHelp="matMenu" overlapTrigger="false">
             <button mat-menu-item routerLink="usage">
                 <mat-icon>help</mat-icon>
                 <span>Help</span>
@@ -44,13 +44,25 @@
 
         <span class="fill-remain-space"></span>
 
-            <button mat-icon-button>
-                <mat-icon>mail</mat-icon>
+        <button mat-icon-button>
+            <mat-icon>mail</mat-icon>
+        </button>
+
+        <button mat-button [matMenuTriggerFor]="menuProfile">
+            <span>{{profile.accountName}}</span>
+            <mat-icon>profile</mat-icon>
+        </button>
+        <mat-menu #menuProfile="matMenu" overlapTrigger="false">
+            <button mat-menu-item routerLink="profile">
+                <mat-icon>setting</mat-icon>
+                <span i18n>Preferences</span>
             </button>
-            <button mat-button (click)="logout()">
-                <span>{{profile.accountName}}</span>
+            <button mat-menu-item (click)="logout()">
                 <mat-icon>logout</mat-icon>
+                <span i18n>Logout</span>
             </button>
+        </mat-menu>
+
     </mat-toolbar>
     <div class="page-content">
         <router-outlet></router-outlet>

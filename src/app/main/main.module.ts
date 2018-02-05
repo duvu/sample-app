@@ -5,6 +5,7 @@ import { CommonModule} from '@angular/common';
 import { FormsModule} from '@angular/forms';
 import { MaterialShared} from '../shared/material-shared';
 import { ConfirmDeleteComponent } from '../shared/components/confirm-delete/confirm-delete.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import { ConfirmDeleteComponent } from '../shared/components/confirm-delete/conf
     ],
     declarations: [
         MainComponent,
-        ConfirmDeleteComponent
+        ConfirmDeleteComponent,
+        ProfileComponent
     ],
     providers: [
     ],
