@@ -28,15 +28,15 @@
         </button>
 
         <mat-menu #menuHelp="matMenu" overlapTrigger="false">
-            <button mat-menu-item routerLink="usage">
+            <button mat-menu-item routerLink="help/usage">
                 <mat-icon>help</mat-icon>
                 <span>Help</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item routerLink="help/development">
                 <mat-icon>voicemail</mat-icon>
                 <span>Development Plan</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item routerLink="help/event-logger">
                 <mat-icon>mail</mat-icon>
                 <span>Event Logger</span>
             </button>
