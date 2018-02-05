@@ -30,8 +30,8 @@ const routes: Routes = [
                 canActivate: [AuthGuard]
             },
             {
-                path: 'usage',
-                loadChildren: 'app/main/usage/usage.module#UsageModule',
+                path: 'help',
+                loadChildren: 'app/main/help/help.module#HelpModule',
                 canActivate: [AuthGuard]
             },
             {
