@@ -76,7 +76,7 @@
             </div>
             <div fxFlex="50">
                 <mat-form-field>
-                    <input matInput [matDatepicker]="picker" placeholder="Expired On">
+                    <input matInput [matDatepicker]="picker" placeholder="Expired On" [(ngModel)]="data.expiredOn">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
