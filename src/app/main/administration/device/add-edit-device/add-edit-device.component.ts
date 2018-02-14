@@ -71,6 +71,8 @@ export class AddEditDeviceComponent implements OnInit {
     }
 
     onSave(): void {
+        console.log('Data#d', this.data);
+
         let data1 = new RequestDevice(this.data);
         data1.accountIds = this.accountIds;
         this.dialogRef.close(data1);
