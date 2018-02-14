@@ -28,7 +28,7 @@ export class MainComponent implements OnInit, OnDestroy {
                 setTimeout(_ => this.showLoading(showing));
             }
         );
-        this.router.navigate(['main', 'tracking']);
+        //this.router.navigate(['main', 'tracking']);
     }
 
     ngOnDestroy(): void {
