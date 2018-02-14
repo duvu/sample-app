@@ -1,0 +1,77 @@
+<mat-drawer-container class="side-nav-container">
+    <mat-drawer mode="side" opened="true">
+        <mat-table [dataSource]="deviceTableDataSource">
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Device ID </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title (click)="selectThisDevice($event, element)">
+                                    <span [ngClass]="{'device-stop': element.state==0, 'device-idle': element.state==1, 'device-live': element.state==2}"></span>
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                    <span>{{element.deviceId}}</span>
+                                </mat-panel-description>
+                            </mat-expansion-panel-header>
+
+                            <table>
+                                <tr>
+                                    <td>Device ID</td>
+                                    <td>{{element.deviceId}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Device Name</td>
+                                    <td>{{element.deviceName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Address</td>
+                                    <td>{{element.address}}</td>
+                                </tr>
+                            </table>
+                            <a [routerLink]="['history', element.id]">history >></a>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns" style="display: none"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{selected: row.selected}"></mat-row>
+        </mat-table>
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-tab-group>
+            <mat-tab i18n-label label="Speed Report">
+                <ul>
+                    <li>Alert history (table)</li>
+                    <li>Speed details (table)</li>
+                    <li>Geozone details (table)</li>
+                    <li>Parking report (table)</li>
+                </ul>
+            </mat-tab>
+            <mat-tab i18n-label label="Parking Report">
+                <ul>
+                    <li>Alert history (table)</li>
+                    <li>Speed details (table)</li>
+                    <li>Geozone details (table)</li>
+                    <li>Parking report (table)</li>
+                </ul>
+            </mat-tab>
+            <mat-tab i18n-label label="Geozone Report">
+                <ul>
+                    <li>Alert history (table)</li>
+                    <li>Speed details (table)</li>
+                    <li>Geozone details (table)</li>
+                    <li>Parking report (table)</li>
+                </ul>
+            </mat-tab>
+            <mat-tab i18n-label label="Alert History">
+                <ul>
+                    <li>Alert history (table)</li>
+                    <li>Speed details (table)</li>
+                    <li>Geozone details (table)</li>
+                    <li>Parking report (table)</li>
+                </ul>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-drawer-content>
+</mat-drawer-container>

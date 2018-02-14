@@ -13,11 +13,30 @@
             <mat-icon>geozone</mat-icon>
             <span i18n>Tracking</span>
         </button>
-
-        <button mat-button routerLink="report">
+        <button mat-button [matMenuTriggerFor]="menuReport">
             <mat-icon>report</mat-icon>
             <span i18n>Reports</span>
         </button>
+        <mat-menu #menuReport="matMenu" overlapTrigger="false">
+            <button mat-menu-item routerLink="report/device">
+                <mat-icon>report</mat-icon>
+                <span i18n>Device Report</span>
+            </button>
+            <button mat-menu-item routerLink="report/account">
+                <mat-icon>report</mat-icon>
+                <span i18n>Account Report</span>
+            </button>
+            <button mat-menu-item routerLink="report/driver">
+                <mat-icon>report</mat-icon>
+                <span i18n>Driver Report</span>
+            </button>
+            <button mat-menu-item routerLink="report/shipment">
+                <mat-icon>report</mat-icon>
+                <span i18n>Shipment Report</span>
+            </button>
+        </mat-menu>
+
+
         <button mat-button routerLink="_admin">
             <mat-icon>setting</mat-icon>
             <span i18n>Administration</span>
