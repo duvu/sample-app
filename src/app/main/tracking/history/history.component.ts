@@ -38,7 +38,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     private customDefault: L.Icon;
 
     dataSource: MatTableDataSource<EventData> | null;
-    displayedColumns = ['id', 'deviceId', 'deviceName', 'latitude', 'longitude', 'altitude', 'heading', 'speedKPH', 'address', 'timestamp'];
+    displayedColumns = ['deviceName', 'latitude', 'longitude', 'altitude', 'heading', 'speedKPH', 'address', 'timestamp'];
 
 
     //charting
