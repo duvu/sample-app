@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ReportRoutingModule } from 'app/main/report/report-routing.module';
-import { ReportComponent } from 'app/main/report/device-report/report.component';
+import { DeviceReportComponent } from 'app/main/report/device-report/device-report.component';
 import { MaterialShared } from 'app/shared/material-shared';
 import { DeviceService } from 'app/shared/services/device.service';
 import { AccountReportComponent } from './account-report/account-report.component';
@@ -20,6 +20,12 @@ import { AlertHistoryComponent } from './alert-history/alert-history.component';
     providers: [
         DeviceService
     ],
-    declarations: [ReportComponent, AccountReportComponent, DriverReportComponent, ShipmentReportComponent, AlertHistoryComponent]
+    declarations: [
+        DeviceReportComponent,
+        AccountReportComponent,
+        DriverReportComponent,
+        ShipmentReportComponent,
+        AlertHistoryComponent
+    ]
 })
 export class ReportModule { }
