@@ -19,4 +19,9 @@ export class DeviceService extends Base2Service<RequestDevice, Device> {
         const url = API_DEVICE_PATH + '/all';
         return this.http.get<DeviceLittle[]>(url);
     }
+
+    getAllStatus(): Observable<string[]> {
+        const url = API_DEVICE_PATH + '/status';
+        return this.http.get<string[]>(url);
+    }
 }

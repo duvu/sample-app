@@ -17,6 +17,8 @@ import {of as observableOf} from 'rxjs/observable/of';
 import { AccountRequest } from 'app/shared/models/request/request-account';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { CompanyLittle } from 'app/shared/models/little/company-little';
+import { RequestDevice } from 'app/shared/models/request/request-device';
+import { Device } from 'app/shared/models/device';
 
 @Component({
     selector: 'app-account',
@@ -31,7 +33,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    displayedColumns = ['id', 'accountId', 'firstName', 'lastName', 'companyName', 'notes', 'createdBy', 'createdOn', 'actions'];
+    displayedColumns = ['toggle', 'id', 'accountId', 'firstName', 'lastName', 'companyName', 'notes', 'createdBy', 'createdOn', 'actions'];
 
     columns = {
         id:                 {selected: false, order: 0},
@@ -224,19 +226,27 @@ export class AccountComponent implements OnInit, AfterViewInit {
         );
     }
 
-    // openDialogRoleUpdate(data: Account): void {
-    //     const dialogRef = this.dialog.open(RoleUpdateComponent, {
-    //         width: '500px',
-    //         disableClose: true,
-    //         data: data
-    //     });
-    //
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         if (result) {
-    //             this.update(result);
-    //         }
-    //     });
-    // }
+    checkStatus(account: Account): boolean {
+        return _.toLower(account.status) === 'activated';
+    }
+
+    toggleStatus(device: Device) {
+        // if (this.checkStatus(device)) {
+        //     device.status = 'disabled';
+        // } else {
+        //     device.status = 'enabled';
+        // }
+        //
+        // let request = new RequestDevice(device)
+        // this.service.update(device.id, request).subscribe(
+        //     data => {},
+        //     error => {},
+        //     () => {
+        //         this.toast.info("Updated device!");
+        //     }
+        // )
+    }
+
 
 
 }

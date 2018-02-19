@@ -15,6 +15,8 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs/observable/of';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Account } from 'app/shared/models/account';
+import { Device } from 'app/shared/models/device';
 
 @Component({
     selector: 'app-organization',
@@ -202,4 +204,5 @@ export class CompanyComponent implements OnInit, AfterViewInit {
             }
         );
     }
+
 }

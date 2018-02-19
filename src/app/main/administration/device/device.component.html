@@ -18,9 +18,7 @@
             <ng-container matColumnDef="toggle">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n>#</mat-header-cell>
                 <mat-cell *matCellDef="let element">
-
                     <mat-slide-toggle [checked]="checkStatus(element)" (change)="toggleStatus(element)"></mat-slide-toggle>
-                    <!--<mat-slide-toggle (checked)="checkStatus(element)" (change)="toggleStatus(element)"></mat-slide-toggle>-->
                 </mat-cell>
             </ng-container>
 
