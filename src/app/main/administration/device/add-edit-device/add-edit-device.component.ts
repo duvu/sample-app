@@ -8,11 +8,11 @@ import { Account } from 'app/shared/models/account';
 import { CompanyService } from 'app/shared/services/organization.service';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
-import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
 import { AccountLittle } from 'app/shared/models/little/account-little';
 import { AccountService } from 'app/shared/services/account.service';
 import { AccountRequest } from 'app/shared/models/request/request-account';
 import { RequestDevice } from 'app/shared/models/request/request-device';
+import { DeviceService } from 'app/shared/services/device.service';
 
 @Component({
   selector: 'app-add-edit-device',
@@ -25,10 +25,18 @@ export class AddEditDeviceComponent implements OnInit {
     companyControl: FormControl = new FormControl();
     companyList: Company[];
 
+    statusList: string[];
+    filteredStatus: Observable<string[]>;
+    statusControl: FormControl = new FormControl();
+
+    dateExpired: Date;
+
     accountList: Observable<Account[]>;
     accountIds: number[];
-    constructor(private companyService: CompanyService, private accountService: AccountService,
-        public dialogRef: MatDialogRef<AddEditDeviceComponent>,
+    constructor(private companyService: CompanyService,
+                private accountService: AccountService,
+                private deviceService: DeviceService,
+                public dialogRef: MatDialogRef<AddEditDeviceComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
@@ -51,6 +59,24 @@ export class AddEditDeviceComponent implements OnInit {
                     );
             }
         );
+
+        this.deviceService.getAllStatus().subscribe(
+            response => {
+                this.statusList = response;
+            },
+            error => {},
+            () => {
+                this.filteredStatus = this.statusControl.valueChanges
+                    .pipe(
+                        startWith(''),
+                        map(value => {
+                            return this.statusList.filter(opt => opt.toLowerCase().indexOf(value.toLowerCase()) === 0);
+                        })
+                    );
+            }
+        );
+
+        this.dateExpired = this.data.expiredOn ? new Date(this.data.expiredOn) : null;
     }
 
     filter(value: string): Company[] {
@@ -71,8 +97,7 @@ export class AddEditDeviceComponent implements OnInit {
     }
 
     onSave(): void {
-        console.log('Data#d', this.data);
-
+        this.data.expiredOn = this.dateExpired;
         let data1 = new RequestDevice(this.data);
         data1.accountIds = this.accountIds;
         this.dialogRef.close(data1);

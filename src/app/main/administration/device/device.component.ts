@@ -175,7 +175,6 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     openDialogEditing(data: Device): void {
         if (data.company === null) data.company = {};
         const dialogRef = this.dialog.open(AddEditDeviceComponent, {
-            // width: '600px',
             disableClose: true,
             data: data
         });

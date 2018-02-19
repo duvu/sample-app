@@ -71,12 +71,18 @@
             </div>
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input matInput i18n-placeholder placeholder="Status" name="dev-status" [(ngModel)]="data.status">
+                    <input type="text" i18n-placeholder placeholder="Status" aria-label="Status" [(ngModel)]="data.status" matInput [formControl]="statusControl" [matAutocomplete]="autoStatus">
+                    <mat-autocomplete #autoStatus="matAutocomplete">
+                        <mat-option *ngFor="let status of filteredStatus | async" [value]="status">
+                            {{status}}
+                        </mat-option>
+                    </mat-autocomplete>
                 </mat-form-field>
             </div>
+
             <div fxFlex="50">
                 <mat-form-field>
-                    <input matInput [matDatepicker]="picker" placeholder="Expired On" [(ngModel)]="data.expiredOn">
+                    <input matInput [matDatepicker]="picker" placeholder="Expired On" [(ngModel)]="dateExpired">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
