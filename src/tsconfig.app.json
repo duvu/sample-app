@@ -8,6 +8,8 @@
       "d3",
       "lodash",
       "leaflet",
+      "leaflet-draw",
+      "leaflet-easybutton",
       "leaflet.markercluster",
       "leaflet-polylinedecorator",
       "jwt-decode"
