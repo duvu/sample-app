@@ -21,7 +21,6 @@ import { OptionalColumnOrganizationComponent } from 'app/main/administration/com
 import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
 import { CustomPipeModule } from 'app/shared/pipes/custom-pipe.module';
 import { DcsComponent } from './dcs/dcs.component';
-import { GeozoneComponent } from './geozone/geozone.component';
 import { AlertRuleComponent } from './alert-rule/alert-rule.component';
 import { DcsService } from 'app/shared/services/dcs.service';
 import { AddEditDcsComponent } from './dcs/add-edit-dcs/add-edit-dcs.component';
@@ -46,7 +45,6 @@ import { DriverComponent } from './driver/driver.component';
         DeviceComponent,
         PrivilegeComponent,
         DcsComponent,
-        GeozoneComponent,
         AlertRuleComponent,
 
         AddEditDeviceComponent,
@@ -59,7 +57,7 @@ import { DriverComponent } from './driver/driver.component';
         OptionalColumnAccountComponent,
         OptionalColumnOrganizationComponent,
         OptionalColumnPrivilegeComponent,
-        DriverComponent,
+        DriverComponent
     ],
     providers: [
         CompanyService,
