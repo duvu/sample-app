@@ -7,10 +7,8 @@ import { DeviceComponent} from "./device/device.component";
 import { CompanyComponent } from 'app/main/administration/company/organization.component';
 import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
 import { DcsComponent } from 'app/main/administration/dcs/dcs.component';
-import { GeozoneComponent } from 'app/main/administration/geozone/geozone.component';
 import { AlertRuleComponent } from 'app/main/administration/alert-rule/alert-rule.component';
 import { DriverComponent } from 'app/main/administration/driver/driver.component';
-import { AddEditGeozoneComponent } from 'app/main/administration/geozone/add-edit-geozone/add-edit-geozone.component';
 
 const routes: Routes = [
     {
