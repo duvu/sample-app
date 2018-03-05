@@ -79,5 +79,28 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             }
         });
         this.map.addControl(drawControl);
+
+        this.map.on(L.Draw.Event.CREATED, (event: any) => {
+            console.log('layer-object', event.layer);
+            let gj = event.layer.toGeoJSON();
+            let radius = event.layer._mRadius;
+            console.log('Radius', radius);
+            gj.geometry.radius = radius;
+            console.log('layer', gj);
+
+            let ly = L.geoJSON(gj, {
+                pointToLayer: function (feature, latlng) {
+                    return L.circle(latlng, gj.geometry.radius, {
+                        fillColor: "#ff7800",
+                        color: "#000",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    });
+                }
+            });
+
+            drawnItems.addLayer(ly);
+        })
     }
 }
