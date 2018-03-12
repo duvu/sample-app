@@ -4,6 +4,7 @@ import * as L from 'leaflet';
 import 'leaflet-draw';
 import { GeozoneService } from 'app/shared/services/geozone.service';
 import { RequestGeozone } from 'app/shared/models/request/request-geozone';
+import { Geozone } from 'app/shared/models/geozone';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -19,6 +20,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     private customDefault: L.Icon;
     private map: L.Map;
 
+    geozoneList: Array<Geozone>;
 
     constructor(private router: Router, private geozoneService: GeozoneService) { }
 
@@ -126,6 +128,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         this.geozoneService.getAll().subscribe(
             data => {
                 console.log('data', data);
+                this.geozoneList = data;
             },
             error => {},
             () => {}
