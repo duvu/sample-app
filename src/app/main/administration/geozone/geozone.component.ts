@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import 'leaflet-draw';
+import { GeozoneService } from 'app/shared/services/geozone.service';
+import { RequestGeozone } from 'app/shared/models/request/request-geozone';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -18,7 +20,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     private map: L.Map;
 
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private geozoneService: GeozoneService) { }
 
     ngOnInit() {
         this.customDefault = L.icon({
@@ -87,6 +89,20 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             console.log('Radius', radius);
             gj.geometry.radius = radius;
             console.log('layer', gj);
+
+            let req = new RequestGeozone();
+            req.name = "abc";
+            req.companyId = 1;
+            req.color = "#ff7800";
+            req.geometry = JSON.stringify(gj.geometry);
+
+            this.geozoneService.create(req).subscribe(
+                data => {
+                    console.log("data# ",  data);
+                },
+                error => {},
+            () => {}
+            );
 
             let ly = L.geoJSON(gj, {
                 pointToLayer: function (feature, latlng) {
