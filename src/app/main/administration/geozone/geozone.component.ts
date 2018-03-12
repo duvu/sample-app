@@ -28,6 +28,8 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             iconUrl: '/assets/images/marker-icon.png',
             shadowUrl: '/assets/images/marker-shadow.png'
         });
+
+        this.loadAllGeozone();
     }
 
     ngAfterViewInit(): void {
@@ -118,5 +120,15 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
             drawnItems.addLayer(ly);
         })
+    }
+
+    private loadAllGeozone(): void {
+        this.geozoneService.getAll().subscribe(
+            data => {
+                console.log('data', data);
+            },
+            error => {},
+            () => {}
+        );
     }
 }
