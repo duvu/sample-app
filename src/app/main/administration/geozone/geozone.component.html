@@ -1,10 +1,15 @@
 <div fxLayout="row" fxLayoutGap="16px" class="geozone-main">
     <div fxFlex="20" class="geozone-list">
-        <mat-list>
-            <mat-list-item *ngFor="let item of geozoneList">
-                <h3 matLine>{{item.name}}</h3>
-            </mat-list-item>
-        </mat-list>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+        <div class="geozone-items">
+            <mat-list>
+                <mat-list-item *ngFor="let item of geozoneList">
+                    <h3 matLine>{{item.name}}</h3>
+                </mat-list-item>
+            </mat-list>
+        </div>
     </div>
     <div fxFlex="80" class="geozone-map">
         <div id="map-id" class="main-map"></div>
