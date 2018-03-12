@@ -8,4 +8,12 @@
 .geozone-list {
   min-width: 250px;
   max-width: 250px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.geozone-items {
+  height: 100%;
+  overflow-y: auto;
 }
