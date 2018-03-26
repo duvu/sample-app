@@ -1,0 +1,22 @@
+<div mat-dialog-title>
+    <span i18n>Geozone</span>
+    <span> #{{type}}</span>
+    <span class="x-dialog-close-btn">
+        <button mat-icon-button (click)="cancel()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </span>
+</div>
+
+<div mat-dialog-title></div>
+    <mat-dialog-content>
+        <ul>
+            <li>circle with center and radius</li>
+            <li>Polygon has a list of lat-lon</li>
+            <li>Rectangle has 4 latlng</li>
+        </ul>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button (click)="cancel()" i18n>Cancel</button>
+        <button mat-raised-button color="primary" i18n>Save</button>
+    </mat-dialog-actions>

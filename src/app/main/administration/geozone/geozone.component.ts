@@ -5,6 +5,10 @@ import 'leaflet-draw';
 import { GeozoneService } from 'app/shared/services/geozone.service';
 import { RequestGeozone } from 'app/shared/models/request/request-geozone';
 import { Geozone } from 'app/shared/models/geozone';
+import { MatDialog } from '@angular/material';
+import * as _ from 'lodash';
+import { OptionalColumnAccountComponent } from 'app/main/administration/account/optional-column-account/optional-column-account.component';
+import { AddEditGeozoneComponent } from 'app/main/administration/geozone/add-edit-geozone/add-edit-geozone.component';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -19,10 +23,14 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
     private customDefault: L.Icon;
     private map: L.Map;
+    private editableLayers: L.FeatureGroup;
 
     geozoneList: Array<Geozone>;
 
-    constructor(private router: Router, private geozoneService: GeozoneService) { }
+    constructor(
+        private dialog: MatDialog,
+        private router: Router,
+        private geozoneService: GeozoneService) { }
 
     ngOnInit() {
         this.customDefault = L.icon({
@@ -54,7 +62,6 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
         this.map = L.map('map-id', {
             zoomControl: false,
-            //drawControl: true,
             center: L.latLng(21.731253, 105.996139),
             zoom: 12,
         });
@@ -62,7 +69,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         L.control.scale().addTo(this.map);
         L.control.zoom().setPosition('bottomleft').addTo(this.map);
 
-        let drawnItems = L.featureGroup().addTo(this.map);
+        this.editableLayers = L.featureGroup().addTo(this.map);
 
         L.control.layers(
             {
@@ -71,57 +78,78 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
                 'mapbox': mapbox
             },
             {
-                'drawlayer': drawnItems
+                'drawlayer': this.editableLayers
             },
             {
                 position: 'topright',
-                collapsed: false
+                collapsed: true
             }).addTo(this.map);
 
 
         let drawControl = new L.Control.Draw({
+            draw: {
+                polyline: false,
+                circlemarker: false,
+                marker: false
+            },
             edit: {
-                featureGroup: drawnItems
+                featureGroup: this.editableLayers,
+                //edit: false, // disable edit-button
+                //remove: false
             }
         });
         this.map.addControl(drawControl);
 
         this.map.on(L.Draw.Event.CREATED, (event: any) => {
-            console.log('layer-object', event.layer);
-            let gj = event.layer.toGeoJSON();
-            let radius = event.layer._mRadius;
-            console.log('Radius', radius);
-            gj.geometry.radius = radius;
-            console.log('layer', gj);
-
-            let req = new RequestGeozone();
-            req.name = "abc";
-            req.companyId = 1;
-            req.color = "#ff7800";
-            req.geometry = JSON.stringify(gj.geometry);
-
-            this.geozoneService.create(req).subscribe(
-                data => {
-                    console.log("data# ",  data);
-                },
-                error => {},
-            () => {}
-            );
-
-            let ly = L.geoJSON(gj, {
-                pointToLayer: function (feature, latlng) {
-                    return L.circle(latlng, gj.geometry.radius, {
-                        fillColor: "#ff7800",
-                        color: "#000",
-                        weight: 1,
-                        opacity: 1,
-                        fillOpacity: 0.8
-                    });
-                }
-            });
-
-            drawnItems.addLayer(ly);
+            this.openAddEditGeozoneDialog(event);
+            this.editableLayers.addLayer(event.layer);
+            // console.log('layer-object', event.layer);
+            // let gj = event.layer.toGeoJSON();
+            // let radius = event.layer._mRadius;
+            // console.log('Radius', radius);
+            // gj.geometry.radius = radius;
+            // console.log('layer', gj);
+            //
+            // let req = new RequestGeozone();
+            // req.name = "abc";
+            // req.companyId = 1;
+            // req.color = "#ff7800";
+            // req.geometry = JSON.stringify(gj.geometry);
+            //
+            // this.geozoneService.create(req).subscribe(
+            //     data => {
+            //         console.log("data# ",  data);
+            //     },
+            //     error => {},
+            // () => {}
+            // );
+            //
+            // let ly = L.geoJSON(gj, {
+            //     pointToLayer: function (feature, latlng) {
+            //         return L.circle(latlng, gj.geometry.radius, {
+            //             fillColor: "#ff7800",
+            //             color: "#000",
+            //             weight: 1,
+            //             opacity: 1,
+            //             fillOpacity: 0.8
+            //         });
+            //     }
+            // });
+            //
+            // this.editableLayers.addLayer(ly);
         })
+    }
+
+    private openAddEditGeozoneDialog(event: any) {
+        const dialogRef = this.dialog.open(AddEditGeozoneComponent, {
+            data: event,
+            disableClose: true
+        });
+        dialogRef.afterClosed().subscribe(
+            result => {
+                //
+            }
+        );
     }
 
     private loadAllGeozone(): void {

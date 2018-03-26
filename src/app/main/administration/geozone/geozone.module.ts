@@ -4,6 +4,7 @@ import { GeozoneComponent } from 'app/main/administration/geozone/geozone.compon
 import { MaterialShared } from 'app/shared/material-shared';
 import { GeozoneRoutingModule } from 'app/main/administration/geozone/geozone-routing.module';
 import { GeozoneService } from 'app/shared/services/geozone.service';
+import { AddEditGeozoneComponent } from './add-edit-geozone/add-edit-geozone.component';
 
 @NgModule({
     imports: [
@@ -15,7 +16,11 @@ import { GeozoneService } from 'app/shared/services/geozone.service';
         GeozoneService
     ],
     declarations: [
-        GeozoneComponent
+        GeozoneComponent,
+        AddEditGeozoneComponent
+    ],
+    entryComponents: [
+        AddEditGeozoneComponent
     ]
 })
 export class GeozoneModule { }
