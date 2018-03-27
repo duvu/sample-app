@@ -25,6 +25,8 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     private map: L.Map;
     private editableLayers: L.FeatureGroup;
 
+    showDetails: boolean = false;
+
     geozoneList: Array<Geozone>;
 
     constructor(
@@ -60,7 +62,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             attribution: 'google'
         });
 
-        this.map = L.map('map-id', {
+        this.map = L.map('geo-map-id', {
             zoomControl: false,
             center: L.latLng(21.731253, 105.996139),
             zoom: 12,
@@ -101,8 +103,9 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         this.map.addControl(drawControl);
 
         this.map.on(L.Draw.Event.CREATED, (event: any) => {
-            this.openAddEditGeozoneDialog(event);
-            this.editableLayers.addLayer(event.layer);
+            // this.openAddEditGeozoneDialog(event);
+            // this.editableLayers.addLayer(event.layer);
+            this.showDetails = !this.showDetails;
             // console.log('layer-object', event.layer);
             // let gj = event.layer.toGeoJSON();
             // let radius = event.layer._mRadius;
@@ -161,5 +164,10 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             error => {},
             () => {}
         );
+    }
+
+    //--
+    public applyFilter(event: any): void {
+
     }
 }
