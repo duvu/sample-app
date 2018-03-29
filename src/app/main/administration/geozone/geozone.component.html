@@ -1,12 +1,14 @@
 <div fxLayout="row" fxLayoutGap="16px" class="geozone-main">
-    <div fxFlex="20" class="geozone-list">
+    <div fxFlex="20" class="geozone-list mat-elevation-z1">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
         <div class="geozone-items">
             <mat-list>
                 <mat-list-item *ngFor="let item of geozoneList">
-                    <h3 matLine>{{item.name}}</h3>
+                    <div (click)="selectGeofence(item)">
+                        <h3 matLine>{{item.name}}</h3>
+                    </div>
                 </mat-list-item>
             </mat-list>
         </div>
@@ -14,7 +16,13 @@
     <div fxFlex="80" class="geo-detail">
         <div id="geo-map-id" class="geo-detail-map"></div>
         <div class="geo-detail-info" *ngIf="showDetails">
-            Details showing Details showing Details showing Details showing Details showing Details showing Details showing
+            <mat-toolbar class="mat-elevation-z1">
+                <span>Geofence: {{selectedGeofence.name}}</span>
+                <span class="fill-remain-space"></span>
+                <button mat-icon-button (click)="hideGeofenceDetails()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-toolbar>
         </div>
     </div>
 </div>

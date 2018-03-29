@@ -714,7 +714,7 @@
         "name": "close",
         "prevSize": 32,
         "code": 59666,
-        "ligatures": "cancel"
+        "ligatures": "cancel, close"
       },
       "setIdx": 0,
       "setId": 1,
