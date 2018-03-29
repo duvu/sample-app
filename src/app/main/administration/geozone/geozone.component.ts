@@ -4,7 +4,7 @@ import * as L from 'leaflet';
 import 'leaflet-draw';
 import { GeozoneService } from 'app/shared/services/geozone.service';
 import { RequestGeozone } from 'app/shared/models/request/request-geozone';
-import { Geozone } from 'app/shared/models/geozone';
+import { Geofence } from 'app/shared/models/geozone';
 import { MatDialog } from '@angular/material';
 import * as _ from 'lodash';
 import { OptionalColumnAccountComponent } from 'app/main/administration/account/optional-column-account/optional-column-account.component';
@@ -25,9 +25,11 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     private map: L.Map;
     private editableLayers: L.FeatureGroup;
 
-    showDetails: boolean = false;
+    showDetails: boolean = true;
 
-    geozoneList: Array<Geozone>;
+    geozoneList: Array<Geofence>;
+
+    selectedGeofence: Geofence | any = {};
 
     constructor(
         private dialog: MatDialog,
@@ -169,5 +171,16 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     //--
     public applyFilter(event: any): void {
 
+    }
+
+    public selectGeofence(geofence: any): void {
+        this.showDetails = true;
+        this.selectedGeofence = geofence;
+    }
+    public hideGeofenceDetails(): void {
+        this.showDetails = false;
+        setTimeout(() => {
+            this.map.invalidateSize();
+        }, 0);
     }
 }

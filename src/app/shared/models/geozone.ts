@@ -1,6 +1,6 @@
 import { AccountLittle } from 'app/shared/models/little/account-little';
 
-export class Geozone {
+export class Geofence {
     id: number;
     companyId: number;
     accounts: Array<AccountLittle>;
