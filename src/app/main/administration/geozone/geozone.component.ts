@@ -7,8 +7,8 @@ import { RequestGeozone } from 'app/shared/models/request/request-geozone';
 import { Geofence } from 'app/shared/models/geozone';
 import { MatDialog } from '@angular/material';
 import * as _ from 'lodash';
-import { OptionalColumnAccountComponent } from 'app/main/administration/account/optional-column-account/optional-column-account.component';
 import { AddEditGeozoneComponent } from 'app/main/administration/geozone/add-edit-geozone/add-edit-geozone.component';
+import { GeoJSON } from 'leaflet';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -24,8 +24,9 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     private customDefault: L.Icon;
     private map: L.Map;
     private editableLayers: L.FeatureGroup;
+    private drawControl: any;
 
-    showDetails: boolean = true;
+    showDetails: boolean = false;
 
     geozoneList: Array<Geofence>;
 
@@ -90,7 +91,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             }).addTo(this.map);
 
 
-        let drawControl = new L.Control.Draw({
+        this.drawControl = new L.Control.Draw({
             draw: {
                 polyline: false,
                 circlemarker: false,
@@ -102,18 +103,19 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
                 //remove: false
             }
         });
-        this.map.addControl(drawControl);
 
         this.map.on(L.Draw.Event.CREATED, (event: any) => {
             // this.openAddEditGeozoneDialog(event);
             // this.editableLayers.addLayer(event.layer);
-            this.showDetails = !this.showDetails;
-            // console.log('layer-object', event.layer);
-            // let gj = event.layer.toGeoJSON();
+            this.showGeofenceDetails(true);
+            this.selectedGeofence = event.layer;
+            console.log('object', event);
+            console.log('layer', event.layer);
+            let gj = event.layer.toGeoJSON();
             // let radius = event.layer._mRadius;
             // console.log('Radius', radius);
             // gj.geometry.radius = radius;
-            // console.log('layer', gj);
+            console.log('layer - geojson', gj);
             //
             // let req = new RequestGeozone();
             // req.name = "abc";
@@ -141,8 +143,16 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             //     }
             // });
             //
-            // this.editableLayers.addLayer(ly);
+            this.editableLayers.addLayer(event.layer);
         })
+    }
+
+    public showDrawToolbar(show: boolean): void {
+        if(show) {
+            this.map.addControl(this.drawControl);
+        } else {
+            this.map.removeControl(this.drawControl);
+        }
     }
 
     private openAddEditGeozoneDialog(event: any) {
@@ -177,10 +187,18 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         this.showDetails = true;
         this.selectedGeofence = geofence;
     }
-    public hideGeofenceDetails(): void {
-        this.showDetails = false;
+    public showGeofenceDetails(show: boolean): void {
+        this.showDetails = show;
+        if(!show) {
+            this.map.removeControl(this.drawControl);
+        }
         setTimeout(() => {
             this.map.invalidateSize();
         }, 0);
+    }
+
+    public isCircle(geofence: any) {
+        return true;
+
     }
 }

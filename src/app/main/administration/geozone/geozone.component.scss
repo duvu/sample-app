@@ -1,20 +1,39 @@
 .geozone-main {
   height: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 .geozone-list {
   min-width: 250px;
   max-width: 250px;
-  margin-right: 0!important;
   height: 100%;
   display: flex;
   flex-direction: column;
+  .filter {
+    margin-left: 16px;
+    display: inline-table;
+    flex-flow: column;
+
+    & > * {
+      display: table-cell;
+    }
+  }
+}
+
+.mat-field-fullwidth {
+  width: 100%;
 }
 
 .geozone-items {
   height: 100%;
-
   overflow-y: auto;
+  .mat-list-item {
+    &:hover {
+      cursor: pointer;
+      background-color: lightgray;
+    }
+  }
 }
 
 .geo-detail {
@@ -22,13 +41,40 @@
   display: flex;
   flex-direction: column;
 
+  .geo-detail-map {
+    height: 100%;
+  }
+
+  .geo-detail-info-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .geo-detail-info {
+      height: 100%;
+      padding: 16px;
+      overflow-y: auto;
+    }
+  }
 }
 
-.geo-detail-map {
-  height: 100%;
-}
+$icon-small-container-size: 20px;
+$icon-small-size: 16px;
 
-.geo-detail-info {
-  background-color: #449fdb;
-  height: 100%;
+.mat-icon-button.small {
+  width: $icon-small-container-size;
+  height: $icon-small-container-size;
+  line-height: $icon-small-container-size;
+
+  .mat-icon, .mat-icon-button i {
+    line-height: $icon-small-size;
+  }
+
+  .mat-icon {
+    width: $icon-small-size;
+    height: $icon-small-size;
+  }
+
+  .material-icons {
+    font-size: $icon-small-size;
+  }
 }

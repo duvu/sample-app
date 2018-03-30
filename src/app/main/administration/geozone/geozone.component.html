@@ -1,28 +1,83 @@
-<div fxLayout="row" fxLayoutGap="16px" class="geozone-main">
-    <div fxFlex="20" class="geozone-list mat-elevation-z1">
-        <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        </mat-form-field>
+<div fxLayout="row" class="geozone-main">
+    <div fxFlex="20" class="geozone-list">
+        <div class="filter">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field>
+            <button mat-icon-button color="primary" matTooltip="Create New Geofence" (click)="showDrawToolbar(true)">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <mat-divider></mat-divider>
         <div class="geozone-items">
             <mat-list>
                 <mat-list-item *ngFor="let item of geozoneList">
                     <div (click)="selectGeofence(item)">
-                        <h3 matLine>{{item.name}}</h3>
+                        <div matLine>
+                            <span>{{item.name}}</span>
+                            <button mat-icon-button class="small"><mat-icon color="gray">edit</mat-icon></button>
+                            <button mat-icon-button class="small"><mat-icon color="gray">delete</mat-icon></button>
+                        </div>
                     </div>
+                    <mat-divider></mat-divider>
                 </mat-list-item>
             </mat-list>
         </div>
     </div>
     <div fxFlex="80" class="geo-detail">
         <div id="geo-map-id" class="geo-detail-map"></div>
-        <div class="geo-detail-info" *ngIf="showDetails">
-            <mat-toolbar class="mat-elevation-z1">
+        <div class="geo-detail-info-container" *ngIf="showDetails">
+            <mat-toolbar>
                 <span>Geofence: {{selectedGeofence.name}}</span>
                 <span class="fill-remain-space"></span>
-                <button mat-icon-button (click)="hideGeofenceDetails()">
+                <button mat-flat-button i18n>Save</button>
+                <button mat-flat-button i18n>Cancel</button>
+                <button mat-flat-button i18n>Edit</button>
+                <button mat-icon-button (click)="showGeofenceDetails(false)">
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-toolbar>
+            <div class="geo-detail-info">
+                <div fxLayout="row" fxLayoutGap="16px">
+                    <div fxFlex="33" class="geo-detail-info-fields">
+                        <form class="">
+                            <div fxLayout="column">
+                                <mat-form-field fxFlex="100">
+                                    <input matInput placeholder="Geofence Name">
+                                </mat-form-field>
+                                <mat-form-field fxFlex="100">
+                                    <input matInput placeholder="Address">
+                                </mat-form-field>
+                                <mat-form-field fxFlex="100">
+                                    <input matInput type="number" placeholder="Max Speed">
+                                </mat-form-field>
+
+                                <mat-checkbox>Private Zone</mat-checkbox>
+                                <mat-checkbox>Reverse Geocode</mat-checkbox>
+                            </div>
+                        </form>
+                    </div>
+                    <div fxFlex="67">
+                        <form>
+                            <mat-form-field>
+                                <input matInput placeholder="Type">
+                            </mat-form-field>
+                            <div *ngIf="isCircle(selectedGeofence)">
+                                <mat-form-field>
+                                    <input matInput placeholder="Center Latitude">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input matInput placeholder="Center Longitude">
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <input type="number" matInput placeholder="Radius (m)">
+                                </mat-form-field>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
