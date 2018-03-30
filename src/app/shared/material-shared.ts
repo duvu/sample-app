@@ -21,7 +21,8 @@ import {
     MatSortModule,
     MatTableModule,
     MatTabsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
 } from '@angular/material';
 
 import {FlexLayoutModule} from '@angular/flex-layout';
@@ -52,7 +53,7 @@ import {NgModule} from "@angular/core";
         MatTableModule,
         MatTabsModule,
         MatToolbarModule,
-
+        MatTooltipModule,
         FlexLayoutModule
     ],
     exports: [
@@ -79,7 +80,7 @@ import {NgModule} from "@angular/core";
         MatTableModule,
         MatTabsModule,
         MatToolbarModule,
-
+        MatTooltipModule,
         FlexLayoutModule
     ],
     declarations: [],
