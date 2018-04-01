@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Company } from 'app/shared/models/company';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { AppService } from 'app/shared/services/app.service';
+import { ApplicationContext } from 'app/shared/services/application-context.service';
 import { CompanyService } from 'app/shared/services/organization.service';
 import { ProgressBarService } from 'app/shared/services/progress-bar.service';
 import { DeleteEvent } from 'app/shared/models/delete-event';
@@ -50,7 +50,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
     };
 
     constructor(private dialog: MatDialog,
-                private app: AppService,
+                private app: ApplicationContext,
                 private service: CompanyService,
                 private progress: ProgressBarService) { }
 

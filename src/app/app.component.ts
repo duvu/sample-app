@@ -1,24 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AppService} from './shared/services/app.service';
+import {ApplicationContext} from './shared/services/application-context.service';
 
 @Component({
   selector: 'app-root',
   template: `<router-outlet></router-outlet>`,
   styles: [``]
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
 
-    constructor(private app: AppService) {
-
-    }
-
-    ngOnInit(): void {
-        // init app-service here to populate app-settings
-        this.app.init();
-    }
-
-    ngOnDestroy(): void {
-        // destroy app-service here to store app-settings
-        this.app.destroy();
-    }
+    constructor() {}
 }

@@ -10,7 +10,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { MaterialShared} from 'app/shared/material-shared';
 import { AuthInterceptor} from 'app/shared/services/auth-interceptor';
 import { ProgressBarService} from 'app/shared/services/progress-bar.service';
-import { AppService} from 'app/shared/services/app.service';
+import { ApplicationContext} from 'app/shared/services/application-context.service';
 import { AppComponent } from 'app/app.component';
 import { AppRoutingModule} from 'app/app-routing.module';
 import { AuthService} from 'app/shared/services/auth.service';
@@ -39,7 +39,7 @@ import { ToastService } from 'app/shared/toast.service';
     providers: [
         AuthService,
         AuthGuard,
-        AppService,
+        ApplicationContext,
         ProgressBarService,
         ToastService,
         {

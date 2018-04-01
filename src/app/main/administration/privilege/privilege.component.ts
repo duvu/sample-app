@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Privilege } from 'app/shared/models/privilege';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { AppService } from 'app/shared/services/app.service';
+import { ApplicationContext } from 'app/shared/services/application-context.service';
 import { PrivilegeService } from 'app/shared/services/privilege.service';
 import { ProgressBarService } from 'app/shared/services/progress-bar.service';
 import { DeleteEvent } from 'app/shared/models/delete-event';
@@ -44,7 +44,7 @@ export class PrivilegeComponent implements OnInit, AfterViewInit {
     resultsLength = 0;
 
     constructor(private dialog: MatDialog,
-                private app: AppService,
+                private app: ApplicationContext,
                 private service: PrivilegeService,
                 private progress: ProgressBarService) { }
 

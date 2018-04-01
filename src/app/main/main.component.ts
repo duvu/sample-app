@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {AppService} from '../shared/services/app.service';
+import {ApplicationContext} from '../shared/services/application-context.service';
 import {MatSidenav} from '@angular/material';
 import {Subscription} from 'rxjs/Subscription';
 import {ProgressBarService} from '../shared/services/progress-bar.service';
@@ -19,7 +19,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     @ViewChild(MatSidenav) sideNav: MatSidenav;
 
-    constructor(private app: AppService, private progress: ProgressBarService, private router: Router) {}
+    constructor(private app: ApplicationContext, private progress: ProgressBarService, private router: Router) {}
 
     ngOnInit() {
         this.profile = this.app.getCurrentAccount();

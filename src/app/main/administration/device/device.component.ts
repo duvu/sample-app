@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Device } from 'app/shared/models/device';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
-import { AppService } from 'app/shared/services/app.service';
+import { ApplicationContext } from 'app/shared/services/application-context.service';
 import { ProgressBarService } from 'app/shared/services/progress-bar.service';
 import { DeviceService } from 'app/shared/services/device.service';
 import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
@@ -66,7 +66,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
 
 
     constructor(private dialog: MatDialog,
-                private app: AppService,
+                private app: ApplicationContext,
                 private service: DeviceService,
                 private toast: ToastService,
                 private progress: ProgressBarService) { }

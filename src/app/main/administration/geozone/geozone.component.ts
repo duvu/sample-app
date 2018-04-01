@@ -9,6 +9,8 @@ import * as _ from 'lodash';
 import * as L from 'leaflet';
 import 'leaflet-draw';
 import { ToastService } from 'app/shared/toast.service';
+import { RequestGeozone } from 'app/shared/models/request/request-geozone';
+import { ApplicationContext } from 'app/shared/services/application-context.service';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -21,6 +23,11 @@ const TILE_GOOGLE_URL = 'http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={
 })
 export class GeozoneComponent implements OnInit, AfterViewInit {
 
+    fences = [
+        {value: 'steak-0', viewValue: 'Steak'},
+        {value: 'pizza-1', viewValue: 'Pizza'},
+        {value: 'tacos-2', viewValue: 'Tacos'}
+    ];
     private customDefault: L.Icon;
     private map: L.Map;
     private editableLayers: any;
@@ -31,11 +38,13 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     geozoneList: Array<Geofence>;
 
     selectedGeofence: Geofence | any = {};
+    newOrEdit: boolean = false;
 
     constructor(
         private dialog: MatDialog,
         private router: Router,
         private toast: ToastService,
+        private appContext: ApplicationContext,
         private geozoneService: GeozoneService) { }
 
     ngOnInit() {
@@ -205,7 +214,8 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
 
     //-- Delete, Edit
-    deleteGeofence(geofence: Geofence): void {
+    deleteGeofence(event: Event, geofence: Geofence): void {
+        event.stopPropagation();
         this.geozoneService._delete(geofence.id).subscribe(
             data => {},
             error => {},
@@ -218,7 +228,20 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         )
     }
 
-    editGeofence(geofence: Geofence): void {
+    editGeofence(geofence?: Geofence): void {
+        if (geofence) {
+            this.selectedGeofence = geofence;
+        }
+        this.newOrEdit = true;
+    }
 
+    saveCurrentGeofence(): void {
+        let req = new RequestGeozone();
+        req.companyId = this.appContext.getCurrentAccount()
+        this.geozoneService.update(this.selectedGeofence.id, req).subscribe(
+            data => {},
+            error => {},
+            () => {}
+        );
     }
 }
