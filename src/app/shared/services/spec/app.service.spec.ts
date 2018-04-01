@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { AppService } from '../app.service';
+import { ApplicationContext } from '../application-context.service';
 
-describe('AppService', () => {
+describe('ApplicationContext', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AppService]
+      providers: [ApplicationContext]
     });
   });
 
-  it('should ...', inject([AppService], (service: AppService) => {
+  it('should ...', inject([ApplicationContext], (service: ApplicationContext) => {
     expect(service).toBeTruthy();
   }));
 });

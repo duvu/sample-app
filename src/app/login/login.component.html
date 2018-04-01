@@ -1,6 +1,6 @@
 <mat-progress-bar class="main-progress-bar" mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <div class="full-height flex-center">
-    <form class="login-form flex-center">
+    <form class="login-form">
         <mat-card>
             <mat-card-header>{{errorMessage}}</mat-card-header>
             <mat-card-content>
@@ -15,7 +15,7 @@
             </mat-card-content>
             <mat-card-actions align="middle">
                 <a mat-button routerLink="/home">Back to home page</a>
-                <button mat-raised-button color="primary" (click)="login()">Login</button>
+                <a mat-raised-button color="primary" (click)="login()">Login</a>
             </mat-card-actions>
             <mat-card-footer align="end" class="card-footer">
                 <span>Forgot Password ?</span>

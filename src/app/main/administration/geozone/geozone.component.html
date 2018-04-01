@@ -15,8 +15,10 @@
                     <div (click)="selectGeofence(item)" class="geo-item">
                         <div matLine>
                             <span>{{item.name}}</span>
-                            <button mat-icon-button class="small" (click)="editGeofence(item)"><mat-icon color="accent">edit</mat-icon></button>
-                            <button mat-icon-button class="small" (click)="deleteGeofence(item)"><mat-icon color="warn">delete</mat-icon></button>
+                            <div class="align-right">
+                                <button mat-icon-button class="small" (click)="editGeofence(item)"><mat-icon color="accent">edit</mat-icon></button>
+                                <button mat-icon-button class="small" (click)="deleteGeofence($event, item)"><mat-icon color="warn">delete</mat-icon></button>
+                            </div>
                         </div>
                     </div>
                     <mat-divider></mat-divider>
@@ -30,9 +32,9 @@
             <mat-toolbar>
                 <span>Geofence: {{selectedGeofence.name}}</span>
                 <span class="fill-remain-space"></span>
-                <button mat-flat-button i18n>Save</button>
+                <button mat-flat-button (click)="saveCurrentGeofence()" i18n>Save</button>
                 <button mat-flat-button i18n>Cancel</button>
-                <button mat-flat-button i18n>Edit</button>
+                <button mat-flat-button (click)="editGeofence()" i18n>Edit</button>
                 <button mat-icon-button (click)="showGeofenceDetails(false)">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -43,34 +45,38 @@
                         <form class="">
                             <div fxLayout="column">
                                 <mat-form-field fxFlex="100">
-                                    <input matInput placeholder="Geofence Name">
+                                    <input matInput placeholder="Geofence Name" [(ngModel)]="selectedGeofence.name" name="geofence-name" [disabled]="!newOrEdit">
                                 </mat-form-field>
                                 <mat-form-field fxFlex="100">
-                                    <input matInput placeholder="Address">
+                                    <input matInput placeholder="Address" [(ngModel)]="selectedGeofence.address" name="geofence-address" [disabled]="!newOrEdit">
                                 </mat-form-field>
                                 <mat-form-field fxFlex="100">
-                                    <input matInput type="number" placeholder="Max Speed">
+                                    <input matInput type="number" placeholder="Max Speed" [(ngModel)]="selectedGeofence.maxSpeedKPH" name="geofence-maxspeed" [disabled]="!newOrEdit">
                                 </mat-form-field>
 
-                                <mat-checkbox>Private Zone</mat-checkbox>
-                                <mat-checkbox>Reverse Geocode</mat-checkbox>
+                                <mat-checkbox [disabled]="!newOrEdit">Private Zone</mat-checkbox>
+                                <mat-checkbox [disabled]="!newOrEdit">Reverse Geocode</mat-checkbox>
                             </div>
                         </form>
                     </div>
                     <div fxFlex="67">
                         <form>
                             <mat-form-field>
-                                <input matInput placeholder="Type">
+                                <mat-select placeholder="Type geofence" disabled>
+                                    <mat-option *ngFor="let fence of fences" [value]="fence.value">
+                                        {{ fence.viewValue }}
+                                    </mat-option>
+                                </mat-select>
                             </mat-form-field>
                             <div *ngIf="isCircle(selectedGeofence)">
                                 <mat-form-field>
-                                    <input matInput placeholder="Center Latitude">
+                                    <input matInput placeholder="Center Latitude" [disabled]="!newOrEdit">
                                 </mat-form-field>
                                 <mat-form-field>
-                                    <input matInput placeholder="Center Longitude">
+                                    <input matInput placeholder="Center Longitude" [disabled]="!newOrEdit">
                                 </mat-form-field>
                                 <mat-form-field>
-                                    <input type="number" matInput placeholder="Radius (m)">
+                                    <input type="number" matInput placeholder="Radius (m)" [disabled]="!newOrEdit">
                                 </mat-form-field>
                             </div>
                         </form>

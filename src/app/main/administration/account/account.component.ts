@@ -7,7 +7,7 @@ import {Account} from 'app/shared/models/account';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
 import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
-import {AppService} from 'app/shared/services/app.service';
+import {ApplicationContext} from 'app/shared/services/application-context.service';
 import {DeleteEvent} from 'app/shared/models/delete-event';
 import {ConfirmDeleteComponent} from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { merge } from 'rxjs/observable/merge';
@@ -60,7 +60,7 @@ export class AccountComponent implements OnInit, AfterViewInit {
     resultsLength = 0;
 
     constructor(private dialog: MatDialog,
-                private app: AppService,
+                private app: ApplicationContext,
                 private service: AccountService,
                 private progress: ProgressBarService) { }
 

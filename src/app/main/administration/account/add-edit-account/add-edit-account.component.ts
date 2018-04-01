@@ -17,7 +17,7 @@ import { Account } from 'app/shared/models/account';
 import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
 import { CompanyLittle } from 'app/shared/models/little/company-little';
 import { AccountService } from 'app/shared/services/account.service';
-import { AppService } from 'app/shared/services/app.service';
+import { ApplicationContext } from 'app/shared/services/application-context.service';
 
 @Component({
     selector: 'app-add-edit-account',
@@ -43,7 +43,7 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
 
     constructor(private companyService: CompanyService,
                 private accountService: AccountService,
-                private app: AppService,
+                private app: ApplicationContext,
                 private privilegeService: PrivilegeService,
                 public dialogRef: MatDialogRef<AddEditAccountComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: Account | any) { }

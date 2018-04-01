@@ -6,7 +6,7 @@ export class LoginResponse {
     private _authorities: string[];
     private _expires_in: number;
     private _jti: string;
-    private _organizationId: number;
+    private _companyId: number;
     private _organizationName: string;
     private _scope: string;
     private _token_type: string;
@@ -59,12 +59,13 @@ export class LoginResponse {
         this._jti = value;
     }
 
-    get organizationId(): number {
-        return this._organizationId;
+
+    get companyId(): number {
+        return this._companyId;
     }
 
-    set organizationId(value: number) {
-        this._organizationId = value;
+    set companyId(value: number) {
+        this._companyId = value;
     }
 
     get organizationName(): string {

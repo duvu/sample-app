@@ -4,12 +4,12 @@ import {
     HttpResponse
 } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {AppService} from "./app.service";
+import {ApplicationContext} from "./application-context.service";
 import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(private app: AppService, private router: Router) {
+    constructor(private app: ApplicationContext, private router: Router) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

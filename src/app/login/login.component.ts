@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'app/shared/services/auth.service';
-import { AppService} from 'app/shared/services/app.service';
+import { ApplicationContext} from 'app/shared/services/application-context.service';
 import { ProgressBarService} from 'app/shared/services/progress-bar.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
     constructor(private auth: AuthService,
                 private router: Router,
-                private app: AppService) {}
+                private app: ApplicationContext) {}
 
     ngOnInit() {
         if (this.app.isLoggedIn()) {

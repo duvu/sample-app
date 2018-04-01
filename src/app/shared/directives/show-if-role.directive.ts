@@ -1,5 +1,5 @@
 import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { AppService } from 'app/shared/services/app.service';
+import { ApplicationContext } from 'app/shared/services/application-context.service';
 
 import * as _ from 'lodash';
 
@@ -12,7 +12,7 @@ export class ShowIfRoleDirective implements OnInit {
     private hasView = false;
     constructor(private templateRef: TemplateRef<any>,
                 private viewContainer: ViewContainerRef,
-                private appService: AppService
+                private appService: ApplicationContext
     ) { }
 
     @Input() set showIfRole(roles: string) {
