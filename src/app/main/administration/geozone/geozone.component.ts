@@ -1,14 +1,14 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as L from 'leaflet';
-import 'leaflet-draw';
 import { GeozoneService } from 'app/shared/services/geozone.service';
-import { RequestGeozone } from 'app/shared/models/request/request-geozone';
 import { Geofence } from 'app/shared/models/geozone';
 import { MatDialog } from '@angular/material';
-import * as _ from 'lodash';
 import { AddEditGeozoneComponent } from 'app/main/administration/geozone/add-edit-geozone/add-edit-geozone.component';
-import { GeoJSON } from 'leaflet';
+
+import * as _ from 'lodash';
+import * as L from 'leaflet';
+import 'leaflet-draw';
+import { ToastService } from 'app/shared/toast.service';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -23,7 +23,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
     private customDefault: L.Icon;
     private map: L.Map;
-    private editableLayers: L.FeatureGroup;
+    private editableLayers: any;
     private drawControl: any;
 
     showDetails: boolean = false;
@@ -35,6 +35,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     constructor(
         private dialog: MatDialog,
         private router: Router,
+        private toast: ToastService,
         private geozoneService: GeozoneService) { }
 
     ngOnInit() {
@@ -193,12 +194,31 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             this.map.removeControl(this.drawControl);
         }
         setTimeout(() => {
-            this.map.invalidateSize();
+            this.map.invalidateSize(true);
         }, 0);
     }
 
     public isCircle(geofence: any) {
         return true;
+
+    }
+
+
+    //-- Delete, Edit
+    deleteGeofence(geofence: Geofence): void {
+        this.geozoneService._delete(geofence.id).subscribe(
+            data => {},
+            error => {},
+            () => {
+                this.toast.info("Deleted geofence #" + geofence.name);
+                _.remove(this.geozoneList, (g) => {
+                    return (g.id === geofence.id);
+                })
+            }
+        )
+    }
+
+    editGeofence(geofence: Geofence): void {
 
     }
 }

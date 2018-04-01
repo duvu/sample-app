@@ -12,11 +12,11 @@
         <div class="geozone-items">
             <mat-list>
                 <mat-list-item *ngFor="let item of geozoneList">
-                    <div (click)="selectGeofence(item)">
+                    <div (click)="selectGeofence(item)" class="geo-item">
                         <div matLine>
                             <span>{{item.name}}</span>
-                            <button mat-icon-button class="small"><mat-icon color="gray">edit</mat-icon></button>
-                            <button mat-icon-button class="small"><mat-icon color="gray">delete</mat-icon></button>
+                            <button mat-icon-button class="small" (click)="editGeofence(item)"><mat-icon color="accent">edit</mat-icon></button>
+                            <button mat-icon-button class="small" (click)="deleteGeofence(item)"><mat-icon color="warn">delete</mat-icon></button>
                         </div>
                     </div>
                     <mat-divider></mat-divider>

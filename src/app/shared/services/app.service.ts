@@ -46,7 +46,7 @@ export class AppService {
         this.redirectURL = url;
     }
     getRedirectURL() {
-        return (this.redirectURL ? this.redirectURL : '/main');
+        return (this.redirectURL ? this.redirectURL : '/main/tracking');
     }
 
     getToken(): string {
