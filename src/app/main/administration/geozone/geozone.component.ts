@@ -237,7 +237,8 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
     saveCurrentGeofence(): void {
         let req = new RequestGeozone();
-        req.companyId = this.appContext.getCurrentAccount()
+        //req.companyId = this.appContext.getCurrentAccount()
+        //TODO update fields of request here
         this.geozoneService.update(this.selectedGeofence.id, req).subscribe(
             data => {},
             error => {},
