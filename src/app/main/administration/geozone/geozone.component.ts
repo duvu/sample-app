@@ -189,20 +189,20 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     }
 
     private drawGeofences(): void {
-        // _.forEach(this.geofenceList, (g) => {
-        //     g = GeoUtils.convertGeofence(g);
-        //     let gj = {
-        //         type: "Feature",
-        //         geometry: g.geometry
-        //     };
-        //
-        //     console.log("Test#", gj);
-        //     let ly = L.geoJSON(gj, {
-        //         pointToLayer: (feature, latlng) => {
-        //         return L.circle(latlng, g.geometry.radius)
-        //     }});
-        //     this.editableLayers.addLayer(ly);
-        // });
+        _.forEach(this.geofenceList, (g) => {
+            g = GeoUtils.convertGeofence(g);
+            let gj = {
+                type: "Feature",
+                geometry: g.geometry
+            };
+
+            console.log("Test#", gj);
+            let ly = L.geoJSON(gj, {
+                pointToLayer: (feature, latlng) => {
+                return L.circle(latlng, g.geometry.radius)
+            }});
+            this.editableLayers.addLayer(ly);
+        });
     }
 
     //--
@@ -271,9 +271,11 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         this.geozoneService.update(this.selectedGeofence.id, req).subscribe(
             data => {
                 console.log('OK');
-                // this.toast.info('Updated Geofence #' + this.selectedGeofence.name);
+                this.toast.info('Updated Geofence #' + this.selectedGeofence.name);
             },
-            error => {},
+            error => {
+                this.toast.error('Not able to update geofence #' + this.selectedGeofence.name);
+            },
             () => {}
         );
     }

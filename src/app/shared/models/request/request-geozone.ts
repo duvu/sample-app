@@ -7,8 +7,8 @@ export class RequestGeozone {
     name: string;
     color: string;
     maxSpeedKPH: number;
-    isReverseGeozone: boolean;
-    isPrivateArea: boolean;
+    reverseGeozone: boolean;
+    privateArea: boolean;
     geometry: string;
 
     // id: number;
@@ -17,15 +17,15 @@ export class RequestGeozone {
     // name: string;
     // color: string;
     // maxSpeedKPH: number;
-    // isReverseGeozone: boolean;
-    // isPrivateArea: boolean;
+    // reverseGeozone: boolean;
+    // privateArea: boolean;
     // geometry: string | any;
     updateFromGeofence(selectedGeofence: Geofence | any) {
         this.name = selectedGeofence.name;
         this.color = selectedGeofence.color;
         this.maxSpeedKPH = selectedGeofence.maxSpeedKPH;
-        this.isPrivateArea = selectedGeofence.isPrivateArea;
-        this.isReverseGeozone = selectedGeofence.isReverseGeozone;
+        this.privateArea = selectedGeofence.privateArea;
+        this.reverseGeozone = selectedGeofence.reverseGeozone;
         this.geometry = JSON.stringify(selectedGeofence.geometry);
     }
 }

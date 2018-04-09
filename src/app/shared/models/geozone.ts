@@ -7,7 +7,7 @@ export class Geofence {
     name: string;
     color: string;
     maxSpeedKPH: number;
-    isReverseGeozone: boolean;
-    isPrivateArea: boolean;
+    reverseGeozone: boolean;
+    privateArea: boolean;
     geometry: string | any;
 }
