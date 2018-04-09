@@ -54,8 +54,8 @@
                                     <input matInput type="number" placeholder="Max Speed" [(ngModel)]="selectedGeofence.maxSpeedKPH" name="geofence-maxspeed" [disabled]="!newOrEdit">
                                 </mat-form-field>
 
-                                <mat-checkbox [disabled]="!newOrEdit">Private Zone</mat-checkbox>
-                                <mat-checkbox [disabled]="!newOrEdit">Reverse Geocode</mat-checkbox>
+                                <mat-checkbox [(ngModel)]="selectedGeofence.privateArea" name="geofence-pri-area" [disabled]="!newOrEdit">Private Zone</mat-checkbox>
+                                <mat-checkbox [(ngModel)]="selectedGeofence.reverseGeocode" name="geofence-rev-code" [disabled]="!newOrEdit">Reverse Geocode</mat-checkbox>
                             </div>
                         </form>
                     </div>
