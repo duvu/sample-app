@@ -11,6 +11,9 @@ import 'leaflet-draw';
 import { ToastService } from 'app/shared/toast.service';
 import { RequestGeozone } from 'app/shared/models/request/request-geozone';
 import { ApplicationContext } from 'app/shared/services/application-context.service';
+import { GeoUtils } from 'app/main/administration/geozone/GeoUtils';
+import { LatLng, LatLngBounds, Point } from 'leaflet';
+import { Feature, GeoJsonObject } from 'geojson';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -23,11 +26,6 @@ const TILE_GOOGLE_URL = 'http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={
 })
 export class GeozoneComponent implements OnInit, AfterViewInit {
 
-    fences = [
-        {value: 'steak-0', viewValue: 'Steak'},
-        {value: 'pizza-1', viewValue: 'Pizza'},
-        {value: 'tacos-2', viewValue: 'Tacos'}
-    ];
     private customDefault: L.Icon;
     private map: L.Map;
     private editableLayers: any;
@@ -35,7 +33,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
     showDetails: boolean = false;
 
-    geozoneList: Array<Geofence>;
+    geofenceList: Array<Geofence>;
 
     selectedGeofence: Geofence | any = {};
     newOrEdit: boolean = false;
@@ -181,11 +179,30 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         this.geozoneService.getAll().subscribe(
             data => {
                 console.log('data', data);
-                this.geozoneList = data;
+                this.geofenceList = data;
             },
             error => {},
-            () => {}
+            () => {
+                this.drawGeofences();
+            }
         );
+    }
+
+    private drawGeofences(): void {
+        // _.forEach(this.geofenceList, (g) => {
+        //     g = GeoUtils.convertGeofence(g);
+        //     let gj = {
+        //         type: "Feature",
+        //         geometry: g.geometry
+        //     };
+        //
+        //     console.log("Test#", gj);
+        //     let ly = L.geoJSON(gj, {
+        //         pointToLayer: (feature, latlng) => {
+        //         return L.circle(latlng, g.geometry.radius)
+        //     }});
+        //     this.editableLayers.addLayer(ly);
+        // });
     }
 
     //--
@@ -193,10 +210,19 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
     }
 
-    public selectGeofence(geofence: any): void {
+    public selectGeofence(geofence: Geofence): void {
         this.showDetails = true;
-        this.selectedGeofence = geofence;
+        this.selectedGeofence = GeoUtils.convertGeofence(geofence);
+
+        console.log('Center', this.center);
+
+        this.map.panTo(this.center);
+
+
+
     }
+
+
     public showGeofenceDetails(show: boolean): void {
         this.showDetails = show;
         if(!show) {
@@ -207,9 +233,12 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         }, 0);
     }
 
-    public isCircle(geofence: any) {
-        return true;
+    public isCircle(): boolean {
+        return (this.selectedGeofence.geometry && this.selectedGeofence.geometry.type === 'Point');
+    }
 
+    public isPolygon(): boolean {
+        return (this.selectedGeofence.geometry && this.selectedGeofence.geometry.type === 'Polygon');
     }
 
 
@@ -221,7 +250,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             error => {},
             () => {
                 this.toast.info("Deleted geofence #" + geofence.name);
-                _.remove(this.geozoneList, (g) => {
+                _.remove(this.geofenceList, (g) => {
                     return (g.id === geofence.id);
                 })
             }
@@ -237,12 +266,78 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
     saveCurrentGeofence(): void {
         let req = new RequestGeozone();
-        //req.companyId = this.appContext.getCurrentAccount()
-        //TODO update fields of request here
+        // req.companyId = this.appContext.companyId;
+        req.updateFromGeofence(this.selectedGeofence);
         this.geozoneService.update(this.selectedGeofence.id, req).subscribe(
-            data => {},
+            data => {
+                console.log('OK');
+                // this.toast.info('Updated Geofence #' + this.selectedGeofence.name);
+            },
             error => {},
             () => {}
         );
+    }
+
+    //-get-set
+    get type(): string {
+        if (this.selectedGeofence.geometry) {
+            return this.selectedGeofence.geometry.type;
+        } else {
+            return "undefined";
+        }
+
+    }
+    set type(t: string) {
+        this.selectedGeofence.geometry.type = t;
+    }
+
+    get coordinates(): any {
+        if (this.isCircle()) {
+            if(this.selectedGeofence.geometry) {
+                return this.selectedGeofence.geometry.coordinates;
+            } else {
+                return [];
+            }
+        } else if (this.isPolygon()) {
+            if (this.selectedGeofence.geometry) {
+                return this.selectedGeofence.geometry.coordinates[0];
+            } else {
+                return [];
+            }
+        }
+    }
+
+
+
+    set coordinates(c: any) {
+        if(this.isCircle()) {
+            this.selectedGeofence.geometry.coordinates = c;
+        } else if (this.isPolygon()) {
+            this.selectedGeofence.geometry.coordinates[0] = c;
+        }
+    }
+
+    get radius(): number {
+        if (this.selectedGeofence.geometry) {
+            return this.selectedGeofence.geometry.radius;
+        } else {
+            return 0;
+        }
+    }
+    set radius(r: number) {
+        this.selectedGeofence.geometry.radius = r;
+    }
+
+    get center(): LatLng {
+        if (this.isCircle()) {
+            return this.map.layerPointToLatLng(this.coordinates);
+        } else {
+            let abc = [];
+            _.forEach(this.coordinates, (coor: Point) => {
+                abc.push(this.map.layerPointToLatLng(coor))
+            });
+
+            return L.latLngBounds(abc).getCenter();
+        }
     }
 }
