@@ -11,7 +11,7 @@
         <mat-divider></mat-divider>
         <div class="geozone-items">
             <mat-list>
-                <mat-list-item *ngFor="let item of geozoneList">
+                <mat-list-item *ngFor="let item of geofenceList">
                     <div (click)="selectGeofence(item)" class="geo-item">
                         <div matLine>
                             <span>{{item.name}}</span>
@@ -59,25 +59,35 @@
                             </div>
                         </form>
                     </div>
-                    <div fxFlex="67">
+                    <div fxFlex="67" class="geo-detail-coordinates">
                         <form>
                             <mat-form-field>
-                                <mat-select placeholder="Type geofence" disabled>
-                                    <mat-option *ngFor="let fence of fences" [value]="fence.value">
-                                        {{ fence.viewValue }}
-                                    </mat-option>
-                                </mat-select>
+                                <input matInput placeholder="Type" [(ngModel)]="type" name="geofence-type" disabled>
                             </mat-form-field>
-                            <div *ngIf="isCircle(selectedGeofence)">
-                                <mat-form-field>
-                                    <input matInput placeholder="Center Latitude" [disabled]="!newOrEdit">
-                                </mat-form-field>
-                                <mat-form-field>
-                                    <input matInput placeholder="Center Longitude" [disabled]="!newOrEdit">
-                                </mat-form-field>
-                                <mat-form-field>
-                                    <input type="number" matInput placeholder="Radius (m)" [disabled]="!newOrEdit">
-                                </mat-form-field>
+                            <div *ngIf="isCircle()">
+                                <div>
+                                    <mat-form-field>
+                                        <input type="number" matInput placeholder="Radius (m)" [(ngModel)]="radius" name="geofence-coor-rad" [disabled]="!newOrEdit">
+                                    </mat-form-field>
+                                </div>
+                                <div>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Center Latitude" [(ngModel)]="coordinates[0]" name="geofence-coor-lat" [disabled]="!newOrEdit">
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input matInput placeholder="Center Longitude" [(ngModel)]="coordinates[1]" name="geofence-coor-lon" [disabled]="!newOrEdit">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div *ngIf="isPolygon()">
+                                <div *ngFor="let coor of coordinates; let i = index">
+                                    <mat-form-field>
+                                        <input type="number" matInput placeholder="Latitude # {{i}}" [(ngModel)]="coor[0]" name="geofence-poly-lat-{{i}}" [disabled]="!newOrEdit">
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <input type="number" matInput placeholder="Latitude # {{i}}" [(ngModel)]="coor[1]" name="geofence-poly-lat-{{i}}" [disabled]="!newOrEdit">
+                                    </mat-form-field>
+                                </div>
                             </div>
                         </form>
                     </div>

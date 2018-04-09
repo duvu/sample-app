@@ -9,5 +9,5 @@ export class Geofence {
     maxSpeedKPH: number;
     isReverseGeozone: boolean;
     isPrivateArea: boolean;
-    geometry: string;
+    geometry: string | any;
 }
