@@ -12,7 +12,7 @@ import { ToastService } from 'app/shared/toast.service';
 import { RequestGeozone } from 'app/shared/models/request/request-geozone';
 import { ApplicationContext } from 'app/shared/services/application-context.service';
 import { GeoUtils } from 'app/main/administration/geozone/GeoUtils';
-import { LatLng, LatLngBounds, Point } from 'leaflet';
+import { GeoJSON, LatLng, LatLngBounds, Point } from 'leaflet';
 import { Feature, GeoJsonObject } from 'geojson';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -151,7 +151,9 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             //     }
             // });
             //
+
             this.editableLayers.addLayer(event.layer);
+            event.layer.editing.enable();
         })
     }
 
@@ -191,16 +193,18 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     private drawGeofences(): void {
         _.forEach(this.geofenceList, (g) => {
             g = GeoUtils.convertGeofence(g);
-            let gj = {
+            let gj: Feature<any>;
+            gj = {
                 type: "Feature",
+                properties: {},
                 geometry: g.geometry
             };
 
-            console.log("Test#", gj);
             let ly = L.geoJSON(gj, {
                 pointToLayer: (feature, latlng) => {
-                return L.circle(latlng, g.geometry.radius)
-            }});
+                    return L.circle(latlng, g.geometry.radius)
+                }
+            });
             this.editableLayers.addLayer(ly);
         });
     }
@@ -211,7 +215,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     }
 
     public selectGeofence(geofence: Geofence): void {
-        this.showDetails = true;
+        this.showGeofenceDetails(true)
         this.selectedGeofence = GeoUtils.convertGeofence(geofence);
 
         console.log('Center', this.center);
@@ -262,6 +266,9 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             this.selectedGeofence = geofence;
         }
         this.newOrEdit = true;
+
+
+
     }
 
     saveCurrentGeofence(): void {
@@ -332,11 +339,11 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
     get center(): LatLng {
         if (this.isCircle()) {
-            return this.map.layerPointToLatLng(this.coordinates);
+            return L.GeoJSON.coordsToLatLng(this.coordinates);
         } else {
             let abc = [];
-            _.forEach(this.coordinates, (coor: Point) => {
-                abc.push(this.map.layerPointToLatLng(coor))
+            _.forEach(this.coordinates, (coor: [number, number]) => {
+                abc.push(L.GeoJSON.coordsToLatLng(coor))
             });
 
             return L.latLngBounds(abc).getCenter();
