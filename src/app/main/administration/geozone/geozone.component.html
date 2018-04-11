@@ -4,7 +4,7 @@
             <mat-form-field>
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
             </mat-form-field>
-            <button mat-icon-button color="primary" matTooltip="Create New Geofence" (click)="showDrawToolbar(true)">
+            <button mat-icon-button color="primary" matTooltip="Create New Geofence" (click)="addNewGeofence()" [disabled]="edit">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
@@ -12,12 +12,12 @@
         <div class="geozone-items">
             <mat-list>
                 <mat-list-item *ngFor="let item of geofenceList">
-                    <div (click)="selectGeofence(item)" class="geo-item">
+                    <div (click)="select(item)" class="geo-item">
                         <div matLine>
                             <span>{{item.name}}</span>
                             <div class="align-right">
-                                <button mat-icon-button class="small" (click)="editGeofence(item)"><mat-icon color="accent">edit</mat-icon></button>
-                                <button mat-icon-button class="small" (click)="deleteGeofence($event, item)"><mat-icon color="warn">delete</mat-icon></button>
+                                <button mat-icon-button class="small" (click)="modify(item)"><mat-icon color="accent">edit</mat-icon></button>
+                                <button mat-icon-button class="small" (click)="delete($event, item)"><mat-icon color="warn">delete</mat-icon></button>
                             </div>
                         </div>
                     </div>
@@ -30,14 +30,18 @@
         <div id="geo-map-id" class="geo-detail-map"></div>
         <div class="geo-detail-info-container" *ngIf="showDetails">
             <mat-toolbar>
-                <span>Geofence: {{selectedGeofence.name}}</span>
+                <span>Geofence: {{selected.name}}</span>
                 <span class="fill-remain-space"></span>
-                <button mat-flat-button (click)="saveCurrentGeofence()" i18n>Save</button>
-                <button mat-flat-button i18n>Cancel</button>
-                <button mat-flat-button (click)="editGeofence()" i18n>Edit</button>
-                <button mat-icon-button (click)="showGeofenceDetails(false)">
-                    <mat-icon>close</mat-icon>
-                </button>
+
+                <div *ngIf="create">
+                    <button mat-icon-button (click)="draw('circle')" [disabled]="pending"><mat-icon>circle</mat-icon></button>
+                    <button mat-icon-button (click)="draw('square')" [disabled]="pending"><mat-icon>square</mat-icon></button>
+                    <button mat-icon-button (click)="draw('pentagon')" [disabled]="pending"><mat-icon>pentagon</mat-icon></button>
+                </div>
+
+                <button mat-flat-button (click)="save()" i18n *ngIf="edit || create">Save</button>
+                <button mat-button (click)="cancel()" i18n *ngIf="edit || create">Cancel</button>
+                <button mat-flat-button (click)="modify()" i18n *ngIf="!edit && !create">Edit</button>
             </mat-toolbar>
             <div class="geo-detail-info">
                 <div fxLayout="row" fxLayoutGap="16px">
@@ -45,17 +49,21 @@
                         <form class="">
                             <div fxLayout="column">
                                 <mat-form-field fxFlex="100">
-                                    <input matInput placeholder="Geofence Name" [(ngModel)]="selectedGeofence.name" name="geofence-name" [disabled]="!newOrEdit">
+                                    <input matInput placeholder="Geofence Name" [(ngModel)]="selected.name" name="geofence-name" [disabled]="!edit && !create">
                                 </mat-form-field>
                                 <mat-form-field fxFlex="100">
-                                    <input matInput placeholder="Address" [(ngModel)]="selectedGeofence.address" name="geofence-address" [disabled]="!newOrEdit">
+                                    <input matInput placeholder="Address" [(ngModel)]="selected.address" name="geofence-address" [disabled]="!edit && !create">
                                 </mat-form-field>
                                 <mat-form-field fxFlex="100">
-                                    <input matInput type="number" placeholder="Max Speed" [(ngModel)]="selectedGeofence.maxSpeedKPH" name="geofence-maxspeed" [disabled]="!newOrEdit">
+                                    <input matInput type="number" placeholder="Max Speed" [(ngModel)]="selected.maxSpeedKPH" name="geofence-maxspeed" [disabled]="!edit && !create">
                                 </mat-form-field>
 
-                                <mat-checkbox [(ngModel)]="selectedGeofence.privateArea" name="geofence-pri-area" [disabled]="!newOrEdit">Private Zone</mat-checkbox>
-                                <mat-checkbox [(ngModel)]="selectedGeofence.reverseGeocode" name="geofence-rev-code" [disabled]="!newOrEdit">Reverse Geocode</mat-checkbox>
+                                <mat-form-field fxFlex="100">
+                                    <input matInput type="text" placeholder="Color" [(ngModel)]="selected.color" name="geofence-color" [disabled]="!edit && !create">
+                                </mat-form-field>
+
+                                <mat-checkbox [(ngModel)]="selected.privateArea" name="geofence-pri-area" [disabled]="!edit && !create">Private Zone</mat-checkbox>
+                                <mat-checkbox [(ngModel)]="selected.reverseGeocode" name="geofence-rev-code" [disabled]="!edit && !create">Reverse Geocode</mat-checkbox>
                             </div>
                         </form>
                     </div>
@@ -67,25 +75,25 @@
                             <div *ngIf="isCircle()">
                                 <div>
                                     <mat-form-field>
-                                        <input type="number" matInput placeholder="Radius (m)" [(ngModel)]="radius" name="geofence-coor-rad" [disabled]="!newOrEdit">
+                                        <input type="number" matInput placeholder="Radius (m)" [(ngModel)]="radius" name="geofence-coor-rad" [disabled]="!edit && !create">
                                     </mat-form-field>
                                 </div>
                                 <div>
                                     <mat-form-field>
-                                        <input matInput placeholder="Center Latitude" [(ngModel)]="coordinates[0]" name="geofence-coor-lat" [disabled]="!newOrEdit">
+                                        <input matInput placeholder="Center Latitude" [(ngModel)]="coordinates[0]" name="geofence-coor-lat" [disabled]="!edit && !create">
                                     </mat-form-field>
                                     <mat-form-field>
-                                        <input matInput placeholder="Center Longitude" [(ngModel)]="coordinates[1]" name="geofence-coor-lon" [disabled]="!newOrEdit">
+                                        <input matInput placeholder="Center Longitude" [(ngModel)]="coordinates[1]" name="geofence-coor-lon" [disabled]="!edit && !create">
                                     </mat-form-field>
                                 </div>
                             </div>
                             <div *ngIf="isPolygon()">
                                 <div *ngFor="let coor of coordinates; let i = index">
                                     <mat-form-field>
-                                        <input type="number" matInput placeholder="Latitude # {{i}}" [(ngModel)]="coor[0]" name="geofence-poly-lat-{{i}}" [disabled]="!newOrEdit">
+                                        <input type="number" matInput placeholder="Latitude # {{i}}" [(ngModel)]="coor[0]" name="geofence-poly-lat-{{i}}" [disabled]="!edit && !create">
                                     </mat-form-field>
                                     <mat-form-field>
-                                        <input type="number" matInput placeholder="Latitude # {{i}}" [(ngModel)]="coor[1]" name="geofence-poly-lat-{{i}}" [disabled]="!newOrEdit">
+                                        <input type="number" matInput placeholder="Latitude # {{i}}" [(ngModel)]="coor[1]" name="geofence-poly-lat-{{i}}" [disabled]="!edit && !create">
                                     </mat-form-field>
                                 </div>
                             </div>
