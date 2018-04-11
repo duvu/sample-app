@@ -10,4 +10,7 @@ export class Geofence {
     reverseGeozone: boolean;
     privateArea: boolean;
     geometry: string | any;
+
+    //track
+    internalId: number;
 }
