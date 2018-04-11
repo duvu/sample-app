@@ -12,8 +12,9 @@ import { ToastService } from 'app/shared/toast.service';
 import { RequestGeozone } from 'app/shared/models/request/request-geozone';
 import { ApplicationContext } from 'app/shared/services/application-context.service';
 import { GeoUtils } from 'app/main/administration/geozone/GeoUtils';
-import { GeoJSON, LatLng, LatLngBounds, Point } from 'leaflet';
+import { GeoJSON, LatLng, LatLngBounds, Layer, LeafletEvent, Point } from 'leaflet';
 import { Feature, GeoJsonObject } from 'geojson';
+import { FeatureGroup } from 'leaflet';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -28,7 +29,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
     private customDefault: L.Icon;
     private map: L.Map;
-    private editableLayers: any;
+    private editableLayers: FeatureGroup;
     private drawControl: any;
 
     showDetails: boolean = false;
@@ -108,7 +109,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             edit: {
                 featureGroup: this.editableLayers,
                 //edit: false, // disable edit-button
-                //remove: false
+                remove: false
             }
         });
 
@@ -116,6 +117,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             // this.openAddEditGeozoneDialog(event);
             // this.editableLayers.addLayer(event.layer);
             this.showGeofenceDetails(true);
+            this.newOrEdit = true;
             this.selectedGeofence = event.layer;
             console.log('object', event);
             console.log('layer', event.layer);
@@ -153,7 +155,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             //
 
             this.editableLayers.addLayer(event.layer);
-            event.layer.editing.enable();
+            //event.layer.editing.enable();
         })
     }
 
@@ -200,13 +202,28 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
                 geometry: g.geometry
             };
 
-            let ly = L.geoJSON(gj, {
+            // let ly = L.geoJSON(gj, {
+            //     pointToLayer: (feature, latlng) => {
+            //         return L.circle(latlng, g.geometry.radius)
+            //     }
+            // });
+
+            let ly = L.GeoJSON.geometryToLayer(gj, {
                 pointToLayer: (feature, latlng) => {
                     return L.circle(latlng, g.geometry.radius)
                 }
             });
             this.editableLayers.addLayer(ly);
+            let internalId = this.editableLayers.getLayerId(ly);
+            g.internalId = internalId;
         });
+
+        // this.editableLayers.eachLayer((layer: Layer) => {
+        //     console.log('Added Layer: ', layer);
+        //     layer.options.editing || (layer.options.editing = {});
+        //     layer.editing.enable();
+        // });
+        //this.map.panTo(this.editableLayers.getBounds().getCenter());
     }
 
     //--
@@ -216,14 +233,10 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
 
     public selectGeofence(geofence: Geofence): void {
         this.showGeofenceDetails(true)
+
         this.selectedGeofence = GeoUtils.convertGeofence(geofence);
 
-        console.log('Center', this.center);
-
         this.map.panTo(this.center);
-
-
-
     }
 
 
@@ -267,7 +280,10 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         }
         this.newOrEdit = true;
 
-
+        let layer: Layer | any;
+        layer = this.editableLayers.getLayer(this.selectedGeofence.internalId);
+        layer.options.editing || (layer.options.editing = {});
+        layer.editing.enable();
 
     }
 
