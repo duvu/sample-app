@@ -42,6 +42,8 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     private _create: boolean = false;
     private _pending: boolean = false;
 
+    private _bakLayer: any;
+
     constructor(
         private dialog: MatDialog,
         private router: Router,
@@ -256,20 +258,34 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     }
 
     cancel(): void {
-
+        this.disable();
         this.hide();
+    }
+
+    enable(): void {
+        this.edit = true;
+        let layer: Layer | any;
+        layer = this.editableLayers.getLayer(this.selected.internalId);
+        this._bakLayer = layer;
+        layer.options.editing || (layer.options.editing = {});
+        layer.editing.enable();
+    }
+
+    disable(): void {
+        this.edit = false;
+        let layer: Layer | any;
+        this.editableLayers.addLayer(this._bakLayer);
+        layer = this.editableLayers.getLayer(this.selected.internalId);
+        layer.options.editing || (layer.options.editing = {});
+        layer.editing.disable();
+
     }
 
     modify(geofence?: Geofence): void {
         if (geofence) {
             this.selected = geofence;
         }
-        this.edit = true;
-
-        let layer: Layer | any;
-        layer = this.editableLayers.getLayer(this.selected.internalId);
-        layer.options.editing || (layer.options.editing = {});
-        layer.editing.enable();
+        this.enable();
     }
 
     save(): void {
@@ -304,6 +320,28 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         }
 
     }
+
+    // _backupLayer(layer) {
+    //     var id = L.Util.stamp(layer);
+    //
+    //     if (!this._uneditedLayerProps[id]) {
+    //         // Polyline, Polygon or Rectangle
+    //         if (layer instanceof L.Polyline || layer instanceof L.Polygon || layer instanceof L.Rectangle) {
+    //             this._uneditedLayerProps[id] = {
+    //                 latlngs: L.LatLngUtil.cloneLatLngs(layer.getLatLngs())
+    //             };
+    //         } else if (layer instanceof L.Circle) {
+    //             this._uneditedLayerProps[id] = {
+    //                 latlng: L.LatLngUtil.cloneLatLng(layer.getLatLng()),
+    //                 radius: layer.getRadius()
+    //             };
+    //         } else if (layer instanceof L.Marker || layer instanceof L.CircleMarker) { // Marker
+    //             this._uneditedLayerProps[id] = {
+    //                 latlng: L.LatLngUtil.cloneLatLng(layer.getLatLng())
+    //             };
+    //         }
+    //     }
+    // },
 
     //-get-set
     get create(): boolean {
