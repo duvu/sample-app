@@ -65,6 +65,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     private totalDevice: number;
 
     private chart: any;
+    private legend: any;
+    private center: any;
+
     private oldSelectedDevice: DeviceLittle;
 
     constructor(private _datePipe: DatePipe,
@@ -287,18 +290,19 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     initSvg(): void {
         this.color = d3.scaleOrdinal()
             .range(["#00e80e", "#ffb403", "#e23015"]);
+
         this.arc = d3.arc()
-            .outerRadius(115)
-            .innerRadius(75);
+            .outerRadius(60)
+            .innerRadius(35);
         this.labelArc = d3.arc()
-            .outerRadius(95)
-            .innerRadius(95);
+            .outerRadius(50)
+            .innerRadius(45);
         this.pie = d3.pie()
             .sort(null)
             .value((d: any) => d.count);
         this.svg = d3.select("svg")
             .append("g")
-            .attr("transform", "translate(" + 125 + "," + 125 + ")");
+            .attr("transform", "translate(" + 60 + "," + 60 + ")");
 
         //this.createPie();
     }
@@ -312,8 +316,29 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private createPie() {
-        // console.log('createPie', this.stats);
-        this.svg.append("text")
+        console.log('creating');
+        this.legend = this.svg.selectAll('.legend')
+            .data(this.pie(this.stats))
+            .enter().append('g')
+            .attr('transform', (d, i) => {return 'translate(' + (75) + ',' + (i * 20 - 30) + ')';})
+            .attr('class', 'legend')
+
+        this.legend.append('rect')
+            .attr('width', 10)
+            .attr('height', 10)
+            .style('fill', (d, i) => {
+                return this.color(i);
+            });
+        this.legend.append('text')
+            .text((d, i) => {
+                console.log('data: ', d.data)
+                return d.data.name;
+            })
+            .attr('y', 10)
+            .attr('x', 15);
+
+        this.center = this.svg
+            .append("text")
             .attr("text-anchor", "middle")
             .attr('font-size', '1.5em')
             .attr('y', 10)
@@ -327,18 +352,23 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.chart.append("path")
             .attr("d", this.arc)
-            .style("fill", (d: any) => this.color(d.data.idx));
+            .attr("fill", (d: any, i: number) => {
+                return this.color(i)
+            });
 
         this.chart.append("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
-            .attr("dy", ".35em")
-            .text((d: any) => d.data.count);
+            .attr("dy", ".5em")
+            .attr('font-size', 12)
+            .text((d: any) => (d.data.count > 0 ? d.data.count : ''));
+
+
     }
 
     private updatePie() {
-        // console.log('updatePie', this.stats);
-        this.svg.select("text").text(() => this.totalDevice);
-        this.chart = this.svg.selectAll(".arc").data(this.pie(this.stats));
-        this.chart.select("path").attr("d", this.arc);
-        this.chart.select("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")").text((d: any) => d.data.count);
+        console.log('updatePie', this.stats);
+        //this.svg.select("text").text(() => this.totalDevice);
+        //this.chart = this.svg.selectAll(".arc").data(this.pie(this.stats));
+        this.center.select('text').text(() => this.totalDevice);
+        this.chart.select("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")").text((d: any) => (d.data.count > 0 ? d.data.count : ''));
     }
 }
