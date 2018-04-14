@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from 'app/shared/services/auth.service';
 import { ApplicationContext} from 'app/shared/services/application-context.service';
-import { ProgressBarService} from 'app/shared/services/progress-bar.service';
+import { SpinnerService } from 'app/shared/services/spinner.service';
 
 @Component({
     selector: 'app-login',
@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
     constructor(private auth: AuthService,
                 private router: Router,
+                private spinner: SpinnerService,
                 private app: ApplicationContext) {}
 
     ngOnInit() {
@@ -28,18 +29,18 @@ export class LoginComponent implements OnInit {
     }
 
     login(): void {
-        this.loading = true;
+        this.spinner.show(true);
         this.auth.login(this.model.username, this.model.password).subscribe(
             result => {
                 this.app.setCurrentAccount(result);
             },
             error => {
                 this.errorMessage = 'Error' + error.message;
-                this.loading = false;
+                this.spinner.show(false);
             },
             () => {
                 const redirectUrl = this.app.getRedirectURL();
-                this.loading = false;
+                this.spinner.show(false);
                 this.router.navigate([redirectUrl]);
             }
         );

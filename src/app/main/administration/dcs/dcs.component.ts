@@ -6,12 +6,12 @@ import { Dcs } from 'app/shared/models/dcs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { of as observableOf } from 'rxjs/observable/of';
-import { ProgressBarService } from 'app/shared/services/progress-bar.service';
 import { AddEditDcsComponent } from 'app/main/administration/dcs/add-edit-dcs/add-edit-dcs.component';
 import { DcsRequest } from 'app/shared/models/request/dcs-request';
 import { ToastService } from 'app/shared/toast.service';
 import { DeleteEvent } from 'app/shared/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
+import { SpinnerService } from 'app/shared/services/spinner.service';
 
 @Component({
     selector: 'app-dcs',
@@ -31,8 +31,8 @@ export class DcsComponent implements OnInit, AfterViewInit {
 
     constructor(private service: DcsService,
                 private dialog: MatDialog,
-                private toast: ToastService,
-                private progress: ProgressBarService) { }
+                private spinner: SpinnerService,
+                private toast: ToastService) { }
 
     ngOnInit() {
         this.dataChange = new ReplaySubject(1);
@@ -48,19 +48,19 @@ export class DcsComponent implements OnInit, AfterViewInit {
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    this.progress.show();
+                    this.spinner.show(true);
                     return this.service!.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
                         this.sort.active, this.sort.direction);
                 }),
                 map(data => {
-                    this.progress.hide();
+                    this.spinner.show(false);
                     this.resultsLength = data.totalElements;
 
                     return data.content;
                 }),
                 catchError(() => {
-                    this.progress.hide();
+                    this.spinner.show(false);
                     return observableOf([]);
                 })
             ).subscribe(data => this.dataSource.data = data);

@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ApplicationContext } from 'app/shared/services/application-context.service';
 import { CompanyService } from 'app/shared/services/organization.service';
-import { ProgressBarService } from 'app/shared/services/progress-bar.service';
 import { DeleteEvent } from 'app/shared/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { OptionalColumnOrganizationComponent } from 'app/main/administration/company/optional-column-organization/optional-column-organization.component';
@@ -17,6 +16,7 @@ import { of as observableOf } from 'rxjs/observable/of';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Account } from 'app/shared/models/account';
 import { Device } from 'app/shared/models/device';
+import { SpinnerService } from 'app/shared/services/spinner.service';
 
 @Component({
     selector: 'app-organization',
@@ -51,8 +51,8 @@ export class CompanyComponent implements OnInit, AfterViewInit {
 
     constructor(private dialog: MatDialog,
                 private app: ApplicationContext,
-                private service: CompanyService,
-                private progress: ProgressBarService) { }
+                private spinner: SpinnerService,
+                private service: CompanyService) { }
 
     ngOnInit() {
         this.initTableSettings();
@@ -68,19 +68,19 @@ export class CompanyComponent implements OnInit, AfterViewInit {
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    this.progress.show();
+                    this.spinner.show(true);
                     return this.service!.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
                         this.sort.active, this.sort.direction);
                 }),
                 map(data => {
-                    this.progress.hide();
+                    this.spinner.show(false);
                     this.resultsLength = data.totalElements;
 
                     return data.content;
                 }),
                 catchError(() => {
-                    this.progress.hide();
+                    this.spinner.show(false);
                     return observableOf([]);
                 })
             ).subscribe(data => this.dataSource.data = data);
