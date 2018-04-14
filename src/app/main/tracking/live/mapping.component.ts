@@ -292,17 +292,17 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             .range(["#00e80e", "#ffb403", "#e23015"]);
 
         this.arc = d3.arc()
-            .outerRadius(60)
-            .innerRadius(35);
+            .outerRadius(56)
+            .innerRadius(28);
         this.labelArc = d3.arc()
-            .outerRadius(50)
-            .innerRadius(45);
+            .outerRadius(45)
+            .innerRadius(35);
         this.pie = d3.pie()
             .sort(null)
             .value((d: any) => d.count);
         this.svg = d3.select("svg")
             .append("g")
-            .attr("transform", "translate(" + 60 + "," + 60 + ")");
+            .attr("transform", "translate(" + 65 + "," + 60 + ")");
 
         //this.createPie();
     }
