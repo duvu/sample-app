@@ -1,0 +1,27 @@
+<table>
+    <tr>
+        <td class="popup-title">DeviceID</td>
+        <td>{{deviceId}}</td>
+    </tr>
+    <tr>
+        <td class="popup-title">SpeedKPH</td>
+        <td>{{speedKph}}</td>
+    </tr>
+    <tr>
+        <td class="popup-title">Time</td>
+        <td>{{timestamp}}</td>
+    </tr>
+    <tr>
+        <td class="popup-title">Lat/Lng</td>
+        <td>{{latlng}}</td>
+    </tr>
+    <tr>
+        <td class="popup-title">Address</td>
+        <td>{{address}}</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <a [routerLink]="['main', 'tracking', 'history', devId]"> history >></a>
+        </td>
+    </tr>
+</table>
