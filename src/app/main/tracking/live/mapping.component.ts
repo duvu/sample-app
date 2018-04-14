@@ -21,10 +21,9 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/mergeMap';
 
-import { arc } from 'd3-shape';
 import { StatusPieChart } from 'app/shared/models/status-pie-chart';
 import { DeviceLittle } from 'app/shared/models/little/device-little';
-import { LinkPopupService } from 'app/main/tracking/LinkPopupService';
+import { PopupService } from 'app/main/tracking/live/popup/popup.service';
 import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
 
 
@@ -72,7 +71,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 private deviceService: DeviceService,
                 private eventService: EventService,
 
-                private popupLink: LinkPopupService) { }
+                private popupLink: PopupService) { }
 
     ngOnInit() {
         this.customDefault = L.icon({
@@ -122,7 +121,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     loadLivesEvent(): void {
-        TimerObservable.create(0, 10000)
+        TimerObservable.create(0, 10000000000000)
             .takeWhile(() => this.alive)
             .subscribe(() => {
                 this.eventService.getLiveEvents().subscribe(
@@ -159,6 +158,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
             if (event.latitude && event.longitude) {
                 let marker = this.buildMarker(event);
+                this.popupLink.register(marker, event);
                 this.markersCluster.addLayer(marker);
             }
 
@@ -205,8 +205,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 opacity: 1,
                 className: 'marker-label'
             }).bindPopup(popup);
-
-        //this.popupLink.register(m, '/test');
         return m;
     }
 
@@ -226,18 +224,19 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     buildPopup(event: EventData): L.Popup {
         let popup = L.popup();
-        let htmlPopup = '';
 
-        let txtDate = this._datePipe.transform(event.timestamp, 'MMM dd, yyyy hh:mm:ss');
-        htmlPopup += '<table>';
-        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'DeviceID:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.deviceId;htmlPopup += '</td>';htmlPopup += '</tr>';
-        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'SpeedKPH:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.speedKPH;htmlPopup += '</td>';htmlPopup += '</tr>';
-        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += txtDate;htmlPopup += '</td>';htmlPopup += '</tr>';
-        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Lat/Lng:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.latitude + '/' + event.longitude;htmlPopup += '</td>';htmlPopup += '</tr>';
-        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Address:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.address;htmlPopup += '</td>';htmlPopup += '</tr>';
-        htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title" colspan="2">';htmlPopup += '<a routeLink=\'history/'; htmlPopup += event.devId; htmlPopup+= '\'> history>>'; htmlPopup+='</a>'; htmlPopup += '</td>';
-        htmlPopup += '</table>';
-        popup.setContent(htmlPopup);
+        // let htmlPopup = '';
+        // let txtDate = this._datePipe.transform(event.timestamp, 'MMM dd, yyyy hh:mm:ss');
+        // htmlPopup += '<table>';
+        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'DeviceID:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.deviceId;htmlPopup += '</td>';htmlPopup += '</tr>';
+        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'SpeedKPH:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.speedKPH;htmlPopup += '</td>';htmlPopup += '</tr>';
+        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += txtDate;htmlPopup += '</td>';htmlPopup += '</tr>';
+        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Lat/Lng:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.latitude + '/' + event.longitude;htmlPopup += '</td>';htmlPopup += '</tr>';
+        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Address:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.address;htmlPopup += '</td>';htmlPopup += '</tr>';
+        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title" colspan="2">';htmlPopup += '<a routeLink=\'history/'; htmlPopup += event.devId; htmlPopup+= '\'> history>>'; htmlPopup+='</a>'; htmlPopup += '</td>';
+        // htmlPopup += '</table>';
+
+        popup.setContent(document.createElement('div'));
         popup.options.offset = L.point(0, 0);
 
         return popup;

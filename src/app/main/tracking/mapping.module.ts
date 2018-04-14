@@ -7,7 +7,8 @@ import { DeviceService} from 'app/shared/services/device.service';
 import {EventService} from 'app/shared/services/event.service';
 import { MaterialShared } from 'app/shared/material-shared';
 import { HistoryComponent } from './history/history.component';
-import { FacilityLinkComponent, LinkPopupService } from 'app/main/tracking/LinkPopupService';
+import { PopupService } from 'app/main/tracking/live/popup/popup.service';
+import { PopupComponent } from './live/popup/popup.component';
 
 
 @NgModule({
@@ -19,18 +20,18 @@ import { FacilityLinkComponent, LinkPopupService } from 'app/main/tracking/LinkP
     ],
     providers: [
         DeviceService,
-        LinkPopupService,
+        PopupService,
         EventService,
         DatePipe
     ],
 
     entryComponents: [
-      FacilityLinkComponent
+      PopupComponent
     ],
     declarations: [
         MappingComponent,
         HistoryComponent,
-        FacilityLinkComponent
+        PopupComponent
     ]
 })
 export class MappingModule { }
