@@ -25,6 +25,7 @@ import { arc } from 'd3-shape';
 import { StatusPieChart } from 'app/shared/models/status-pie-chart';
 import { DeviceLittle } from 'app/shared/models/little/device-little';
 import { LinkPopupService } from 'app/main/tracking/LinkPopupService';
+import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
 
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -36,9 +37,6 @@ const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access
     styleUrls: ['./mapping.component.scss']
 })
 export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
-
-    now: number;
-
     liveEvents: EventData[];
     customDefault: L.Icon;
     map: L.Map;
@@ -149,8 +147,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         let idleDev = new StatusPieChart(2,"Idle", 0);
         let stopDev = new StatusPieChart(3,"Stop", 0);
 
-        this.now = (new Date()).getTime();
-
         this.markersCluster.clearLayers();
         _.forEach(this.liveEvents, function (event) {
             let d = _.find(this.dataSource.data, function (dt) {
@@ -166,15 +162,20 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.markersCluster.addLayer(marker);
             }
 
-            if (this.now - event.timestamp <= 300000 /*300 seconds*/) {
-                liveDev.increase();
-                d.state = 2; //living
-            } else if (this.now - event.timestamp <= 30*60*1000) {
-                idleDev.increase();
-                d.state = 1; //idle
-            } else {
-                stopDev.increase();
-                d.state = 0; //stop
+            const status = MappingUtils.getStatus(event.timestamp);
+            switch (status) {
+                case 'live':
+                    liveDev.increase();
+                    d.state = 2; //living
+                    break;
+                case 'idle':
+                    idleDev.increase();
+                    d.state = 1; //idle
+                    break;
+                case 'stop':
+                    stopDev.increase();
+                    d.state = 0; //stop
+                    break;
             }
 
         }.bind(this));
@@ -211,16 +212,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     buildIcon(event: EventData): L.DivIcon {
         let htmlIcon = '';
-        if (this.now - event.timestamp <= 300000 /*300 seconds*/) {
-            htmlIcon = '<div style="background-color: lawngreen; width: 100%; height: 100%;"></div>';
-        } else if (this.now - event.timestamp <= 30*60*1000) {
-            htmlIcon = '<div style="background-color: orange; width: 100%; height: 100%;"></div>';
-        } else {
-            htmlIcon = '<div style="background-color: red; width: 100%; height: 100%;"></div>';
-        }
-
-
-
+        htmlIcon = '<div style="background-color:' + MappingUtils.getColor(event.timestamp) + '; width: 100%; height: 100%;"></div>';
         // html?: string | false;
         // bgPos?: PointExpression;
         // iconSize?: PointExpression;
@@ -289,7 +281,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     initSvg(): void {
         this.color = d3.scaleOrdinal()
-            .range(["#00e80e", "#ffb403", "#e23015"]);
+            .range(MappingUtils.COLOR_SCHEME);
 
         this.arc = d3.arc()
             .outerRadius(56)
