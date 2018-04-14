@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as d3 from 'd3';
-import { Component, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterViewInit, AfterContentInit } from '@angular/core';
 
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
@@ -25,6 +25,7 @@ import { StatusPieChart } from 'app/shared/models/status-pie-chart';
 import { DeviceLittle } from 'app/shared/models/little/device-little';
 import { PopupService } from 'app/main/tracking/live/popup/popup.service';
 import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
+import { SpinnerService } from 'app/shared/services/spinner.service';
 
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -70,6 +71,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(private _datePipe: DatePipe,
                 private deviceService: DeviceService,
                 private eventService: EventService,
+                private spinner: SpinnerService,
                 private popupLink: PopupService) { }
 
     ngOnInit() {
@@ -84,10 +86,10 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             () => {}
         );
         this.initSvg();
-        this.loadLivesEvent();
     }
 
     ngAfterViewInit(): void {
+        this.loadLivesEvent();
         this.customDefault = L.icon({
             iconRetinaUrl: '/assets/images/marker-icon-2x.png',
             iconUrl: '/assets/images/marker-icon.png',
@@ -117,6 +119,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
 
+
+
     ngOnDestroy(): void {
         this.alive = false;
     }
@@ -125,16 +129,20 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         TimerObservable.create(0, 10000000000000)
             .takeWhile(() => this.alive)
             .subscribe(() => {
+                this.spinner.show(true);
                 this.eventService.getLiveEvents().subscribe(
                     liveEvents => {
                         this.liveEvents = liveEvents;
                         this.isLoading = false;
                         this.numberOfLoad++;
                         this.processEvents();
+                        this.spinner.show(false);
                     },
-                    error => {},
+                    error => {
+                        this.spinner.show(false);
+                    },
                     () => {
-
+                        this.spinner.show(false);
                     }
                 );
             });
@@ -146,6 +154,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         let liveDev = new StatusPieChart(1,"Live", 0);
         let idleDev = new StatusPieChart(2,"Idle", 0);
         let stopDev = new StatusPieChart(3,"Stop", 0);
+        let deadDev = new StatusPieChart(3,"Dead", 0);
 
         this.markersCluster.clearLayers();
         _.forEach(this.liveEvents, function (event) {
@@ -177,6 +186,10 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                     stopDev.increase();
                     d.state = 0; //stop
                     break;
+                case 'dead':
+                    deadDev.increase();
+                    d.state = 0;
+                    break;
             }
 
         }.bind(this));
@@ -187,7 +200,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         this.totalDevice = this.liveEvents.length;
 
-        this.stats.push(liveDev, idleDev, stopDev);
+        this.stats.push(liveDev, idleDev, stopDev, deadDev);
         this.draw();
     }
 
@@ -225,18 +238,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     buildPopup(event: EventData): L.Popup {
         let popup = L.popup();
-
-        // let htmlPopup = '';
-        // let txtDate = this._datePipe.transform(event.timestamp, 'MMM dd, yyyy hh:mm:ss');
-        // htmlPopup += '<table>';
-        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'DeviceID:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.deviceId;htmlPopup += '</td>';htmlPopup += '</tr>';
-        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'SpeedKPH:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.speedKPH;htmlPopup += '</td>';htmlPopup += '</tr>';
-        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Time:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += txtDate;htmlPopup += '</td>';htmlPopup += '</tr>';
-        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Lat/Lng:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.latitude + '/' + event.longitude;htmlPopup += '</td>';htmlPopup += '</tr>';
-        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title">';htmlPopup += 'Address:'; htmlPopup += '</td>';htmlPopup += '<td>';htmlPopup += event.address;htmlPopup += '</td>';htmlPopup += '</tr>';
-        // htmlPopup += '<tr>'; htmlPopup += '<td class="popup-title" colspan="2">';htmlPopup += '<a routeLink=\'history/'; htmlPopup += event.devId; htmlPopup+= '\'> history>>'; htmlPopup+='</a>'; htmlPopup += '</td>';
-        // htmlPopup += '</table>';
-
         popup.setContent(document.createElement('div'));
         popup.options.offset = L.point(0, 0);
 
@@ -326,13 +327,14 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 console.log('data: ', d.data)
                 return d.data.name;
             })
+            .attr('font-size', '0.9em')
             .attr('y', 10)
             .attr('x', 15);
 
         this.center = this.svg
             .append("text")
             .attr("text-anchor", "middle")
-            .attr('font-size', '1.5em')
+            .attr('font-size', '1.25em')
             .attr('y', 10)
             .text(this.totalDevice);
 
@@ -350,16 +352,13 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.chart.append("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
             .attr("dy", ".5em")
-            .attr('font-size', 12)
+            .attr('font-size', '0.7em')
             .text((d: any) => (d.data.count > 0 ? d.data.count : ''));
 
 
     }
 
     private updatePie() {
-        console.log('updatePie', this.stats);
-        //this.svg.select("text").text(() => this.totalDevice);
-        //this.chart = this.svg.selectAll(".arc").data(this.pie(this.stats));
         this.center.select('text').text(() => this.totalDevice);
         this.chart.select("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")").text((d: any) => (d.data.count > 0 ? d.data.count : ''));
     }

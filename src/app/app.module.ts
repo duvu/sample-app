@@ -9,7 +9,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { MaterialShared} from 'app/shared/material-shared';
 import { AuthInterceptor} from 'app/shared/services/auth-interceptor';
-import { ProgressBarService} from 'app/shared/services/progress-bar.service';
 import { ApplicationContext} from 'app/shared/services/application-context.service';
 import { AppComponent } from 'app/app.component';
 import { AppRoutingModule} from 'app/app-routing.module';
@@ -17,13 +16,16 @@ import { AuthService} from 'app/shared/services/auth.service';
 import { AuthGuard} from 'app/shared/services/auth.guard';
 import { PageNotFoundComponent } from 'app/pages/page-not-found/page-not-found.component';
 import { ToastService } from 'app/shared/toast.service';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
+import { SpinnerService } from 'app/shared/services/spinner.service';
 
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        SpinnerComponent
     ],
     imports: [
         BrowserModule,
@@ -40,13 +42,16 @@ import { ToastService } from 'app/shared/toast.service';
         AuthService,
         AuthGuard,
         ApplicationContext,
-        ProgressBarService,
+        SpinnerService,
         ToastService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
             multi: true
         }
+    ],
+    entryComponents: [
+        SpinnerComponent
     ],
 
     bootstrap: [AppComponent],

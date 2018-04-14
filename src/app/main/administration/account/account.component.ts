@@ -1,8 +1,6 @@
 import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {AccountService} from 'app/shared/services/account.service';
-import {ProgressBarService} from 'app/shared/services/progress-bar.service';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Account} from 'app/shared/models/account';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
@@ -19,6 +17,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { CompanyLittle } from 'app/shared/models/little/company-little';
 import { RequestDevice } from 'app/shared/models/request/request-device';
 import { Device } from 'app/shared/models/device';
+import { SpinnerService } from 'app/shared/services/spinner.service';
 
 @Component({
     selector: 'app-account',
@@ -61,8 +60,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
 
     constructor(private dialog: MatDialog,
                 private app: ApplicationContext,
-                private service: AccountService,
-                private progress: ProgressBarService) { }
+                private spinner: SpinnerService,
+                private service: AccountService) { }
 
     ngOnInit() {
         this.initTableSettings();
@@ -79,19 +78,19 @@ export class AccountComponent implements OnInit, AfterViewInit {
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    this.progress.show();
+                    this.spinner.show(true);
                     return this.service!.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
                         this.sort.active, this.sort.direction);
                 }),
                 map(data => {
-                    this.progress.hide();
+                    this.spinner.show(false);
                     this.resultsLength = data.totalElements;
 
                     return data.content;
                 }),
                 catchError(() => {
-                    this.progress.hide();
+                    this.spinner.show(false);
                     return observableOf([]);
                 })
             ).subscribe(data => this.dataSource.data = data);
@@ -156,16 +155,13 @@ export class AccountComponent implements OnInit, AfterViewInit {
     }
 
     create(account: AccountRequest): void {
-        this.progress.show();
         this.service.create(account).subscribe(
             data => {
                 this.dataChange.next(data.id);
             },
             error => {
-                this.progress.hide();
             },
             () => {
-                this.progress.hide();
             }
         );
     }

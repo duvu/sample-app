@@ -66,6 +66,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource();
         this.timeFrom = this.timeFrom ? this.timeFrom : 0;
         this.timeTo = this.timeTo ? this.timeTo : 0;
+        this.loadHistoryEvents();
 
     }
     ngAfterViewInit(): void {
@@ -137,8 +138,6 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         range.push(range1h, range2h, range6h, range12h, range1d, range3d, range1w, range1m);
 
         L.easyBar(range).addTo(this.map);
-
-        this.loadHistoryEvents();
 
         this.initSvg();
         this.initAxis();
