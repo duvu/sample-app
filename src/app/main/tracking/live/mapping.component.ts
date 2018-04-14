@@ -70,15 +70,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(private _datePipe: DatePipe,
                 private deviceService: DeviceService,
                 private eventService: EventService,
-
                 private popupLink: PopupService) { }
 
     ngOnInit() {
-        this.customDefault = L.icon({
-            iconRetinaUrl: '/assets/images/marker-icon-2x.png',
-            iconUrl: '/assets/images/marker-icon.png',
-            shadowUrl: '/assets/images/marker-shadow.png'
-        });
         this.alive = true;
         this.dataSource = new MatTableDataSource();
 
@@ -89,13 +83,20 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             error => {},
             () => {}
         );
-
-        this.markersCluster = L.markerClusterGroup();
         this.initSvg();
-
+        this.loadLivesEvent();
     }
 
     ngAfterViewInit(): void {
+        this.customDefault = L.icon({
+            iconRetinaUrl: '/assets/images/marker-icon-2x.png',
+            iconUrl: '/assets/images/marker-icon.png',
+            shadowUrl: '/assets/images/marker-shadow.png'
+        });
+
+        this.markersCluster = L.markerClusterGroup();
+
+
         this.map = L.map('map-id', {
             zoomControl: false,
             center: L.latLng(21.731253, 105.996139),
@@ -113,7 +114,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         L.control.scale().addTo(this.map);
         L.control.zoom().setPosition('bottomleft').addTo(this.map);
-        this.loadLivesEvent();
+
     }
 
     ngOnDestroy(): void {

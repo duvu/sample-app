@@ -14,12 +14,12 @@
             <span i18n>Tracking</span>
         </button>
 
-        <!--<button mat-button routerLink="report">-->
-        <!--<mat-icon>report</mat-icon>-->
-        <!--<span i18n>Reports</span>-->
-        <!--</button>-->
+        <button mat-button [routerLink]="['report', 'device']">
+        <mat-icon>report</mat-icon>
+        <span i18n>Reports</span>
+        </button>
 
-        <button mat-button [matMenuTriggerFor]="menuReport">
+        <!--button mat-button [matMenuTriggerFor]="menuReport">
             <mat-icon>report</mat-icon>
             <span i18n>Reports</span>
         </button>
@@ -40,7 +40,7 @@
                 <mat-icon>report</mat-icon>
                 <span i18n>Shipment Report</span>
             </button>
-        </mat-menu>
+        </mat-menu-->
 
 
         <button mat-button routerLink="_admin/_account">
