@@ -14,7 +14,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { SpinnerService } from 'app/shared/services/spinner.service';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 @Component({
   selector: 'app-privilege',
@@ -45,7 +45,7 @@ export class PrivilegeComponent implements OnInit, AfterViewInit {
 
     constructor(private dialog: MatDialog,
                 private app: ApplicationContext,
-                private spinner: SpinnerService,
+                private spinner: WaitingService,
                 private service: PrivilegeService) { }
 
     ngOnInit() {

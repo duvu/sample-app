@@ -15,6 +15,7 @@ import { MatTableDataSource } from '@angular/material';
 
 import * as d3 from 'd3';
 import { Stocks } from './shared/data';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -51,7 +52,8 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     private line: d3.Line<[number, number]>;
 
     constructor(private route: ActivatedRoute,
-                private eventService: EventService) {
+                private eventService: EventService,
+                private waitingService: WaitingService) {
 
     }
 
@@ -146,6 +148,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     }
 
     private loadHistoryEvents(): void {
+        this.waitingService.show(true);
         this.eventService.getHistoryEvents(this.id, this.timeFrom, this.timeTo).subscribe(
             data => {
                 //console.log('Data', data);
@@ -154,8 +157,12 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 this.processEvents();
 
             },
-            error => {},
-            () => {}
+            error => {
+                this.waitingService.show(false);
+            },
+            () => {
+                this.waitingService.show(false);
+            }
         )
     }
 

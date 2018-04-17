@@ -14,7 +14,7 @@ import { GeoUtils } from 'app/main/administration/geozone/GeoUtils';
 import { DrawOptions, LatLng, Layer, Point } from 'leaflet';
 import { Feature} from 'geojson';
 import { FeatureGroup } from 'leaflet';
-import { SpinnerService } from 'app/shared/services/spinner.service';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -49,7 +49,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         private dialog: MatDialog,
         private router: Router,
         private toast: ToastService,
-        private spinner: SpinnerService,
+        private spinner: WaitingService,
         private appContext: ApplicationContext,
         private service: GeozoneService) { }
 

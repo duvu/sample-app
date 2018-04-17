@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from 'app/shared/services/auth.service';
 import { ApplicationContext} from 'app/shared/services/application-context.service';
-import { SpinnerService } from 'app/shared/services/spinner.service';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 @Component({
     selector: 'app-login',
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
     constructor(private auth: AuthService,
                 private router: Router,
-                private spinner: SpinnerService,
+                private spinner: WaitingService,
                 private app: ApplicationContext) {}
 
     ngOnInit() {

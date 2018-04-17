@@ -25,7 +25,7 @@ import { StatusPieChart } from 'app/shared/models/status-pie-chart';
 import { DeviceLittle } from 'app/shared/models/little/device-little';
 import { PopupService } from 'app/main/tracking/live/popup/popup.service';
 import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
-import { SpinnerService } from 'app/shared/services/spinner.service';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -71,7 +71,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(private _datePipe: DatePipe,
                 private deviceService: DeviceService,
                 private eventService: EventService,
-                private spinner: SpinnerService,
+                private spinner: WaitingService,
                 private popupLink: PopupService) { }
 
     ngOnInit() {

@@ -20,7 +20,7 @@ import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { ToastService } from 'app/shared/toast.service';
-import { SpinnerService } from 'app/shared/services/spinner.service';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 @Component({
     selector: 'app-device',
@@ -68,7 +68,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     constructor(private dialog: MatDialog,
                 private app: ApplicationContext,
                 private service: DeviceService,
-                private spinner: SpinnerService,
+                private spinner: WaitingService,
                 private toast: ToastService) { }
 
     ngOnInit() {
