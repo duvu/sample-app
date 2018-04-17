@@ -1,5 +1,13 @@
 import * as _ from 'lodash';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+    AfterContentInit,
+    AfterViewChecked,
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import {AccountService} from 'app/shared/services/account.service';
 import {Account} from 'app/shared/models/account';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
@@ -25,7 +33,7 @@ import { SpinnerService } from 'app/shared/services/spinner.service';
     styleUrls: ['./account.component.scss']
 })
 
-export class AccountComponent implements OnInit, AfterViewInit {
+export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked {
     dataSource: MatTableDataSource<Account>;
     dataChange: ReplaySubject<any>;
 
@@ -69,11 +77,13 @@ export class AccountComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource();
     }
 
+    ngAfterViewChecked(): void {
+
+    }
+
     ngAfterViewInit(): void {
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         this.dataSource.sort = this.sort;
-        //this.dataSource.paginator = this.paginator;
-
         merge(this.sort.sortChange, this.paginator.page, this.dataChange)
             .pipe(
                 startWith({}),
@@ -84,16 +94,17 @@ export class AccountComponent implements OnInit, AfterViewInit {
                         this.sort.active, this.sort.direction);
                 }),
                 map(data => {
-                    this.spinner.show(false);
                     this.resultsLength = data.totalElements;
-
                     return data.content;
                 }),
                 catchError(() => {
-                    this.spinner.show(false);
                     return observableOf([]);
                 })
-            ).subscribe(data => this.dataSource.data = data);
+            ).subscribe(
+            data => {
+                this.dataSource.data = data;
+                this.spinner.show(false);
+            });
     }
     applyFilter(filterValue: string) {
         filterValue = filterValue.trim(); // Remove whitespace
@@ -242,6 +253,8 @@ export class AccountComponent implements OnInit, AfterViewInit {
         //     }
         // )
     }
+
+
 
 
 
