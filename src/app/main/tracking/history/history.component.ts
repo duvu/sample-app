@@ -5,7 +5,6 @@ import * as L from 'leaflet';
 import 'leaflet-polylinedecorator';
 import 'leaflet-easybutton';
 
-//import 'leaflet.markercluster';
 import { EventService } from 'app/shared/services/event.service';
 import { EventData } from 'app/shared/models/event-data';
 
@@ -14,9 +13,7 @@ import { LatLng, Polyline } from 'leaflet';
 import { MatTableDataSource } from '@angular/material';
 
 import * as d3 from 'd3';
-import { Stocks } from './shared/data';
 import { WaitingService } from 'app/shared/services/waiting.service';
-import { line } from 'd3-shape';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
