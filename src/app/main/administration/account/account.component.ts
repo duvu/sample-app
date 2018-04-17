@@ -25,7 +25,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { CompanyLittle } from 'app/shared/models/little/company-little';
 import { RequestDevice } from 'app/shared/models/request/request-device';
 import { Device } from 'app/shared/models/device';
-import { SpinnerService } from 'app/shared/services/spinner.service';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 @Component({
     selector: 'app-account',
@@ -68,7 +68,7 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
 
     constructor(private dialog: MatDialog,
                 private app: ApplicationContext,
-                private spinner: SpinnerService,
+                private spinner: WaitingService,
                 private service: AccountService) { }
 
     ngOnInit() {

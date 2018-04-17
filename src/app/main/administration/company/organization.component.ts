@@ -16,7 +16,7 @@ import { of as observableOf } from 'rxjs/observable/of';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Account } from 'app/shared/models/account';
 import { Device } from 'app/shared/models/device';
-import { SpinnerService } from 'app/shared/services/spinner.service';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 @Component({
     selector: 'app-organization',
@@ -51,7 +51,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
 
     constructor(private dialog: MatDialog,
                 private app: ApplicationContext,
-                private spinner: SpinnerService,
+                private spinner: WaitingService,
                 private service: CompanyService) { }
 
     ngOnInit() {

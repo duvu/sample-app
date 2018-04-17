@@ -11,7 +11,7 @@ import { DcsRequest } from 'app/shared/models/request/dcs-request';
 import { ToastService } from 'app/shared/toast.service';
 import { DeleteEvent } from 'app/shared/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
-import { SpinnerService } from 'app/shared/services/spinner.service';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 @Component({
     selector: 'app-dcs',
@@ -31,7 +31,7 @@ export class DcsComponent implements OnInit, AfterViewInit {
 
     constructor(private service: DcsService,
                 private dialog: MatDialog,
-                private spinner: SpinnerService,
+                private spinner: WaitingService,
                 private toast: ToastService) { }
 
     ngOnInit() {

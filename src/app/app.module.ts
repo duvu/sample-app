@@ -17,7 +17,7 @@ import { AuthGuard} from 'app/shared/services/auth.guard';
 import { PageNotFoundComponent } from 'app/pages/page-not-found/page-not-found.component';
 import { ToastService } from 'app/shared/toast.service';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
-import { SpinnerService } from 'app/shared/services/spinner.service';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 
 @NgModule({
@@ -42,7 +42,7 @@ import { SpinnerService } from 'app/shared/services/spinner.service';
         AuthService,
         AuthGuard,
         ApplicationContext,
-        SpinnerService,
+        WaitingService,
         ToastService,
         {
             provide: HTTP_INTERCEPTORS,

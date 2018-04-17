@@ -3,7 +3,7 @@ import { ComponentPortal, DomPortalHost } from '@angular/cdk/portal';
 import { SpinnerComponent } from 'app/shared/components/spinner/spinner.component';
 
 @Injectable()
-export class SpinnerService {
+export class WaitingService {
     private holderPortal: ComponentPortal<SpinnerComponent>;
     private bodyPortal: DomPortalHost;
 
