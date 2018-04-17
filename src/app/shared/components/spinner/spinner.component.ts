@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-spinner',
@@ -11,5 +11,4 @@ export class SpinnerComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

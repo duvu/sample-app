@@ -22,10 +22,12 @@ export class SpinnerService {
     }
 
     show(shouldShow: boolean) {
-        if (shouldShow) {
-            this.bodyPortal.attach(this.holderPortal);
-        } else {
-            this.bodyPortal.detach();
-        }
+        setTimeout(() => {
+            if (shouldShow && !this.bodyPortal.hasAttached()) {
+                this.bodyPortal.attach(this.holderPortal);
+            } else {
+                this.bodyPortal.detach();
+            }
+        }, 0);
     }
 }
