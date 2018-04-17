@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as d3 from 'd3';
-import { Component, OnDestroy, OnInit, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterViewInit} from '@angular/core';
 
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
@@ -12,8 +12,6 @@ import {DeviceService} from 'app/shared/services/device.service';
 import {EventService} from 'app/shared/services/event.service';
 import {EventData} from 'app/shared/models/event-data';
 import {DatePipe} from '@angular/common';
-import { MatTableDataSource } from '@angular/material';
-import { Device } from 'app/shared/models/device';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 import 'rxjs/add/operator/takeWhile';
@@ -41,15 +39,14 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     customDefault: L.Icon;
     map: L.Map;
 
-    isLoading: boolean = true;
     numberOfLoad: number = 0;
     markersCluster: MarkerClusterGroup;
 
     selectedEvent: EventData = null;
     inputSearch: string = null;
 
-    displayedColumns = ['name'];
-    dataSource: MatTableDataSource<DeviceLittle> | null;
+    deviceList: DeviceLittle[];
+    allDeviceList: DeviceLittle[];
 
     private alive: boolean;
 
@@ -76,14 +73,18 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit() {
         this.alive = true;
-        this.dataSource = new MatTableDataSource();
-
+        this.spinner.show(true)
         this.deviceService.getAllLittle().subscribe(
             response => {
-                this.dataSource.data = response;
+                this.allDeviceList = response;
             },
             error => {},
-            () => {}
+            () => {
+                this.deviceList = _.filter(this.allDeviceList, (d) => {
+                    return true;
+                })
+                this.spinner.show(false)
+            }
         );
         this.initSvg();
     }
@@ -126,23 +127,20 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     loadLivesEvent(): void {
-        TimerObservable.create(0, 10000000000000)
+        TimerObservable.create(0, 10 * 1000)
             .takeWhile(() => this.alive)
             .subscribe(() => {
-                this.spinner.show(true);
                 this.eventService.getLiveEvents().subscribe(
                     liveEvents => {
                         this.liveEvents = liveEvents;
-                        this.isLoading = false;
                         this.numberOfLoad++;
                         this.processEvents();
-                        this.spinner.show(false);
                     },
                     error => {
-                        this.spinner.show(false);
+
                     },
                     () => {
-                        this.spinner.show(false);
+
                     }
                 );
             });
@@ -158,13 +156,14 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.markersCluster.clearLayers();
         _.forEach(this.liveEvents, function (event) {
-            let d = _.find(this.dataSource.data, function (dt) {
+            let d = _.find(this.deviceList, function (dt) {
                 return event.devId === dt.id;
             });
 
             d.address = event.address;
             d.latitude = event.latitude;
             d.longitude = event.longitude;
+            d.lastUpdateTime = event.timestamp;
 
             if (event.latitude && event.longitude) {
                 let marker = this.buildMarker(event);
@@ -188,7 +187,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                     break;
                 case 'dead':
                     deadDev.increase();
-                    d.state = 0;
+                    d.state = -1;
                     break;
             }
 
@@ -259,10 +258,26 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     applyFilter(filterValue: string) {
         filterValue = filterValue.trim(); // Remove whitespace
-        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-        this.dataSource.filter = filterValue;
+        // filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+        this.deviceList = _.filter(this.allDeviceList, (dev: DeviceLittle) => {
+            return (dev.name && _.includes(dev.name, filterValue)) ||
+                (dev.deviceId && _.includes(dev.deviceId, filterValue)) ||
+                (dev.address && _.includes(dev.address, filterValue));
+        });
     }
+    getTimeRangeString(timestamp: number): string {
+        const time_range = ((new Date()).getTime() - timestamp) / 1000;
 
+        if (time_range < 60) {
+            return 'few seconds ago';
+        } else if (time_range < 60 * 60) {
+            return 'about '+ Math.round(time_range/60) +' minutes ago';
+        } else if (time_range < 24 * 60 * 60) {
+            return 'about ' + Math.round(time_range / (60 * 60)) + ' hours ago';
+        } else {
+            return 'about ' + Math.round(time_range / (24 * 60 * 60)) + ' days ago';
+        }
+    }
 
     selectThisDevice(event: any, device: DeviceLittle): void {
         event.stopPropagation();
@@ -324,7 +339,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             });
         this.legend.append('text')
             .text((d, i) => {
-                console.log('data: ', d.data)
                 return d.data.name;
             })
             .attr('font-size', '0.9em')
@@ -360,6 +374,11 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private updatePie() {
         this.center.select('text').text(() => this.totalDevice);
-        this.chart.select("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")").text((d: any) => (d.data.count > 0 ? d.data.count : ''));
+        this.chart.data(this.pie(this.stats));
+        this.chart.select("path")
+            .attr("d", this.arc);
+        this.chart.select("text")
+            .attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
+            .text((d: any) => (d.data.count > 0 ? d.data.count : ''));
     }
 }
