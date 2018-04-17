@@ -16,6 +16,7 @@ import { MatTableDataSource } from '@angular/material';
 import * as d3 from 'd3';
 import { Stocks } from './shared/data';
 import { WaitingService } from 'app/shared/services/waiting.service';
+import { line } from 'd3-shape';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -41,15 +42,18 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     dataSource: MatTableDataSource<EventData> | null;
     displayedColumns = ['deviceName', 'latitude', 'longitude', 'altitude', 'heading', 'speedKPH', 'address', 'timestamp'];
 
-
     //charting
-    private margin = {top: 20, right: 20, bottom: 30, left: 50};
     private width: number;
     private height: number;
     private x: any;
     private y: any;
     private svg: any;
-    private line: d3.Line<[number, number]>;
+    private chart: any;
+    private line: d3.Line<any>;
+    private xAxis: any;
+    private yAxis: any;
+
+    private update: boolean = false;
 
     constructor(private route: ActivatedRoute,
                 private eventService: EventService,
@@ -142,9 +146,6 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         L.easyBar(range).addTo(this.map);
 
         this.initSvg();
-        this.initAxis();
-        this.drawAxis();
-        this.drawLine();
     }
 
     private loadHistoryEvents(): void {
@@ -155,13 +156,13 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 this.historyEvents = data;
                 this.dataSource.data = data;
                 this.processEvents();
-
             },
             error => {
                 this.waitingService.show(false);
             },
             () => {
                 this.waitingService.show(false);
+                this.draw();
             }
         )
     }
@@ -190,42 +191,48 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     }
 
     private initSvg() {
-        let parentDiv = document.getElementById('parent-div');
-
-        // this.width = 900 - this.margin.left - this.margin.right;
-        // this.height = 500 - this.margin.top - this.margin.bottom;
-
+        let parentDiv = document.getElementById('div-chart');
         this.width = parentDiv.clientWidth;
         this.height = parentDiv.clientHeight;
-        this.svg = d3.select("svg")
-            .datum(Stocks)
+
+        //init Axis
+        this.x = d3.scaleTime().rangeRound([0, this.width - 40]);
+        this.y = d3.scaleLinear().rangeRound([this.height, 40]);
+
+        this.svg = d3.select('#div-chart').append('svg')
             .attr("width", '100%')
             .attr("height", '100%')
             .attr("preserveAspectRatio", "xMidYMid meet")
-            .attr("viewBox", '0 0 '+ this.width+' '+ this.height)
-            .append("g")
-            //.attr("transform", "translate(" + Math.min(this.width,this.height)/2 + "," + Math.min(this.width,this.height)/2 + ")");
-            // .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+            .attr("viewBox", '0 0 '+ this.width+' '+ this.height);
+
+        console.log('Svg', this.svg);
+        this.chart = this.svg.append("g")
+            .attr('class', 'chart')
             .attr("transform", "translate(30, -30)");
+
+        this.yAxis = d3.axisLeft(this.y).ticks(10);
+        this.xAxis = d3.axisBottom(this.x).ticks(10);
+        this.line = d3.line()
+            .curve(d3.curveStep)
+            .x( (d: any) => this.x(d.timestamp) )
+            .y( (d: any) => this.y(d.speedKPH) );
     }
 
-    private initAxis() {
-        this.x = d3.scaleTime().rangeRound([0, this.width - 40]);
-        this.y = d3.scaleLinear().rangeRound([this.height, 40]);
-        this.x.domain(d3.extent(Stocks, (d) => d.date ));
-        this.y.domain(d3.extent(Stocks, (d) => d.value ));
-    }
+    private draw() {
+        this.x.domain(d3.extent(this.historyEvents, (d) => d.timestamp ));
+        this.y.domain(d3.extent(this.historyEvents, (d) => d.speedKPH ));
 
-    private drawAxis() {
+        if (!this.update) {
+            this.update = true;
 
-        this.svg.append("g")
-            // .attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + this.height + ")")
-            .call(d3.axisBottom(this.x));
+            this.chart.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + this.height + ")")
+                .call(this.xAxis);
 
-        this.svg.append("g")
-            // .attr("class", "axis axis--y")
-            .call(d3.axisLeft(this.y));
+            this.chart.append("g")
+                .attr("class", "y axis")
+                .call(this.yAxis);
             // .append("text")
             // .attr("class", "axis-title")
             // .attr("transform", "rotate(-90)")
@@ -233,21 +240,30 @@ export class HistoryComponent implements OnInit, AfterViewInit {
             // .attr("dy", ".71em")
             // .style("text-anchor", "end")
             // .text("Price ($)");
+
+            this.chart
+                .append("path")
+                .attr("fill", "none")
+                .attr("stroke", "red")
+                .attr("stroke-linejoin", "round")
+                .attr("stroke-linecap", "round")
+                .attr("stroke-width", 1.5)
+                .attr("class", "line")
+                .attr("d", this.line(this.historyEvents));
+        } else {
+            let svg = d3.select('#div-chart').select('svg').transition();
+            svg.select('.line')
+                .duration(750)
+                .attr("d", this.line(this.historyEvents));
+            svg.select('.x.axis')
+                .duration(750)
+                .call(this.xAxis);
+
+            svg.select('.y.axis')
+                .duration(750)
+                .call(this.yAxis);
+        }
+
     }
 
-    private drawLine() {
-        this.line = d3.line()
-            .x( (d: any) => this.x(d.date) )
-            .y( (d: any) => this.y(d.value) );
-
-        this.svg
-            .append("path")
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-linecap", "round")
-            .attr("stroke-width", 1.5)
-            .attr("class", "line")
-            .attr("d", this.line);
-    }
 }
