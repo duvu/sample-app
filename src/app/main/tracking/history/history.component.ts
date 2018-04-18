@@ -14,6 +14,7 @@ import { MatTableDataSource } from '@angular/material';
 
 import * as d3 from 'd3';
 import { WaitingService } from 'app/shared/services/waiting.service';
+import { SelectionModel } from '@angular/cdk/collections';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -28,16 +29,18 @@ export class HistoryComponent implements OnInit, AfterViewInit {
 
     private id: string;
     private map: L.Map;
+    private selectedMarker: L.Marker;
     private historyEvents: EventData[];
     private polyline: Polyline;
     private decor: any;
     private timeFrom: number;
     private  timeTo: number;
 
-    private customDefault: L.Icon;
+    private iconDefault: L.Icon;
 
     dataSource: MatTableDataSource<EventData> | null;
-    displayedColumns = ['deviceName', 'latitude', 'longitude', 'altitude', 'heading', 'speedKPH', 'address', 'timestamp'];
+    displayedColumns = ['deviceName', 'latitude', 'longitude', 'heading', 'speedKPH', 'address', 'timestamp', 'age'];
+    selection = new SelectionModel<EventData>(true, []);
 
     //charting
     private width: number;
@@ -60,10 +63,11 @@ export class HistoryComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.id = this.route.snapshot.paramMap.get('id');
-        this.customDefault = L.icon({
+        this.iconDefault = L.icon({
             iconRetinaUrl: '/assets/images/marker-icon-2x.png',
             iconUrl: '/assets/images/marker-icon.png',
-            shadowUrl: '/assets/images/marker-shadow.png'
+            shadowUrl: '/assets/images/marker-shadow.png',
+            iconAnchor: [12.5, 41]
         });
 
         this.dataSource = new MatTableDataSource();
@@ -152,6 +156,12 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 //console.log('Data', data);
                 this.historyEvents = data;
                 this.dataSource.data = data;
+                let ahead = (new Date()).getTime();
+                _.forEach(this.dataSource.data, (d: EventData) => {
+                    //--
+                    d.age = ahead - d.timestamp;
+                    ahead = d.timestamp;
+                });
                 this.processEvents();
             },
             error => {
@@ -164,9 +174,17 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         )
     }
 
+    select(row: EventData): void {
+        console.log('Data Row', row);
+        if (this.selectedMarker) {
+            this.map.removeLayer(this.selectedMarker);
+        }
+        this.selectedMarker = L.marker([row.latitude, row.longitude], {icon: this.iconDefault}).addTo(this.map);
+    }
+
     private processEvents(): void {
         let latlngs = _.map(this.historyEvents, (event) => {
-           return new LatLng(event.latitude, event.longitude);
+           return L.latLng([event.latitude, event.longitude]); //new LatLng(event.latitude, event.longitude);
         });
 
         if (this.polyline) {
@@ -177,14 +195,25 @@ export class HistoryComponent implements OnInit, AfterViewInit {
             this.map.removeLayer(this.decor);
         }
 
-        this.polyline = L.polyline(latlngs, {color: 'red'}).addTo(this.map);
+        this.polyline = L.polyline(_.reverse(latlngs), {color: 'red'}).addTo(this.map);
         this.map.fitBounds(this.polyline.getBounds());
 
         this.decor = L.polylineDecorator(this.polyline, {
             patterns: [
-                {offset: 25, repeat: 50, symbol: L.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, weight: 0}})}
-            ]
-        }).addTo(this.map);
+                {
+                    offset: 0,
+                    repeat: 60,
+                    symbol:
+                        L.Symbol.arrowHead({
+                            pixelSize: 15,
+                            headAngle: 45,
+                            pathOptions:
+                                {
+                                    fillOpacity: 0.9,
+                                    weight: 0
+                                }
+                        })
+                }]}).addTo(this.map);
     }
 
     private initSvg() {
@@ -208,9 +237,9 @@ export class HistoryComponent implements OnInit, AfterViewInit {
             .attr("transform", "translate(30, -30)");
 
         this.yAxis = d3.axisLeft(this.y).ticks(10);
-        this.xAxis = d3.axisBottom(this.x).ticks(10);
+        this.xAxis = d3.axisBottom(this.x).ticks(15);
         this.line = d3.line()
-            .curve(d3.curveStep)
+            .curve(d3.curveBasis)
             .x( (d: any) => this.x(d.timestamp) )
             .y( (d: any) => this.y(d.speedKPH) );
     }
@@ -230,21 +259,14 @@ export class HistoryComponent implements OnInit, AfterViewInit {
             this.chart.append("g")
                 .attr("class", "y axis")
                 .call(this.yAxis);
-            // .append("text")
-            // .attr("class", "axis-title")
-            // .attr("transform", "rotate(-90)")
-            // .attr("y", 6)
-            // .attr("dy", ".71em")
-            // .style("text-anchor", "end")
-            // .text("Price ($)");
 
             this.chart
                 .append("path")
-                .attr("fill", "none")
+                .attr("fill", "lightblue")
                 .attr("stroke", "red")
                 .attr("stroke-linejoin", "round")
                 .attr("stroke-linecap", "round")
-                .attr("stroke-width", 1.5)
+                .attr("stroke-width", 0.5)
                 .attr("class", "line")
                 .attr("d", this.line(this.historyEvents));
         } else {
@@ -261,6 +283,18 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 .call(this.yAxis);
         }
 
+    }
+
+    timerange(age: number): string {
+        age = age / 1000;
+
+        if (age <= 60) {
+            return age + ' seconds';
+        } else if (age <= 60 * 60) {
+            return Math.round(age/60) + ' minutes';
+        } else {
+            return Math.round(age/(60*60)) + ' hour(s)';
+        }
     }
 
 }
