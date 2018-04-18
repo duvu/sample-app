@@ -15,4 +15,6 @@ export interface EventData {
     timestamp: number
     speedKPH: number;
     heading: number;
+
+    age: number;
 }
