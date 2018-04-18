@@ -15,15 +15,17 @@ import {DatePipe} from '@angular/common';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 import 'rxjs/add/operator/takeWhile';
-import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/observable/forkJoin';
 
 import { StatusPieChart } from 'app/shared/models/status-pie-chart';
 import { DeviceLittle } from 'app/shared/models/little/device-little';
 import { PopupService } from 'app/main/tracking/live/popup/popup.service';
 import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
 import { WaitingService } from 'app/shared/services/waiting.service';
+import { Observable } from 'rxjs/Observable';
 
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
@@ -73,19 +75,26 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit() {
         this.alive = true;
-        this.spinner.show(true)
-        this.deviceService.getAllLittle().subscribe(
-            response => {
-                this.allDeviceList = response;
+        this.spinner.show(true);
+
+        Observable.forkJoin(
+            this.deviceService.getAllLittle(),
+            this.eventService.getLiveEvents()
+        ).subscribe(
+            data => {
+                this.allDeviceList = data[0];
+                this.liveEvents = data[1];
             },
             error => {},
             () => {
                 this.deviceList = _.filter(this.allDeviceList, (d) => {
                     return true;
-                })
+                });
+                this.processEvents();
                 this.spinner.show(false)
             }
         );
+
         this.initSvg();
     }
 
@@ -127,7 +136,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     loadLivesEvent(): void {
-        TimerObservable.create(0, 10 * 1000)
+        TimerObservable.create(20, 10 * 1000)
             .takeWhile(() => this.alive)
             .subscribe(() => {
                 this.eventService.getLiveEvents().subscribe(
