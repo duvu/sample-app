@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DeviceLittle } from 'app/shared/models/little/device-little';
 import { MatTableDataSource } from '@angular/material';
 import { DeviceService } from 'app/shared/services/device.service';
+import { Util } from 'app/shared/utils/Util';
 
 @Component({
     selector: 'app-report',
@@ -9,18 +10,15 @@ import { DeviceService } from 'app/shared/services/device.service';
     styleUrls: ['./device-report.component.scss']
 })
 export class DeviceReportComponent implements OnInit {
-
-    deviceTableDataSource: MatTableDataSource<DeviceLittle> | null;
-    displayedColumns = ['name'];
+    deviceList: DeviceLittle[];
 
     constructor(private deviceService: DeviceService) { }
 
     ngOnInit() {
-        this.deviceTableDataSource = new MatTableDataSource();
 
         this.deviceService.getAllLittle().subscribe(
             response => {
-                this.deviceTableDataSource.data = response;
+                this.deviceList = response;
             },
             error => {},
             () => {}
@@ -29,9 +27,9 @@ export class DeviceReportComponent implements OnInit {
 
 
     applyFilter(filterValue: string) {
-        filterValue = filterValue.trim(); // Remove whitespace
-        filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-        this.deviceTableDataSource.filter = filterValue;
+        // filterValue = filterValue.trim(); // Remove whitespace
+        // filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+        // this.deviceTableDataSource.filter = filterValue;
     }
 
 
@@ -51,5 +49,8 @@ export class DeviceReportComponent implements OnInit {
         // this.oldSelectedDevice = device;
     }
 
+    timeAgeToString(timestamp: number): string {
+        return Util.getTimeRangeString(timestamp);
+    }
 
 }

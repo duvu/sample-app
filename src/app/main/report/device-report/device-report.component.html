@@ -1,6 +1,38 @@
 <mat-drawer-container class="side-nav-container">
     <mat-drawer mode="side" opened="true">
-        <mat-table [dataSource]="deviceTableDataSource">
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let device of deviceList">
+                <mat-expansion-panel-header>
+                    <mat-panel-title (click)="selectThisDevice($event, device)">
+                        <span [ngClass]="{'device-stop': device.state==0, 'device-idle': device.state==1, 'device-live': device.state==2}"></span>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <span>{{device.name || device.deviceId}}</span>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <table>
+                    <tr>
+                        <td i18n>Device ID</td>
+                        <td>{{device.deviceId}}</td>
+                    </tr>
+                    <tr>
+                        <td i18n>Device Name</td>
+                        <td>{{device.name}}</td>
+                    </tr>
+                    <tr>
+                        <td i18n>Last Event: </td>
+                        <td>{{timeAgeToString(device.lastUpdateTime)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td>{{device.address}}</td>
+                    </tr>
+                </table>
+                <a [routerLink]="['history', device.id]">history >></a>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <!--mat-table [dataSource]="deviceTableDataSource">
             <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef> Device ID </mat-header-cell>
                 <mat-cell *matCellDef="let element">
@@ -36,7 +68,7 @@
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns" style="display: none"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{selected: row.selected}"></mat-row>
-        </mat-table>
+        </mat-table-->
     </mat-drawer>
     <mat-drawer-content>
         <mat-tab-group>
