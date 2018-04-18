@@ -26,7 +26,7 @@ import { PopupService } from 'app/main/tracking/live/popup/popup.service';
 import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
 import { WaitingService } from 'app/shared/services/waiting.service';
 import { Observable } from 'rxjs/Observable';
-
+import { Util } from 'app/shared/utils/Util';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -274,18 +274,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 (dev.address && _.includes(dev.address, filterValue));
         });
     }
-    getTimeRangeString(timestamp: number): string {
-        const time_range = ((new Date()).getTime() - timestamp) / 1000;
-
-        if (time_range < 60) {
-            return 'few seconds ago';
-        } else if (time_range < 60 * 60) {
-            return 'about '+ Math.round(time_range/60) +' minutes ago';
-        } else if (time_range < 24 * 60 * 60) {
-            return 'about ' + Math.round(time_range / (60 * 60)) + ' hours ago';
-        } else {
-            return 'about ' + Math.round(time_range / (24 * 60 * 60)) + ' days ago';
-        }
+    timeAgeToString(timestamp: number): string {
+        return Util.getTimeRangeString(timestamp);
     }
 
     selectThisDevice(event: any, device: DeviceLittle): void {
