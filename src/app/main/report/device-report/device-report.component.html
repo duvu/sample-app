@@ -1,6 +1,11 @@
 <mat-drawer-container class="side-nav-container">
     <mat-drawer mode="side" opened="true">
-        <mat-accordion>
+        <mat-list>
+            <mat-list-item *ngFor="let device of deviceList">
+                <span>{{device.name || device.deviceId}}</span>
+            </mat-list-item>
+        </mat-list>
+        <!--mat-accordion>
             <mat-expansion-panel *ngFor="let device of deviceList">
                 <mat-expansion-panel-header>
                     <mat-panel-title (click)="selectThisDevice($event, device)">
@@ -30,47 +35,15 @@
                 </table>
                 <a [routerLink]="['history', device.id]">history >></a>
             </mat-expansion-panel>
-        </mat-accordion>
-
-        <!--mat-table [dataSource]="deviceTableDataSource">
-            <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef> Device ID </mat-header-cell>
-                <mat-cell *matCellDef="let element">
-                    <mat-accordion>
-                        <mat-expansion-panel>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title (click)="selectThisDevice($event, element)">
-                                    <span [ngClass]="{'device-stop': element.state==0, 'device-idle': element.state==1, 'device-live': element.state==2}"></span>
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    <span>{{element.deviceId}}</span>
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-
-                            <table>
-                                <tr>
-                                    <td>Device ID</td>
-                                    <td>{{element.deviceId}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Device Name</td>
-                                    <td>{{element.deviceName}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Address</td>
-                                    <td>{{element.address}}</td>
-                                </tr>
-                            </table>
-                            <a [routerLink]="['history', element.id]">history >></a>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns" style="display: none"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{selected: row.selected}"></mat-row>
-        </mat-table-->
+        </mat-accordion-->
     </mat-drawer>
     <mat-drawer-content>
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>{{selected}}</mat-expansion-panel-header>
+            </mat-expansion-panel>
+        </mat-accordion>
+
         <mat-tab-group>
             <mat-tab i18n-label label="Speed Report">
                 <ul>
