@@ -28,6 +28,6 @@ export class WaitingService {
             } else {
                 this.bodyPortal.detach();
             }
-        }, 0);
+        }, 1);
     }
 }

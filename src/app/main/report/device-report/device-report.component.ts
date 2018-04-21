@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DeviceLittle } from 'app/shared/models/little/device-little';
-import { MatTableDataSource } from '@angular/material';
+import { MatDrawer, MatSidenav, MatTableDataSource } from '@angular/material';
 import { DeviceService } from 'app/shared/services/device.service';
 import { Util } from 'app/shared/utils/Util';
+import { WaitingService } from 'app/shared/services/waiting.service';
 
 @Component({
     selector: 'app-report',
@@ -11,17 +12,26 @@ import { Util } from 'app/shared/utils/Util';
 })
 export class DeviceReportComponent implements OnInit {
     deviceList: DeviceLittle[];
+    selected: DeviceLittle | any;
+    tIcon: string = 'back';
 
-    constructor(private deviceService: DeviceService) { }
+    @ViewChild(MatDrawer) sideNav: MatDrawer;
+
+    constructor(private deviceService: DeviceService,
+                private spinner: WaitingService) { }
 
     ngOnInit() {
-
+        this.spinner.show(true);
+        this.selected = {};
         this.deviceService.getAllLittle().subscribe(
             response => {
                 this.deviceList = response;
+                this.selected = this.deviceList[0];
             },
             error => {},
-            () => {}
+            () => {
+                this.spinner.show(false);
+            }
         );
     }
 
@@ -35,6 +45,7 @@ export class DeviceReportComponent implements OnInit {
 
     selectThisDevice(device: DeviceLittle): void {
         console.log('Device: ', device);
+        this.selected = device;
         // if (this.oldSelectedDevice) {
         //     this.oldSelectedDevice.selected = false;
         // }
@@ -51,6 +62,12 @@ export class DeviceReportComponent implements OnInit {
 
     timeAgeToString(timestamp: number): string {
         return Util.getTimeRangeString(timestamp);
+    }
+
+    tonggleSidebar(e: any) {
+        e.stopPropagation();
+        this.sideNav.toggle();
+        this.tIcon = this.sideNav.opened ? 'back' : 'sub-menu';
     }
 
 }

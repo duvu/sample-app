@@ -1,12 +1,17 @@
 <mat-drawer-container class="side-nav-container">
-    <mat-drawer mode="side" opened="true">
-        <mat-nav-list>
-            <mat-list-item *ngFor="let device of deviceList" (click)="selectThisDevice(device)">
-                <div class="rpt-left-device">
-                    <span class="rpt-left-device-content">{{device.name || device.deviceId}}</span>
-                </div>
-            </mat-list-item>
-        </mat-nav-list>
+    <mat-drawer mode="side" [opened]="true" class="mat-elevation-z3">
+        <div class="rpt-nav-device">
+            <mat-form-field class="rpt-device-filter">
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Device Filter">
+            </mat-form-field>
+            <mat-nav-list class="rpt-list-device">
+                <mat-list-item *ngFor="let device of deviceList" (click)="selectThisDevice(device)">
+                    <div>
+                        <span>{{device.name || device.deviceId}}</span>
+                    </div>
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
         <!--mat-accordion>
             <mat-expansion-panel *ngFor="let device of deviceList">
                 <mat-expansion-panel-header>
@@ -40,9 +45,45 @@
         </mat-accordion-->
     </mat-drawer>
     <mat-drawer-content>
-        <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>{{selected}}</mat-expansion-panel-header>
+        <mat-accordion class="rpt-info-board">
+            <mat-expansion-panel [expanded]="true" [hideToggle]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <button mat-icon-button (click)="tonggleSidebar($event)">
+                            <mat-icon>{{tIcon}}</mat-icon>
+                        </button>
+                        <span>{{selected.name || selected.deviceId}}</span>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Device Description
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-divider></mat-divider>
+
+                <ng-template matExpansionPanelContent>
+                    <div fxLayout="column">
+                        <div fxLayout="row" fxLayoutGap="16px" class="rpt-board-timepicker">
+                            <button mat-button color="primary">Last 2 hours</button>
+                            <button mat-button color="primary">Last 8 hours</button>
+                            <button mat-button color="primary">Last 24 hours</button>
+                            <button mat-button color="primary">Last 3 days</button>
+                            <button mat-button color="primary">Custom</button>
+                        </div>
+                        <div fxLayout="row" fxLayoutGap="16px" class="rpt-board-timepicker">
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker1" placeholder="Choose a date for start">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1 startView="year" [startAt]="startDate"></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                </ng-template>
             </mat-expansion-panel>
         </mat-accordion>
 
