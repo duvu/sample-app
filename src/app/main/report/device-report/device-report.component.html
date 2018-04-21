@@ -1,10 +1,12 @@
 <mat-drawer-container class="side-nav-container">
     <mat-drawer mode="side" opened="true">
-        <mat-list>
-            <mat-list-item *ngFor="let device of deviceList">
-                <span>{{device.name || device.deviceId}}</span>
+        <mat-nav-list>
+            <mat-list-item *ngFor="let device of deviceList" (click)="selectThisDevice(device)">
+                <div class="rpt-left-device">
+                    <span class="rpt-left-device-content">{{device.name || device.deviceId}}</span>
+                </div>
             </mat-list-item>
-        </mat-list>
+        </mat-nav-list>
         <!--mat-accordion>
             <mat-expansion-panel *ngFor="let device of deviceList">
                 <mat-expansion-panel-header>

@@ -33,8 +33,8 @@ export class DeviceReportComponent implements OnInit {
     }
 
 
-    selectThisDevice(event: any, device: DeviceLittle): void {
-        event.stopPropagation();
+    selectThisDevice(device: DeviceLittle): void {
+        console.log('Device: ', device);
         // if (this.oldSelectedDevice) {
         //     this.oldSelectedDevice.selected = false;
         // }
