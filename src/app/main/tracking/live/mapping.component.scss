@@ -1,9 +1,19 @@
-$side-nav-width: 300px;
+$side-nav-width: 500px;
 @mixin map-component($theme) {
   .main-map {
     height:100%;
   }
-
+  .m-live {
+    height: 100%;
+    .m-comm{
+      display: flex;
+      align-items: center;
+      height: 20%;
+      min-height: 130px;
+      max-height: 200px;
+      justify-content: space-between;
+    }
+  }
   .side-nav-container {
     height: 100%;
   }
@@ -12,27 +22,27 @@ $side-nav-width: 300px;
   }
   .side-nav-container mat-sidenav {
     overflow-y: hidden;
-    //overflow-x: hidden;
-    min-width: $side-nav-width;
+    width: 20%;
     max-width: $side-nav-width;
-    display: flex;
-    flex-direction: column;
   }
 
-  .map-device {
+  .m-dev {
     height: 100%;
     display: flex;
     flex-direction: column;
 
-    .map-device-header {
-      min-height: 64px;
-      padding: 8px 24px 0;
-
-      .mat-form-field {
+    .m-dev-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 16px 24px 0;
+      .m-dev-filter {
+        flex: 1;
         font-size: 14px;
-        width: 100%;
       }
     }
+
+
     .map-device-table {
       overflow-y: auto;
       height: 100%;
@@ -65,21 +75,11 @@ $side-nav-width: 300px;
         border-radius: 50%;
         display: inline-block;
       }
-
-      .mat-table > .mat-row > .mat-cell {
-        padding-left: 0px;
-        padding-right: 0px;
-      }
-
-      mat-panel-title {
-        align-items: center;
-      }
     }
 
-
-
     .chart-overview {
-
+      margin: auto;
+      float: right;
 
     }
   }

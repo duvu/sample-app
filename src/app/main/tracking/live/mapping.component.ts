@@ -27,6 +27,7 @@ import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
 import { WaitingService } from 'app/shared/services/waiting.service';
 import { Observable } from 'rxjs/Observable';
 import { Util } from 'app/shared/utils/Util';
+import { ToastService } from 'app/shared/toast.service';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -71,6 +72,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 private deviceService: DeviceService,
                 private eventService: EventService,
                 private spinner: WaitingService,
+                private toast: ToastService,
                 private popupLink: PopupService) { }
 
     ngOnInit() {
@@ -85,13 +87,15 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.allDeviceList = data[0];
                 this.liveEvents = data[1];
             },
-            error => {},
+            error => {
+                this.toast.error("Error when loading data");
+            },
             () => {
                 this.deviceList = _.filter(this.allDeviceList, (d) => {
                     return true;
                 });
+                this.spinner.show(false);
                 this.processEvents();
-                this.spinner.show(false)
             }
         );
 
