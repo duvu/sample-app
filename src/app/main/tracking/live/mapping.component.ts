@@ -206,12 +206,13 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         }.bind(this));
 
-        this.map.addLayer(this.markersCluster);
-        if (this.numberOfLoad <= 1) {
-            this.map.fitBounds(this.markersCluster.getBounds());
+        if (this.markersCluster.getChildCount() > 0 ) {
+            this.map.addLayer(this.markersCluster);
+            if (this.numberOfLoad <= 1) {
+                this.map.fitBounds(this.markersCluster.getBounds());
+            }
         }
-        this.totalDevice = this.liveEvents.length;
-
+        this.totalDevice = this.markersCluster.getChildCount();
         this.stats.push(liveDev, idleDev, stopDev, deadDev);
         this.draw();
     }
