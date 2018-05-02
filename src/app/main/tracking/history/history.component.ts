@@ -35,7 +35,9 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     private polyline: Polyline;
     private decor: any;
     private timeFrom: number;
-    private  timeTo: number;
+    private timeTo: number;
+
+    private name: string;
 
     private iconDefault: L.Icon;
 
@@ -165,6 +167,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 l.speedKPH=0;
                 this.historyEventsOptimizeForChart = _.concat(h, data, l);
 
+                this.name = h.deviceName || h.deviceId;
                 this.dataSource.data = data;
                 let ahead = (new Date()).getTime();
                 _.forEach(this.dataSource.data, (d: EventData) => {
