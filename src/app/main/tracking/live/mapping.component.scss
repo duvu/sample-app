@@ -75,6 +75,12 @@ $side-nav-width: 500px;
         border-radius: 50%;
         display: inline-block;
       }
+
+      .mat-list-item-content {
+        flex-basis: 0;
+        justify-content: space-between;
+        align-items: center;
+      }
     }
 
     .chart-overview {

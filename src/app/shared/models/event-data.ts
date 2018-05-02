@@ -16,5 +16,12 @@ export interface EventData {
     speedKPH: number;
     heading: number;
 
+    satelliteCount: number;
+    batteryLevel: number;
+    signalStrength: number;
+    fuelLevel: number;
+    fuelLevel2: number;
+    fuelTotal: number;
+    fuelRemain: number;
     age: number;
 }
