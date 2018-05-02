@@ -81,8 +81,17 @@
     </mat-sidenav-container>
     <mat-divider></mat-divider>
     <div class="m-comm">
-        <div fxLayout="row">
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                Informations of current device
+                <a mat-button [routerLink]="['history', 1]">history >></a>
+            </div>
 
+            <div fxFlex="50">
+                <button mat-stroked-button>Shutdown</button>
+                <button mat-stroked-button>Reconfig</button>
+                <button mat-stroked-button>Request Now</button>
+            </div>
         </div>
         <div class="chart-overview">
             <svg width="200" height="120" id="chart"></svg>
