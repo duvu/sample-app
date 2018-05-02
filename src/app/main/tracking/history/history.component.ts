@@ -31,6 +31,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     private map: L.Map;
     private selectedMarker: L.Marker;
     private historyEvents: EventData[];
+    private historyEventsOptimizeForChart: EventData[];
     private polyline: Polyline;
     private decor: any;
     private timeFrom: number;
@@ -155,6 +156,15 @@ export class HistoryComponent implements OnInit, AfterViewInit {
             data => {
                 //console.log('Data', data);
                 this.historyEvents = data;
+
+                let h = _.head(data);
+                let l = _.last(data);
+                h.timestamp -= 1;
+                h.speedKPH=0;
+                l.timestamp+=1;
+                l.speedKPH=0;
+                this.historyEventsOptimizeForChart = _.concat(h, data, l);
+
                 this.dataSource.data = data;
                 let ahead = (new Date()).getTime();
                 _.forEach(this.dataSource.data, (d: EventData) => {
@@ -245,8 +255,8 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     }
 
     private draw() {
-        this.x.domain(d3.extent(this.historyEvents, (d) => d.timestamp ));
-        this.y.domain(d3.extent(this.historyEvents, (d) => d.speedKPH ));
+        this.x.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.timestamp ));
+        this.y.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.speedKPH ));
 
         if (!this.update) {
             this.update = true;
@@ -268,12 +278,12 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 .attr("stroke-linecap", "round")
                 .attr("stroke-width", 0.5)
                 .attr("class", "line")
-                .attr("d", this.line(this.historyEvents));
+                .attr("d", this.line(this.historyEventsOptimizeForChart));
         } else {
             let svg = d3.select('#div-chart').select('svg').transition();
             svg.select('.line')
                 .duration(750)
-                .attr("d", this.line(this.historyEvents));
+                .attr("d", this.line(this.historyEventsOptimizeForChart));
             svg.select('.x.axis')
                 .duration(750)
                 .call(this.xAxis);
