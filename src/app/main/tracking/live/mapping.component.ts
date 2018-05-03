@@ -5,7 +5,8 @@ import { Component, OnDestroy, OnInit, AfterViewInit} from '@angular/core';
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { MarkerClusterGroup } from "leaflet";
-import { LatLngBounds } from 'leaflet';
+
+import * as d_ from 'date-fns';
 
 
 import {DeviceService} from 'app/shared/services/device.service';
@@ -279,8 +280,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 (dev.address && _.includes(dev.address, filterValue));
         });
     }
-    timeAgeToString(timestamp: number): string {
-        return Util.getTimeRangeString(timestamp);
+    timeDistance(timestamp: number): string {
+        return d_.distanceInWordsToNow(timestamp);
     }
 
     selectThisDevice(event: any, device: DeviceLittle): void {

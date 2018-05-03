@@ -19,7 +19,7 @@
 
                         <div>
                             <span mat-line>{{device.name || device.deviceId}}</span>
-                            <span mat-line>{{timeAgeToString(device.lastUpdateTime)}}</span>
+                            <span mat-line>{{timeDistance(device.lastUpdateTime)}}</span>
                         </div>
                         <div>
                             <mat-icon mat-list-icon>satellite</mat-icon>
@@ -52,7 +52,7 @@
                                     </tr>
                                     <tr>
                                         <td i18n>Last Event: </td>
-                                        <td>{{timeAgeToString(device.lastUpdateTime)}}</td>
+                                        <td>{{timeDistance(device.lastUpdateTime)}}</td>
                                     </tr>
                                     <tr>
                                         <td>Address</td>
