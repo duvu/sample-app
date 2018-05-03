@@ -5,6 +5,8 @@ import * as L from 'leaflet';
 import 'leaflet-polylinedecorator';
 import 'leaflet-easybutton';
 
+import * as d_ from 'date-fns';
+
 import { EventService } from 'app/shared/services/event.service';
 import { EventData } from 'app/shared/models/event-data';
 
@@ -42,7 +44,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     private iconDefault: L.Icon;
 
     dataSource: MatTableDataSource<EventData> | null;
-    displayedColumns = ['deviceName', 'latitude', 'longitude', 'heading', 'speedKPH', 'address', 'timestamp', 'age'];
+    displayedColumns = ['latitude', 'longitude', 'heading', 'speedKPH', 'address', 'timestamp', 'age'];
     selection = new SelectionModel<EventData>(true, []);
 
     //charting
@@ -156,18 +158,22 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         this.waitingService.show(true);
         this.eventService.getHistoryEvents(this.id, this.timeFrom, this.timeTo).subscribe(
             data => {
-                //console.log('Data', data);
                 this.historyEvents = data;
 
                 let h = _.head(data);
                 let l = _.last(data);
-                h.timestamp -= 1;
-                h.speedKPH=0;
-                l.timestamp+=1;
-                l.speedKPH=0;
-                this.historyEventsOptimizeForChart = _.concat(h, data, l);
+                if (h && l) {
+                    h.timestamp -= 1;
+                    h.speedKPH=0;
+                    l.timestamp+=1;
+                    l.speedKPH=0;
+                    this.historyEventsOptimizeForChart = _.concat(h, data, l);
+                    this.name = h.deviceName || h.deviceId;
+                } else {
+                    this.historyEventsOptimizeForChart = data;
+                }
 
-                this.name = h.deviceName || h.deviceId;
+
                 this.dataSource.data = data;
                 let ahead = (new Date()).getTime();
                 _.forEach(this.dataSource.data, (d: EventData) => {
@@ -298,7 +304,12 @@ export class HistoryComponent implements OnInit, AfterViewInit {
 
     }
 
+    timeDistance(timestamp: number): string {
+        return d_.distanceInWordsToNow(timestamp);
+    }
+
     timerange(age: number): string {
+
         age = age / 1000;
 
         if (age <= 60) {
