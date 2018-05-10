@@ -11,4 +11,5 @@ export class DeviceLittle {
     public latitude: number;
     public longitude: number;
     public lastUpdateTime: number;
+    public lastUpdateTimeInWords: string;
 }

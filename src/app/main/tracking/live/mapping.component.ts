@@ -85,7 +85,11 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             this.eventService.getLiveEvents()
         ).subscribe(
             data => {
-                this.allDeviceList = data[0];
+                this.allDeviceList = _.map(data[0], (d) => {
+                    d.lastUpdateTimeInWords = d_.distanceInWordsToNow(d.lastUpdateTime);
+                    return d;
+                });
+
                 this.liveEvents = data[1];
             },
             error => {
@@ -170,7 +174,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.markersCluster.clearLayers();
         _.forEach(this.liveEvents, function (event) {
-            let d = _.find(this.deviceList, function (dt) {
+            let d = _.find(this.allDeviceList, function (dt) {
                 return event.devId === dt.id;
             });
 
@@ -273,7 +277,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     applyFilter(filterValue: string) {
         filterValue = filterValue.trim(); // Remove whitespace
-        // filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
         this.deviceList = _.filter(this.allDeviceList, (dev: DeviceLittle) => {
             return (dev.name && _.includes(dev.name, filterValue)) ||
                 (dev.deviceId && _.includes(dev.deviceId, filterValue)) ||
