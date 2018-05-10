@@ -202,6 +202,10 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     }
 
     private processEvents(): void {
+        if (this.historyEvents.length <= 0) {
+            return;
+        }
+
         let latlngs = _.map(this.historyEvents, (event) => {
            return L.latLng([event.latitude, event.longitude]); //new LatLng(event.latitude, event.longitude);
         });
