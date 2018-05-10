@@ -6,7 +6,7 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { MarkerClusterGroup } from "leaflet";
 
-import * as d_ from 'date-fns';
+import { distanceInWordsToNow } from 'date-fns/distance_in_words_to_now'
 
 
 import {DeviceService} from 'app/shared/services/device.service';
@@ -85,11 +85,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             this.eventService.getLiveEvents()
         ).subscribe(
             data => {
-                this.allDeviceList = _.map(data[0], (d) => {
-                    d.lastUpdateTimeInWords = d_.distanceInWordsToNow(d.lastUpdateTime);
-                    return d;
-                });
-
+                this.allDeviceList = data[0];
                 this.liveEvents = data[1];
             },
             error => {
@@ -182,6 +178,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             d.latitude = event.latitude;
             d.longitude = event.longitude;
             d.lastUpdateTime = event.timestamp;
+            d.lastUpdateTimeInWords = distanceInWordsToNow(event.timestamp);
 
             if (event.latitude && event.longitude) {
                 let marker = this.buildMarker(event);
@@ -283,9 +280,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 (dev.address && _.includes(dev.address, filterValue));
         });
     }
-    timeDistance(timestamp: number): string {
-        return d_.distanceInWordsToNow(timestamp);
-    }
+    // timeDistance(timestamp: number): string {
+    //     return d_.distanceInWordsToNow(timestamp);
+    // }
 
     selectThisDevice(event: any, device: DeviceLittle): void {
         event.stopPropagation();
