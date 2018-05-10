@@ -6,7 +6,7 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import { MarkerClusterGroup } from "leaflet";
 
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
 
 import {DeviceService} from 'app/shared/services/device.service';
