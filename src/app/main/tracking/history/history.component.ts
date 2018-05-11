@@ -262,7 +262,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         this.yAxis = d3.axisLeft(this.y).ticks(10);
         this.xAxis = d3.axisBottom(this.x).ticks(15);
         this.line = d3.line()
-            .curve(d3.curveBasis)
+            .curve(d3.curveStepAfter)
             .x( (d: any) => this.x(d.timestamp) )
             .y( (d: any) => this.y(d.speedKPH) );
     }
