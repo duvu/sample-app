@@ -18,7 +18,7 @@ export class MappingUtils {
             return 'live';
         } else if (now - timestamp <= 60*60*1000) {
             return 'idle';
-        } else if (now - timestamp < 12 * 60 * 60 * 1000) {
+        } else if (now - timestamp < 24 * 60 * 60 * 1000) {
             return 'stop';
         } else {
             return 'dead';
