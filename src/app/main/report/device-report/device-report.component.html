@@ -58,10 +58,10 @@
 
         <mat-tab-group>
             <mat-tab i18n-label label="Speed Report">
-                <app-d-speed></app-d-speed>
+                <app-d-speed [device]="selected.id" [from]="0" [to]="0"></app-d-speed>
             </mat-tab>
             <mat-tab i18n-label label="Parking Report">
-                <app-d-parking></app-d-parking>
+                <app-d-parking ></app-d-parking>
             </mat-tab>
             <mat-tab i18n-label label="Geofence Report">
                 <ul>

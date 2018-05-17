@@ -1,6 +1,5 @@
 import { CompanyLittle } from 'app/shared/models/little/company-little';
 import { AccountLittle } from 'app/shared/models/little/account-little';
-import * as _ from 'lodash';
 
 export class Device {
     public id: number;
