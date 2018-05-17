@@ -92,7 +92,7 @@ export class DSpeedComponent implements OnChanges, OnInit, AfterViewInit {
                     return this.deviceReportService!.getSpeedReport(this.device, this.from, this.to,
                         this.paginator.pageIndex, this.paginator.pageSize,this.sort.active, this.sort.direction);
                 }),
-                map(data => {
+                map((data: any) => {
                     this.resultsLength = data.totalElements;
                     return data.content;
                 }),
@@ -105,29 +105,4 @@ export class DSpeedComponent implements OnChanges, OnInit, AfterViewInit {
                     this.spinner.show(false);
             });
     }
-
-    loadData(): void {
-        console.log("[>_] loading data");
-        if (!this.device) {
-            return;
-        }
-
-
-
-        // this.deviceReportService.getSpeedReport(this.device, this.from, this.to,
-        //     this.paginator.pageIndex, this.paginator.pageSize,this.sort.active, this.sort.direction)
-        //     .subscribe(
-        //         data => {
-        //             console.log("Data", data);
-        //             this.resultsLength = data.totalElements;
-        //             this.dataSource.data = data.content;
-        //         },
-        //         error => {
-        //
-        //         },
-        //         () => {}
-        //     );
-    }
-
-
 }
