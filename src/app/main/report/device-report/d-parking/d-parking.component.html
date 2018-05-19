@@ -1,3 +1,71 @@
-<p>
-  d-parking works!
-</p>
+<table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="devId">
+        <th mat-header-cell *matHeaderCellDef>#Id</th>
+        <td mat-cell *matCellDef="let row">{{ row.devId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="deviceId">
+        <th mat-header-cell *matHeaderCellDef>Device Id</th>
+        <td mat-cell *matCellDef="let row">{{ row.deviceId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="deviceName">
+        <th mat-header-cell *matHeaderCellDef>Device Name</th>
+        <td mat-cell *matCellDef="let row">{{ row.deviceName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="altitude">
+        <th mat-header-cell *matHeaderCellDef>Altitude</th>
+        <td mat-cell *matCellDef="let row">{{ row.altitude }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="latitude">
+        <th mat-header-cell *matHeaderCellDef>Latitude</th>
+        <td mat-cell *matCellDef="let row">{{ row.latitude }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="longitude">
+        <th mat-header-cell *matHeaderCellDef>Longitude</th>
+        <td mat-cell *matCellDef="let row">{{ row.longitude }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="heading">
+        <th mat-header-cell *matHeaderCellDef>Heading</th>
+        <td mat-cell *matCellDef="let row">{{ row.heading }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="odometerKM">
+        <th mat-header-cell *matHeaderCellDef>OdometerKM</th>
+        <td mat-cell *matCellDef="let row">{{ row.odometerKM }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="speedKPH">
+        <th mat-header-cell *matHeaderCellDef>speedKPH</th>
+        <td mat-cell *matCellDef="let row">{{ row.speedKPH }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>status</th>
+        <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="timestamp">
+        <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+        <td mat-cell *matCellDef="let row">{{ row.timestamp | date: 'short'}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Address</th>
+        <td mat-cell *matCellDef="let row">{{ row.address }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="stoppedTime">
+        <th mat-header-cell *matHeaderCellDef>Stopped Time</th>
+        <td mat-cell *matCellDef="let row">{{ timeDistance(row.stoppedTime) }}</td>
+    </ng-container>
+
+    <!--body-->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

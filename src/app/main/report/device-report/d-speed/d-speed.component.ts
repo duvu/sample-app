@@ -30,7 +30,7 @@ export class DSpeedComponent implements OnChanges, OnInit, AfterViewInit {
     resultsLength: number;
     dataChange: ReplaySubject<any>;
 
-    displayedColumns = ['devId', 'address', 'altitude', 'deviceId', 'deviceName', 'heading', 'latitude', 'longitude', 'odometerKM', 'speedKPH', 'status', 'timestamp'];
+    displayedColumns = ['devId', 'deviceId', 'deviceName', 'heading', 'latitude', 'longitude', 'altitude', 'odometerKM', 'speedKPH', 'address', 'status', 'timestamp'];
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -72,7 +72,7 @@ export class DSpeedComponent implements OnChanges, OnInit, AfterViewInit {
     }
 
     ngOnChanges(changes: {[propKey: string]: SimpleChange}): void {
-        console.log('[>_] Changed', changes);
+        // console.log('[>_] Changed', changes);
 
         //this.loadData();
         this.dataChange.next(100);
