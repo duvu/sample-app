@@ -67,7 +67,6 @@
 
                         <ng-container matColumnDef="age">
                             <mat-header-cell *matHeaderCellDef i18n> Age </mat-header-cell>
-                            <!--mat-cell *matCellDef="let row">{{timerange(row.age)}}</mat-cell-->
                             <mat-cell *matCellDef="let row">{{timeDistance(row.timestamp)}}</mat-cell>
                         </ng-container>
 
