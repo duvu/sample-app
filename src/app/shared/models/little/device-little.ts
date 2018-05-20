@@ -6,6 +6,7 @@ export class DeviceLittle {
 
     //--additional
     public selected: boolean;
+    public speedKph: number;
     public state: number; //stopped, living, idle
     public address: string;
     public latitude: number;

@@ -67,7 +67,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     private legend: any;
     private center: any;
 
-    private oldSelectedDevice: DeviceLittle;
+    private selectedDevice: DeviceLittle;
 
     constructor(private _datePipe: DatePipe,
                 private deviceService: DeviceService,
@@ -178,7 +178,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             d.latitude = event.latitude;
             d.longitude = event.longitude;
             d.lastUpdateTime = event.timestamp;
-            d.lastUpdateTimeInWords = distanceInWordsToNow(event.timestamp);
+            d.speedKph = 'speed: ' + event.speedKPH;
+            d.lastUpdateTimeInWords = distanceInWordsToNow(event.timestamp) + ' ago';
 
             if (event.latitude && event.longitude) {
                 let marker = this.buildMarker(event);
@@ -286,8 +287,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     selectThisDevice(event: any, device: DeviceLittle): void {
         event.stopPropagation();
-        if (this.oldSelectedDevice) {
-            this.oldSelectedDevice.selected = false;
+        if (this.selectedDevice) {
+            this.selectedDevice.selected = false;
         }
         device.selected = !device.selected;
 
@@ -297,7 +298,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         let center = L.latLng(evdt.latitude, evdt.longitude);
         this.map.setView(center, 15);
 
-        this.oldSelectedDevice = device;
+        this.selectedDevice = device;
     }
 
     initSvg(): void {
