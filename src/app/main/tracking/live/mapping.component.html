@@ -1,101 +1,66 @@
-<div fxLayout="column" class="m-live">
-    <mat-sidenav-container class="side-nav-container">
-        <mat-sidenav mode="side" [opened]="true" position="end">
-            <div class="m-dev">
-                <div class="m-dev-header">
-                    <mat-form-field class="m-dev-filter">
-                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Devices Filter">
-                    </mat-form-field>
-                    <div class="m-dev-add">
-                        <button mat-button color="primary">
-                            <mat-icon>add</mat-icon>Device
-                        </button>
+<mat-sidenav-container class="side-nav-container">
+    <mat-sidenav mode="side" [opened]="true" position="end">
+        <div class="m-dev">
+            <div class="m-dev-header">
+                <mat-form-field class="m-dev-filter">
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Devices Filter">
+                </mat-form-field>
+                <div class="m-dev-add">
+                    <button mat-button color="primary">
+                        <mat-icon>add</mat-icon>Device
+                    </button>
+                </div>
+
+            </div>
+
+            <mat-nav-list class="map-device-table">
+                <mat-list-item *ngFor="let device of deviceList" (click)="selectThisDevice($event, device)">
+                    <div [ngClass]="{'device-stop': device.state==0, 'device-idle': device.state==1, 'device-live': device.state==2}"></div>
+
+                    <div>
+
+
+                        <span mat-line>{{device.name || device.deviceId}}</span>
+                        <span mat-line>{{device.speedKph}} km/h {{device.lastUpdateTimeInWords}}</span>
+                    </div>
+                    <div>
+                        <mat-icon mat-list-icon>satellite</mat-icon>
+                        <mat-icon mat-list-icon>cellfull</mat-icon>
+                    </div>
+                </mat-list-item>
+            </mat-nav-list>
+
+            <mat-divider></mat-divider>
+            <div class="chart-overview">
+                <svg width="200" height="120" id="chart"></svg>
+            </div>
+        </div>
+
+    </mat-sidenav>
+
+
+    <mat-sidenav-content class="mat-elevation-z6">
+        <div class="sidenav-content">
+            <div id="map-id" class="main-map"></div>
+
+            <div class="m-comm" *ngIf="selectedDevice">
+                <div fxLayout="row" fxLayoutGap="16px">
+                    <div fxFlex="50">
+                        Informations of current device
+                        <a mat-button [routerLink]="['history', selectedDevice.id]">history >></a>
                     </div>
 
+                    <div fxFlex="50">
+                        <button mat-stroked-button>Shutdown</button>
+                        <button mat-stroked-button>Reconfig</button>
+                        <button mat-stroked-button>Request Now</button>
+                    </div>
                 </div>
-                <mat-nav-list class="map-device-table">
-                    <mat-list-item *ngFor="let device of deviceList" (click)="selectThisDevice($event, device)">
-                        <span [ngClass]="{'device-stop': device.state==0, 'device-idle': device.state==1, 'device-live': device.state==2}"></span>
 
-                        <div>
-                            <span mat-line>{{device.name || device.deviceId}}</span>
-                            <span mat-line>{{device.lastUpdateTimeInWords}}</span>
-                        </div>
-                        <div>
-                            <mat-icon mat-list-icon>satellite</mat-icon>
-                            <mat-icon mat-list-icon>cellfull</mat-icon>
-                        </div>
-                    </mat-list-item>
-                </mat-nav-list>
-                <!--div class="map-device-table">
-
-
-                    <mat-accordion displayMode="flat">
-                        <mat-expansion-panel *ngFor="let device of deviceList">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title (click)="selectThisDevice($event, device)">
-                                    <span [ngClass]="{'device-stop': device.state==0, 'device-idle': device.state==1, 'device-live': device.state==2}"></span>
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    <span>{{device.name || device.deviceId}}</span>
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-                            <ng-template matExpansionPanelContent>
-                                <table>
-                                    <tr>
-                                        <td i18n>Device ID</td>
-                                        <td>{{device.deviceId}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td i18n>Device Name</td>
-                                        <td>{{device.name}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td i18n>Last Event: </td>
-                                        <td>{{timeDistance(device.lastUpdateTime)}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Address</td>
-                                        <td>{{device.address}}</td>
-                                    </tr>
-                                </table>
-                                <mat-action-row>
-                                    <a mat-button [routerLink]="['history', device.id]">history >></a>
-                                    <button mat-button color="primary">Shutdown</button>
-                                </mat-action-row>
-                            </ng-template>
-
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </div-->
-
-            </div>
-        </mat-sidenav>
-
-
-        <mat-sidenav-content class="mat-elevation-z6">
-            <div class="sidenav-content">
-                <div id="map-id" class="main-map"></div>
-            </div>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-    <mat-divider></mat-divider>
-    <div class="m-comm">
-        <div fxLayout="row" fxLayoutGap="16px">
-            <div fxFlex="50">
-                Informations of current device
-                <a mat-button [routerLink]="['history', 1]">history >></a>
-            </div>
-
-            <div fxFlex="50">
-                <button mat-stroked-button>Shutdown</button>
-                <button mat-stroked-button>Reconfig</button>
-                <button mat-stroked-button>Request Now</button>
             </div>
         </div>
-        <div class="chart-overview">
-            <svg width="200" height="120" id="chart"></svg>
-        </div>
-    </div>
-</div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+    <!--<mat-divider></mat-divider>-->
+
 

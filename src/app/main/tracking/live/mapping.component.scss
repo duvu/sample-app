@@ -1,11 +1,30 @@
 $side-nav-width: 500px;
 @mixin map-component($theme) {
-  .main-map {
-    height:100%;
-  }
-  .m-live {
+
+  //.m-live {
+  //  height: 100%;
+  //  .m-comm{
+  //    display: flex;
+  //    align-items: center;
+  //    height: 20%;
+  //    min-height: 130px;
+  //    max-height: 200px;
+  //    justify-content: space-between;
+  //  }
+  //}
+  .side-nav-container {
     height: 100%;
-    .m-comm{
+  }
+  .sidenav-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .main-map {
+      height:100%;
+    }
+
+    .m-comm {
       display: flex;
       align-items: center;
       height: 20%;
@@ -13,12 +32,6 @@ $side-nav-width: 500px;
       max-height: 200px;
       justify-content: space-between;
     }
-  }
-  .side-nav-container {
-    height: 100%;
-  }
-  .sidenav-content {
-    height: 100%;
   }
   .side-nav-container mat-sidenav {
     overflow-y: hidden;
