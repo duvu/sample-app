@@ -59,6 +59,8 @@ $side-nav-width: 500px;
     .map-device-table {
       overflow-y: auto;
       height: 100%;
+
+
       &::-webkit-scrollbar {
         width: 6px;
         background-color: #ffffff;
@@ -90,9 +92,9 @@ $side-nav-width: 500px;
       }
 
       .mat-list-item-content {
-        flex-basis: 0;
-        justify-content: space-between;
-        align-items: center;
+        .right {
+          margin: 0 0 0 auto;
+        }
       }
     }
 
