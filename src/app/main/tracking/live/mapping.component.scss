@@ -1,17 +1,5 @@
 $side-nav-width: 500px;
 @mixin map-component($theme) {
-
-  //.m-live {
-  //  height: 100%;
-  //  .m-comm{
-  //    display: flex;
-  //    align-items: center;
-  //    height: 20%;
-  //    min-height: 130px;
-  //    max-height: 200px;
-  //    justify-content: space-between;
-  //  }
-  //}
   .side-nav-container {
     height: 100%;
   }
@@ -69,27 +57,24 @@ $side-nav-width: 500px;
         background-color: #eeeeee;
       }
 
-      .device-stop {
-        width: 10px;
-        height: 10px;
-        background-color: red;
-        border-radius: 50%;
+      .device {
+        width: 8px;
+        height: 100%;
+        margin-left: -16px;
+        margin-right: 16px;
         display: inline-block;
+
+        &.stop {
+          background-color: red;
+        }
+        &.idle {
+          background-color: orange;
+        }
+        &.live {
+          background-color: #00e80e;
+        }
       }
-      .device-idle {
-        width: 10px;
-        height: 10px;
-        background-color: orange;
-        border-radius: 50%;
-        display: inline-block;
-      }
-      .device-live {
-        width: 10px;
-        height: 10px;
-        background-color: lightgreen;
-        border-radius: 50%;
-        display: inline-block;
-      }
+
 
       .mat-list-item-content {
         .right {
