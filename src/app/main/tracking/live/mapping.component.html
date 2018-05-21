@@ -15,8 +15,7 @@
 
             <mat-nav-list class="map-device-table" role="list">
                 <mat-list-item *ngFor="let device of deviceList" (click)="selectThisDevice($event, device)">
-                    <div [ngClass]="{'device-stop': device.state==0, 'device-idle': device.state==1, 'device-live': device.state==2}"></div>
-
+                    <div class="device" [ngClass]="{'stop': device.state==0, 'idle': device.state==1, 'live': device.state==2}"></div>
                     <div>
                         <span mat-line>{{device.name || device.deviceId}}</span>
                         <span mat-line>{{device.speedKph}} km/h {{device.lastUpdateTimeInWords}}</span>
@@ -26,6 +25,7 @@
                         <mat-icon mat-list-icon>satellite</mat-icon>
                         <mat-icon mat-list-icon>cellfull</mat-icon>
                     </div>
+                    <mat-divider></mat-divider>
                 </mat-list-item>
             </mat-nav-list>
 
