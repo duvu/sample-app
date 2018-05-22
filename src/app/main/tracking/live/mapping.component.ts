@@ -69,6 +69,12 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private selectedDevice: DeviceLittle;
 
+    foods = [
+        {value: 'steak-0', viewValue: 'Steak'},
+        {value: 'pizza-1', viewValue: 'Pizza'},
+        {value: 'tacos-2', viewValue: 'Tacos'}
+    ];
+
     constructor(private _datePipe: DatePipe,
                 private deviceService: DeviceService,
                 private eventService: EventService,
@@ -178,13 +184,16 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             d.latitude = event.latitude;
             d.longitude = event.longitude;
             d.lastUpdateTime = event.timestamp;
-            d.speedKph = 'speed: ' + event.speedKPH;
+            d.speedKph = event.speedKPH;
             d.lastUpdateTimeInWords = distanceInWordsToNow(event.timestamp) + ' ago';
 
             if (event.latitude && event.longitude) {
                 let marker = this.buildMarker(event);
                 this.popupLink.register(marker, event);
                 this.markersCluster.addLayer(marker);
+                marker.on('click', () => {
+                    this.selectedDevice = d;
+                });
             }
 
             const status = MappingUtils.getStatus(event.timestamp);
@@ -224,6 +233,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         let ll = L.latLng(event.latitude, event.longitude);
         let icon = this.buildIcon(event);
         let popup = this.buildPopup(event);
+
 
         let devName = event.deviceName ? event.deviceName : event.deviceId;
 
@@ -299,6 +309,10 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.map.setView(center, 15);
 
         this.selectedDevice = device;
+    }
+
+    closePanelDetails() {
+        this.selectedDevice = null;
     }
 
     initSvg(): void {

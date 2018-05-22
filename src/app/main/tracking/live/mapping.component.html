@@ -19,7 +19,7 @@
                     <div class="device" [ngClass]="{'stop': device.state==0, 'idle': device.state==1, 'live': device.state==2}"></div>
                     <div>
                         <span mat-line>{{device.name || device.deviceId}}</span>
-                        <span mat-line>{{device.speedKph}} km/h {{device.lastUpdateTimeInWords}}</span>
+                        <span mat-line>Speed {{device.speedKph}} km/h {{device.lastUpdateTimeInWords}}</span>
                     </div>
 
                     <div class="right">
@@ -44,23 +44,54 @@
             <div id="map-id" class="main-map"></div>
 
             <div class="m-comm" *ngIf="selectedDevice">
-                <div fxLayout="row" fxLayoutGap="16px">
-                    <div fxFlex="50">
-                        Informations of current device
-                        <a mat-button [routerLink]="['history', selectedDevice.id]">history >></a>
+                <div class="m-comm-content">
+                    <table>
+                        <tr>
+                            <td class="t-head">DeviceID</td>
+                            <td>{{selectedDevice.name || selectedDevice.deviceId}}</td>
+                        </tr>
+                        <tr>
+                            <td class="t-head">Lat/Lng</td>
+                            <td>{{selectedDevice.latitude}}/{{selectedDevice.longitude}}</td>
+                        </tr>
+                        <tr>
+                            <td class="t-head">Lat/Lng</td>
+                            <td>{{selectedDevice.lastUpdateTime | date: 'short'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="t-head">SpeedKPH</td>
+                            <td>{{selectedDevice.speedKph}} km/h</td>
+                        </tr>
+                        <tr>
+                            <td class="t-head">Address</td>
+                            <td>{{selectedDevice.address}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <a mat-button [routerLink]="['history', selectedDevice.id]">history >></a>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="m-d-command">
+                        <mat-form-field>
+                            <mat-select placeholder="Favorite food">
+                                <mat-option *ngFor="let food of foods" [value]="food.value">
+                                    {{ food.viewValue }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button mat-button>Submit</button>
                     </div>
 
-                    <div fxFlex="50">
-                        <button mat-stroked-button>Shutdown</button>
-                        <button mat-stroked-button>Reconfig</button>
-                        <button mat-stroked-button>Request Now</button>
+                    <div>
+                        <svg width="500" height="130" id="track-speed-chart"></svg>
                     </div>
                 </div>
-
+                <button mat-icon-button (click)="closePanelDetails()">
+                    <mat-icon>close</mat-icon>
+                </button>
             </div>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
-    <!--<mat-divider></mat-divider>-->
-
-
