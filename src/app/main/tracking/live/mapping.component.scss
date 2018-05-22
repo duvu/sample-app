@@ -14,11 +14,28 @@ $side-nav-width: 500px;
 
     .m-comm {
       display: flex;
-      align-items: center;
+      flex-direction: row;
       height: 20%;
+      overflow-y: auto;
       min-height: 130px;
-      max-height: 200px;
+      max-height: 250px;
+      font-size: 14px;
       justify-content: space-between;
+
+      .m-comm-content {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .t-head {
+        font-weight: 600;
+      }
+
+      .m-d-command {
+        display: flex;
+        flex-direction: column;
+      }
     }
   }
   .side-nav-container mat-sidenav {
