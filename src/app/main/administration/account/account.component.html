@@ -16,10 +16,10 @@
         <table mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="toggle">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>#</th>
-                <td mat-cell *matCellDef="let element">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>#</mat-header-cell>
+                <mat-cell *matCellDef="let element">
                     <mat-slide-toggle [checked]="checkStatus(element)" (change)="toggleStatus(element)"></mat-slide-toggle>
-                </td>
+                </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="id">
