@@ -9,6 +9,7 @@ import { MaterialShared } from 'app/shared/material-shared';
 import { HistoryComponent } from './history/history.component';
 import { PopupService } from 'app/main/tracking/live/popup/popup.service';
 import { PopupComponent } from './live/popup/popup.component';
+import { SpeedChartComponent } from './live/speed-chart/speed-chart.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { PopupComponent } from './live/popup/popup.component';
     declarations: [
         MappingComponent,
         HistoryComponent,
-        PopupComponent
+        PopupComponent,
+        SpeedChartComponent
     ]
 })
 export class MappingModule { }

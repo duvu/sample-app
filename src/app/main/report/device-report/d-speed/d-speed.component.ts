@@ -11,8 +11,8 @@ import { DeviceReportService } from 'app/shared/services/device-report.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { DeviceSpeeedReport } from 'app/shared/models/device-speeed-report';
 
-import {merge, Observable, of as observableOf} from 'rxjs';
-import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import { merge, of as observableOf} from 'rxjs';
+import { catchError, map, startWith, switchMap} from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { WaitingService } from 'app/shared/services/waiting.service';
 
@@ -72,9 +72,6 @@ export class DSpeedComponent implements OnChanges, OnInit, AfterViewInit {
     }
 
     ngOnChanges(changes: {[propKey: string]: SimpleChange}): void {
-        // console.log('[>_] Changed', changes);
-
-        //this.loadData();
         this.dataChange.next(100);
     }
 
