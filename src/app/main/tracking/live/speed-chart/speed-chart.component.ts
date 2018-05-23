@@ -14,6 +14,29 @@ import { TimerObservable } from 'rxjs/observable/TimerObservable';
     styleUrls: ['./speed-chart.component.scss']
 })
 export class SpeedChartComponent implements OnChanges, OnInit, AfterViewInit {
+    get period() {
+        return this._period;
+    }
+
+    @Input()
+    set period(value) {
+        this._period = value;
+    }
+    get from() {
+        return this._from;
+    }
+
+    set from(value) {
+        this._from = value;
+    }
+
+    get to() {
+        return this._to;
+    }
+
+    set to(value) {
+        this._to = value;
+    }
     get svg(): any {
         return this._svg;
     }
@@ -94,6 +117,9 @@ export class SpeedChartComponent implements OnChanges, OnInit, AfterViewInit {
         this._Y = value;
     }
     private _device;
+    private _period;
+    private _from;
+    private _to;
 
     private _width;
     private _height;
@@ -124,8 +150,9 @@ export class SpeedChartComponent implements OnChanges, OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.intervalUpdate();
-        let to = Date.now();
-        let from = to - 6 * 60 * 60 * 1000; // 6 hours
+        this.to = Date.now();
+        this.from = this.to - this.period * 60 * 60 * 1000; // 6 hours
+
         merge(this.dataChange)
             .pipe(
                 startWith([]),
@@ -133,7 +160,7 @@ export class SpeedChartComponent implements OnChanges, OnInit, AfterViewInit {
                     if (!this.device) {
                         return observableOf([]);
                     }
-                    return this.eventService!.getHistoryEvents(this.device, from, to);
+                    return this.eventService!.getHistoryEvents(this.device, this.from, this.to);
                 }),
                 map((data: any) => {
                     return data;
@@ -164,6 +191,8 @@ export class SpeedChartComponent implements OnChanges, OnInit, AfterViewInit {
         TimerObservable.create(15, 15 * 1000)
             .takeWhile(() => this.alive)
             .subscribe(() => {
+                this.to = Date.now();
+                this.from = this.to - this.period * 60 * 60 * 1000; // 6 hours
                 this.dataChange.next(101);
             });
     }
