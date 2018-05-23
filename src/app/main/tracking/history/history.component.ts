@@ -254,7 +254,6 @@ export class HistoryComponent implements OnInit, AfterViewInit {
             .attr("preserveAspectRatio", "xMidYMid meet")
             .attr("viewBox", '0 0 '+ this.width+' '+ this.height);
 
-        console.log('Svg', this.svg);
         this.chart = this.svg.append("g")
             .attr('class', 'chart')
             .attr("transform", "translate(30, -30)");

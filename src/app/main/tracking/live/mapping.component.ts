@@ -46,9 +46,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     numberOfLoad: number = 0;
     markersCluster: MarkerClusterGroup;
 
-    selectedEvent: EventData = null;
-    inputSearch: string = null;
-
     deviceList: DeviceLittle[];
     allDeviceList: DeviceLittle[];
 
@@ -67,7 +64,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     private legend: any;
     private center: any;
 
-    private selectedDevice: DeviceLittle;
+    selectedDevice: DeviceLittle;
 
     foods = [
         {value: 'steak-0', viewValue: 'Steak'},
@@ -75,8 +72,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         {value: 'tacos-2', viewValue: 'Tacos'}
     ];
 
-    constructor(private _datePipe: DatePipe,
-                private deviceService: DeviceService,
+    constructor(private deviceService: DeviceService,
                 private eventService: EventService,
                 private spinner: WaitingService,
                 private toast: ToastService,
@@ -106,7 +102,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             }
         );
 
-        this.initSvg();
+        this.initOverviewPieChart();
     }
 
     ngAfterViewInit(): void {
@@ -218,7 +214,11 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         }.bind(this));
 
-        if (this.liveEvents.length > 0 ) {
+        if (this.selectedDevice) {
+            let center = L.latLng(this.selectedDevice.latitude, this.selectedDevice.longitude);
+            let oldZoom = this.map.getZoom();
+            this.map.setView(center, oldZoom);
+        } else if (this.liveEvents.length > 0 ) {
             this.map.addLayer(this.markersCluster);
             if (this.numberOfLoad <= 1) {
                 this.map.fitBounds(this.markersCluster.getBounds());
@@ -269,19 +269,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         return popup;
     }
-    clearSearch(): void {
-        this.inputSearch = null;
-        this.selectedEvent = null;
-    }
-    clearSelected() {
-        this.selectedEvent = null;
-    }
-    selectAnEvent(event: EventData): void{
-        this.selectedEvent = event;
-        this.inputSearch = event.deviceName;
-        let center = L.latLng(event.latitude, event.longitude);
-        this.map.setView(center, 15);
-    }
 
     applyFilter(filterValue: string) {
         filterValue = filterValue.trim(); // Remove whitespace
@@ -291,9 +278,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 (dev.address && _.includes(dev.address, filterValue));
         });
     }
-    // timeDistance(timestamp: number): string {
-    //     return d_.distanceInWordsToNow(timestamp);
-    // }
 
     selectThisDevice(event: any, device: DeviceLittle): void {
         event.stopPropagation();
@@ -302,10 +286,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         device.selected = !device.selected;
 
-        let evdt = _.find(this.liveEvents, function (e) {
-            return device.id === e.devId;
-        });
-        let center = L.latLng(evdt.latitude, evdt.longitude);
+        let center = L.latLng(device.latitude, device.longitude);
         this.map.setView(center, 15);
 
         this.selectedDevice = device;
@@ -315,7 +296,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selectedDevice = null;
     }
 
-    initSvg(): void {
+    initOverviewPieChart(): void {
         this.color = d3.scaleOrdinal()
             .range(MappingUtils.COLOR_SCHEME);
 
@@ -331,8 +312,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.svg = d3.select("svg")
             .append("g")
             .attr("transform", "translate(" + 65 + "," + 60 + ")");
-
-        //this.createPie();
     }
 
     private draw() {
@@ -401,4 +380,13 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             .attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
             .text((d: any) => (d.data.count > 0 ? d.data.count : ''));
     }
+
+    //--
+    // private width: number;
+    // private height: number;
+    // private initSpeedLineChart() {
+    //     let parentDiv = document.getElementById('speed-chart');
+    //     this.width = parentDiv.clientWidth;
+    //     this.height = parentDiv.clientHeight;
+    // }
 }
