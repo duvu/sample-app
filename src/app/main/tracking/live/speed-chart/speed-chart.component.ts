@@ -136,6 +136,7 @@ export class SpeedChartComponent implements OnChanges, OnInit, AfterViewInit {
     private historyEventsOptimizeForChart: EventData[];
     private update: boolean = false;
     private alive: boolean = true;
+    private subscription;
     //-------------------------------------------------------------------------
     constructor(private eventService: EventService) {
         this.dataChange = new ReplaySubject(1);
@@ -188,7 +189,11 @@ export class SpeedChartComponent implements OnChanges, OnInit, AfterViewInit {
     }
 
     private intervalUpdate() {
-        TimerObservable.create(15, 15 * 1000)
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+
+        this.subscription = TimerObservable.create(15, 15 * 1000)
             .takeWhile(() => this.alive)
             .subscribe(() => {
                 this.to = Date.now();
