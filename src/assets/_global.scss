@@ -197,4 +197,23 @@
       min-width: 84px;
     }
   }
+
+  .mat-icon-button.small {
+    width: $icon-small-container-size!important;
+    height: $icon-small-container-size!important;
+    line-height: $icon-small-container-size!important;
+
+    .mat-icon, .mat-icon-button i {
+      line-height: $icon-small-size!important;
+    }
+
+    .mat-icon {
+      width: $icon-small-size!important;
+      height: $icon-small-size!important;
+    }
+
+    .material-icons {
+      font-size: $icon-small-size!important;
+    }
+  }
 }
