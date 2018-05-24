@@ -25,12 +25,12 @@
 
                     <div class="right">
                         <div>
-                            <button mat-icon-button class="small"><mat-icon mat-list-icon>satellite</mat-icon></button>
-                            <button mat-icon-button class="small"><mat-icon mat-list-icon>cellfull</mat-icon></button>
+                            <button mat-icon-button class="small" (click)="stopPropagation($event)"><mat-icon mat-list-icon>satellite</mat-icon></button>
+                            <button mat-icon-button class="small" (click)="stopPropagation($event)"><mat-icon mat-list-icon>cellfull</mat-icon></button>
                         </div>
                         <div>
-                            <button mat-icon-button class="small"><mat-icon mat-list-icon>console</mat-icon></button>
-                            <button mat-icon-button class="small"><mat-icon mat-list-icon>refresh</mat-icon></button>
+                            <button mat-icon-button class="small" (click)="openDialogSendCommand($event)"><mat-icon mat-list-icon>console</mat-icon></button>
+                            <button mat-icon-button class="small" (click)="requestLocationUpdate($event)"><mat-icon mat-list-icon>refresh</mat-icon></button>
                         </div>
                     </div>
                     <mat-divider></mat-divider>

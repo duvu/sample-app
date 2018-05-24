@@ -292,6 +292,21 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     closePanelDetails() {
         this.selectedDevice = null;
+        setTimeout(() => {
+            this.map.invalidateSize(true);
+        }, 0);
+    }
+
+    stopPropagation(event: Event) {
+        event.stopPropagation();
+    }
+
+    openDialogSendCommand(event: Event) {
+        event.stopPropagation();
+    }
+
+    requestLocationUpdate(event: Event) {
+        event.stopPropagation();
     }
 
     initOverviewPieChart(): void {
