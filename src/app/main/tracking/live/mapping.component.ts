@@ -12,7 +12,6 @@ import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import {DeviceService} from 'app/shared/services/device.service';
 import {EventService} from 'app/shared/services/event.service';
 import {EventData} from 'app/shared/models/event-data';
-import {DatePipe} from '@angular/common';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 import 'rxjs/add/operator/takeWhile';
@@ -27,7 +26,6 @@ import { PopupService } from 'app/main/tracking/live/popup/popup.service';
 import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
 import { WaitingService } from 'app/shared/services/waiting.service';
 import { Observable } from 'rxjs/Observable';
-import { Util } from 'app/shared/utils/Util';
 import { ToastService } from 'app/shared/toast.service';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';

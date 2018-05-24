@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { EventService } from 'app/shared/services/event.service';
 import { merge, of as observableOf } from 'rxjs/index';
@@ -13,7 +13,7 @@ import { TimerObservable } from 'rxjs/observable/TimerObservable';
     templateUrl: './speed-chart.component.html',
     styleUrls: ['./speed-chart.component.scss']
 })
-export class SpeedChartComponent implements OnChanges, OnInit, AfterViewInit {
+export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterViewInit {
     get period() {
         return this._period;
     }
@@ -146,13 +146,19 @@ export class SpeedChartComponent implements OnChanges, OnInit, AfterViewInit {
     }
 
     ngOnChanges(changes: {[propKey: string]: SimpleChange}): void {
+        console.log('ngOnChanges');
         this.dataChange.next(100);
     }
 
+    ngOnDestroy(): void {
+        this.alive = false;
+    }
+
     ngAfterViewInit(): void {
+        console.log('afterViewInit ...');
         this.intervalUpdate();
         this.to = Date.now();
-        this.from = this.to - this.period * 60 * 60 * 1000; // 6 hours
+        this.from = this.to - this.period * 60 * 60 * 1000; // default 8 hours
 
         merge(this.dataChange)
             .pipe(
@@ -189,6 +195,7 @@ export class SpeedChartComponent implements OnChanges, OnInit, AfterViewInit {
     }
 
     private intervalUpdate() {
+        console.log('intervalUpdate ...');
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
