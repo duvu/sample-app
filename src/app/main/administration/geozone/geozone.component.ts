@@ -322,29 +322,6 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         }
 
     }
-
-    // _backupLayer(layer) {
-    //     var id = L.Util.stamp(layer);
-    //
-    //     if (!this._uneditedLayerProps[id]) {
-    //         // Polyline, Polygon or Rectangle
-    //         if (layer instanceof L.Polyline || layer instanceof L.Polygon || layer instanceof L.Rectangle) {
-    //             this._uneditedLayerProps[id] = {
-    //                 latlngs: L.LatLngUtil.cloneLatLngs(layer.getLatLngs())
-    //             };
-    //         } else if (layer instanceof L.Circle) {
-    //             this._uneditedLayerProps[id] = {
-    //                 latlng: L.LatLngUtil.cloneLatLng(layer.getLatLng()),
-    //                 radius: layer.getRadius()
-    //             };
-    //         } else if (layer instanceof L.Marker || layer instanceof L.CircleMarker) { // Marker
-    //             this._uneditedLayerProps[id] = {
-    //                 latlng: L.LatLngUtil.cloneLatLng(layer.getLatLng())
-    //             };
-    //         }
-    //     }
-    // },
-
     //-get-set
     get create(): boolean {
         return this._create;
