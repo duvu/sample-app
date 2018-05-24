@@ -1,4 +1,3 @@
-$side-nav-width: 500px;
 @mixin map-component($theme) {
   .side-nav-container {
     height: 100%;
@@ -65,21 +64,12 @@ $side-nav-width: 500px;
       overflow-y: auto;
       height: 100%;
 
-
-      &::-webkit-scrollbar {
-        width: 6px;
-        background-color: #ffffff;
-      }
-      &::-webkit-scrollbar-thumb {
-        background-color: #eeeeee;
-      }
-
       .device {
         width: 8px;
         height: 100%;
         margin-left: -16px;
         margin-right: 16px;
-        display: inline-block;
+        display: flex;
 
         &.stop {
           background-color: red;
@@ -92,12 +82,20 @@ $side-nav-width: 500px;
         }
       }
 
-
       .mat-list-item-content {
         .right {
           margin: 0 0 0 auto;
         }
       }
+
+      &::-webkit-scrollbar {
+        width: 6px;
+        background-color: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #eeeeee;
+      }
+
     }
 
     .chart-overview {

@@ -17,14 +17,21 @@
             <mat-nav-list class="map-device-table" role="list">
                 <mat-list-item *ngFor="let device of deviceList" (click)="selectThisDevice($event, device)">
                     <div class="device" [ngClass]="{'stop': device.state==0, 'idle': device.state==1, 'live': device.state==2}"></div>
+
                     <div>
                         <span mat-line>{{device.name || device.deviceId}}</span>
                         <span mat-line>Speed {{device.speedKph}} km/h {{device.lastUpdateTimeInWords}}</span>
                     </div>
 
                     <div class="right">
-                        <mat-icon mat-list-icon>satellite</mat-icon>
-                        <mat-icon mat-list-icon>cellfull</mat-icon>
+                        <div>
+                            <button mat-icon-button class="small"><mat-icon mat-list-icon>satellite</mat-icon></button>
+                            <button mat-icon-button class="small"><mat-icon mat-list-icon>cellfull</mat-icon></button>
+                        </div>
+                        <div>
+                            <button mat-icon-button class="small"><mat-icon mat-list-icon>console</mat-icon></button>
+                            <button mat-icon-button class="small"><mat-icon mat-list-icon>refresh</mat-icon></button>
+                        </div>
                     </div>
                     <mat-divider></mat-divider>
                 </mat-list-item>
