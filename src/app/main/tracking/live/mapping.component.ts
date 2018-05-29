@@ -27,6 +27,7 @@ import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
 import { WaitingService } from 'app/shared/services/waiting.service';
 import { Observable } from 'rxjs/Observable';
 import { ToastService } from 'app/shared/toast.service';
+import { CircleMarker } from 'leaflet';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -63,6 +64,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     private center: any;
 
     selectedDevice: DeviceLittle;
+    selectedMarker: CircleMarker;
 
     foods = [
         {value: 'steak-0', viewValue: 'Steak'},
@@ -187,6 +189,12 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.markersCluster.addLayer(marker);
                 marker.on('click', () => {
                     this.selectedDevice = d;
+                    //circle around marker
+                    if (this.selectedMarker) {
+                        this.selectedMarker.removeFrom(this.map);
+                    }
+                    let center = L.latLng(this.selectedDevice.latitude, this.selectedDevice.longitude);
+                    this.selectedMarker = L.circleMarker(center, {radius: 30}).addTo(this.map);
                 });
             }
 
@@ -216,11 +224,22 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             let center = L.latLng(this.selectedDevice.latitude, this.selectedDevice.longitude);
             let oldZoom = this.map.getZoom();
             this.map.setView(center, oldZoom);
+
+            //circle around marker
+            if (this.selectedMarker) {
+                this.selectedMarker.removeFrom(this.map);
+            }
+            this.selectedMarker = L.circleMarker(center, {radius: 30}).addTo(this.map);
         } else if (this.liveEvents.length > 0 ) {
             this.map.addLayer(this.markersCluster);
             if (this.numberOfLoad <= 1) {
                 this.map.fitBounds(this.markersCluster.getBounds());
             }
+
+            if (this.selectedMarker) {
+                this.selectedMarker.removeFrom(this.map);
+            }
+
         }
         this.totalDevice = this.liveEvents.length;
         this.stats.push(liveDev, idleDev, stopDev, deadDev);
@@ -288,6 +307,11 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         this.map.setView(center, 15);
 
         this.selectedDevice = device;
+        //circle around marker
+        if (this.selectedMarker) {
+            this.selectedMarker.removeFrom(this.map);
+        }
+        this.selectedMarker = L.circleMarker(center, {radius: 30}).addTo(this.map);
     }
 
     closePanelDetails() {
