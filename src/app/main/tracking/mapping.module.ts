@@ -8,8 +8,9 @@ import {EventService} from 'app/shared/services/event.service';
 import { MaterialShared } from 'app/shared/material-shared';
 import { HistoryComponent } from './history/history.component';
 import { PopupService } from 'app/main/tracking/live/popup/popup.service';
-import { PopupComponent } from './live/popup/popup.component';
-import { SpeedChartComponent } from './live/speed-chart/speed-chart.component';
+import { PopupComponent } from 'app/main/tracking/live/popup/popup.component';
+import { SharedModule } from 'app/shared/shared.module';
+import { SpeedChartComponent } from 'app/main/tracking/live/speed-chart/speed-chart.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SpeedChartComponent } from './live/speed-chart/speed-chart.component';
         CommonModule,
         FormsModule,
         MappingRoutingModule,
-        MaterialShared
+        MaterialShared,
+        SharedModule
     ],
     providers: [
         DeviceService,
