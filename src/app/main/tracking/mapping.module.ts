@@ -11,12 +11,14 @@ import { PopupService } from 'app/main/tracking/live/popup/popup.service';
 import { PopupComponent } from 'app/main/tracking/live/popup/popup.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { SpeedChartComponent } from 'app/main/tracking/live/speed-chart/speed-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
+        NgxChartsModule,
         MappingRoutingModule,
         MaterialShared,
         SharedModule

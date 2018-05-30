@@ -19,7 +19,6 @@ import { ToastService } from 'app/shared/toast.service';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { WaitingService } from 'app/shared/services/waiting.service';
 
-
 @NgModule({
     declarations: [
         AppComponent,
@@ -35,7 +34,6 @@ import { WaitingService } from 'app/shared/services/waiting.service';
         HttpClientModule,
 
         MaterialShared,
-
         AppRoutingModule
     ],
     providers: [

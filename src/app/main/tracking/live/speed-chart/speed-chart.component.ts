@@ -7,6 +7,7 @@ import * as d3 from 'd3';
 import { EventData } from 'app/shared/models/event-data';
 import * as _ from 'lodash';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
+import { Item } from 'app/shared/models/chart/item';
 
 @Component({
     selector: 'speed-chart',
@@ -133,6 +134,9 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
     private _yAxis: any;
 
     dataChange: ReplaySubject<any>;
+
+    chartsData: any;
+
     private historyEventsOptimizeForChart: EventData[];
     private update: boolean = false;
     private alive: boolean = true;
@@ -188,10 +192,23 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
                 } else {
                     this.historyEventsOptimizeForChart = data;
                 }
-                this.draw();
-            });
 
-        this.initSvg();
+
+                this.chartsData = [];
+                let series = _.map(this.historyEventsOptimizeForChart, (x) => {
+                    let item = new Item();
+                    item.name = new Date(x.timestamp);
+                    item.value = x.speedKPH;
+                    return item;
+                });
+                this.chartsData.push({
+                    "name": "SpeedKHP",
+                    "series": series
+                }, {
+                    "name": "Fuel Remain",
+                    "series": []
+                });
+            });
     }
 
     private intervalUpdate() {
@@ -207,74 +224,5 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
                 this.from = this.to - this.period * 60 * 60 * 1000; // 6 hours
                 this.dataChange.next(101);
             });
-    }
-
-    private initSvg() {
-
-        let parentDiv = document.getElementById('speed-chart');
-        this.width = parentDiv.clientWidth;
-        this.height = parentDiv.clientHeight;
-
-        //init Axis
-        this.X = d3.scaleTime().rangeRound([0, this.width - 40]);
-        this.Y = d3.scaleLinear().rangeRound([this.height, 40]);
-
-        this.svg = d3.select('#speed-chart').append('svg')
-            // .attr("width", '100%')
-            // .attr("height", '100%')
-            // .attr("preserveAspectRatio", "xMidYMid meet")
-            .attr("viewBox", '0 0 '+ this.width+ ' ' + (this.height-10));
-
-        this.chart = this.svg.append("g")
-            .attr('class', 'chart')
-            .attr("transform", "translate(30, -30)");
-
-        this.yAxis = d3.axisLeft(this.Y).ticks(10);
-        this.xAxis = d3.axisBottom(this.X).ticks(15);
-        this.line = d3.line()
-            .curve(d3.curveStepAfter)
-            .x( (d: any) => this.X(d.timestamp) )
-            .y( (d: any) => this.Y(d.speedKPH) );
-    }
-
-    private draw() {
-        this.X.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.timestamp ));
-        this.Y.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.speedKPH ));
-
-        if (!this.update) {
-            this.update = true;
-
-            this.chart.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + this.height + ")")
-                .call(this.xAxis);
-
-            this.chart.append("g")
-                .attr("class", "y axis")
-                .call(this.yAxis);
-
-            this.chart
-                .append("path")
-                .attr("fill", "lightblue")
-                .attr("stroke", "red")
-                .attr("stroke-linejoin", "round")
-                .attr("stroke-linecap", "round")
-                .attr("stroke-width", 0.5)
-                .attr("class", "line")
-                .attr("d", this.line(this.historyEventsOptimizeForChart));
-        } else {
-            let svg = d3.select('#speed-chart').select('svg').transition();
-            svg.select('.line')
-                .duration(750)
-                .attr("d", this.line(this.historyEventsOptimizeForChart));
-            svg.select('.x.axis')
-                .duration(750)
-                .call(this.xAxis);
-
-            svg.select('.y.axis')
-                .duration(750)
-                .call(this.yAxis);
-        }
-
     }
 }
