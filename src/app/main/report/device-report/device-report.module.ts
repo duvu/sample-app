@@ -10,7 +10,7 @@ import { DParkingComponent } from './d-parking/d-parking.component';
     imports: [
         CommonModule,
         DeviceReportRoutingModule,
-        MaterialShared
+        MaterialShared,
     ],
     declarations: [
         DeviceReportComponent,
