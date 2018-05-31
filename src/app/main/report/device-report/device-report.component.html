@@ -32,11 +32,11 @@
                 <ng-template matExpansionPanelContent>
                     <div fxLayout="column">
                         <div fxLayout="row" fxLayoutGap="16px" class="rpt-board-timepicker">
-                            <button mat-button color="primary">Last 2 hours</button>
-                            <button mat-button color="primary">Last 8 hours</button>
-                            <button mat-button color="primary">Last 24 hours</button>
-                            <button mat-button color="primary">Last 3 days</button>
-                            <button mat-button color="primary">Custom</button>
+                            <button mat-stroked-button color="primary" (click)="last2hours()">Last 2 hours</button>
+                            <button mat-stroked-button color="primary" (click)="last8hours()">Last 8 hours</button>
+                            <button mat-stroked-button color="primary" (click)="last24hours()">Last 24 hours</button>
+                            <button mat-stroked-button color="primary" (click)="last72hours()">Last 3 days</button>
+                            <button mat-stroked-button color="primary">Custom</button>
                         </div>
                         <div fxLayout="row" fxLayoutGap="16px" class="rpt-board-timepicker">
                             <mat-form-field>
@@ -51,6 +51,10 @@
                             </mat-form-field>
                         </div>
 
+                        <div fxLayout="row" fxLayoutGap="16px">
+                            <button mat-icon-button><mat-icon>pdf</mat-icon></button>
+                            <button mat-icon-button><mat-icon>excel</mat-icon></button>
+                        </div>
                     </div>
                 </ng-template>
             </mat-expansion-panel>
@@ -58,10 +62,10 @@
 
         <mat-tab-group>
             <mat-tab i18n-label label="Speed Report">
-                <app-d-speed [device]="selected.id" [from]="0" [to]="0"></app-d-speed>
+                <app-d-speed [device]="selected.id" [from]="from" [to]="to"></app-d-speed>
             </mat-tab>
             <mat-tab i18n-label label="Parking Report">
-                <app-d-parking [device]="selected.id" [from]="0" [to]="0" ></app-d-parking>
+                <app-d-parking [device]="selected.id" [from]="from" [to]="to" ></app-d-parking>
             </mat-tab>
             <mat-tab i18n-label label="Geofence Report">
                 <ul>

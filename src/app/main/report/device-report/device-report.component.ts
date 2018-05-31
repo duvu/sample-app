@@ -15,6 +15,10 @@ export class DeviceReportComponent implements OnInit {
     selected: DeviceLittle | any;
     tIcon: string = 'back';
 
+    from: number = 0;
+    to: number = 0;
+
+
     @ViewChild(MatDrawer) sideNav: MatDrawer;
 
     constructor(private deviceService: DeviceService,
@@ -70,4 +74,23 @@ export class DeviceReportComponent implements OnInit {
         this.tIcon = this.sideNav.opened ? 'back' : 'sub-menu';
     }
 
+    last2hours(): void {
+        this.to = Date.now();
+        this.from = this.to - 2 * 3600 * 1000;
+    }
+
+    last8hours(): void {
+        this.to = Date.now();
+        this.from = this.to - 8 * 3600 * 1000;
+    }
+
+    last24hours(): void {
+        this.to = Date.now();
+        this.from = this.to - 24 * 3600 * 1000;
+    }
+
+    last72hours(): void {
+        this.to = Date.now();
+        this.from = this.to - 72 * 3600 * 1000;
+    }
 }
