@@ -224,7 +224,7 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
         this.svg = d3.select('#speed-chart').append('svg')
             // .attr("width", '100%')
             // .attr("height", '100%')
-            // .attr("preserveAspectRatio", "xMidYMid meet")
+            .attr("preserveAspectRatio", "xMidYMid meet")
             .attr("viewBox", '0 0 '+ this.width+ ' ' + (this.height-10));
 
         this.chart = this.svg.append("g")
