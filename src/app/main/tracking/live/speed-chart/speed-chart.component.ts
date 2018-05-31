@@ -215,6 +215,8 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
         this.width = parentDiv.clientWidth;
         this.height = parentDiv.clientHeight;
 
+        console.log('height', this.height);
+
         //init Axis
         this.X = d3.scaleTime().rangeRound([0, this.width - 40]);
         this.Y = d3.scaleLinear().rangeRound([this.height, 40]);
@@ -229,8 +231,18 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
             .attr('class', 'chart')
             .attr("transform", "translate(30, -30)");
 
-        this.yAxis = d3.axisLeft(this.Y).ticks(10);
-        this.xAxis = d3.axisBottom(this.X).ticks(15);
+        this.yAxis = d3.axisLeft(this.Y)
+            .ticks(5)
+            .tickSizeInner(-this.width)
+            .tickSizeOuter(0)
+            .tickPadding(10);
+
+        this.xAxis = d3.axisBottom(this.X)
+            .ticks(16)
+            .tickSizeInner(-this.height + 40)
+            .tickSizeOuter(0)
+            .tickPadding(10);
+
         this.line = d3.line()
             .curve(d3.curveStepAfter)
             .x( (d: any) => this.X(d.timestamp) )
