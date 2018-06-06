@@ -25,7 +25,7 @@ export class DcsComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    displayedColumns = ['toggle', 'id', 'name', 'duplex', 'address', 'port', 'className', 'actions'];
+    displayedColumns = ['toggle', 'name', 'duplex', 'address', 'port', 'className', 'actions'];
 
     resultsLength = 0;
 

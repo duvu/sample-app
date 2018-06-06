@@ -28,7 +28,7 @@ export class PrivilegeComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    displayedColumns = ['id', 'name', 'description','createdBy', 'createdOn', 'actions'];
+    displayedColumns = ['name', 'description','createdBy', 'createdOn', 'actions'];
 
     columns = {
         id:                 {selected: false, order: 0},
