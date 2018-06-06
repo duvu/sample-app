@@ -32,7 +32,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    displayedColumns = ['id', 'name', 'emailAddress', 'phoneNumber', 'addressLine1', 'addressLine2', 'createdBy', 'createdOn', 'actions'];
+    displayedColumns = ['name', 'emailAddress', 'phoneNumber', 'addressLine1', 'addressLine2', 'createdBy', 'createdOn', 'actions'];
 
     columns = {
         id:                 {selected: false, order: 0},

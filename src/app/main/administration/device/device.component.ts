@@ -33,7 +33,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    displayedColumns = ['toggle', 'id', 'name', 'deviceId', 'companyName', 'vehicleName', 'protocol', 'expiredOn', 'createdBy', 'createdOn', 'actions'];
+    displayedColumns = ['toggle', 'name', 'deviceId', 'companyName', 'vehicleName', 'protocol', 'expiredOn', 'createdBy', 'createdOn', 'actions'];
 
     columns = {
         id:                 {selected: false, order: 0},
