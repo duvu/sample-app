@@ -43,13 +43,14 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
     displayedColumns = ['toggle', 'accountId', 'firstName', 'lastName', 'companyName', 'notes', 'createdBy', 'createdOn', 'actions'];
 
     columns = {
+        toggle:             {selected: false, order: 0},
         id:                 {selected: false, order: 0},
         accountId:          {selected: false, order: 1},
         firstName:          {selected: false, order: 2},
         lastName:           {selected: false, order: 3},
         status:             {selected: false, order: 4},
-        companyId:     {selected: false, order: 5},
-        companyName:   {selected: false, order: 6},
+        companyId:          {selected: false, order: 5},
+        companyName:        {selected: false, order: 6},
         phoneNumber:        {selected: false, order: 7},
         photoUrl:           {selected: false, order: 8},
         emailAddress:       {selected: false, order: 9},
