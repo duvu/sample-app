@@ -48,8 +48,10 @@
 
     <mat-sidenav-content class="mat-elevation-z6">
         <div class="sidenav-content">
+            <!--mapping-->
             <div id="map-id" class="main-map"></div>
 
+            <!--details-->
             <div class="m-comm" *ngIf="selectedDevice">
                 <div class="m-comm-content">
                     <table>
@@ -75,12 +77,24 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <a mat-button [routerLink]="['history', selectedDevice.id]">history >></a>
+                                <div fxLayout="row" fxLayoutGap="16px">
+                                    <a mat-stroked-button [routerLink]="['history', selectedDevice.id]">
+                                        <mat-icon>history</mat-icon>
+                                        <span>history >></span>
+                                    </a>
+                                    <a mat-stroked-button [routerLink]="['history', selectedDevice.id]">
+                                        <mat-icon>console</mat-icon>
+                                        <span>Send Command</span>
+                                    </a>
+                                </div>
+
                             </td>
                         </tr>
                     </table>
 
-                    <div class="m-d-command">
+
+                    <!---->
+                    <!--div class="m-d-command">
                         <mat-form-field>
                             <mat-select placeholder="Favorite food">
                                 <mat-option *ngFor="let food of foods" [value]="food.value">
@@ -89,9 +103,9 @@
                             </mat-select>
                         </mat-form-field>
                         <button mat-button>Submit</button>
-                    </div>
+                    </div-->
 
-                    <speed-chart class="fill-remain-space" [device]="selectedDevice.id" [period]="8"></speed-chart>
+                    <speed-chart class="fill-remain-space speed-chart-max-width" [device]="selectedDevice.id" [period]="8"></speed-chart>
                 </div>
                 <button mat-icon-button (click)="closePanelDetails()">
                     <mat-icon>close</mat-icon>

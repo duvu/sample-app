@@ -35,6 +35,10 @@
         display: flex;
         flex-direction: column;
       }
+
+      .speed-chart-max-width {
+        max-width: 900px;
+      }
     }
   }
   .side-nav-container mat-sidenav {
