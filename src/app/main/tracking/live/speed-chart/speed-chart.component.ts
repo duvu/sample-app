@@ -180,11 +180,16 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
                 let h = _.head(data);
                 let l = _.last(data);
                 if (h && l) {
-                    h.timestamp -= 1;
+                    h.timestamp = this.from;
                     h.speedKPH=0;
                     l.timestamp+=1;
                     l.speedKPH=0;
-                    this.historyEventsOptimizeForChart = _.concat(h, data, l);
+
+                    let l1: EventData|any = {};
+                    l1.timestamp = this.to;
+                    l1.speedKPH = 0;
+
+                    this.historyEventsOptimizeForChart = _.concat(h, data, l, l1);
                 } else {
                     this.historyEventsOptimizeForChart = data;
                 }
