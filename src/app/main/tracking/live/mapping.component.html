@@ -29,7 +29,7 @@
                             <button mat-icon-button class="small" (click)="stopPropagation($event)"><mat-icon mat-list-icon>cellfull</mat-icon></button>
                         </div>
                         <div>
-                            <button mat-icon-button class="small" (click)="openDialogSendCommand($event)"><mat-icon mat-list-icon>console</mat-icon></button>
+                            <button mat-icon-button class="small" (click)="openPanelCommand($event)"><mat-icon mat-list-icon>console</mat-icon></button>
                             <button mat-icon-button class="small" (click)="requestLocationUpdate($event)"><mat-icon mat-list-icon>refresh</mat-icon></button>
                         </div>
                     </div>
@@ -54,56 +54,45 @@
             <!--details-->
             <div class="m-comm" *ngIf="selectedDevice">
                 <div class="m-comm-content">
-                    <table>
-                        <tr>
-                            <td class="t-head">DeviceID</td>
-                            <td>{{selectedDevice.name || selectedDevice.deviceId}}</td>
-                        </tr>
-                        <tr>
-                            <td class="t-head">Lat/Lng</td>
-                            <td>{{selectedDevice.latitude}}/{{selectedDevice.longitude}}</td>
-                        </tr>
-                        <tr>
-                            <td class="t-head">Lat/Lng</td>
-                            <td>{{selectedDevice.lastUpdateTime | date: 'short'}}</td>
-                        </tr>
-                        <tr>
-                            <td class="t-head">SpeedKPH</td>
-                            <td>{{selectedDevice.speedKph}} km/h</td>
-                        </tr>
-                        <tr>
-                            <td class="t-head">Address</td>
-                            <td>{{selectedDevice.address}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <div fxLayout="row" fxLayoutGap="16px">
-                                    <a mat-stroked-button [routerLink]="['history', selectedDevice.id]">
-                                        <mat-icon>history</mat-icon>
-                                        <span>history >></span>
-                                    </a>
-                                    <a mat-stroked-button [routerLink]="['history', selectedDevice.id]">
-                                        <mat-icon>console</mat-icon>
-                                        <span>Send Command</span>
-                                    </a>
-                                </div>
+                    <div class="m-table-details">
+                        <table>
+                            <tr>
+                                <td class="t-head">DeviceID</td>
+                                <td>{{selectedDevice.name || selectedDevice.deviceId}}</td>
+                            </tr>
+                            <tr>
+                                <td class="t-head">Lat/Lng</td>
+                                <td>{{selectedDevice.latitude}}/{{selectedDevice.longitude}}</td>
+                            </tr>
+                            <tr>
+                                <td class="t-head">Lat/Lng</td>
+                                <td>{{selectedDevice.lastUpdateTime | date: 'short'}}</td>
+                            </tr>
+                            <tr>
+                                <td class="t-head">SpeedKPH</td>
+                                <td>{{selectedDevice.speedKph}} km/h</td>
+                            </tr>
+                            <tr>
+                                <td class="t-head">Address</td>
+                                <td>{{selectedDevice.address}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div fxLayout="row" fxLayoutGap="16px" class="m-t-d-command">
+                                        <a mat-stroked-button [routerLink]="['history', selectedDevice.id]">
+                                            <mat-icon>history</mat-icon>
+                                            <span>history >></span>
+                                        </a>
+                                        <button mat-stroked-button (click)="openPanelCommand()">
+                                            <mat-icon>console</mat-icon>
+                                            <span>Send Command</span>
+                                        </button>
+                                    </div>
 
-                            </td>
-                        </tr>
-                    </table>
-
-
-                    <!---->
-                    <!--div class="m-d-command">
-                        <mat-form-field>
-                            <mat-select placeholder="Favorite food">
-                                <mat-option *ngFor="let food of foods" [value]="food.value">
-                                    {{ food.viewValue }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <button mat-button>Submit</button>
-                    </div-->
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
                     <speed-chart class="fill-remain-space speed-chart-max-width" [device]="selectedDevice.id" [period]="8"></speed-chart>
                 </div>

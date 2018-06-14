@@ -26,6 +26,12 @@
         flex: 1 1 auto;
         flex-direction: row;
         justify-content: space-between;
+
+        .m-table-details{
+          display: flex;
+          vertical-align: middle;
+          padding: 16px;
+        }
       }
       .t-head {
         font-weight: 600;
@@ -109,7 +115,9 @@
     }
   }
 
-
+.m-t-d-command {
+  margin-top: 16px;
+}
 
   //Override css mapping
   .marker-label {
