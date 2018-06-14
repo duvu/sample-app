@@ -28,6 +28,8 @@ import { WaitingService } from 'app/shared/services/waiting.service';
 import { Observable } from 'rxjs/Observable';
 import { ToastService } from 'app/shared/toast.service';
 import { CircleMarker } from 'leaflet';
+import { MatBottomSheet } from '@angular/material';
+import { PanelCommandComponent } from 'app/main/tracking/live/panel-command/panel-command.component';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -66,17 +68,12 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     selectedDevice: DeviceLittle;
     selectedMarker: CircleMarker;
 
-    foods = [
-        {value: 'steak-0', viewValue: 'Steak'},
-        {value: 'pizza-1', viewValue: 'Pizza'},
-        {value: 'tacos-2', viewValue: 'Tacos'}
-    ];
-
     constructor(private deviceService: DeviceService,
                 private eventService: EventService,
                 private spinner: WaitingService,
                 private toast: ToastService,
-                private popupLink: PopupService) { }
+                private popupLink: PopupService,
+                private bottomSheet: MatBottomSheet) { }
 
     ngOnInit() {
         this.alive = true;
@@ -325,8 +322,12 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         event.stopPropagation();
     }
 
-    openDialogSendCommand(event: Event) {
-        event.stopPropagation();
+    openPanelCommand(event: Event) {
+        if (event) {
+            event.stopPropagation();
+        }
+
+        this.bottomSheet.open(PanelCommandComponent);
     }
 
     requestLocationUpdate(event: Event) {
