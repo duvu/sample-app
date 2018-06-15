@@ -1,8 +1,7 @@
 import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Device } from 'app/shared/models/device';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ApplicationContext } from 'app/shared/services/application-context.service';
 import { DeviceService } from 'app/shared/services/device.service';
 import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
@@ -11,7 +10,6 @@ import { DeleteEvent } from 'app/shared/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { RequestDevice } from 'app/shared/models/request/request-device';
 
-import {Observable} from 'rxjs/Observable';
 import {merge} from 'rxjs/observable/merge';
 import {of as observableOf} from 'rxjs/observable/of';
 import {catchError} from 'rxjs/operators/catchError';
@@ -33,7 +31,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    displayedColumns = ['toggle', 'name', 'deviceId', 'companyName', 'vehicleName', 'protocol', 'expiredOn', 'createdBy', 'createdOn', 'actions'];
+    displayedColumns = ['toggle', 'name', 'deviceId', 'companyName', 'vehicleName', 'protocol', 'lastEventTime', 'expiredOn', 'createdBy', 'createdOn', 'actions'];
 
     columns = {
         id:                 {selected: false, order: 0},
@@ -53,6 +51,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         manufacturerName:   {selected: false, order: 12},
         firmwareVersion:    {selected: false, order: 13},
         originalCountry:    {selected: false, order: 14},
+        lastEventTime:      {selected: false, order: 141},
         createdBy:          {selected: false, order: 15},
         createdOn:          {selected: false, order: 16},
         updatedBy:          {selected: false, order: 17},

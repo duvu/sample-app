@@ -76,11 +76,16 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Status</mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
             </ng-container>
+
+            <ng-container matColumnDef="lastEventTime">
+                <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Last Event Time</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.lastEventTime | timeDistance}} </mat-cell>
+            </ng-container>
+
             <ng-container matColumnDef="expiredOn">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Expired On</mat-header-cell>
                 <mat-cell *matCellDef="let element"> {{element.expiredOn | date:'shortDate'}} </mat-cell>
             </ng-container>
-
 
             <ng-container matColumnDef="serialNumber">
                 <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Serial Number</mat-header-cell>

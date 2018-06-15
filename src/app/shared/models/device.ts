@@ -26,6 +26,7 @@ export class Device {
     public manufacturerName: string;
     public firmwareVersion: string;
     public originalCountry: string;
+    public lastEventTime: Date;
     public createdBy: string;
     public createdOn: Date;
     public updatedBy: string;
