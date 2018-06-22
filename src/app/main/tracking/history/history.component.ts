@@ -258,8 +258,17 @@ export class HistoryComponent implements OnInit, AfterViewInit {
             .attr('class', 'chart')
             .attr("transform", "translate(30, -30)");
 
-        this.yAxis = d3.axisLeft(this.y).ticks(10);
-        this.xAxis = d3.axisBottom(this.x).ticks(15);
+        this.yAxis = d3.axisLeft(this.y)
+            .ticks(10)
+            .tickSizeInner(-this.width)
+            .tickSizeOuter(0)
+            .tickPadding(10);
+
+        this.xAxis = d3.axisBottom(this.x)
+            .ticks(12)
+            .tickSizeInner(-this.height + 40)
+            .tickSizeOuter(0)
+            .tickPadding(10);
         this.line = d3.line()
             .curve(d3.curveStepAfter)
             .x( (d: any) => this.x(d.timestamp) )
