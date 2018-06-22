@@ -247,7 +247,7 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
             .tickPadding(10);
 
         this.line = d3.line()
-            .curve(d3.curveStepAfter)
+            .curve(d3.curveLinear)
             .x( (d: any) => this.X(d.timestamp) )
             .y( (d: any) => this.Y(d.speedKPH) );
     }
