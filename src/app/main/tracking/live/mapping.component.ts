@@ -55,13 +55,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //-- chart
     private chart0: any;
-
-    private arc: any;
-    private labelArc: any;
-    private pie: any;
-    private color: any;
-    private svg: any;
-
     private stats: any;
     private liveDev = new StatusPieChart(1,"Live", 0);
     private idleDev = new StatusPieChart(2,"Idle", 0);
@@ -69,10 +62,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     private deadDev = new StatusPieChart(3,"Dead", 0);
 
     private totalDevice: number;
-
-    private chart: any;
-    private legend: any;
-    private center: any;
 
     selectedDevice: DeviceLittle;
     selectedMarker: CircleMarker;
@@ -344,24 +333,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         event.stopPropagation();
     }
 
-    // initOverviewPieChart(): void {
-    //     this.color = d3.scaleOrdinal()
-    //         .range(MappingUtils.COLOR_SCHEME);
-    //
-    //     this.arc = d3.arc()
-    //         .outerRadius(56)
-    //         .innerRadius(28);
-    //     this.labelArc = d3.arc()
-    //         .outerRadius(45)
-    //         .innerRadius(35);
-    //     this.pie = d3.pie()
-    //         .sort(null)
-    //         .value((d: any) => d.count);
-    //     this.svg = d3.select("svg")
-    //         .append("g")
-    //         .attr("transform", "translate(" + 65 + "," + 60 + ")");
-    // }
-
     private draw() {
         if (this.chart0) {
             this.updatePie();
@@ -424,53 +395,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             .attr('font-size', '2em')
             //.attr('class', 'total-device')
             .text(() => this.totalDevice);
-
-        // console.log('creating');
-        // this.legend = this.svg.selectAll('.legend')
-        //     .data(this.pie(this.stats))
-        //     .enter().append('g')
-        //     .attr('transform', (d, i) => {return 'translate(' + (75) + ',' + (i * 20 - 30) + ')';})
-        //     .attr('class', 'legend')
-        //
-        // this.legend.append('rect')
-        //     .attr('width', 10)
-        //     .attr('height', 10)
-        //     .style('fill', (d, i) => {
-        //         return this.color(i);
-        //     });
-        // this.legend.append('text')
-        //     .text((d, i) => {
-        //         return d.data.name;
-        //     })
-        //     .attr('font-size', '0.9em')
-        //     .attr('y', 10)
-        //     .attr('x', 15);
-        //
-        // this.center = this.svg
-        //     .append("text")
-        //     .attr("text-anchor", "middle")
-        //     .attr('font-size', '1.25em')
-        //     .attr('y', 10)
-        //     .text(this.totalDevice);
-        //
-        //
-        // this.chart = this.svg.selectAll(".arc")
-        //     .data(this.pie(this.stats))
-        //     .enter().append("g")
-        //     .attr("class", "arc");
-        //
-        // this.chart.append("path")
-        //     .attr("d", this.arc)
-        //     .attr("fill", (d: any, i: number) => {
-        //         return this.color(i)
-        //     });
-        //
-        // this.chart.append("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
-        //     .attr("dy", ".5em")
-        //     .attr('font-size', '0.7em')
-        //     .text((d: any) => (d.data.count > 0 ? d.data.count : ''));
-
-
     }
 
     private updatePie() {
@@ -486,21 +410,5 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         d3.select('#chart0 .c3-chart-arcs-title')
             .attr('font-size', '2em')
             .text(() => this.totalDevice);
-        // this.center.select('text').text(() => this.totalDevice);
-        // this.chart.data(this.pie(this.stats));
-        // this.chart.select("path")
-        //     .attr("d", this.arc);
-        // this.chart.select("text")
-        //     .attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
-        //     .text((d: any) => (d.data.count > 0 ? d.data.count : ''));
     }
-
-    //--
-    // private width: number;
-    // private height: number;
-    // private initSpeedLineChart() {
-    //     let parentDiv = document.getElementById('speed-chart');
-    //     this.width = parentDiv.clientWidth;
-    //     this.height = parentDiv.clientHeight;
-    // }
 }

@@ -4,6 +4,7 @@ import { EventService } from 'app/shared/services/event.service';
 import { merge, of as observableOf } from 'rxjs/index';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import * as d3 from 'd3';
+import * as c3 from 'c3';
 import { EventData } from 'app/shared/models/event-data';
 import * as _ from 'lodash';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
@@ -22,6 +23,16 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
     set period(value) {
         this._period = value;
     }
+
+    get device() {
+        return this._device;
+    }
+
+    @Input()
+    set device(value) {
+        this._device = value;
+    }
+
     get from() {
         return this._from;
     }
@@ -76,14 +87,7 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
     set yAxis(value: any) {
         this._yAxis = value;
     }
-    get device() {
-        return this._device;
-    }
 
-    @Input()
-    set device(value) {
-        this._device = value;
-    }
 
     get width() {
         return this._width;
@@ -146,7 +150,6 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
     }
 
     ngOnChanges(changes: {[propKey: string]: SimpleChange}): void {
-        console.log('ngOnChanges');
         this.dataChange.next(100);
     }
 
@@ -155,7 +158,6 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
     }
 
     ngAfterViewInit(): void {
-        console.log('afterViewInit ...');
         this.intervalUpdate();
         this.to = Date.now();
         this.from = this.to - this.period * 60 * 60 * 1000; // default 8 hours
@@ -195,12 +197,9 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
                 }
                 this.draw();
             });
-
-        this.initSvg();
     }
 
     private intervalUpdate() {
-        console.log('intervalUpdate ...');
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
@@ -214,82 +213,64 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
             });
     }
 
-    private initSvg() {
-
-        let parentDiv = document.getElementById('speed-chart');
-        this.width = parentDiv.clientWidth;
-        this.height = parentDiv.clientHeight;
-
-        console.log('height', this.height);
-
-        //init Axis
-        this.X = d3.scaleTime().rangeRound([0, this.width - 40]);
-        this.Y = d3.scaleLinear().rangeRound([this.height, 40]);
-
-        this.svg = d3.select('#speed-chart').append('svg')
-            .attr("preserveAspectRatio", "xMidYMid meet")
-            .attr("viewBox", '0 0 '+ this.width+ ' ' + (this.height-10));
-
-        this.chart = this.svg.append("g")
-            .attr('class', 'chart')
-            .attr("transform", "translate(30, -30)");
-
-        this.yAxis = d3.axisLeft(this.Y)
-            .ticks(5)
-            .tickSizeInner(-this.width)
-            .tickSizeOuter(0)
-            .tickPadding(10);
-
-        this.xAxis = d3.axisBottom(this.X)
-            .ticks(16)
-            .tickSizeInner(-this.height + 40)
-            .tickSizeOuter(0)
-            .tickPadding(10);
-
-        this.line = d3.line()
-            .curve(d3.curveLinear)
-            .x( (d: any) => this.X(d.timestamp) )
-            .y( (d: any) => this.Y(d.speedKPH) );
-    }
-
     private draw() {
-        this.X.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.timestamp ));
-        this.Y.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.speedKPH ));
+        if (this.chart) {
+            //update
+            let X:Array<any> = ['timestamp'];
+            let S:Array<any> = ['SpeedKPH'];
+            let F:Array<any> = ['Fuel Remain'];
 
-        if (!this.update) {
-            this.update = true;
+            const ta = _.uniqBy(this.historyEventsOptimizeForChart, 'timestamp');
+            _.forEach(ta, (d) => {
+                X.push(d.timestamp);
+                S.push(d.speedKPH);
+                F.push(0);
+            });
 
-            this.chart.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + this.height + ")")
-                .call(this.xAxis);
-
-            this.chart.append("g")
-                .attr("class", "y axis")
-                .call(this.yAxis);
-
-            this.chart
-                .append("path")
-                .attr("fill", "lightblue")
-                .attr("stroke", "red")
-                .attr("stroke-linejoin", "round")
-                .attr("stroke-linecap", "round")
-                .attr("stroke-width", 0.5)
-                .attr("class", "line")
-                .attr("d", this.line(this.historyEventsOptimizeForChart));
+            let cols = [
+                X, S, F
+            ];
+            this.chart.load({
+                columns: cols
+            });
         } else {
-            let svg = d3.select('#speed-chart').select('svg').transition();
-            svg.select('.line')
-                .duration(750)
-                .attr("d", this.line(this.historyEventsOptimizeForChart));
-            svg.select('.x.axis')
-                .duration(750)
-                .call(this.xAxis);
+            let X:Array<any> = ['timestamp'];
+            let S:Array<any> = ['SpeedKPH'];
+            let F:Array<any> = ['Fuel Remain'];
 
-            svg.select('.y.axis')
-                .duration(750)
-                .call(this.yAxis);
+            const ta = _.uniqBy(this.historyEventsOptimizeForChart, 'timestamp');
+
+            _.forEach(ta, (d) => {
+                X.push(d.timestamp);
+                S.push(d.speedKPH);
+                F.push(0);
+            });
+
+            let cols = [
+                X, S, F
+            ];
+
+            this.chart = c3.generate({
+                bindto: '#chart1',
+                size: {
+                    height: 196
+                },
+                data: {
+                    columns: cols,
+                    x: 'timestamp'
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%H:%M'
+                        }
+                    }
+                },
+                point: {
+                    show: false
+                }
+            });
         }
-
     }
 }
