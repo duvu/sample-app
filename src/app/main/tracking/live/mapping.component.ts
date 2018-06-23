@@ -388,6 +388,12 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                     ['Stopped', this.stopDev.count],
                     ['Dead',    this.deadDev.count],
                 ],
+                colors: {
+                    Live: '#00e80e',
+                    IDLE: '#ffb403',
+                    Stopped: '#e23015',
+                    Dead: '#b9b3b9'
+                },
                 type: 'donut'
             },
             legend: {
