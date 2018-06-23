@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import * as d3 from 'd3';
+import * as c3 from 'c3';
 import { Component, OnDestroy, OnInit, AfterViewInit} from '@angular/core';
 
 import * as L from 'leaflet';
@@ -53,6 +54,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     private alive: boolean;
 
     //-- chart
+    private chart0: any;
+
     private arc: any;
     private labelArc: any;
     private pie: any;
@@ -105,7 +108,8 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             }
         );
 
-        this.initOverviewPieChart();
+
+        //this.initOverviewPieChart();
     }
 
     ngAfterViewInit(): void {
@@ -340,26 +344,27 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
         event.stopPropagation();
     }
 
-    initOverviewPieChart(): void {
-        this.color = d3.scaleOrdinal()
-            .range(MappingUtils.COLOR_SCHEME);
-
-        this.arc = d3.arc()
-            .outerRadius(56)
-            .innerRadius(28);
-        this.labelArc = d3.arc()
-            .outerRadius(45)
-            .innerRadius(35);
-        this.pie = d3.pie()
-            .sort(null)
-            .value((d: any) => d.count);
-        this.svg = d3.select("svg")
-            .append("g")
-            .attr("transform", "translate(" + 65 + "," + 60 + ")");
-    }
+    // initOverviewPieChart(): void {
+    //     this.color = d3.scaleOrdinal()
+    //         .range(MappingUtils.COLOR_SCHEME);
+    //
+    //     this.arc = d3.arc()
+    //         .outerRadius(56)
+    //         .innerRadius(28);
+    //     this.labelArc = d3.arc()
+    //         .outerRadius(45)
+    //         .innerRadius(35);
+    //     this.pie = d3.pie()
+    //         .sort(null)
+    //         .value((d: any) => d.count);
+    //     this.svg = d3.select("svg")
+    //         .append("g")
+    //         .attr("transform", "translate(" + 65 + "," + 60 + ")");
+    // }
 
     private draw() {
-        if (this.chart) {
+        console.log('drawing');
+        if (this.chart0) {
             this.updatePie();
         } else {
             this.createPie();
@@ -367,62 +372,102 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private createPie() {
-        console.log('creating');
-        this.legend = this.svg.selectAll('.legend')
-            .data(this.pie(this.stats))
-            .enter().append('g')
-            .attr('transform', (d, i) => {return 'translate(' + (75) + ',' + (i * 20 - 30) + ')';})
-            .attr('class', 'legend')
-
-        this.legend.append('rect')
-            .attr('width', 10)
-            .attr('height', 10)
-            .style('fill', (d, i) => {
-                return this.color(i);
-            });
-        this.legend.append('text')
-            .text((d, i) => {
-                return d.data.name;
-            })
-            .attr('font-size', '0.9em')
-            .attr('y', 10)
-            .attr('x', 15);
-
-        this.center = this.svg
-            .append("text")
-            .attr("text-anchor", "middle")
-            .attr('font-size', '1.25em')
-            .attr('y', 10)
-            .text(this.totalDevice);
-
-
-        this.chart = this.svg.selectAll(".arc")
-            .data(this.pie(this.stats))
-            .enter().append("g")
-            .attr("class", "arc");
-
-        this.chart.append("path")
-            .attr("d", this.arc)
-            .attr("fill", (d: any, i: number) => {
-                return this.color(i)
-            });
-
-        this.chart.append("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
-            .attr("dy", ".5em")
-            .attr('font-size', '0.7em')
-            .text((d: any) => (d.data.count > 0 ? d.data.count : ''));
+        this.chart0 = c3.generate({
+            bindto: '#chart0',
+            size: {
+                width: 250,
+                height: 200
+            },
+            transition: {
+                duration: 0
+            },
+            data: {
+                columns: [
+                    ['Live', 0],
+                    ['IDLE', 0],
+                    ['Stopped', 0],
+                    ['Dead', 0],
+                ],
+                type: 'donut'
+            },
+            legend: {
+                position: 'right'
+            },
+            donut: {
+                title: 'Device State',
+                label: {
+                    format: function (value, ratio, id) {
+                        return d3.format(' ')(value);
+                    }
+                }
+            }
+        });
+        // console.log('creating');
+        // this.legend = this.svg.selectAll('.legend')
+        //     .data(this.pie(this.stats))
+        //     .enter().append('g')
+        //     .attr('transform', (d, i) => {return 'translate(' + (75) + ',' + (i * 20 - 30) + ')';})
+        //     .attr('class', 'legend')
+        //
+        // this.legend.append('rect')
+        //     .attr('width', 10)
+        //     .attr('height', 10)
+        //     .style('fill', (d, i) => {
+        //         return this.color(i);
+        //     });
+        // this.legend.append('text')
+        //     .text((d, i) => {
+        //         return d.data.name;
+        //     })
+        //     .attr('font-size', '0.9em')
+        //     .attr('y', 10)
+        //     .attr('x', 15);
+        //
+        // this.center = this.svg
+        //     .append("text")
+        //     .attr("text-anchor", "middle")
+        //     .attr('font-size', '1.25em')
+        //     .attr('y', 10)
+        //     .text(this.totalDevice);
+        //
+        //
+        // this.chart = this.svg.selectAll(".arc")
+        //     .data(this.pie(this.stats))
+        //     .enter().append("g")
+        //     .attr("class", "arc");
+        //
+        // this.chart.append("path")
+        //     .attr("d", this.arc)
+        //     .attr("fill", (d: any, i: number) => {
+        //         return this.color(i)
+        //     });
+        //
+        // this.chart.append("text").attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
+        //     .attr("dy", ".5em")
+        //     .attr('font-size', '0.7em')
+        //     .text((d: any) => (d.data.count > 0 ? d.data.count : ''));
 
 
     }
 
     private updatePie() {
-        this.center.select('text').text(() => this.totalDevice);
-        this.chart.data(this.pie(this.stats));
-        this.chart.select("path")
-            .attr("d", this.arc);
-        this.chart.select("text")
-            .attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
-            .text((d: any) => (d.data.count > 0 ? d.data.count : ''));
+        console.log('Live', this.liveDev);
+        const cols = {
+            columns: [
+                ['Live',    this.liveDev.count],
+                ['IDLE',    this.idleDev.count],
+                ['Stopped', this.stopDev.count],
+                ['Dead',    this.deadDev.count],
+            ]
+        };
+        this.chart0.load(cols);
+        // this.center.select('text').text(() => this.totalDevice);
+        // this.chart.data(this.pie(this.stats));
+        // this.chart.select("path")
+        //     .attr("d", this.arc);
+        // this.chart.select("text")
+        //     .attr("transform", (d: any) => "translate(" + this.labelArc.centroid(d) + ")")
+        //     .text((d: any) => (d.data.count > 0 ? d.data.count : ''));
     }
 
     //--
