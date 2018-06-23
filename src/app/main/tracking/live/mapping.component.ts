@@ -363,7 +363,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     // }
 
     private draw() {
-        console.log('drawing');
         if (this.chart0) {
             this.updatePie();
         } else {
@@ -394,13 +393,25 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                     Stopped: '#e23015',
                     Dead: '#b9b3b9'
                 },
-                type: 'donut'
+                type: 'donut',
+                // selection: {
+                //     enabled: true
+                // },
+                // onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+                // onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+            },
+            tooltip: {
+                format: {
+                    value: function (value, ratio, id, index) {
+                        return value + "(" + d3.format(".0%")(ratio) + ")";
+                    }
+                }
             },
             legend: {
                 position: 'right'
             },
             donut: {
-                title: 'Device State',
+                title: '',
                 label: {
                     format: function (value, ratio, id) {
                         return d3.format(' ')(value);
@@ -463,7 +474,6 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     private updatePie() {
-        console.log('Live', this.liveDev);
         const cols = {
             columns: [
                 ['Live',    this.liveDev.count],
