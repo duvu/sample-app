@@ -58,7 +58,13 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     private pie: any;
     private color: any;
     private svg: any;
+
     private stats: any;
+    private liveDev = new StatusPieChart(1,"Live", 0);
+    private idleDev = new StatusPieChart(2,"Idle", 0);
+    private stopDev = new StatusPieChart(3,"Stop", 0);
+    private deadDev = new StatusPieChart(3,"Dead", 0);
+
     private totalDevice: number;
 
     private chart: any;
@@ -162,10 +168,10 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
     processEvents(): void {
         let icon = this.customDefault;
         this.stats = [];
-        let liveDev = new StatusPieChart(1,"Live", 0);
-        let idleDev = new StatusPieChart(2,"Idle", 0);
-        let stopDev = new StatusPieChart(3,"Stop", 0);
-        let deadDev = new StatusPieChart(3,"Dead", 0);
+        this.liveDev.reset();
+        this.idleDev.reset();
+        this.stopDev.reset();
+        this.deadDev.reset();
 
         this.markersCluster.clearLayers();
         _.forEach(this.liveEvents, function (event) {
@@ -198,19 +204,19 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             const status = MappingUtils.getStatus(event.timestamp);
             switch (status) {
                 case 'live':
-                    liveDev.increase();
+                    this.liveDev.increase();
                     d.state = 2; //living
                     break;
                 case 'idle':
-                    idleDev.increase();
+                    this.idleDev.increase();
                     d.state = 1; //idle
                     break;
                 case 'stop':
-                    stopDev.increase();
+                    this.stopDev.increase();
                     d.state = 0; //stop
                     break;
                 case 'dead':
-                    deadDev.increase();
+                    this.deadDev.increase();
                     d.state = -1;
                     break;
             }
@@ -239,7 +245,7 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
         }
         this.totalDevice = this.liveEvents.length;
-        this.stats.push(liveDev, idleDev, stopDev, deadDev);
+        this.stats.push(this.liveDev, this.idleDev, this.stopDev, this.deadDev);
         this.draw();
     }
 

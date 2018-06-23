@@ -11,4 +11,7 @@ export class StatusPieChart {
     public increase(): void {
         this.count++;
     }
+    public reset(): void {
+        this.count = 0;
+    }
 }
