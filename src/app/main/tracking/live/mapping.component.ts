@@ -383,10 +383,10 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             },
             data: {
                 columns: [
-                    ['Live', 0],
-                    ['IDLE', 0],
-                    ['Stopped', 0],
-                    ['Dead', 0],
+                    ['Live',    this.liveDev.count],
+                    ['IDLE',    this.idleDev.count],
+                    ['Stopped', this.stopDev.count],
+                    ['Dead',    this.deadDev.count],
                 ],
                 type: 'donut'
             },
@@ -402,6 +402,12 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
             }
         });
+
+        d3.select('#chart0 .c3-chart-arcs-title')
+            .attr('font-size', '2em')
+            //.attr('class', 'total-device')
+            .text(() => this.totalDevice);
+
         // console.log('creating');
         // this.legend = this.svg.selectAll('.legend')
         //     .data(this.pie(this.stats))
@@ -461,6 +467,9 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             ]
         };
         this.chart0.load(cols);
+        d3.select('#chart0 .c3-chart-arcs-title')
+            .attr('font-size', '2em')
+            .text(() => this.totalDevice);
         // this.center.select('text').text(() => this.totalDevice);
         // this.chart.data(this.pie(this.stats));
         // this.chart.select("path")
