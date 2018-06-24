@@ -272,8 +272,12 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
                     },
                     y: {
                         label: 'Speed KPH',
+                        min: 0,
+                        padding: {
+                            bottom: 0
+                        },
                         tick: {
-                            count: 7,
+                            count: 5,
                             format: function(x) {
                                 return d3.format('.0f')(x);
                             }

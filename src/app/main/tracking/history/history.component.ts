@@ -5,8 +5,6 @@ import * as L from 'leaflet';
 import 'leaflet-polylinedecorator';
 import 'leaflet-easybutton';
 
-import * as d_ from 'date-fns';
-
 import { EventService } from 'app/shared/services/event.service';
 import { EventData } from 'app/shared/models/event-data';
 
@@ -15,6 +13,8 @@ import { LatLng, Polyline } from 'leaflet';
 import { MatTableDataSource } from '@angular/material';
 
 import * as d3 from 'd3';
+import * as c3 from 'c3';
+
 import { WaitingService } from 'app/shared/services/waiting.service';
 import { SelectionModel } from '@angular/cdk/collections';
 
@@ -33,7 +33,12 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     private map: L.Map;
     private selectedMarker: L.Marker;
     private historyEvents: EventData[];
+
     private historyEventsOptimizeForChart: EventData[];
+    private timestampCol: Array<any> = ['timestamp'];
+    private speedKphCol: Array<any> = ['SpeedKPH'];
+    private fuelLevelCol: Array<any> = ['FuelLevel'];
+
     private polyline: Polyline;
     private decor: any;
     private timeFrom: number;
@@ -151,7 +156,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
 
         L.easyBar(range).addTo(this.map);
 
-        this.initSvg();
+        //this.initSvg();
     }
 
     private loadHistoryEvents(): void {
@@ -239,98 +244,110 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 }]}).addTo(this.map);
     }
 
-    private initSvg() {
-        let parentDiv = document.getElementById('div-chart');
-        this.width = parentDiv.clientWidth;
-        this.height = parentDiv.clientHeight;
-
-        //init Axis
-        this.x = d3.scaleTime().rangeRound([0, this.width - 40]);
-        this.y = d3.scaleLinear().rangeRound([this.height, 40]);
-
-        this.svg = d3.select('#div-chart').append('svg')
-            .attr("width", '100%')
-            .attr("height", '100%')
-            .attr("preserveAspectRatio", "xMidYMid meet")
-            .attr("viewBox", '0 0 '+ this.width+' '+ this.height);
-
-        this.chart = this.svg.append("g")
-            .attr('class', 'chart')
-            .attr("transform", "translate(30, -30)");
-
-        this.yAxis = d3.axisLeft(this.y)
-            .ticks(10)
-            .tickSizeInner(-this.width)
-            .tickSizeOuter(0)
-            .tickPadding(10);
-
-        this.xAxis = d3.axisBottom(this.x)
-            .ticks(12)
-            .tickSizeInner(-this.height + 40)
-            .tickSizeOuter(0)
-            .tickPadding(10);
-        this.line = d3.line()
-            .curve(d3.curveLinear)
-            .x( (d: any) => this.x(d.timestamp) )
-            .y( (d: any) => this.y(d.speedKPH) );
-    }
+    // private initSvg() {
+    //     let parentDiv = document.getElementById('div-chart');
+    //     this.width = parentDiv.clientWidth;
+    //     this.height = parentDiv.clientHeight;
+    //
+    //     //init Axis
+    //     this.x = d3.scaleTime().rangeRound([0, this.width - 40]);
+    //     this.y = d3.scaleLinear().rangeRound([this.height, 40]);
+    //
+    //     this.svg = d3.select('#div-chart').append('svg')
+    //         .attr("width", '100%')
+    //         .attr("height", '100%')
+    //         .attr("preserveAspectRatio", "xMidYMid meet")
+    //         .attr("viewBox", '0 0 '+ this.width+' '+ this.height);
+    //
+    //     this.chart = this.svg.append("g")
+    //         .attr('class', 'chart')
+    //         .attr("transform", "translate(30, -30)");
+    //
+    //     this.yAxis = d3.axisLeft(this.y)
+    //         .ticks(10)
+    //         .tickSizeInner(-this.width)
+    //         .tickSizeOuter(0)
+    //         .tickPadding(10);
+    //
+    //     this.xAxis = d3.axisBottom(this.x)
+    //         .ticks(12)
+    //         .tickSizeInner(-this.height + 40)
+    //         .tickSizeOuter(0)
+    //         .tickPadding(10);
+    //     this.line = d3.line()
+    //         .curve(d3.curveLinear)
+    //         .x( (d: any) => this.x(d.timestamp) )
+    //         .y( (d: any) => this.y(d.speedKPH) );
+    // }
 
     private draw() {
-        this.x.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.timestamp ));
-        this.y.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.speedKPH ));
 
-        if (!this.update) {
-            this.update = true;
+        let uHist = _.uniqBy(this.historyEventsOptimizeForChart, 'timestamp');
+        _.forEach(uHist, (x) => {
+            this.timestampCol.push(x.timestamp);
+            this.speedKphCol.push(x.speedKPH);
+            this.fuelLevelCol.push(x.fuelLevel);
+        });
 
-            this.chart.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + this.height + ")")
-                .call(this.xAxis);
-
-            this.chart.append("g")
-                .attr("class", "y axis")
-                .call(this.yAxis);
-
-            this.chart
-                .append("path")
-                .attr("fill", "lightblue")
-                .attr("stroke", "red")
-                .attr("stroke-linejoin", "round")
-                .attr("stroke-linecap", "round")
-                .attr("stroke-width", 0.5)
-                .attr("class", "line")
-                .attr("d", this.line(this.historyEventsOptimizeForChart));
+        if (this.chart) {
+            //update
+            this.chart.load({
+                columns: [
+                    this.timestampCol,
+                    this.speedKphCol,
+                    this.fuelLevelCol
+                ]
+            })
         } else {
-            let svg = d3.select('#div-chart').select('svg').transition();
-            svg.select('.line')
-                .duration(750)
-                .attr("d", this.line(this.historyEventsOptimizeForChart));
-            svg.select('.x.axis')
-                .duration(750)
-                .call(this.xAxis);
-
-            svg.select('.y.axis')
-                .duration(750)
-                .call(this.yAxis);
+            this.chart = c3.generate({
+                bindto: '#chart2',
+                data: {
+                    columns: [
+                        this.timestampCol,
+                        this.speedKphCol,
+                        this.fuelLevelCol
+                    ],
+                    x: 'timestamp'
+                }
+            });
         }
+        // this.x.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.timestamp ));
+        // this.y.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.speedKPH ));
+        //
+        // if (!this.update) {
+        //     this.update = true;
+        //
+        //     this.chart.append("g")
+        //         .attr("class", "x axis")
+        //         .attr("transform", "translate(0," + this.height + ")")
+        //         .call(this.xAxis);
+        //
+        //     this.chart.append("g")
+        //         .attr("class", "y axis")
+        //         .call(this.yAxis);
+        //
+        //     this.chart
+        //         .append("path")
+        //         .attr("fill", "lightblue")
+        //         .attr("stroke", "red")
+        //         .attr("stroke-linejoin", "round")
+        //         .attr("stroke-linecap", "round")
+        //         .attr("stroke-width", 0.5)
+        //         .attr("class", "line")
+        //         .attr("d", this.line(this.historyEventsOptimizeForChart));
+        // } else {
+        //     let svg = d3.select('#div-chart').select('svg').transition();
+        //     svg.select('.line')
+        //         .duration(750)
+        //         .attr("d", this.line(this.historyEventsOptimizeForChart));
+        //     svg.select('.x.axis')
+        //         .duration(750)
+        //         .call(this.xAxis);
+        //
+        //     svg.select('.y.axis')
+        //         .duration(750)
+        //         .call(this.yAxis);
+        // }
 
     }
-
-    timeDistance(timestamp: number): string {
-        return d_.distanceInWordsToNow(timestamp);
-    }
-
-    timerange(age: number): string {
-
-        age = age / 1000;
-
-        if (age <= 60) {
-            return age + ' seconds';
-        } else if (age <= 60 * 60) {
-            return Math.round(age/60) + ' minutes';
-        } else {
-            return Math.round(age/(60*60)) + ' hour(s)';
-        }
-    }
-
 }

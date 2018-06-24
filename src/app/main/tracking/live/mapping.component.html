@@ -1,13 +1,13 @@
 <mat-sidenav-container class="side-nav-container">
-    <mat-sidenav mode="side" [opened]="true" position="end">
+    <mat-sidenav mode="side" [opened]="true" position="end" [disableClose]="true">
         <div class="m-dev">
             <div class="m-dev-header">
                 <mat-form-field class="m-dev-filter">
                     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Devices Filter">
                 </mat-form-field>
                 <div class="m-dev-add">
-                    <button mat-button color="primary">
-                        <mat-icon>add</mat-icon>Device
+                    <button mat-icon-button color="primary">
+                        <mat-icon>add</mat-icon>
                     </button>
                 </div>
 

@@ -18,6 +18,7 @@ export class ShowIfRoleDirective implements OnInit {
     @Input() set showIfRole(roles: string) {
         this._roles = roles;
     }
+
     ngOnInit(): void {
         this.appService.currentUser.subscribe(currentUser => {
             if (!currentUser) return;
@@ -36,7 +37,7 @@ export class ShowIfRoleDirective implements OnInit {
 
         if (rolesArray && rolesArray.length > 0) {
             for (let i = 0; i < rolesArray.length; i++) {
-                let role = ShowIfRoleDirective.nomalize(rolesArray[i]);
+                let role = ShowIfRoleDirective.normalize(rolesArray[i]);
                 if (_.includes(authorities, role)) {
                     return true;
                 }
@@ -45,7 +46,7 @@ export class ShowIfRoleDirective implements OnInit {
         return false;
     }
 
-    static nomalize(role: string): string {
+    static normalize(role: string): string {
         //0. snakeCase
         role = _.snakeCase(role);
         //1. toUpper

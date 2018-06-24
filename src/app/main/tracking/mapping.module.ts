@@ -13,6 +13,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { SpeedChartComponent } from 'app/main/tracking/live/speed-chart/speed-chart.component';
 import { PanelCommandComponent } from './live/panel-command/panel-command.component';
 import { MatBottomSheet, MatBottomSheetContainer } from '@angular/material';
+import { CustomPipeModule } from 'app/shared/pipes/custom-pipe.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MatBottomSheet, MatBottomSheetContainer } from '@angular/material';
         FormsModule,
         MappingRoutingModule,
         MaterialShared,
-        SharedModule
+        SharedModule,
+        CustomPipeModule
     ],
     providers: [
         DeviceService,
