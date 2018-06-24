@@ -218,7 +218,7 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
             //update
             let X:Array<any> = ['timestamp'];
             let S:Array<any> = ['SpeedKPH'];
-            let F:Array<any> = ['Fuel Remain'];
+            let F:Array<any> = ['FuelLevel'];
 
             const ta = _.uniqBy(this.historyEventsOptimizeForChart, 'timestamp');
             _.forEach(ta, (d) => {
@@ -236,7 +236,7 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
         } else {
             let X:Array<any> = ['timestamp'];
             let S:Array<any> = ['SpeedKPH'];
-            let F:Array<any> = ['Fuel Remain'];
+            let F:Array<any> = ['FuelLevel'];
 
             const ta = _.uniqBy(this.historyEventsOptimizeForChart, 'timestamp');
 
@@ -257,6 +257,10 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
                 },
                 data: {
                     columns: cols,
+                    axes: {
+                        SpeedKPH: 'y',
+                        FuelLevel: 'y2'
+                    },
                     x: 'timestamp'
                 },
                 axis: {
@@ -265,6 +269,9 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
                         tick: {
                             format: '%H:%M'
                         }
+                    },
+                    y2: {
+                        show: true
                     }
                 },
                 point: {
