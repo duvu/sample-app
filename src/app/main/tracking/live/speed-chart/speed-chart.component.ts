@@ -270,7 +270,25 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
                             format: '%H:%M'
                         }
                     },
+                    y: {
+                        label: 'Speed KPH',
+                        tick: {
+                            count: 7,
+                            format: function(x) {
+                                return d3.format('.0f')(x);
+                            }
+                        }
+                    },
                     y2: {
+                        label: 'Fuel Level',
+                        show: true
+                    }
+                },
+                grid: {
+                    x: {
+                        show: true
+                    },
+                    y: {
                         show: true
                     }
                 },
