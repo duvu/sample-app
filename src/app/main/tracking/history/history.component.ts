@@ -317,7 +317,10 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 },
 
                 subchart: {
-                    show: true
+                    show: true,
+                    size: {
+                        height: 40
+                    }
                 },
                 zoom: {
                     enabled: true,
