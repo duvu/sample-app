@@ -4,13 +4,15 @@
     </div>
     <div fxFlex="50" class="history-details">
         <mat-toolbar>
-            <div>
-                <button mat-button>1d</button>
-                <button mat-button>2d</button>
-                <button mat-button>3d</button>
-                <button mat-button>1w</button>
-                <button mat-button>1m</button>
-            </div>
+            <mat-button-toggle-group class="history-range-group" (change)="timeDistanceChange()" [(ngModel)]="timeDistance">
+                <mat-button-toggle value="1">1h</mat-button-toggle>
+                <mat-button-toggle value="2">2h</mat-button-toggle>
+                <mat-button-toggle value="8">8h</mat-button-toggle>
+                <mat-button-toggle value="24">24h</mat-button-toggle>
+                <mat-button-toggle value="48">48h</mat-button-toggle>
+                <mat-button-toggle value="72">3d</mat-button-toggle>
+                <mat-button-toggle value="custom">Custom</mat-button-toggle>
+            </mat-button-toggle-group>
             <div>{{name}}</div>
             <span class="fill-remain-space"></span>
             <button mat-button>

@@ -52,18 +52,10 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     displayedColumns = ['latitude', 'longitude', 'heading', 'speedKPH', 'address', 'timestamp', 'age'];
     selection = new SelectionModel<EventData>(true, []);
 
-    //charting
-    private width: number;
-    private height: number;
-    private x: any;
-    private y: any;
-    private svg: any;
-    private chart: any;
-    private line: d3.Line<any>;
-    private xAxis: any;
-    private yAxis: any;
+    timeDistance: any;
 
-    private update: boolean = false;
+    //charting
+    private chart: any;
 
     constructor(private route: ActivatedRoute,
                 private eventService: EventService,
@@ -106,57 +98,66 @@ export class HistoryComponent implements OnInit, AfterViewInit {
         L.control.scale().addTo(this.map);
         L.control.zoom().setPosition('bottomleft').addTo(this.map);
 
-        let range = [];
+        // let range = [];
+        //
+        // let range1h = L.easyButton('<span>1h</span>', function (button, map) {
+        //     this.timeTo = (new Date()).getTime();
+        //     this.timeFrom = this.timeTo - 60 * 60 * 1000;
+        //     this.loadHistoryEvents();
+        // }.bind(this));
+        //
+        // let range2h = L.easyButton('<span>2h</span>', function () {
+        //     this.timeTo = (new Date()).getTime();
+        //     this.timeFrom = this.timeTo - 2 * 60 * 60 * 1000;
+        //     this.loadHistoryEvents();
+        // }.bind(this));
+        // let range6h = L.easyButton('<span>6h</span>', function () {
+        //     this.timeTo = (new Date()).getTime();
+        //     this.timeFrom = this.timeTo - 6 * 60 * 60 * 1000;
+        //     this.loadHistoryEvents();
+        // }.bind(this));
+        // let range12h = L.easyButton('<span>12h</span>', function () {
+        //     this.timeTo = (new Date()).getTime();
+        //     this.timeFrom = this.timeTo - 12 * 60 * 60 * 1000;
+        //     this.loadHistoryEvents();
+        // }.bind(this));
+        //
+        // let range1d = L.easyButton('<span>1d</span>', function () {
+        //     this.timeTo = (new Date()).getTime();
+        //     this.timeFrom = this.timeTo - 24 * 60 * 60 * 1000;
+        //     this.loadHistoryEvents();
+        // }.bind(this));
+        // let range3d = L.easyButton('<span>3d</span>', function () {
+        //     this.timeTo = (new Date()).getTime();
+        //     this.timeFrom = this.timeTo - 72 * 60 * 60 * 1000;
+        //     this.loadHistoryEvents();
+        // }.bind(this));
+        //
+        // let range1w = L.easyButton('<span>1w</span>', function () {
+        //     this.timeTo = (new Date()).getTime();
+        //     this.timeFrom = this.timeTo - 7 * 24* 60 * 60 * 1000;
+        //     this.loadHistoryEvents();
+        // }.bind(this));
+        // let range1m = L.easyButton('<span>1m</span>', function () {
+        //     this.timeTo = (new Date()).getTime();
+        //     this.timeFrom = this.timeTo - 30 * 24* 60 * 60 * 1000;
+        //     this.loadHistoryEvents();
+        // }.bind(this));
+        //
+        // range.push(range1h, range2h, range6h, range12h, range1d, range3d, range1w, range1m);
+        //
+        // L.easyBar(range).addTo(this.map);
+    }
 
-        let range1h = L.easyButton('<span>1h</span>', function (button, map) {
+    timeDistanceChange(): void {
+        console.log('Timedistance', this.timeDistance)
+        if (this.timeDistance !== 'custom') {
             this.timeTo = (new Date()).getTime();
-            this.timeFrom = this.timeTo - 60 * 60 * 1000;
+            this.timeFrom = this.timeTo - this.timeDistance * 60 * 60 * 1000;
             this.loadHistoryEvents();
-        }.bind(this));
+        } else {
 
-        let range2h = L.easyButton('<span>2h</span>', function () {
-            this.timeTo = (new Date()).getTime();
-            this.timeFrom = this.timeTo - 2 * 60 * 60 * 1000;
-            this.loadHistoryEvents();
-        }.bind(this));
-        let range6h = L.easyButton('<span>6h</span>', function () {
-            this.timeTo = (new Date()).getTime();
-            this.timeFrom = this.timeTo - 6 * 60 * 60 * 1000;
-            this.loadHistoryEvents();
-        }.bind(this));
-        let range12h = L.easyButton('<span>12h</span>', function () {
-            this.timeTo = (new Date()).getTime();
-            this.timeFrom = this.timeTo - 12 * 60 * 60 * 1000;
-            this.loadHistoryEvents();
-        }.bind(this));
-
-        let range1d = L.easyButton('<span>1d</span>', function () {
-            this.timeTo = (new Date()).getTime();
-            this.timeFrom = this.timeTo - 24 * 60 * 60 * 1000;
-            this.loadHistoryEvents();
-        }.bind(this));
-        let range3d = L.easyButton('<span>3d</span>', function () {
-            this.timeTo = (new Date()).getTime();
-            this.timeFrom = this.timeTo - 72 * 60 * 60 * 1000;
-            this.loadHistoryEvents();
-        }.bind(this));
-
-        let range1w = L.easyButton('<span>1w</span>', function () {
-            this.timeTo = (new Date()).getTime();
-            this.timeFrom = this.timeTo - 7 * 24* 60 * 60 * 1000;
-            this.loadHistoryEvents();
-        }.bind(this));
-        let range1m = L.easyButton('<span>1m</span>', function () {
-            this.timeTo = (new Date()).getTime();
-            this.timeFrom = this.timeTo - 30 * 24* 60 * 60 * 1000;
-            this.loadHistoryEvents();
-        }.bind(this));
-
-        range.push(range1h, range2h, range6h, range12h, range1d, range3d, range1w, range1m);
-
-        L.easyBar(range).addTo(this.map);
-
-        //this.initSvg();
+        }
     }
 
     private loadHistoryEvents(): void {
@@ -244,45 +245,13 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 }]}).addTo(this.map);
     }
 
-    // private initSvg() {
-    //     let parentDiv = document.getElementById('div-chart');
-    //     this.width = parentDiv.clientWidth;
-    //     this.height = parentDiv.clientHeight;
-    //
-    //     //init Axis
-    //     this.x = d3.scaleTime().rangeRound([0, this.width - 40]);
-    //     this.y = d3.scaleLinear().rangeRound([this.height, 40]);
-    //
-    //     this.svg = d3.select('#div-chart').append('svg')
-    //         .attr("width", '100%')
-    //         .attr("height", '100%')
-    //         .attr("preserveAspectRatio", "xMidYMid meet")
-    //         .attr("viewBox", '0 0 '+ this.width+' '+ this.height);
-    //
-    //     this.chart = this.svg.append("g")
-    //         .attr('class', 'chart')
-    //         .attr("transform", "translate(30, -30)");
-    //
-    //     this.yAxis = d3.axisLeft(this.y)
-    //         .ticks(10)
-    //         .tickSizeInner(-this.width)
-    //         .tickSizeOuter(0)
-    //         .tickPadding(10);
-    //
-    //     this.xAxis = d3.axisBottom(this.x)
-    //         .ticks(12)
-    //         .tickSizeInner(-this.height + 40)
-    //         .tickSizeOuter(0)
-    //         .tickPadding(10);
-    //     this.line = d3.line()
-    //         .curve(d3.curveLinear)
-    //         .x( (d: any) => this.x(d.timestamp) )
-    //         .y( (d: any) => this.y(d.speedKPH) );
-    // }
-
     private draw() {
 
         let uHist = _.uniqBy(this.historyEventsOptimizeForChart, 'timestamp');
+        this.timestampCol = ['timestamp'];
+        this.speedKphCol = ['SpeedKPH'];
+        this.fuelLevelCol = ['FuelLevel'];
+
         _.forEach(uHist, (x) => {
             this.timestampCol.push(x.timestamp);
             this.speedKphCol.push(x.speedKPH);
@@ -307,47 +276,54 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                         this.speedKphCol,
                         this.fuelLevelCol
                     ],
+                    type: 'spline',
                     x: 'timestamp'
+                },
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: '%H:%M'
+                        }
+                    },
+                    y: {
+                        label: 'Speed KPH',
+                        min: 0,
+                        padding: {
+                            bottom: 0
+                        },
+                        tick: {
+                            count: 5,
+                            format: function(x) {
+                                return d3.format('.0f')(x);
+                            }
+                        }
+                    },
+                    y2: {
+                        label: 'Fuel Level',
+                        show: true
+                    }
+                },
+                grid: {
+                    x: {
+                        show: true
+                    },
+                    y: {
+                        show: true
+                    }
+                },
+                point: {
+                    show: false
+                },
+
+                subchart: {
+                    show: true
+                },
+                zoom: {
+                    enabled: true,
+                    rescale: true
                 }
             });
         }
-        // this.x.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.timestamp ));
-        // this.y.domain(d3.extent(this.historyEventsOptimizeForChart, (d) => d.speedKPH ));
-        //
-        // if (!this.update) {
-        //     this.update = true;
-        //
-        //     this.chart.append("g")
-        //         .attr("class", "x axis")
-        //         .attr("transform", "translate(0," + this.height + ")")
-        //         .call(this.xAxis);
-        //
-        //     this.chart.append("g")
-        //         .attr("class", "y axis")
-        //         .call(this.yAxis);
-        //
-        //     this.chart
-        //         .append("path")
-        //         .attr("fill", "lightblue")
-        //         .attr("stroke", "red")
-        //         .attr("stroke-linejoin", "round")
-        //         .attr("stroke-linecap", "round")
-        //         .attr("stroke-width", 0.5)
-        //         .attr("class", "line")
-        //         .attr("d", this.line(this.historyEventsOptimizeForChart));
-        // } else {
-        //     let svg = d3.select('#div-chart').select('svg').transition();
-        //     svg.select('.line')
-        //         .duration(750)
-        //         .attr("d", this.line(this.historyEventsOptimizeForChart));
-        //     svg.select('.x.axis')
-        //         .duration(750)
-        //         .call(this.xAxis);
-        //
-        //     svg.select('.y.axis')
-        //         .duration(750)
-        //         .call(this.yAxis);
-        // }
-
     }
 }
