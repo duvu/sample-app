@@ -28,6 +28,13 @@ const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access
     styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit, AfterViewInit {
+    get name(): string {
+        return this._name;
+    }
+
+    set name(value: string) {
+        this._name = value;
+    }
 
     private id: string;
     private map: L.Map;
@@ -44,7 +51,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     private timeFrom: number;
     private timeTo: number;
 
-    private name: string;
+    private _name: string;
 
     private iconDefault: L.Icon;
 
@@ -174,7 +181,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                     l.timestamp+=1;
                     l.speedKPH=0;
                     this.historyEventsOptimizeForChart = _.concat(h, data, l);
-                    this.name = h.deviceName || h.deviceId;
+                    this._name = h.deviceName || h.deviceId;
                 } else {
                     this.historyEventsOptimizeForChart = data;
                 }

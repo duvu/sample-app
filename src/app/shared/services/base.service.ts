@@ -1,12 +1,9 @@
-import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import {Search} from "../models/search";
-import {PageableResponse} from "../models/pageable-response";
+import { PageableResponse } from 'app/shared/models/pageable-response';
 
-@Injectable()
 export class BaseService<T> {
     private _http: HttpClient;
     private _url: string;

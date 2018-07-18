@@ -4,7 +4,6 @@ import { Router } from "@angular/router";
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import {PageableResponse} from 'app/shared/models/pageable-response';
 
-@Injectable()
 export class Base2Service<I, O> {
     private _http: HttpClient;
     private _url: string;

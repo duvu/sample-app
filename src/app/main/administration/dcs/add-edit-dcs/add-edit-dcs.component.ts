@@ -8,7 +8,7 @@ import { Dcs } from 'app/shared/models/dcs';
   styleUrls: ['./add-edit-dcs.component.scss']
 })
 export class AddEditDcsComponent implements OnInit {
-
+    isEditing: false;
   constructor(public dialogRef: MatDialogRef<AddEditDcsComponent>,
               @Inject(MAT_DIALOG_DATA) public data: Dcs | any) { }
 
