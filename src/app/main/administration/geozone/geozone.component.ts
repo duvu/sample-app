@@ -9,7 +9,7 @@ import * as L from 'leaflet';
 import 'leaflet-draw';
 import { ToastService } from 'app/shared/toast.service';
 import { RequestGeozone } from 'app/shared/models/request/request-geozone';
-import { ApplicationContext } from 'app/shared/services/application-context.service';
+import { ApplicationContext } from 'app/application-context';
 import { GeoUtils } from 'app/main/administration/geozone/GeoUtils';
 import { DrawOptions, LatLng, Layer, Point } from 'leaflet';
 import { Feature} from 'geojson';

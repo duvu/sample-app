@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Device } from 'app/shared/models/device';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { ApplicationContext } from 'app/shared/services/application-context.service';
+import { ApplicationContext } from 'app/application-context';
 import { DeviceService } from 'app/shared/services/device.service';
 import { OptionalColumnDeviceComponent } from 'app/main/administration/device/optional-column-device/optional-column-device.component';
 import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';

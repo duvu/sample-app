@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'app/shared/services/auth.service';
-import { ApplicationContext} from 'app/shared/services/application-context.service';
+import { ApplicationContext} from 'app/application-context';
 import { WaitingService } from 'app/shared/services/waiting.service';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { ApplicationContext } from 'app/shared/services/application-context.service';
+import { ApplicationContext } from 'app/application-context';
 
 import * as _ from 'lodash';
 

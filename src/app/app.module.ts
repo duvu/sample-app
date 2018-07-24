@@ -8,8 +8,8 @@ import { LoginComponent} from 'app/login/login.component';
 import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { MaterialShared} from 'app/shared/material-shared';
-import { AuthInterceptor} from 'app/shared/services/auth-interceptor';
-import { ApplicationContext} from 'app/shared/services/application-context.service';
+import { AuthInterceptor} from 'app/shared/interceptors/auth-interceptor';
+import { ApplicationContext} from 'app/application-context';
 import { AppComponent } from 'app/app.component';
 import { AppRoutingModule} from 'app/app-routing.module';
 import { AuthService} from 'app/shared/services/auth.service';

@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Company } from 'app/shared/models/company';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { ApplicationContext } from 'app/shared/services/application-context.service';
+import { ApplicationContext } from 'app/application-context';
 import { CompanyService } from 'app/shared/services/organization.service';
 import { DeleteEvent } from 'app/shared/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';

@@ -13,7 +13,7 @@ import {Account} from 'app/shared/models/account';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
 import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
-import {ApplicationContext} from 'app/shared/services/application-context.service';
+import {ApplicationContext} from 'app/application-context';
 import {DeleteEvent} from 'app/shared/models/delete-event';
 import {ConfirmDeleteComponent} from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { merge } from 'rxjs/observable/merge';

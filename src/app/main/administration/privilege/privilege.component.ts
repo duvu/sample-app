@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Privilege } from 'app/shared/models/privilege';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { ApplicationContext } from 'app/shared/services/application-context.service';
+import { ApplicationContext } from 'app/application-context';
 import { PrivilegeService } from 'app/shared/services/privilege.service';
 import { DeleteEvent } from 'app/shared/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';

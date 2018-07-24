@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ApplicationContext } from '../application-context.service';
+import { ApplicationContext } from '../../../application-context';
 
 describe('ApplicationContext', () => {
   beforeEach(() => {

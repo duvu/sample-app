@@ -4,7 +4,7 @@ import {
     CanActivateChild, Router, NavigationExtras
 } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import {ApplicationContext} from './application-context.service';
+import {ApplicationContext} from '../../application-context';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {

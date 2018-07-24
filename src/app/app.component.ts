@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ApplicationContext} from './shared/services/application-context.service';
+import {ApplicationContext} from './application-context';
 
 @Component({
   selector: 'app-root',
