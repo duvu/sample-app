@@ -1,5 +1,5 @@
-import { CompanyLittle } from 'app/shared/models/little/company-little';
-import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
+import { CompanyLittle } from 'app/models/little/company-little';
+import { PrivilegeLittle } from 'app/models/little/privilege-little';
 
 export class Account {
     id: number;

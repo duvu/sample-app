@@ -5,8 +5,8 @@ import * as L from 'leaflet';
 import 'leaflet-polylinedecorator';
 import 'leaflet-easybutton';
 
-import { EventService } from 'app/shared/services/event.service';
-import { EventData } from 'app/shared/models/event-data';
+import { EventService } from 'app/services/event.service';
+import { EventData } from 'app/models/event-data';
 
 import * as _ from 'lodash';
 import { LatLng, Polyline } from 'leaflet';
@@ -15,7 +15,7 @@ import { MatTableDataSource } from '@angular/material';
 import * as d3 from 'd3';
 import * as c3 from 'c3';
 
-import { WaitingService } from 'app/shared/services/waiting.service';
+import { WaitingService } from 'app/services/waiting.service';
 import { SelectionModel } from '@angular/cdk/collections';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';

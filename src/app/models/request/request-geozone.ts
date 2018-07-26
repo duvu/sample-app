@@ -1,5 +1,5 @@
-import { Geofence } from 'app/shared/models/geozone';
-import { AccountLittle } from 'app/shared/models/little/account-little';
+import { Geofence } from 'app/models/geozone';
+import { AccountLittle } from 'app/models/little/account-little';
 
 export class RequestGeozone {
     companyId: number;

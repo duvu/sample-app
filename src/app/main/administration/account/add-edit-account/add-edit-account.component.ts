@@ -2,21 +2,21 @@ import * as _ from 'lodash';
 import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
-import { Company } from 'app/shared/models/company';
+import { Company } from 'app/models/company';
 import { FormControl } from '@angular/forms';
-import { CompanyService } from 'app/shared/services/organization.service';
-import { Privilege } from 'app/shared/models/privilege';
-import { PrivilegeService } from 'app/shared/services/privilege.service';
+import { CompanyService } from 'app/services/organization.service';
+import { Privilege } from 'app/models/privilege';
+import { PrivilegeService } from 'app/services/privilege.service';
 
 import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { pipe } from 'rxjs/Rx';
-import { AccountRequest } from 'app/shared/models/request/request-account';
-import { Account } from 'app/shared/models/account';
-import { PrivilegeLittle } from 'app/shared/models/little/privilege-little';
-import { CompanyLittle } from 'app/shared/models/little/company-little';
-import { AccountService } from 'app/shared/services/account.service';
+import { AccountRequest } from 'app/models/request/request-account';
+import { Account } from 'app/models/account';
+import { PrivilegeLittle } from 'app/models/little/privilege-little';
+import { CompanyLittle } from 'app/models/little/company-little';
+import { AccountService } from 'app/services/account.service';
 import { ApplicationContext } from 'app/application-context';
 
 @Component({

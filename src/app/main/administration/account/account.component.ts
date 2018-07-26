@@ -8,24 +8,24 @@ import {
     OnInit,
     ViewChild
 } from '@angular/core';
-import {AccountService} from 'app/shared/services/account.service';
-import {Account} from 'app/shared/models/account';
+import {AccountService} from 'app/services/account.service';
+import {Account} from 'app/models/account';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
 import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
 import {ApplicationContext} from 'app/application-context';
-import {DeleteEvent} from 'app/shared/models/delete-event';
+import {DeleteEvent} from 'app/models/delete-event';
 import {ConfirmDeleteComponent} from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
-import { AccountRequest } from 'app/shared/models/request/request-account';
+import { AccountRequest } from 'app/models/request/request-account';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { CompanyLittle } from 'app/shared/models/little/company-little';
-import { RequestDevice } from 'app/shared/models/request/request-device';
-import { Device } from 'app/shared/models/device';
-import { WaitingService } from 'app/shared/services/waiting.service';
+import { CompanyLittle } from 'app/models/little/company-little';
+import { RequestDevice } from 'app/models/request/request-device';
+import { Device } from 'app/models/device';
+import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
     selector: 'app-account',

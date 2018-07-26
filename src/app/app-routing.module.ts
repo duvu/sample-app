@@ -3,7 +3,7 @@
  */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import {AuthGuard} from "./shared/services/auth.guard";
+import {AuthGuard} from "app/services/auth.guard";
 import {PageNotFoundComponent} from "./pages/page-not-found/page-not-found.component";
 import {LoginComponent} from "./login/login.component";
 

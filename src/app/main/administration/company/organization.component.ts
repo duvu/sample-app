@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Company } from 'app/shared/models/company';
+import { Company } from 'app/models/company';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ApplicationContext } from 'app/application-context';
-import { CompanyService } from 'app/shared/services/organization.service';
-import { DeleteEvent } from 'app/shared/models/delete-event';
+import { CompanyService } from 'app/services/organization.service';
+import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { OptionalColumnOrganizationComponent } from 'app/main/administration/company/optional-column-organization/optional-column-organization.component';
 import { AddEditOrganizationComponent } from 'app/main/administration/company/add-edit-organization/add-edit-organization.component';
@@ -14,9 +14,9 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs/observable/of';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Account } from 'app/shared/models/account';
-import { Device } from 'app/shared/models/device';
-import { WaitingService } from 'app/shared/services/waiting.service';
+import { Account } from 'app/models/account';
+import { Device } from 'app/models/device';
+import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
     selector: 'app-organization',

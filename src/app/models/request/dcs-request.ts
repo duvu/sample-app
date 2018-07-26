@@ -1,4 +1,4 @@
-import { Dcs } from 'app/shared/models/dcs';
+import { Dcs } from 'app/models/dcs';
 
 export class DcsRequest {
     public name: string;

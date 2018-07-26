@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChange } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { EventService } from 'app/shared/services/event.service';
+import { EventService } from 'app/services/event.service';
 import { merge, of as observableOf } from 'rxjs/index';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import * as d3 from 'd3';
 import * as c3 from 'c3';
-import { EventData } from 'app/shared/models/event-data';
+import { EventData } from 'app/models/event-data';
 import * as _ from 'lodash';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 

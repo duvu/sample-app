@@ -10,9 +10,9 @@ import { MarkerClusterGroup } from "leaflet";
 import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
 
-import {DeviceService} from 'app/shared/services/device.service';
-import {EventService} from 'app/shared/services/event.service';
-import {EventData} from 'app/shared/models/event-data';
+import {DeviceService} from 'app/services/device.service';
+import {EventService} from 'app/services/event.service';
+import {EventData} from 'app/models/event-data';
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
 
 import 'rxjs/add/operator/takeWhile';
@@ -21,11 +21,11 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/forkJoin';
 
-import { StatusPieChart } from 'app/shared/models/status-pie-chart';
-import { DeviceLittle } from 'app/shared/models/little/device-little';
+import { StatusPieChart } from 'app/models/status-pie-chart';
+import { DeviceLittle } from 'app/models/little/device-little';
 import { PopupService } from 'app/main/tracking/live/popup/popup.service';
 import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
-import { WaitingService } from 'app/shared/services/waiting.service';
+import { WaitingService } from 'app/services/waiting.service';
 import { Observable } from 'rxjs/Observable';
 import { ToastService } from 'app/shared/toast.service';
 import { CircleMarker } from 'leaflet';

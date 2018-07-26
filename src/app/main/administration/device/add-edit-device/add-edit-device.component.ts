@@ -3,16 +3,16 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { Company } from 'app/shared/models/company';
-import { Account } from 'app/shared/models/account';
-import { CompanyService } from 'app/shared/services/organization.service';
+import { Company } from 'app/models/company';
+import { Account } from 'app/models/account';
+import { CompanyService } from 'app/services/organization.service';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
-import { AccountLittle } from 'app/shared/models/little/account-little';
-import { AccountService } from 'app/shared/services/account.service';
-import { AccountRequest } from 'app/shared/models/request/request-account';
-import { RequestDevice } from 'app/shared/models/request/request-device';
-import { DeviceService } from 'app/shared/services/device.service';
+import { AccountLittle } from 'app/models/little/account-little';
+import { AccountService } from 'app/services/account.service';
+import { AccountRequest } from 'app/models/request/request-account';
+import { RequestDevice } from 'app/models/request/request-device';
+import { DeviceService } from 'app/services/device.service';
 
 @Component({
   selector: 'app-add-edit-device',

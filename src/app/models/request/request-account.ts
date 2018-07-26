@@ -1,4 +1,4 @@
-import { Account } from 'app/shared/models/account';
+import { Account } from 'app/models/account';
 import * as _ from 'lodash';
 
 export class AccountRequest {

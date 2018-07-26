@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Privilege } from 'app/shared/models/privilege';
+import { Privilege } from 'app/models/privilege';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ApplicationContext } from 'app/application-context';
-import { PrivilegeService } from 'app/shared/services/privilege.service';
-import { DeleteEvent } from 'app/shared/models/delete-event';
+import { PrivilegeService } from 'app/services/privilege.service';
+import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { OptionalColumnPrivilegeComponent } from 'app/main/administration/privilege/optional-column-privilege/optional-column-privilege.component';
 import { AddEditPrivilegeComponent } from 'app/main/administration/privilege/add-edit-privilege/add-edit-privilege.component';
@@ -14,7 +14,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { WaitingService } from 'app/shared/services/waiting.service';
+import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
   selector: 'app-privilege',

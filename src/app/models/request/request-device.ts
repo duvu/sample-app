@@ -1,4 +1,4 @@
-import { Device } from 'app/shared/models/device';
+import { Device } from 'app/models/device';
 import * as _ from 'lodash';
 
 export class RequestDevice {

@@ -1,4 +1,4 @@
-import { Geofence } from 'app/shared/models/geozone';
+import { Geofence } from 'app/models/geozone';
 
 export class GeoUtils {
     public static convertGeofence(data: Geofence): Geofence {

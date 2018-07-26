@@ -1,20 +1,20 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GeozoneService } from 'app/shared/services/geozone.service';
-import { Geofence } from 'app/shared/models/geozone';
+import { GeozoneService } from 'app/services/geozone.service';
+import { Geofence } from 'app/models/geozone';
 import { MatDialog } from '@angular/material';
 
 import * as _ from 'lodash';
 import * as L from 'leaflet';
 import 'leaflet-draw';
 import { ToastService } from 'app/shared/toast.service';
-import { RequestGeozone } from 'app/shared/models/request/request-geozone';
+import { RequestGeozone } from 'app/models/request/request-geozone';
 import { ApplicationContext } from 'app/application-context';
 import { GeoUtils } from 'app/main/administration/geozone/GeoUtils';
 import { DrawOptions, LatLng, Layer, Point } from 'leaflet';
 import { Feature} from 'geojson';
 import { FeatureGroup } from 'leaflet';
-import { WaitingService } from 'app/shared/services/waiting.service';
+import { WaitingService } from 'app/services/waiting.service';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';

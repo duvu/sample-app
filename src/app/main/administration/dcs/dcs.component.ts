@@ -1,17 +1,17 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { DcsService } from 'app/shared/services/dcs.service';
+import { DcsService } from 'app/services/dcs.service';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Dcs } from 'app/shared/models/dcs';
+import { Dcs } from 'app/models/dcs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { merge } from 'rxjs/observable/merge';
 import { of as observableOf } from 'rxjs/observable/of';
 import { AddEditDcsComponent } from 'app/main/administration/dcs/add-edit-dcs/add-edit-dcs.component';
-import { DcsRequest } from 'app/shared/models/request/dcs-request';
+import { DcsRequest } from 'app/models/request/dcs-request';
 import { ToastService } from 'app/shared/toast.service';
-import { DeleteEvent } from 'app/shared/models/delete-event';
+import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
-import { WaitingService } from 'app/shared/services/waiting.service';
+import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
     selector: 'app-dcs',

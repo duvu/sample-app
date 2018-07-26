@@ -4,7 +4,7 @@ import {
     HttpResponse
 } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {ApplicationContext} from "../../application-context";
+import {ApplicationContext} from "../application-context";
 import {Router} from "@angular/router";
 
 @Injectable()

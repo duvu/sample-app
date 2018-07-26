@@ -1,9 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from 'app/shared/services/auth.service';
+import { AuthService } from 'app/services/auth.service';
 import { ApplicationContext} from 'app/application-context';
-import { WaitingService } from 'app/shared/services/waiting.service';
+import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
     selector: 'app-login',

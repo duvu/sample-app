@@ -7,14 +7,14 @@ import {
     SimpleChange,
     ViewChild
 } from '@angular/core';
-import { DeviceReportService } from 'app/shared/services/device-report.service';
+import { DeviceReportService } from 'app/services/device-report.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { DeviceSpeeedReport } from 'app/shared/models/device-speeed-report';
+import { DeviceSpeeedReport } from 'app/models/device-speeed-report';
 
 import { merge, of as observableOf} from 'rxjs';
 import { catchError, map, startWith, switchMap} from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { WaitingService } from 'app/shared/services/waiting.service';
+import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
     selector: 'app-d-speed',

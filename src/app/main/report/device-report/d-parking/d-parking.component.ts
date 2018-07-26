@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
-import { WaitingService } from 'app/shared/services/waiting.service';
-import { DeviceReportService } from 'app/shared/services/device-report.service';
+import { WaitingService } from 'app/services/waiting.service';
+import { DeviceReportService } from 'app/services/device-report.service';
 import { MatTableDataSource } from '@angular/material';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { DeviceParkingReport } from 'app/shared/models/device-parking-report';
+import { DeviceParkingReport } from 'app/models/device-parking-report';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import * as d_ from "date-fns";

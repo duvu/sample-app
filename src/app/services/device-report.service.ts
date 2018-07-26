@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/index';
-import { PageableResponse } from 'app/shared/models/pageable-response';
-import { DeviceSpeeedReport } from 'app/shared/models/device-speeed-report';
-import { DeviceParkingReport } from 'app/shared/models/device-parking-report';
+import { PageableResponse } from 'app/models/pageable-response';
+import { DeviceSpeeedReport } from 'app/models/device-speeed-report';
+import { DeviceParkingReport } from 'app/models/device-parking-report';
 
 const API_REPORT_DEVICE_PATH = '/api/r/device';
 

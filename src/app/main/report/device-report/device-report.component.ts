@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DeviceLittle } from 'app/shared/models/little/device-little';
+import { DeviceLittle } from 'app/models/little/device-little';
 import { MatDrawer, MatSidenav, MatTableDataSource } from '@angular/material';
-import { DeviceService } from 'app/shared/services/device.service';
-import { Util } from 'app/shared/utils/Util';
-import { WaitingService } from 'app/shared/services/waiting.service';
+import { DeviceService } from 'app/services/device.service';
+import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
     selector: 'app-report',
@@ -62,10 +61,6 @@ export class DeviceReportComponent implements OnInit {
         // this.map.setView(center, 15);
         //
         // this.oldSelectedDevice = device;
-    }
-
-    timeAgeToString(timestamp: number): string {
-        return Util.getTimeRangeString(timestamp);
     }
 
     tonggleSidebar(e: any) {

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {Device} from 'app/shared/models/device';
-import { Base2Service } from 'app/shared/services/base2.service';
-import { RequestDevice } from 'app/shared/models/request/request-device';
+import {Device} from 'app/models/device';
+import { Base2Service } from 'app/services/base2.service';
+import { RequestDevice } from 'app/models/request/request-device';
 import { Observable } from 'rxjs/Rx';
-import { DeviceLittle } from 'app/shared/models/little/device-little';
+import { DeviceLittle } from 'app/models/little/device-little';
 
 const API_DEVICE_PATH = '/api/device';
 

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Dcs } from 'app/shared/models/dcs';
+import { Dcs } from 'app/models/dcs';
 
 @Component({
   selector: 'app-add-edit-dcs',
