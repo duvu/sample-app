@@ -144,14 +144,15 @@
                 </mat-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{selected: row.selected}"></mat-row>
 
         </mat-table>
     </div>
 
-    <mat-paginator #paginator
+    <mat-paginator
                    [length]="resultsLength"
+                   showFirstLastButtons
                    [pageIndex]="0"
                    [pageSize]="25"
                    [pageSizeOptions]="[5, 10, 25, 100]">
