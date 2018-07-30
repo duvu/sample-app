@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { AuthService } from 'app/services/auth.service';
 import { ApplicationContext} from 'app/application-context';
 import { WaitingService } from 'app/services/waiting.service';
+import { LoginResponse } from 'app/models/login-response';
 
 @Component({
-    selector: 'app-login',
+    selector: 'applicationContext-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
@@ -19,11 +20,11 @@ export class LoginComponent implements OnInit {
     constructor(private auth: AuthService,
                 private router: Router,
                 private spinner: WaitingService,
-                private app: ApplicationContext) {}
+                private applicationContext: ApplicationContext) {}
 
     ngOnInit() {
-        if (this.app.isLoggedIn()) {
-            const redirectUrl = this.app.getRedirectURL();
+        if (this.applicationContext.isLoggedIn()) {
+            const redirectUrl = this.applicationContext.getRedirectURL();
             this.router.navigate([redirectUrl]);
         }
     }
@@ -31,15 +32,16 @@ export class LoginComponent implements OnInit {
     login(): void {
         this.spinner.show(true);
         this.auth.login(this.model.username, this.model.password).subscribe(
-            result => {
-                this.app.setCurrentAccount(result);
+            (result: LoginResponse) => {
+                this.applicationContext.setCurrentAccount(result);
+                this.applicationContext.store(result);
             },
             error => {
                 this.errorMessage = 'Error' + error.message;
                 this.spinner.show(false);
             },
             () => {
-                const redirectUrl = this.app.getRedirectURL();
+                const redirectUrl = this.applicationContext.getRedirectURL();
                 this.spinner.show(false);
                 this.router.navigate([redirectUrl]);
             }

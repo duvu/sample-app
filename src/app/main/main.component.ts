@@ -15,7 +15,6 @@ export class MainComponent implements OnInit, OnDestroy {
     constructor(private app: ApplicationContext, private router: Router) {}
 
     ngOnInit() {
-        this.profile = this.app.getCurrentAccount();
     }
 
     ngOnDestroy(): void {

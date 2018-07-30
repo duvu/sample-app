@@ -5,6 +5,7 @@ import * as jwt from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import 'rxjs/add/operator/distinctUntilChanged';
+import { Observable } from 'rxjs';
 
 
 export const CURRENT_USER = 'vd5-current-user';
@@ -13,28 +14,132 @@ const DEFAULT_REDIRECT_URL = '/main/tracking';
 
 @Injectable()
 export class ApplicationContext implements OnDestroy {
-    redirectURL: string;
 
-    access_token: string;
-    accountId: number;
-    accountName: string;
-    authorities: string[];
-    expires_in: number;
-    jti: string;
-    companyId: number;
-    organizationName: string;
-    scope: string;
-    token_type: string;
+    get redirectURL(): string {
+        return this._redirectURL;
+    }
 
-    private currentUserSubject = new BehaviorSubject<LoginResponse>(new LoginResponse());
-    public currentUser = this.currentUserSubject.asObservable().distinctUntilChanged();
+    set redirectURL(value: string) {
+        this._redirectURL = value;
+    }
+
+    get access_token(): string {
+        return this._access_token;
+    }
+
+    set access_token(value: string) {
+        this._access_token = value;
+    }
+
+    get accountId(): number {
+        return this._accountId;
+    }
+
+    set accountId(value: number) {
+        this._accountId = value;
+    }
+
+    get accountName(): string {
+        return this._accountName;
+    }
+
+    set accountName(value: string) {
+        this._accountName = value;
+    }
+
+    get authorities(): Array<string> {
+        return this._authorities;
+    }
+
+    set authorities(value: Array<string>) {
+        this._authorities = value;
+    }
+
+    get expires_in(): number {
+        return this._expires_in;
+    }
+
+    set expires_in(value: number) {
+        this._expires_in = value;
+    }
+
+    get jti(): string {
+        return this._jti;
+    }
+
+    set jti(value: string) {
+        this._jti = value;
+    }
+
+    get companyId(): number {
+        return this._companyId;
+    }
+
+    set companyId(value: number) {
+        this._companyId = value;
+    }
+
+    get organizationName(): string {
+        return this._organizationName;
+    }
+
+    set organizationName(value: string) {
+        this._organizationName = value;
+    }
+
+    get scope(): string {
+        return this._scope;
+    }
+
+    set scope(value: string) {
+        this._scope = value;
+    }
+
+    get token_type(): string {
+        return this._token_type;
+    }
+
+    set token_type(value: string) {
+        this._token_type = value;
+    }
+
+    get currentUserSubject(): BehaviorSubject<LoginResponse> {
+        return this._currentUserSubject;
+    }
+
+    set currentUserSubject(value: BehaviorSubject<LoginResponse>) {
+        this._currentUserSubject = value;
+    }
+
+    get currentUser(): Observable<any> {
+        return this._currentUser;
+    }
+
+    set currentUser(value: Observable<any>) {
+        this._currentUser = value;
+    }
+
+    private _redirectURL: string;
+
+    private _access_token: string;
+    private _accountId: number;
+    private _accountName: string;
+    private _authorities: Array<string>;
+    private _expires_in: number;
+    private _jti: string;
+    private _companyId: number;
+    private _organizationName: string;
+    private _scope: string;
+    private _token_type: string;
+
+    private _currentUserSubject = new BehaviorSubject<LoginResponse>(new LoginResponse());
+    private _currentUser = this._currentUserSubject.asObservable().distinctUntilChanged();
 
     constructor() {
-        console.log('App service is initiating!');
         try {
             const currentAccount = JSON.parse(localStorage.getItem(CURRENT_USER));
             if (currentAccount != null) {
-                this.currentUserSubject.next(currentAccount);
+                this._currentUserSubject.next(currentAccount);
             }
         } catch (e) {
             // console.log("error", e);
@@ -42,8 +147,56 @@ export class ApplicationContext implements OnDestroy {
         this.redirectURL = localStorage.getItem(redirectUrl);
     }
 
+    store(result: LoginResponse): void {
+        this.access_token       = result.access_token;
+        this.accountId          = result.accountId;
+        this.accountName        = result.accountName;
+        this.authorities        = result.authorities;
+        this.expires_in         = result.expires_in;
+        this.jti                = result.jti;
+        this.companyId          = result.companyId;
+        this.organizationName   = result.organizationName;
+        this.scope              = result.scope;
+        this.token_type         = result.token_type;
+
+        localStorage.setItem('ACCESS_TOKEN', this.access_token);
+        localStorage.setItem('ACCOUNT_ID', String(this.accountId));
+        localStorage.setItem('ACCOUNT_NAME', this.accountName);
+        localStorage.setItem('AUTHORITIES', JSON.stringify(this.authorities));
+        localStorage.setItem('EXPIRES_IN', String(this.expires_in));
+        localStorage.setItem('JTI', String(this.jti));
+        localStorage.setItem('COMPANY_ID', String(this.companyId));
+        localStorage.setItem('ORGANIZATION_NAME', this.organizationName);
+        localStorage.setItem('SCOPE', this.scope);
+        localStorage.setItem('TOKEN_TYPE', this.token_type);
+    }
+
+    clear(): void {
+        this.access_token       = null;
+        this.accountId          = null;
+        this.accountName        = null;
+        this.authorities        = null;
+        this.expires_in         = null;
+        this.jti                = null;
+        this.companyId          = null;
+        this.organizationName   = null;
+        this.scope              = null;
+        this.token_type         = null;
+
+        localStorage.setItem('ACCESS_TOKEN', this.access_token);
+        localStorage.setItem('ACCOUNT_ID', String(this.accountId));
+        localStorage.setItem('ACCOUNT_NAME', this.accountName);
+        localStorage.setItem('AUTHORITIES', JSON.stringify(this.authorities));
+        localStorage.setItem('EXPIRES_IN', String(this.expires_in));
+        localStorage.setItem('JTI', String(this.jti));
+        localStorage.setItem('COMPANY_ID', String(this.companyId));
+        localStorage.setItem('ORGANIZATION_NAME', this.organizationName);
+        localStorage.setItem('SCOPE', this.scope);
+        localStorage.setItem('TOKEN_TYPE', this.token_type);
+    }
+
     getCurrentAccount(): LoginResponse {
-        return this.currentUserSubject.getValue();
+        return this._currentUserSubject.getValue();
     }
 
     setRedirectURL (url: string) {
@@ -59,19 +212,18 @@ export class ApplicationContext implements OnDestroy {
 
     setCurrentAccount(credential: LoginResponse) {
         localStorage.setItem(CURRENT_USER, JSON.stringify(credential));
-        this.currentUserSubject.next(credential);
+        this._currentUserSubject.next(credential);
     }
 
     logout() {
-        //this.currentAccount = null;
-        this.currentUserSubject.next(null);
+        this._currentUserSubject.next(null);
         this.redirectURL = null;
-        localStorage.removeItem(CURRENT_USER);
+        this.clear();
     }
 
     isLoggedIn(): boolean {
-        if (this.getCurrentAccount() != null && this.getCurrentAccount().access_token) {
-            const decoded: any = jwt(this.getCurrentAccount().access_token);
+        if (this.access_token) {
+            const decoded: any = jwt(this.access_token);
             return decoded.exp > Date.now()/1000;
         } else {
             return false;
