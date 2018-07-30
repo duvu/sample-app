@@ -37,6 +37,11 @@ const routes: Routes = [
             {
                 path: 'profile',
                 component: ProfileComponent
+            },
+            {
+                path: 'mail',
+                loadChildren: 'app/main/mail/mail.module#MailModule',
+                canActivate: [AuthGuard]
             }
         ]
     }

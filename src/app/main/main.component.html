@@ -68,9 +68,9 @@
 
         <span class="fill-remain-space"></span>
 
-        <button mat-icon-button>
-            <mat-icon>mail</mat-icon>
-        </button>
+        <a mat-icon-button [routerLink]="['mail']">
+            <mat-icon matBadge="15" matBadgeColor="warn">mail</mat-icon>
+        </a>
 
         <button mat-button [matMenuTriggerFor]="menuProfile">
             <span>{{profile.accountName}}</span>

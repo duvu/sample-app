@@ -1,24 +1,20 @@
 <div class="full-height flex-center">
-    <form class="login-form">
-        <mat-card>
-            <mat-card-header>{{errorMessage}}</mat-card-header>
-            <mat-card-content>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Your Usermame" [(ngModel)]="model.username" name="username">
-                    <span matPrefix class=""><mat-icon matPrefix>profile</mat-icon></span>
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <input matInput type="password" placeholder="Your Password" [(ngModel)]="model.password" name="password">
-                    <span matPrefix class=""><mat-icon matPrefix>key</mat-icon></span>
-                </mat-form-field>
-            </mat-card-content>
-            <mat-card-actions align="middle">
-                <a mat-button routerLink="/home">Back to home page</a>
-                <a mat-raised-button color="primary" (click)="login()">Login</a>
-            </mat-card-actions>
-            <mat-card-footer align="end" class="card-footer">
-                <span>Forgot Password ?</span>
-            </mat-card-footer>
-        </mat-card>
+    <form class="l-form">
+        <div>{{errorMessage}}</div>
+        <mat-form-field class="full-width">
+            <input matInput placeholder="Your Usermame" [(ngModel)]="model.username" name="username">
+            <span matPrefix><mat-icon matPrefix>profile</mat-icon></span>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput type="password" placeholder="Your Password" [(ngModel)]="model.password" name="password">
+            <span matPrefix class=""><mat-icon matPrefix>key</mat-icon></span>
+        </mat-form-field>
+
+        <div class="l-button">
+            <a mat-button routerLink="/home">Back to home page</a>
+            <a mat-raised-button color="primary" (click)="login()">Login</a>
+        </div>
+        <mat-divider></mat-divider>
+        <div>Forgot Password ?</div>
     </form>
 </div>

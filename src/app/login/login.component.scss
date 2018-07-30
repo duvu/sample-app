@@ -1,15 +1,21 @@
-.login-form {
-  max-width: 50%;
-  width: 450px;
-  >form button {
-    text-transform: uppercase;
-  }
-  .card-footer{
-    border-top: 1px lightgray solid;
+@mixin style-login($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  .l-form {
+    max-width: 50%;
+    width: 450px;
     padding: 16px;
+    border: 1px solid mat-color($primary);
+
+    .l-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 16px;
+    }
   }
-}
-.main-progress-bar {
-  height: 5px;
-  z-index: 100;
 }

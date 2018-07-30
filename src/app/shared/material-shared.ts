@@ -1,6 +1,9 @@
 import {
-    MatAutocompleteModule, MatBottomSheetModule,
-    MatButtonModule, MatButtonToggleModule,
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatBottomSheetModule,
+    MatButtonModule,
+    MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
     MatDatepickerModule,
@@ -31,6 +34,7 @@ import {NgModule} from "@angular/core";
 @NgModule({
     imports: [
         MatAutocompleteModule,
+        MatBadgeModule,
         MatBottomSheetModule,
         MatButtonModule,
         MatButtonToggleModule,
@@ -60,6 +64,7 @@ import {NgModule} from "@angular/core";
     ],
     exports: [
         MatAutocompleteModule,
+        MatBadgeModule,
         MatBottomSheetModule,
         MatButtonModule,
         MatButtonToggleModule,
