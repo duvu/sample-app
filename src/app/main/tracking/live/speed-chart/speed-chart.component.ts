@@ -267,6 +267,7 @@ export class SpeedChartComponent implements OnChanges, OnDestroy, OnInit, AfterV
                     x: {
                         type: 'timeseries',
                         tick: {
+                            count: 10,
                             format: '%H:%M'
                         }
                     },

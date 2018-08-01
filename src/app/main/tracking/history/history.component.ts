@@ -290,6 +290,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                     x: {
                         type: 'timeseries',
                         tick: {
+                            count: 10,
                             format: '%H:%M'
                         }
                     },
