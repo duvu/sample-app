@@ -9,12 +9,12 @@ import {LoginResponse} from 'app/models/login-response';
     styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnDestroy {
-
-    profile: LoginResponse | any;
+    accountName: string;
 
     constructor(private app: ApplicationContext, private router: Router) {}
 
     ngOnInit() {
+        this.accountName = this.app.accountName;
     }
 
     ngOnDestroy(): void {
