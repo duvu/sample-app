@@ -13,10 +13,10 @@ export const redirectUrl = 'redirectUrl';
 const DEFAULT_REDIRECT_URL = '/main/tracking';
 
 @Injectable()
-export class ApplicationContext implements OnDestroy {
+export class ApplicationContext implements OnInit, OnDestroy {
 
     get redirectURL(): string {
-        return this._redirectURL;
+        return this._redirectURL? this._redirectURL : DEFAULT_REDIRECT_URL;
     }
 
     set redirectURL(value: string) {
@@ -144,20 +144,26 @@ export class ApplicationContext implements OnDestroy {
         } catch (e) {
             // console.log("error", e);
         }
-        this.redirectURL = localStorage.getItem(redirectUrl);
+        this.populate();
     }
 
-    store(result: LoginResponse): void {
-        this.access_token       = result.access_token;
-        this.accountId          = result.accountId;
-        this.accountName        = result.accountName;
-        this.authorities        = result.authorities;
-        this.expires_in         = result.expires_in;
-        this.jti                = result.jti;
-        this.companyId          = result.companyId;
-        this.organizationName   = result.organizationName;
-        this.scope              = result.scope;
-        this.token_type         = result.token_type;
+    ngOnInit(): void {
+
+    }
+
+    store(result?: LoginResponse): void {
+        if (result) {
+            this.access_token       = result.access_token;
+            this.accountId          = result.accountId;
+            this.accountName        = result.accountName;
+            this.authorities        = result.authorities;
+            this.expires_in         = result.expires_in;
+            this.jti                = result.jti;
+            this.companyId          = result.companyId;
+            this.organizationName   = result.organizationName;
+            this.scope              = result.scope;
+            this.token_type         = result.token_type;
+        }
 
         localStorage.setItem('ACCESS_TOKEN', this.access_token);
         localStorage.setItem('ACCOUNT_ID', String(this.accountId));
@@ -169,6 +175,28 @@ export class ApplicationContext implements OnDestroy {
         localStorage.setItem('ORGANIZATION_NAME', this.organizationName);
         localStorage.setItem('SCOPE', this.scope);
         localStorage.setItem('TOKEN_TYPE', this.token_type);
+
+        localStorage.setItem(redirectUrl, this.redirectURL);
+    }
+
+    populate(): void {
+        try {
+            this.access_token       = localStorage.getItem('ACCESS_TOKEN');
+            this.accountId          = parseInt(localStorage.getItem('ACCOUNT_ID'), 10);
+            this.accountName        = localStorage.getItem('ACCOUNT_NAME');
+            this.authorities        = JSON.parse(localStorage.getItem('AUTHORITIES'));
+            this.expires_in         = parseInt(localStorage.getItem('EXPIRES_IN'), 10);
+            this.jti                = localStorage.getItem('JTI');
+            this.companyId          = parseInt(localStorage.getItem('COMPANY_ID'), 10);
+            this.organizationName   = localStorage.getItem('ORGANIZATION_NAME');
+            this.scope              = localStorage.getItem('SCOPE');
+            this.token_type         = localStorage.getItem('TOKEN_TYPE');
+
+            this.redirectURL = localStorage.getItem(redirectUrl);
+        } catch (e) {
+            console.log(e);
+        }
+
     }
 
     clear(): void {
@@ -222,6 +250,7 @@ export class ApplicationContext implements OnDestroy {
     }
 
     isLoggedIn(): boolean {
+        console.log('access_token: ' + this.access_token);
         if (this.access_token) {
             const decoded: any = jwt(this.access_token);
             return decoded.exp > Date.now()/1000;
@@ -232,6 +261,7 @@ export class ApplicationContext implements OnDestroy {
 
     ngOnDestroy(): void {
         localStorage.setItem(CURRENT_USER, JSON.stringify(this.getCurrentAccount()));
-        localStorage.setItem(redirectUrl, this.redirectURL);
+        this.store()
+
     }
 }

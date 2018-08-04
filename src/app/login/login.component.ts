@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         if (this.applicationContext.isLoggedIn()) {
-            const redirectUrl = this.applicationContext.getRedirectURL();
+            const redirectUrl = this.applicationContext.redirectURL;
             this.router.navigate([redirectUrl]);
         }
     }
