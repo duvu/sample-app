@@ -250,7 +250,6 @@ export class ApplicationContext implements OnInit, OnDestroy {
     }
 
     isLoggedIn(): boolean {
-        console.log('access_token: ' + this.access_token);
         if (this.access_token) {
             const decoded: any = jwt(this.access_token);
             return decoded.exp > Date.now()/1000;
