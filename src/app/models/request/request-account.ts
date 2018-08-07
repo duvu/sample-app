@@ -1,5 +1,5 @@
 import { Account } from 'app/models/account';
-import * as _ from 'lodash';
+import { Role } from 'app/models/role';
 
 export class AccountRequest {
     id: number;
@@ -8,7 +8,7 @@ export class AccountRequest {
     lastName: string;
     password: string;
     status: string;
-    privilegeIds: Array<number>;
+    privilege: Role;
     companyId: number;
     companyName: string;
     phoneNumber: string;
@@ -26,11 +26,7 @@ export class AccountRequest {
             this.firstName = account.firstName;
             this.lastName = account.lastName;
             this.status = account.status;
-
-            this.privilegeIds = _.map(account.privileges, (privilege) => {
-                return privilege.id;
-            });
-
+            this.privilege = account.privilege;
             this.companyId = account.company ? account.company.id : null;
             this.companyName = account.company ? account.company.name : null;
             this.phoneNumber = account.phoneNumber;
@@ -39,8 +35,6 @@ export class AccountRequest {
             this.addressLine1 = account.addressLine1;
             this.addressLine2 = account.addressLine2;
             this.notes = account.notes;
-        } else {
-            this.privilegeIds = [];
         }
     }
 }

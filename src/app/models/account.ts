@@ -1,5 +1,5 @@
 import { CompanyLittle } from 'app/models/little/company-little';
-import { PrivilegeLittle } from 'app/models/little/privilege-little';
+import { Role } from 'app/models/role';
 
 export class Account {
     id: number;
@@ -7,7 +7,7 @@ export class Account {
     firstName: string;
     lastName: string;
     status: string;
-    privileges: Array<PrivilegeLittle>;
+    privilege: Role;
     company: CompanyLittle | any;
     phoneNumber: string;
     photoUrl: string;

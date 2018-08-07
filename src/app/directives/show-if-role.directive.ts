@@ -12,7 +12,7 @@ export class ShowIfRoleDirective implements OnInit {
     private hasView = false;
     constructor(private templateRef: TemplateRef<any>,
                 private viewContainer: ViewContainerRef,
-                private appService: ApplicationContext
+                private applicationContext: ApplicationContext
     ) { }
 
     @Input() set showIfRole(roles: string) {
@@ -20,24 +20,24 @@ export class ShowIfRoleDirective implements OnInit {
     }
 
     ngOnInit(): void {
-        this.appService.currentUser.subscribe(currentUser => {
-            if (!currentUser) return;
-            if (this.isContainRole(currentUser.authorities, this._roles) && !this.hasView) {
-                this.viewContainer.createEmbeddedView(this.templateRef);
-                this.hasView = true;
-            } else if (!this.isContainRole(currentUser.authorities, this._roles) && this.hasView) {
-                this.viewContainer.clear();
-                this.hasView = false;
-            }
-        })
+        if (this.isContainRole(this.applicationContext.authorities, this._roles) && !this.hasView) {
+            this.viewContainer.createEmbeddedView(this.templateRef);
+            this.hasView = true;
+        } else if (!this.isContainRole(this.applicationContext.authorities, this._roles) && this.hasView) {
+            this.viewContainer.clear();
+            this.hasView = false;
+        }
+
     }
 
     isContainRole(authorities: string[], roles: string): boolean {
-        let rolesArray = _.split(this._roles, ',');
+
+        let rolesArray = _.split(roles, ',');
 
         if (rolesArray && rolesArray.length > 0) {
             for (let i = 0; i < rolesArray.length; i++) {
                 let role = ShowIfRoleDirective.normalize(rolesArray[i]);
+                console.log('isContainRole: ', role);
                 if (_.includes(authorities, role)) {
                     return true;
                 }
@@ -47,15 +47,7 @@ export class ShowIfRoleDirective implements OnInit {
     }
 
     static normalize(role: string): string {
-        //0. snakeCase
-        role = _.snakeCase(role);
         //1. toUpper
-        role = _.toUpper(role);
-        //2. check startWith ROLE_
-        if (_.startsWith(role, 'ROLE_')) {
-            return role;
-        } else {
-            return 'ROLE_' + role;
-        }
+        return _.toUpper(role);
     }
 }

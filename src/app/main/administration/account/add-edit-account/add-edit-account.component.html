@@ -43,7 +43,7 @@
         <div fxLayout="row" fxLayoutGap="16px">
             <div fxFlex="80">
                 <mat-form-field class="full-width">
-                    <input type="text"  placeholder="Company" aria-label="Company" [(ngModel)]="data.company" matInput [formControl]="companyControl" [matAutocomplete]="auto">
+                    <input type="text"  placeholder="Company" aria-label="Company" matInput [formControl]="companyControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                         <mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
                             {{company.name}}
@@ -58,17 +58,18 @@
             </div>
         </div>
 
-        <mat-form-field class="full-width" *ngIf="isCurrentLoggedInAccount">
-            <input matInput i18n-placeholder placeholder="Role" name="acc-role" value="{{data.privileges | flatten: 'name'}}">
-        </mat-form-field>
-        <mat-form-field class="full-width" *ngIf="!isCurrentLoggedInAccount">
-            <mat-select multiple matInput placeholder="Roles" [(ngModel)]="privilegeIds">
-                <mat-option *ngFor="let pri of privilegeList | async" [value]="pri.id">{{pri.name}}</mat-option>
+        <!--mat-form-field class="full-width" *ngIf="isCurrentLoggedInAccount">
+            <input matInput i18n-placeholder placeholder="Roles" name="acc-role" value="{{data.privileges | flatten: 'name'}}">
+        </mat-form-field-->
+
+        <mat-form-field class="full-width">
+            <mat-select matInput placeholder="Roles" [(ngModel)]="data.privilege">
+                <mat-option *ngFor="let pri of privilegeList" [value]="pri.id">{{pri.name}}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field class="full-width">
-            <input type="text"  placeholder="Status" aria-label="Status" [(ngModel)]="data.status" matInput [formControl]="statusControl" [matAutocomplete]="autoStatus">
+            <input type="text"  placeholder="Status" aria-label="Status" matInput [formControl]="statusControl" [matAutocomplete]="autoStatus">
             <mat-autocomplete #autoStatus="matAutocomplete">
                 <mat-option *ngFor="let status of filteredStatus | async" [value]="status">
                     {{status}}

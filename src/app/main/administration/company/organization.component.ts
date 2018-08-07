@@ -14,8 +14,6 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs/observable/of';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Account } from 'app/models/account';
-import { Device } from 'app/models/device';
 import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
@@ -36,7 +34,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
 
     columns = {
         id:                 {selected: false, order: 0},
-        name:          {selected: false, order: 1},
+        name:               {selected: false, order: 1},
         phoneNumber:        {selected: false, order: 7},
         photoUrl:           {selected: false, order: 8},
         emailAddress:       {selected: false, order: 9},

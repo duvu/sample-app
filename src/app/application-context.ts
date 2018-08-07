@@ -5,7 +5,7 @@ import * as jwt from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import 'rxjs/add/operator/distinctUntilChanged';
-import { Observable } from 'rxjs';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 
 export const CURRENT_USER = 'vd5-current-user';
@@ -103,22 +103,6 @@ export class ApplicationContext implements OnInit, OnDestroy {
         this._token_type = value;
     }
 
-    get currentUserSubject(): BehaviorSubject<LoginResponse> {
-        return this._currentUserSubject;
-    }
-
-    set currentUserSubject(value: BehaviorSubject<LoginResponse>) {
-        this._currentUserSubject = value;
-    }
-
-    get currentUser(): Observable<any> {
-        return this._currentUser;
-    }
-
-    set currentUser(value: Observable<any>) {
-        this._currentUser = value;
-    }
-
     private _redirectURL: string;
 
     private _access_token: string;
@@ -133,9 +117,8 @@ export class ApplicationContext implements OnInit, OnDestroy {
     private _token_type: string;
 
     private _currentUserSubject = new BehaviorSubject<LoginResponse>(new LoginResponse());
-    private _currentUser = this._currentUserSubject.asObservable().distinctUntilChanged();
 
-    constructor() {
+    constructor(private snackBar: MatSnackBar) {
         try {
             const currentAccount = JSON.parse(localStorage.getItem(CURRENT_USER));
             if (currentAccount != null) {
@@ -262,5 +245,31 @@ export class ApplicationContext implements OnInit, OnDestroy {
         localStorage.setItem(CURRENT_USER, JSON.stringify(this.getCurrentAccount()));
         this.store()
 
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+    //-- toast
+    //------------------------------------------------------------------------------------------------------------------
+    info(message: string): void {
+        const config = this._createConfig(false);
+        this.snackBar.open(message, null, config);
+    }
+
+    error(message: string): void {
+        const config = this._createConfig(true);
+        this.snackBar.open(message, null, config);
+    }
+
+    private _createConfig(isError?: boolean) {
+        const config = new MatSnackBarConfig();
+        config.verticalPosition = 'bottom';
+        config.horizontalPosition = 'right';
+        config.duration = 3000;
+        if (isError) {
+            config.panelClass = ['toast-warn'];
+        } else {
+            config.panelClass = ['toast-info'];
+        }
+        return config;
     }
 }

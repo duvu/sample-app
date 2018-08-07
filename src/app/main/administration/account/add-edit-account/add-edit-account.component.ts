@@ -11,25 +11,31 @@ import { PrivilegeService } from 'app/services/privilege.service';
 import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
-import { pipe } from 'rxjs/Rx';
 import { AccountRequest } from 'app/models/request/request-account';
 import { Account } from 'app/models/account';
-import { PrivilegeLittle } from 'app/models/little/privilege-little';
-import { CompanyLittle } from 'app/models/little/company-little';
+
 import { AccountService } from 'app/services/account.service';
 import { ApplicationContext } from 'app/application-context';
 
 @Component({
-    selector: 'app-add-edit-account',
+    selector: 'applicationContext-add-edit-account',
     templateUrl: './add-edit-account.component.html',
     styleUrls: ['./add-edit-account.component.scss']
 })
 export class AddEditAccountComponent implements OnInit, AfterViewInit {
-    privilegeIds: number[];
+    //privilegeIds: number[];
+    privilege: number;
     password: string;
     re_password: string;
     companyList: Company[];
-    statusList: string[];
+
+    statusList: Array<string> = [
+        'UNKNOWN',
+        'DELETED',
+        'PENDING',
+        'INACTIVATED',
+        'ACTIVATED'
+    ];
 
     filteredCompanies: Observable<Company[]>;
     filteredStatus: Observable<string[]>;
@@ -38,25 +44,25 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
     statusControl: FormControl = new FormControl();
 
     isEditing = false;
-    isCurrentLoggedInAccount = false;
-    privilegeList: Observable<Privilege[]>;
+    privilegeList: Array<Privilege> = [
+        {id: 0, name: "ANONYMOUS"},
+        {id: 1, name: "NORMAL_USER"},
+        {id: 2, name: "MODERATOR"},
+        {id: 3, name: "ADMIN"},
+        {id: 4, name: "SYSADMIN"},
+        {id: 5, name: "VD5LORD"}
+    ];
 
     constructor(private companyService: CompanyService,
-                private accountService: AccountService,
-                private app: ApplicationContext,
-                private privilegeService: PrivilegeService,
                 public dialogRef: MatDialogRef<AddEditAccountComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: Account | any) { }
 
     ngOnInit() {
-        this.privilegeIds = _.map(this.data.privileges, (privilege: PrivilegeLittle) => {
-            return privilege.id;
-        });
-
         this.isEditing = !!this.data.accountId;
-        this.isCurrentLoggedInAccount = (this.data.id === this.app.getCurrentAccount().accountId);
 
-        this.privilegeList = this.privilegeService.getAll();
+        this.companyControl.setValue(this.data.company);
+        this.statusControl.setValue(this.data.status);
+
         this.companyService.getAll().subscribe(
             response => {
                 this.companyList = response;
@@ -71,21 +77,13 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
             }
         );
 
-        this.accountService.getAllStatus().subscribe(
-            response => {
-                this.statusList = response;
-            },
-            error => {},
-            () => {
-                this.filteredStatus = this.statusControl.valueChanges
-                    .pipe(
-                        startWith(''),
-                        map(value => {
-                            return this.statusList.filter(opt => opt.toLowerCase().indexOf(value.toLowerCase()) === 0);
-                        })
-                    );
-            }
-        );
+        this.filteredStatus = this.statusControl.valueChanges
+            .pipe(
+                startWith(''),
+                map(value => {
+                    return this.statusList.filter(opt => opt.toLowerCase().indexOf(value.toLowerCase()) === 0);
+                })
+            );
     }
 
     ngAfterViewInit(): void {
@@ -97,7 +95,10 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
 
     onSave(): void {
         let data1 = new AccountRequest(this.data);
-        data1.privilegeIds = this.privilegeIds;
+        data1.companyId = this.companyControl.value.id;
+        data1.companyName = this.companyControl.value.name;
+        data1.status = this.statusControl.value;
+
         data1.password = this.password;
         this.dialogRef.close(data1);
     }
@@ -111,7 +112,7 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
     }
 
 
-    displayFn(company: Company): string | Company {
-        return company ? company.name : company;
+    displayFn(company: Company): string | undefined {
+        return company ? company.name : undefined;
     }
 }

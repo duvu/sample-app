@@ -5,6 +5,15 @@
   $background: map-get($theme, background);
   $foreground: map-get($theme, foreground);
 
+
+  .toast-info {
+    background-color: mat-color($primary);
+  }
+
+  .toast-warn {
+    background-color: mat-color($warn);
+  }
+
   .fill-remain-space {
     flex: 1 1 auto;
   }

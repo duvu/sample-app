@@ -28,7 +28,7 @@ import { Device } from 'app/models/device';
 import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
-    selector: 'app-account',
+    selector: 'applicationContext-account',
     templateUrl: './account.component.html',
     styleUrls: ['./account.component.scss']
 })
@@ -68,7 +68,7 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
     resultsLength = 0;
 
     constructor(private dialog: MatDialog,
-                private app: ApplicationContext,
+                private applicationContext: ApplicationContext,
                 private spinner: WaitingService,
                 private service: AccountService) { }
 
@@ -183,6 +183,7 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
             data.company = new CompanyLittle();
         }
         const dialogRef = this.dialog.open(AddEditAccountComponent, {
+            width: '600px',
             disableClose: true,
             data: data
         });
@@ -195,10 +196,13 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
     }
 
     update(id: number, account: AccountRequest): void {
-        console.log('Updating Account Record.....!', account);
         this.service.update(id, account).subscribe(
             result => {
-                console.log('-', result);
+                this.applicationContext.info("update account success");
+                this.dataChange.next(1);
+            },
+            error => {
+                this.applicationContext.error('Update account failed');
             }
         );
     }
