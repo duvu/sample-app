@@ -9,6 +9,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
 import * as _ from 'lodash';
 import { Privilege } from 'app/models/privilege';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 export const CURRENT_USER = 'vd5-current-user';
@@ -137,14 +138,6 @@ export class ApplicationContext implements OnInit, OnDestroy {
     ];
 
     constructor(private snackBar: MatSnackBar) {
-        // try {
-        //     const currentAccount = JSON.parse(localStorage.getItem(CURRENT_USER));
-        //     if (currentAccount != null) {
-        //         this._currentUserSubject.next(currentAccount);
-        //     }
-        // } catch (e) {
-        //     // console.log("error", e);
-        // }
         this.populate();
     }
 
@@ -239,6 +232,7 @@ export class ApplicationContext implements OnInit, OnDestroy {
             if (this.all_privilege[i].name !== max) {
                 rtn.push(this.all_privilege[i]);
             } else {
+                rtn.push(this.all_privilege[i]);
                 break;
             }
         }
@@ -277,6 +271,11 @@ export class ApplicationContext implements OnInit, OnDestroy {
     error(message: string): void {
         const config = this._createConfig(true);
         this.snackBar.open(message, null, config);
+    }
+
+    http_error(error: HttpErrorResponse): void {
+        const message = error.error.error_description;
+        this.error(message);
     }
 
     private _createConfig(isError?: boolean) {

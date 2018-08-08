@@ -7,7 +7,7 @@
         <button mat-icon-button (click)="openDialogColumnOptions()">
             <mat-icon>settings</mat-icon>
         </button>
-        <button mat-icon-button (click)="openDialogNewObject()">
+        <button mat-icon-button (click)="openDialogNewObject()" *showIfRole="'vd5lord,sysadmin,admin,moderator'">
             <mat-icon>add</mat-icon>
         </button>
     </div>

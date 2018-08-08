@@ -26,6 +26,7 @@ import { CompanyLittle } from 'app/models/little/company-little';
 import { RequestDevice } from 'app/models/request/request-device';
 import { Device } from 'app/models/device';
 import { WaitingService } from 'app/services/waiting.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'applicationContext-account',
@@ -201,8 +202,8 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
                 this.applicationContext.info("update account success");
                 this.dataChange.next(1);
             },
-            error => {
-                this.applicationContext.error('Update account failed');
+            (error: HttpErrorResponse) => {
+                this.applicationContext.http_error(error);
             }
         );
     }
@@ -242,21 +243,14 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
         return _.toLower(account.status) === 'activated';
     }
 
-    toggleStatus(device: Device) {
-        // if (this.checkStatus(device)) {
-        //     device.status = 'disabled';
-        // } else {
-        //     device.status = 'enabled';
-        // }
-        //
-        // let request = new RequestDevice(device)
-        // this.service.update(device.id, request).subscribe(
-        //     data => {},
-        //     error => {},
-        //     () => {
-        //         this.toast.info("Updated device!");
-        //     }
-        // )
+    toggleStatus(account: Account) {
+        if (this.checkStatus(account)) {
+            account.status = 'INACTIVATED';
+        } else {
+            account.status = 'ACTIVATED';
+        }
+
+        this.update(account.id, new AccountRequest(account));
     }
 
 
