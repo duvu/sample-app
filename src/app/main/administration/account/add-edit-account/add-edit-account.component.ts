@@ -6,15 +6,12 @@ import { Company } from 'app/models/company';
 import { FormControl } from '@angular/forms';
 import { CompanyService } from 'app/services/organization.service';
 import { Privilege } from 'app/models/privilege';
-import { PrivilegeService } from 'app/services/privilege.service';
 
 import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { AccountRequest } from 'app/models/request/request-account';
 import { Account } from 'app/models/account';
-
-import { AccountService } from 'app/services/account.service';
 import { ApplicationContext } from 'app/application-context';
 
 @Component({
@@ -44,7 +41,8 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
     statusControl: FormControl = new FormControl();
 
     isEditing = false;
-    privilegeList: Array<Privilege> = [
+    privilegeList: Array<Privilege>;
+    allPrivilege: Array<Privilege> = [
         {id: 0, name: "ANONYMOUS"},
         {id: 1, name: "NORMAL_USER"},
         {id: 2, name: "MODERATOR"},
@@ -54,6 +52,7 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
     ];
 
     constructor(private companyService: CompanyService,
+                private applicationContext: ApplicationContext,
                 public dialogRef: MatDialogRef<AddEditAccountComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: Account | any) { }
 
@@ -62,6 +61,9 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
 
         this.companyControl.setValue(this.data.company);
         this.statusControl.setValue(this.data.status);
+        this.privilegeList = _.map(this.allPrivilege, (x) => {
+            return
+        })
 
         this.companyService.getAll().subscribe(
             response => {

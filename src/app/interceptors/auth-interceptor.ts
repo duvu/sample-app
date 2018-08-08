@@ -9,7 +9,7 @@ import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(private app: ApplicationContext, private router: Router) {
+    constructor(private applicationContext: ApplicationContext, private router: Router) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
             const changeReg = req.clone();
             return next.handle(changeReg);
         } else {
-                const token = this.app.getToken();
+                const token = this.applicationContext.getToken();
                 const changeReg = req.clone({
                     headers: req.headers.set('Content-Type', 'application/json')
                         .set('Accept', 'application/json')

@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
         this.spinner.show(true);
         this.auth.login(this.model.username, this.model.password).subscribe(
             (result: LoginResponse) => {
-                this.applicationContext.setCurrentAccount(result);
                 this.applicationContext.store(result);
             },
             error => {

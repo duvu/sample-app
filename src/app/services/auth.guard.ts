@@ -9,7 +9,7 @@ import {ApplicationContext} from 'app/application-context';
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
 
-    constructor(private app: ApplicationContext, private router: Router) {}
+    constructor(private applicationContext: ApplicationContext, private router: Router) {}
 
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
         return this.canActivate(childRoute, state);
@@ -18,12 +18,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             return this.checkLogin(state.url);
     }
     checkLogin(url: string): boolean {
-        if (this.app.isLoggedIn()) {
+        if (this.applicationContext.isLoggedIn()) {
             return true;
         }
 
         // store the attempted URL for redirecting
-        this.app.setRedirectURL(url);
+        this.applicationContext.redirectURL = url;
         // create session_id
         const sessionId = 12345567;
         // Set our navigation extras object

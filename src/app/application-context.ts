@@ -206,28 +206,17 @@ export class ApplicationContext implements OnInit, OnDestroy {
         localStorage.setItem('TOKEN_TYPE', this.token_type);
     }
 
-    getCurrentAccount(): LoginResponse {
-        return this._currentUserSubject.getValue();
-    }
-
-    setRedirectURL (url: string) {
-        this.redirectURL = url;
-    }
     getRedirectURL() {
         return (this.redirectURL ? this.redirectURL : DEFAULT_REDIRECT_URL);
     }
 
     getToken(): string {
-        return this.getCurrentAccount().token_type + " " + this.getCurrentAccount().access_token;
+        return this.token_type + " " + this.access_token;
     }
 
-    setCurrentAccount(credential: LoginResponse) {
-        localStorage.setItem(CURRENT_USER, JSON.stringify(credential));
-        this._currentUserSubject.next(credential);
-    }
-
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
     logout() {
-        this._currentUserSubject.next(null);
         this.redirectURL = null;
         this.clear();
     }
@@ -242,7 +231,6 @@ export class ApplicationContext implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        localStorage.setItem(CURRENT_USER, JSON.stringify(this.getCurrentAccount()));
         this.store()
 
     }
