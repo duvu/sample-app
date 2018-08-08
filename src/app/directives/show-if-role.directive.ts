@@ -37,7 +37,6 @@ export class ShowIfRoleDirective implements OnInit {
         if (rolesArray && rolesArray.length > 0) {
             for (let i = 0; i < rolesArray.length; i++) {
                 let role = ShowIfRoleDirective.normalize(rolesArray[i]);
-                console.log('isContainRole: ', role);
                 if (_.includes(authorities, role)) {
                     return true;
                 }
