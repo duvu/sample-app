@@ -26,14 +26,6 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
     re_password: string;
     companyList: Company[];
 
-    statusList: Array<string> = [
-        'UNKNOWN',
-        'DELETED',
-        'PENDING',
-        'INACTIVATED',
-        'ACTIVATED'
-    ];
-
     filteredCompanies: Observable<Company[]>;
     filteredStatus: Observable<string[]>;
 
@@ -42,14 +34,7 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
 
     isEditing = false;
     privilegeList: Array<Privilege>;
-    allPrivilege: Array<Privilege> = [
-        {id: 0, name: "ANONYMOUS"},
-        {id: 1, name: "NORMAL_USER"},
-        {id: 2, name: "MODERATOR"},
-        {id: 3, name: "ADMIN"},
-        {id: 4, name: "SYSADMIN"},
-        {id: 5, name: "VD5LORD"}
-    ];
+
 
     constructor(private companyService: CompanyService,
                 private applicationContext: ApplicationContext,
@@ -61,9 +46,7 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
 
         this.companyControl.setValue(this.data.company);
         this.statusControl.setValue(this.data.status);
-        this.privilegeList = _.map(this.allPrivilege, (x) => {
-            return
-        })
+        this.privilegeList = this.applicationContext.getPrivileges();
 
         this.companyService.getAll().subscribe(
             response => {
@@ -83,7 +66,7 @@ export class AddEditAccountComponent implements OnInit, AfterViewInit {
             .pipe(
                 startWith(''),
                 map(value => {
-                    return this.statusList.filter(opt => opt.toLowerCase().indexOf(value.toLowerCase()) === 0);
+                    return this.applicationContext.statusList.filter(opt => opt.toLowerCase().indexOf(value.toLowerCase()) === 0);
                 })
             );
     }

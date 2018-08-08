@@ -7,6 +7,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 
+import * as _ from 'lodash';
+import { Privilege } from 'app/models/privilege';
+
 
 export const CURRENT_USER = 'vd5-current-user';
 export const redirectUrl = 'redirectUrl';
@@ -116,17 +119,32 @@ export class ApplicationContext implements OnInit, OnDestroy {
     private _scope: string;
     private _token_type: string;
 
-    private _currentUserSubject = new BehaviorSubject<LoginResponse>(new LoginResponse());
+    private all_privilege: Array<Privilege> = [
+        {id: 0, name: "ANONYMOUS"},
+        {id: 1, name: "NORMAL_USER"},
+        {id: 2, name: "MODERATOR"},
+        {id: 3, name: "ADMIN"},
+        {id: 4, name: "SYSADMIN"},
+        {id: 5, name: "VD5LORD"}
+    ];
+
+    statusList: Array<string> = [
+        'UNKNOWN',
+        'DELETED',
+        'PENDING',
+        'INACTIVATED',
+        'ACTIVATED'
+    ];
 
     constructor(private snackBar: MatSnackBar) {
-        try {
-            const currentAccount = JSON.parse(localStorage.getItem(CURRENT_USER));
-            if (currentAccount != null) {
-                this._currentUserSubject.next(currentAccount);
-            }
-        } catch (e) {
-            // console.log("error", e);
-        }
+        // try {
+        //     const currentAccount = JSON.parse(localStorage.getItem(CURRENT_USER));
+        //     if (currentAccount != null) {
+        //         this._currentUserSubject.next(currentAccount);
+        //     }
+        // } catch (e) {
+        //     // console.log("error", e);
+        // }
         this.populate();
     }
 
@@ -212,6 +230,19 @@ export class ApplicationContext implements OnInit, OnDestroy {
 
     getToken(): string {
         return this.token_type + " " + this.access_token;
+    }
+
+    getPrivileges(): Array<Privilege> {
+        const max = this.authorities[0]; //only 1 authority
+        let rtn: Array<Privilege> = [];
+        for (let i = 0; i < this.all_privilege.length; i++) {
+            if (this.all_privilege[i].name !== max) {
+                rtn.push(this.all_privilege[i]);
+            } else {
+                break;
+            }
+        }
+        return rtn;
     }
 
     //------------------------------------------------------------------------------------------------------------------

@@ -5,6 +5,7 @@ import { AuthService } from 'app/services/auth.service';
 import { ApplicationContext} from 'app/application-context';
 import { WaitingService } from 'app/services/waiting.service';
 import { LoginResponse } from 'app/models/login-response';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'applicationContext-login',
@@ -33,17 +34,16 @@ export class LoginComponent implements OnInit {
         this.spinner.show(true);
         this.auth.login(this.model.username, this.model.password).subscribe(
             (result: LoginResponse) => {
+                this.spinner.show(false);
                 this.applicationContext.store(result);
-            },
-            error => {
-                this.errorMessage = 'Error' + error.message;
-                this.spinner.show(false);
-            },
-            () => {
                 const redirectUrl = this.applicationContext.getRedirectURL();
-                this.spinner.show(false);
                 this.router.navigate([redirectUrl]);
-            }
+            },
+            (err: HttpErrorResponse) => {
+                this.applicationContext.error(err.error.error_description);
+                this.spinner.show(false);
+            },
+            () => {}
         );
     }
 }
