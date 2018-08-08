@@ -5,7 +5,7 @@ import { Component, OnDestroy, OnInit, AfterViewInit} from '@angular/core';
 
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
-import { MarkerClusterGroup } from "leaflet";
+import { LatLngBounds, MarkerClusterGroup } from 'leaflet';
 
 import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
@@ -172,46 +172,48 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 return event.devId === dt.id;
             });
 
-            d.address = event.address;
-            d.latitude = event.latitude;
-            d.longitude = event.longitude;
-            d.lastUpdateTime = event.timestamp;
-            d.speedKph = event.speedKPH;
-            d.lastUpdateTimeInWords = distanceInWordsToNow(event.timestamp) + ' ago';
+            if (d) {
+                d.address = event.address;
+                d.latitude = event.latitude;
+                d.longitude = event.longitude;
+                d.lastUpdateTime = event.timestamp;
+                d.speedKph = event.speedKPH;
+                d.lastUpdateTimeInWords = distanceInWordsToNow(event.timestamp) + ' ago';
 
-            if (event.latitude && event.longitude) {
-                let marker = this.buildMarker(event);
-                this.popupLink.register(marker, event);
-                this.markersCluster.addLayer(marker);
-                marker.on('click', () => {
-                    this.selectedDevice = d;
-                    //circle around marker
-                    if (this.selectedMarker) {
-                        this.selectedMarker.removeFrom(this.map);
-                    }
-                    let center = L.latLng(this.selectedDevice.latitude, this.selectedDevice.longitude);
-                    this.selectedMarker = L.circleMarker(center, {radius: 30}).addTo(this.map);
-                });
-            }
+                if (event.latitude && event.longitude) {
+                    let marker = this.buildMarker(event);
+                    this.popupLink.register(marker, event);
+                    this.markersCluster.addLayer(marker);
+                    marker.on('click', () => {
+                        this.selectedDevice = d;
+                        //circle around marker
+                        if (this.selectedMarker) {
+                            this.selectedMarker.removeFrom(this.map);
+                        }
+                        let center = L.latLng(this.selectedDevice.latitude, this.selectedDevice.longitude);
+                        this.selectedMarker = L.circleMarker(center, {radius: 30}).addTo(this.map);
+                    });
+                }
 
-            const status = MappingUtils.getStatus(event.timestamp);
-            switch (status) {
-                case 'live':
-                    this.liveDev.increase();
-                    d.state = 2; //living
-                    break;
-                case 'idle':
-                    this.idleDev.increase();
-                    d.state = 1; //idle
-                    break;
-                case 'stop':
-                    this.stopDev.increase();
-                    d.state = 0; //stop
-                    break;
-                case 'dead':
-                    this.deadDev.increase();
-                    d.state = -1;
-                    break;
+                const status = MappingUtils.getStatus(event.timestamp);
+                switch (status) {
+                    case 'live':
+                        this.liveDev.increase();
+                        d.state = 2; //living
+                        break;
+                    case 'idle':
+                        this.idleDev.increase();
+                        d.state = 1; //idle
+                        break;
+                    case 'stop':
+                        this.stopDev.increase();
+                        d.state = 0; //stop
+                        break;
+                    case 'dead':
+                        this.deadDev.increase();
+                        d.state = -1;
+                        break;
+                }
             }
 
         }.bind(this));
@@ -228,8 +230,12 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
             this.selectedMarker = L.circleMarker(center, {radius: 30}).addTo(this.map);
         } else if (this.liveEvents.length > 0 ) {
             this.map.addLayer(this.markersCluster);
-            if (this.numberOfLoad <= 1) {
-                this.map.fitBounds(this.markersCluster.getBounds());
+            if (this.numberOfLoad === 1) {
+                let bounds: LatLngBounds = this.markersCluster.getBounds();
+                if (bounds.isValid()) {
+                    this.map.fitBounds(bounds);
+                }
+
             }
 
             if (this.selectedMarker) {
