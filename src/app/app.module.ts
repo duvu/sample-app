@@ -18,6 +18,7 @@ import { PageNotFoundComponent } from 'app/pages/page-not-found/page-not-found.c
 import { ToastService } from 'app/shared/toast.service';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { WaitingService } from 'app/services/waiting.service';
+import { ErrorComponent } from './pages/error/error.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { WaitingService } from 'app/services/waiting.service';
         AppComponent,
         LoginComponent,
         PageNotFoundComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        ErrorComponent
     ],
     imports: [
         BrowserModule,
