@@ -4,7 +4,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import {AuthGuard} from "app/services/auth.guard";
-import {PageNotFoundComponent} from "./pages/page-not-found/page-not-found.component";
+import {NotFoundComponent} from "./pages/not-found/not-found.component";
 import {LoginComponent} from "./login/login.component";
 import { ErrorComponent } from 'app/pages/error/error.component';
 
@@ -14,7 +14,7 @@ const routes: Routes = [
     { path: 'login',    component: LoginComponent },
     { path: 'main',     loadChildren: 'app/main/main.module#MainModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
     { path: 'error',    pathMatch: 'full', component: ErrorComponent },
-    { path: '**',       pathMatch: 'full', component: PageNotFoundComponent }
+    { path: '**',       pathMatch: 'full', component: NotFoundComponent }
 ];
 
 @NgModule({

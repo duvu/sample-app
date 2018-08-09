@@ -14,7 +14,7 @@ import { AppComponent } from 'app/app.component';
 import { AppRoutingModule} from 'app/app-routing.module';
 import { AuthService} from 'app/services/auth.service';
 import { AuthGuard} from 'app/services/auth.guard';
-import { PageNotFoundComponent } from 'app/pages/page-not-found/page-not-found.component';
+import { NotFoundComponent } from 'app/pages/not-found/not-found.component';
 import { ToastService } from 'app/shared/toast.service';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { WaitingService } from 'app/services/waiting.service';
@@ -25,7 +25,7 @@ import { ErrorComponent } from './pages/error/error.component';
     declarations: [
         AppComponent,
         LoginComponent,
-        PageNotFoundComponent,
+        NotFoundComponent,
         SpinnerComponent,
         ErrorComponent
     ],
