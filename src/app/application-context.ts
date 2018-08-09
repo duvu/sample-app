@@ -1,26 +1,28 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import {LoginResponse} from 'app/models/login-response';
-
 import * as jwt from 'jwt-decode';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
 import 'rxjs/add/operator/distinctUntilChanged';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
-
-import * as _ from 'lodash';
 import { Privilege } from 'app/models/privilege';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
-export const CURRENT_USER = 'vd5-current-user';
 export const redirectUrl = 'redirectUrl';
 const DEFAULT_REDIRECT_URL = '/main/tracking';
 
 @Injectable()
 export class ApplicationContext implements OnInit, OnDestroy {
+    get firstPageUrl(): string {
+        return (this._firstPageUrl && this._firstPageUrl!=='null') ? this._firstPageUrl : DEFAULT_REDIRECT_URL;
+    }
+
+    set firstPageUrl(value: string) {
+        this._firstPageUrl = value;
+    }
 
     get redirectURL(): string {
-        return this._redirectURL? this._redirectURL : DEFAULT_REDIRECT_URL;
+        return this._redirectURL; //? this._redirectURL : this.firstPageUrl;
     }
 
     set redirectURL(value: string) {
@@ -107,19 +109,9 @@ export class ApplicationContext implements OnInit, OnDestroy {
         this._token_type = value;
     }
 
-    private _redirectURL: string;
-
-    private _access_token: string;
-    private _accountId: number;
-    private _accountName: string;
-    private _authorities: Array<string>;
-    private _expires_in: number;
-    private _jti: string;
-    private _companyId: number;
-    private _organizationName: string;
-    private _scope: string;
-    private _token_type: string;
-
+    //------------------------------------------------------------------------------------------------------------------
+    //~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~
+    //------------------------------------------------------------------------------------------------------------------
     private all_privilege: Array<Privilege> = [
         {id: 0, name: "ANONYMOUS"},
         {id: 1, name: "NORMAL_USER"},
@@ -137,7 +129,20 @@ export class ApplicationContext implements OnInit, OnDestroy {
         'ACTIVATED'
     ];
 
-    constructor(private snackBar: MatSnackBar) {
+    pageUrlList: Array<string> = [
+        '/main/tracking',
+        '/main/report',
+        '/main/_admin/_account',
+        '/main/_admin/_company',
+
+    ];
+
+
+    //------------------------------------------------------------------------------------------------------------------
+    //~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~//~~
+    //------------------------------------------------------------------------------------------------------------------
+
+    constructor(private snackBar: MatSnackBar, private router: Router) {
         this.populate();
     }
 
@@ -157,6 +162,7 @@ export class ApplicationContext implements OnInit, OnDestroy {
             this.organizationName   = result.organizationName;
             this.scope              = result.scope;
             this.token_type         = result.token_type;
+            this.firstPageUrl       = result.firstPageUrl;
         }
 
         localStorage.setItem('ACCESS_TOKEN', this.access_token);
@@ -169,6 +175,7 @@ export class ApplicationContext implements OnInit, OnDestroy {
         localStorage.setItem('ORGANIZATION_NAME', this.organizationName);
         localStorage.setItem('SCOPE', this.scope);
         localStorage.setItem('TOKEN_TYPE', this.token_type);
+        localStorage.setItem('FIRST_PAGE_URL', this.firstPageUrl);
 
         localStorage.setItem(redirectUrl, this.redirectURL);
     }
@@ -185,6 +192,7 @@ export class ApplicationContext implements OnInit, OnDestroy {
             this.organizationName   = localStorage.getItem('ORGANIZATION_NAME');
             this.scope              = localStorage.getItem('SCOPE');
             this.token_type         = localStorage.getItem('TOKEN_TYPE');
+            this.firstPageUrl       = localStorage.getItem('FIRST_PAGE_URL');
 
             this.redirectURL = localStorage.getItem(redirectUrl);
         } catch (e) {
@@ -204,6 +212,7 @@ export class ApplicationContext implements OnInit, OnDestroy {
         this.organizationName   = null;
         this.scope              = null;
         this.token_type         = null;
+        this.firstPageUrl       = null;
 
         localStorage.setItem('ACCESS_TOKEN', this.access_token);
         localStorage.setItem('ACCOUNT_ID', String(this.accountId));
@@ -215,10 +224,11 @@ export class ApplicationContext implements OnInit, OnDestroy {
         localStorage.setItem('ORGANIZATION_NAME', this.organizationName);
         localStorage.setItem('SCOPE', this.scope);
         localStorage.setItem('TOKEN_TYPE', this.token_type);
+        localStorage.setItem('FIRST_PAGE_URL', this.firstPageUrl);
     }
 
     getRedirectURL() {
-        return (this.redirectURL ? this.redirectURL : DEFAULT_REDIRECT_URL);
+        return (this.redirectURL && this.redirectURL !== 'null') ? this.redirectURL : this.firstPageUrl;
     }
 
     getToken(): string {
@@ -240,10 +250,15 @@ export class ApplicationContext implements OnInit, OnDestroy {
     }
 
     //------------------------------------------------------------------------------------------------------------------
+    //~~
     //------------------------------------------------------------------------------------------------------------------
     logout() {
-        this.redirectURL = null;
+        this.redirectURL = '';
         this.clear();
+    }
+
+    navigate(url: string) {
+        this.router.navigate([url]);
     }
 
     isLoggedIn(): boolean {
@@ -290,4 +305,22 @@ export class ApplicationContext implements OnInit, OnDestroy {
         }
         return config;
     }
+
+    //------------------------------------------------------------------------------------------------------------------
+    //--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--//--
+    //------------------------------------------------------------------------------------------------------------------
+    private _redirectURL: string;
+
+    private _access_token: string;
+    private _accountId: number;
+    private _accountName: string;
+    private _authorities: Array<string>;
+    private _expires_in: number;
+    private _jti: string;
+    private _companyId: number;
+    private _organizationName: string;
+    private _scope: string;
+    private _token_type: string;
+    private _firstPageUrl: string;
+
 }

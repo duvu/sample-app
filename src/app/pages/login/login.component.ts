@@ -8,15 +8,12 @@ import { LoginResponse } from 'app/models/login-response';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-    selector: 'applicationContext-login',
+    selector: 'login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
     model: any = {};
-    errorMessage: string;
-
-    loading: boolean = false;
 
     constructor(private auth: AuthService,
                 private router: Router,
@@ -25,7 +22,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         if (this.applicationContext.isLoggedIn()) {
-            const redirectUrl = this.applicationContext.redirectURL;
+            const redirectUrl = this.applicationContext.getRedirectURL();
             this.router.navigate([redirectUrl]);
         }
     }

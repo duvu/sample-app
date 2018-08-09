@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {MainComponent} from './main.component';
-import {AuthGuard} from 'app/services/auth.guard';
+import {AuthGuard} from 'app/guards/auth.guard';
 import { ProfileComponent } from 'app/main/profile/profile.component';
 
 const routes: Routes = [
@@ -27,7 +27,7 @@ const routes: Routes = [
             {
                 path: '_admin',
                 loadChildren: 'app/main/administration/administration.module#AdministrationModule',
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuard],
             },
             {
                 path: 'help',
@@ -41,7 +41,7 @@ const routes: Routes = [
             {
                 path: 'mail',
                 loadChildren: 'app/main/mail/mail.module#MailModule',
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuard],
             }
         ]
     }

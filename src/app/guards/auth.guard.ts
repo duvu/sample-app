@@ -7,23 +7,29 @@ import { Observable } from 'rxjs/Observable';
 import {ApplicationContext} from 'app/application-context';
 
 @Injectable()
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
     constructor(private applicationContext: ApplicationContext, private router: Router) {}
 
     canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
         return this.canActivate(childRoute, state);
     }
+
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-            return this.checkLogin(state.url);
+            return this.checkLogin();
     }
-    checkLogin(url: string): boolean {
+
+    canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
+        return this.checkLogin();
+    }
+
+    checkLogin(): boolean {
         if (this.applicationContext.isLoggedIn()) {
             return true;
         }
 
         // store the attempted URL for redirecting
-        this.applicationContext.redirectURL = url;
+        //this.applicationContext.redirectURL = url;
         // create session_id
         const sessionId = 12345567;
         // Set our navigation extras object
@@ -35,4 +41,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         this.router.navigate(['/login'], navigationExtras);
         return false;
     }
+
+
 }
