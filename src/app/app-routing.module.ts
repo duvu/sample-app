@@ -3,10 +3,12 @@
  */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-import {AuthGuard} from "app/services/auth.guard";
-import {NotFoundComponent} from "./pages/not-found/not-found.component";
-import {LoginComponent} from "./login/login.component";
+import { AuthGuard} from "app/services/auth.guard";
+import { NotFoundComponent} from "./pages/not-found/not-found.component";
+import { LoginComponent} from "./login/login.component";
 import { ErrorComponent } from 'app/pages/error/error.component';
+import { ForgotPasswordComponent } from 'app/pages/forgot-password/forgot-password.component';
+import { RegisterComponent } from 'app/pages/register/register.component';
 
 
 const routes: Routes = [
@@ -14,6 +16,8 @@ const routes: Routes = [
     { path: 'login',    component: LoginComponent },
     { path: 'main',     loadChildren: 'app/main/main.module#MainModule', canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
     { path: 'error',    pathMatch: 'full', component: ErrorComponent },
+    { path: 'forgot-password',    pathMatch: 'full', component: ForgotPasswordComponent },
+    { path: 'register', pathMatch: 'full', component: RegisterComponent },
     { path: '**',       pathMatch: 'full', component: NotFoundComponent }
 ];
 

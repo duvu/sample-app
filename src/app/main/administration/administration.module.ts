@@ -15,7 +15,7 @@ import { DeviceService } from 'app/services/device.service';
 import { CompanyComponent } from './company/organization.component';
 import { CompanyService } from 'app/services/organization.service';
 import { PrivilegeService} from 'app/services/privilege.service';
-import { MyDirectivesModule } from 'app/directives/my-directives.module';
+import { CustomDirectivesModule } from 'app/directives/custom-directives.module';
 import { AddEditOrganizationComponent } from 'app/main/administration/company/add-edit-organization/add-edit-organization.component';
 import { OptionalColumnOrganizationComponent } from 'app/main/administration/company/optional-column-organization/optional-column-organization.component';
 import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
@@ -34,7 +34,7 @@ import { DriverComponent } from './driver/driver.component';
         CommonModule,
         MaterialShared,
         FormsModule,
-        MyDirectivesModule,
+        CustomDirectivesModule,
         ReactiveFormsModule,
         AdministrationRoutingModule
     ],

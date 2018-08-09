@@ -13,4 +13,4 @@ import { ShowIfRoleDirective } from './show-if-role.directive';
       ShowIfRoleDirective
   ]
 })
-export class MyDirectivesModule { }
+export class CustomDirectivesModule { }

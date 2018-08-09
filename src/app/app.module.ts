@@ -19,6 +19,8 @@ import { ToastService } from 'app/shared/toast.service';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 import { WaitingService } from 'app/services/waiting.service';
 import { ErrorComponent } from './pages/error/error.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { ErrorComponent } from './pages/error/error.component';
         LoginComponent,
         NotFoundComponent,
         SpinnerComponent,
-        ErrorComponent
+        ErrorComponent,
+        ForgotPasswordComponent,
+        RegisterComponent
     ],
     imports: [
         BrowserModule,
