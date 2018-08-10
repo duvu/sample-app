@@ -1,3 +1,16 @@
-<p>
-  alert-profile works!
-</p>
+<div class="x-container">
+    <div class="x-header">
+        <mat-form-field>
+            <input matInput i18n-placeholder placeholder="Search" (keyup)="applyFilter($event.target.value)">
+        </mat-form-field>
+
+        <span class="fill-remain-space"></span>
+        <button mat-icon-button (click)="openDialogColumnOptions()">
+            <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button (click)="dialogToCreateNewAlertProfile()">
+            <mat-icon>add</mat-icon>
+        </button>
+
+    </div>
+</div>
