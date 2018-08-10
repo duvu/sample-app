@@ -21,12 +21,10 @@ import { OptionalColumnOrganizationComponent } from 'app/main/administration/com
 import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
 import { CustomPipeModule } from 'app/pipes/custom-pipe.module';
 import { DcsComponent } from './dcs/dcs.component';
-import { AlertRuleComponent } from './alert/alert-rule.component';
 import { DcsService } from 'app/services/dcs.service';
 import { AddEditDcsComponent } from './dcs/add-edit-dcs/add-edit-dcs.component';
 import { OptionalColumnPrivilegeComponent } from 'app/main/administration/privilege/optional-column-privilege/optional-column-privilege.component';
 import { AddEditPrivilegeComponent } from 'app/main/administration/privilege/add-edit-privilege/add-edit-privilege.component';
-import { DriverComponent } from './driver/driver.component';
 
 @NgModule({
     imports: [
@@ -45,7 +43,6 @@ import { DriverComponent } from './driver/driver.component';
         DeviceComponent,
         PrivilegeComponent,
         DcsComponent,
-        AlertRuleComponent,
 
         AddEditDeviceComponent,
         AddEditPrivilegeComponent,
@@ -57,7 +54,6 @@ import { DriverComponent } from './driver/driver.component';
         OptionalColumnAccountComponent,
         OptionalColumnOrganizationComponent,
         OptionalColumnPrivilegeComponent,
-        DriverComponent
     ],
     providers: [
         CompanyService,

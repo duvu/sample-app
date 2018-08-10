@@ -20,8 +20,7 @@ const routes: Routes = [
         path: 'main',
         loadChildren: 'app/main/main.module#MainModule',
         canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        canLoad: [AuthGuard]
+        canActivateChild: [AuthGuard]
     },
     { path: 'error',            pathMatch: 'full', component: ErrorComponent },
     { path: 'forgot-password',  pathMatch: 'full', component: ForgotPasswordComponent },
