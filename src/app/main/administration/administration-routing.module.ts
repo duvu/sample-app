@@ -5,15 +5,17 @@ import { AuthGuard} from 'app/guards/auth.guard';
 import { AccountComponent} from "./account/account.component";
 import { DeviceComponent} from "./device/device.component";
 import { CompanyComponent } from 'app/main/administration/company/organization.component';
-import { PrivilegeComponent } from 'app/main/administration/privilege/privilege.component';
-import { DcsComponent } from 'app/main/administration/dcs/dcs.component';
 import { CompanyGuard } from 'app/guards/company.guard';
 const routes: Routes = [
     {
         path: '',
         component: AdministrationComponent,
         children:[
-            { path: '_account',     component: AccountComponent,    canActivate: [AuthGuard] },
+            {
+                path: '_account',
+                component: AccountComponent,
+                canActivate: [AuthGuard]
+            },
             {
                 path: '_company',
                 component: CompanyComponent,
@@ -30,7 +32,6 @@ const routes: Routes = [
                 loadChildren: 'app/main/administration/driver/driver.module#DriverModule',
                 canActivate: [AuthGuard]
             },
-            { path: '_vehicle',     component: DeviceComponent,     canActivate: [AuthGuard] },
             {
                 path: '_geozone',
                 loadChildren: 'app/main/administration/geozone/geozone.module#GeozoneModule',
@@ -41,8 +42,6 @@ const routes: Routes = [
                 loadChildren: 'app/main/administration/alert-profile/alert-profile.module#AlertProfileModule',
                 canActivate: [AuthGuard]
             },
-            { path: '_privilege',   component: PrivilegeComponent,  canActivate: [AuthGuard] },
-            { path: '_dcs',         component: DcsComponent,        canActivate: [AuthGuard] }
         ]
     }
 ];
