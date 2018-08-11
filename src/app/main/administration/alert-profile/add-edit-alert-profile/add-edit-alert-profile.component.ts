@@ -8,6 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 })
 export class AddEditAlertProfileComponent implements OnInit {
 
+    isEditing: boolean = false;
     constructor(
         public dialogRef: MatDialogRef<AddEditAlertProfileComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) {}
