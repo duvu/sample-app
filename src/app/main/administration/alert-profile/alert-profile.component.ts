@@ -14,7 +14,11 @@ export class AlertProfileComponent implements OnInit {
     ngOnInit() {
     }
 
-    dialogToCreateNewAlertProfile() {
+    openDialogColumnOptions(): void {
+
+    }
+
+    dialogToCreateNewAlertProfile(): void {
         const dialogRef = this.dialog.open(AddEditAlertProfileComponent, {
             minWidth: 350,
             data: {}
