@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {ApplicationContext} from 'app/application-context';
-import {LoginResponse} from 'app/models/login-response';
+import {AuthResponse} from 'app/models/auth.response';
 
 @Component({
     selector: 'app-main',

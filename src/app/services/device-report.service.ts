@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/index';
-import { PageableResponse } from 'app/models/pageable-response';
-import { DeviceSpeeedReport } from 'app/models/device-speeed-report';
-import { DeviceParkingReport } from 'app/models/device-parking-report';
+import { PageableCommonResponse } from 'app/models/pageable-common.response';
+import { DeviceSpeeedReport } from 'app/models/device-speeed.report';
+import { DeviceParkingReport } from 'app/models/device-parking.report';
 
 const API_REPORT_DEVICE_PATH = '/api/r/device';
 
@@ -16,7 +16,7 @@ export class DeviceReportService {
 
     }
 
-    getSpeedReport(device: number, from: number, to: number, page: number, size: number, sort: string, order: string): Observable<PageableResponse<DeviceSpeeedReport>> {
+    getSpeedReport(device: number, from: number, to: number, page: number, size: number, sort: string, order: string): Observable<PageableCommonResponse<DeviceSpeeedReport>> {
 
         let url = API_REPORT_DEVICE_PATH + "/speed/" + device;
 
@@ -28,7 +28,7 @@ export class DeviceReportService {
         sort = sort ? sort : '';
         order = order ? order : '';
         params = params.append('sort', sort + ',' + order);
-        return this.http.get<PageableResponse<DeviceSpeeedReport>>(url, {params: params});
+        return this.http.get<PageableCommonResponse<DeviceSpeeedReport>>(url, {params: params});
     }
 
     getParkingReport(device: number, from: number, to: number): Observable<DeviceParkingReport> {

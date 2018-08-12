@@ -10,7 +10,7 @@ import { Privilege } from 'app/models/privilege';
 import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
-import { AccountRequest } from 'app/models/request/request-account';
+import { AccountRequest } from 'app/models/request/account.request';
 import { Account } from 'app/models/account';
 import { ApplicationContext } from 'app/application-context';
 

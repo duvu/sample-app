@@ -3,7 +3,7 @@ import {Account} from 'app/models/account';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import { Base2Service } from 'app/services/base2.service';
-import { AccountRequest } from 'app/models/request/request-account';
+import { AccountRequest } from 'app/models/request/account.request';
 import { Observable } from 'rxjs/Rx';
 
 export const ACCOUNT_API_URL = '/api/account';

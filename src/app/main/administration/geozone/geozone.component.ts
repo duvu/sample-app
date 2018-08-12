@@ -7,14 +7,12 @@ import { MatDialog } from '@angular/material';
 import * as _ from 'lodash';
 import * as L from 'leaflet';
 import 'leaflet-draw';
-import { ToastService } from 'app/shared/toast.service';
-import { RequestGeozone } from 'app/models/request/request-geozone';
+import { GeozoneRequest } from 'app/models/request/geozone.request';
 import { ApplicationContext } from 'app/application-context';
 import { GeoUtils } from 'app/main/administration/geozone/GeoUtils';
 import { DrawOptions, LatLng, Layer, Point } from 'leaflet';
 import { Feature} from 'geojson';
 import { FeatureGroup } from 'leaflet';
-import { WaitingService } from 'app/services/waiting.service';
 
 const TILE_OSM_URL = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX_URL = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -48,9 +46,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     constructor(
         private dialog: MatDialog,
         private router: Router,
-        private toast: ToastService,
-        private spinner: WaitingService,
-        private appContext: ApplicationContext,
+        private applicationContext: ApplicationContext,
         private service: GeozoneService) { }
 
     ngOnInit() {
@@ -230,7 +226,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
             },
             error => {},
             () => {
-                this.toast.info("Deleted geofence #" + geofence.name);
+                this.applicationContext.info("Deleted geofence #" + geofence.name);
                 _.remove(this.geofenceList, (g) => {
                     return (g.id === geofence.id);
                 });
@@ -291,15 +287,15 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
     }
 
     save(): void {
-        let req = new RequestGeozone();
+        let req = new GeozoneRequest();
         req.updateFromGeofence(this.selected);
         if (this.selected && this.selected.id) {
             this.service.update(this.selected.id, req).subscribe(
                 data => {
-                    this.toast.info('Updated Geofence #' + this.selected.name);
+                    this.applicationContext.info('Updated Geofence #' + this.selected.name);
                 },
                 error => {
-                    this.toast.error('Not able to update geofence #' + this.selected.name);
+                    this.applicationContext.error('Not able to update geofence #' + this.selected.name);
                     this.pending = false;
                 },
                 () => {
@@ -309,7 +305,7 @@ export class GeozoneComponent implements OnInit, AfterViewInit {
         } else {
             this.service.create(req).subscribe(
                 data => {
-                    this.toast.info('Created #' + this.selected.name);
+                    this.applicationContext.info('Created #' + this.selected.name);
                     this.geofenceList.push(data);
                 },
                 error => {

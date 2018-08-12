@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 import * as L from 'leaflet';
 import 'leaflet-polylinedecorator';
@@ -9,14 +9,14 @@ import { EventService } from 'app/services/event.service';
 import { EventData } from 'app/models/event-data';
 
 import * as _ from 'lodash';
-import { LatLng, Polyline } from 'leaflet';
+import { Polyline } from 'leaflet';
 import { MatTableDataSource } from '@angular/material';
 
 import * as d3 from 'd3';
 import * as c3 from 'c3';
 
-import { WaitingService } from 'app/services/waiting.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ApplicationContext } from 'app/application-context';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -66,7 +66,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
 
     constructor(private route: ActivatedRoute,
                 private eventService: EventService,
-                private waitingService: WaitingService) {
+                private applicationContext: ApplicationContext) {
 
     }
 
@@ -168,7 +168,7 @@ export class HistoryComponent implements OnInit, AfterViewInit {
     }
 
     private loadHistoryEvents(): void {
-        this.waitingService.show(true);
+        this.applicationContext.spin(true);
         this.eventService.getHistoryEvents(this.id, this.timeFrom, this.timeTo).subscribe(
             data => {
                 this.historyEvents = data;
@@ -197,10 +197,10 @@ export class HistoryComponent implements OnInit, AfterViewInit {
                 this.processEvents();
             },
             error => {
-                this.waitingService.show(false);
+                this.applicationContext.spin(false);
             },
             () => {
-                this.waitingService.show(false);
+                this.applicationContext.spin(false);
                 this.draw();
             }
         )

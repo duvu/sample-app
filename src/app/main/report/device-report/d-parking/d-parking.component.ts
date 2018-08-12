@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChange } from '@angular/core';
-import { WaitingService } from 'app/services/waiting.service';
 import { DeviceReportService } from 'app/services/device-report.service';
 import { MatTableDataSource } from '@angular/material';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { DeviceParkingReport } from 'app/models/device-parking-report';
+import { DeviceParkingReport } from 'app/models/device-parking.report';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import * as d_ from "date-fns";
+import { ApplicationContext } from 'app/application-context';
 @Component({
     selector: 'app-d-parking',
     templateUrl: './d-parking.component.html',
@@ -23,7 +23,7 @@ export class DParkingComponent implements OnChanges, OnInit, AfterViewInit {
     displayedColumns = ['latitude', 'longitude', 'altitude', 'odometerKM', 'speedKPH', 'heading', 'status', 'address', 'timestamp', 'stoppedTime'];
 
     constructor(private deviceReportService: DeviceReportService,
-                private spinner: WaitingService) {
+                private applicationContext: ApplicationContext) {
         this.dataChange = new ReplaySubject(1);
     }
 
@@ -70,7 +70,8 @@ export class DParkingComponent implements OnChanges, OnInit, AfterViewInit {
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    this.spinner.show(true);
+                    //this.spinner.show(true);
+                    this.applicationContext.spin(true);
                     if (!this.device) {
                         return observableOf([]);
                     }
@@ -86,7 +87,8 @@ export class DParkingComponent implements OnChanges, OnInit, AfterViewInit {
             ).subscribe(
             data => {
                 this.dataSource.data = data;
-                this.spinner.show(false);
+                //this.spinner.show(false);
+                this.applicationContext.spin(false);
             });
     }
 

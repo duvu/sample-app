@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DeviceLittle } from 'app/models/little/device-little';
+import { DeviceLittle } from 'app/models/little/device.little';
 import { MatDrawer, MatSidenav, MatTableDataSource } from '@angular/material';
 import { DeviceService } from 'app/services/device.service';
-import { WaitingService } from 'app/services/waiting.service';
+import { ApplicationContext } from 'app/application-context';
 
 @Component({
     selector: 'app-report',
@@ -21,10 +21,10 @@ export class DeviceReportComponent implements OnInit {
     @ViewChild(MatDrawer) sideNav: MatDrawer;
 
     constructor(private deviceService: DeviceService,
-                private spinner: WaitingService) { }
+                private applicationContext: ApplicationContext) { }
 
     ngOnInit() {
-        this.spinner.show(true);
+        this.applicationContext.spin(true);
         this.selected = {};
         this.deviceService.getAllLittle().subscribe(
             response => {
@@ -33,7 +33,7 @@ export class DeviceReportComponent implements OnInit {
             },
             error => {},
             () => {
-                this.spinner.show(false);
+                this.applicationContext.spin(false);
             }
         );
     }

@@ -1,7 +1,6 @@
 import * as _ from 'lodash';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Company } from 'app/models/company';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ApplicationContext } from 'app/application-context';
 import { CompanyService } from 'app/services/organization.service';
@@ -14,10 +13,9 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs/observable/of';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
-    selector: 'app-organization',
+    selector: 'applicationContext-organization',
     templateUrl: './organization.component.html',
     styleUrls: ['./organization.component.scss']
 })
@@ -48,8 +46,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
     };
 
     constructor(private dialog: MatDialog,
-                private app: ApplicationContext,
-                private spinner: WaitingService,
+                private applicationContext: ApplicationContext,
                 private service: CompanyService) { }
 
     ngOnInit() {
@@ -66,19 +63,19 @@ export class CompanyComponent implements OnInit, AfterViewInit {
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    this.spinner.show(true);
+                    this.applicationContext.spin(true);
                     return this.service!.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
                         this.sort.active, this.sort.direction);
                 }),
                 map(data => {
-                    this.spinner.show(false);
+                    this.applicationContext.spin(false);
                     this.resultsLength = data.totalElements;
 
                     return data.content;
                 }),
                 catchError(() => {
-                    this.spinner.show(false);
+                    this.applicationContext.spin(false);
                     return observableOf([]);
                 })
             ).subscribe(data => this.dataSource.data = data);

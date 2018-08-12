@@ -1,5 +1,5 @@
-import { CompanyLittle } from 'app/models/little/company-little';
-import { AccountLittle } from 'app/models/little/account-little';
+import { CompanyLittle } from 'app/models/little/company.little';
+import { AccountLittle } from 'app/models/little/account.little';
 
 export class Device {
     public id: number;

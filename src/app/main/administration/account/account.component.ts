@@ -20,12 +20,9 @@ import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import {of as observableOf} from 'rxjs/observable/of';
-import { AccountRequest } from 'app/models/request/request-account';
+import { AccountRequest } from 'app/models/request/account.request';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { CompanyLittle } from 'app/models/little/company-little';
-import { RequestDevice } from 'app/models/request/request-device';
-import { Device } from 'app/models/device';
-import { WaitingService } from 'app/services/waiting.service';
+import { CompanyLittle } from 'app/models/little/company.little';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -70,7 +67,6 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
 
     constructor(private dialog: MatDialog,
                 private applicationContext: ApplicationContext,
-                private spinner: WaitingService,
                 private service: AccountService) { }
 
     ngOnInit() {
@@ -90,7 +86,7 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    this.spinner.show(true);
+                    this.applicationContext.spin(true)
                     return this.service!.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
                         this.sort.active, this.sort.direction);
@@ -105,7 +101,7 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
             ).subscribe(
             data => {
                 this.dataSource.data = data;
-                this.spinner.show(false);
+                this.applicationContext.spin(false);
             });
     }
     applyFilter(filterValue: string) {

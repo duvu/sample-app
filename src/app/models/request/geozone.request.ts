@@ -1,7 +1,7 @@
 import { Geofence } from 'app/models/geozone';
-import { AccountLittle } from 'app/models/little/account-little';
+import { AccountLittle } from 'app/models/little/account.little';
 
-export class RequestGeozone {
+export class GeozoneRequest {
     companyId: number;
     accountIds: Array<number>;
     name: string;

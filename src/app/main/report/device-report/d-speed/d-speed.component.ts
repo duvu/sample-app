@@ -9,12 +9,12 @@ import {
 } from '@angular/core';
 import { DeviceReportService } from 'app/services/device-report.service';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { DeviceSpeeedReport } from 'app/models/device-speeed-report';
+import { DeviceSpeeedReport } from 'app/models/device-speeed.report';
 
 import { merge, of as observableOf} from 'rxjs';
 import { catchError, map, startWith, switchMap} from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { WaitingService } from 'app/services/waiting.service';
+import { ApplicationContext } from 'app/application-context';
 
 @Component({
     selector: 'app-d-speed',
@@ -36,7 +36,7 @@ export class DSpeedComponent implements OnChanges, OnInit, AfterViewInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(private deviceReportService: DeviceReportService,
-                private spinner: WaitingService) {
+                private applicationContext: ApplicationContext) {
         this.dataChange = new ReplaySubject(1);
     }
 
@@ -82,7 +82,8 @@ export class DSpeedComponent implements OnChanges, OnInit, AfterViewInit {
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    this.spinner.show(true);
+                    //this.spinner.show(true);
+                    this.applicationContext.spin(true);
                     if (!this.device) {
                         return observableOf({});
                     }
@@ -99,7 +100,7 @@ export class DSpeedComponent implements OnChanges, OnInit, AfterViewInit {
             ).subscribe(
                 data => {
                     this.dataSource.data = data;
-                    this.spinner.show(false);
+                    this.applicationContext.spin(false);
             });
     }
 }

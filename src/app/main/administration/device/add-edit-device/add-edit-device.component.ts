@@ -8,10 +8,10 @@ import { Account } from 'app/models/account';
 import { CompanyService } from 'app/services/organization.service';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
-import { AccountLittle } from 'app/models/little/account-little';
+import { AccountLittle } from 'app/models/little/account.little';
 import { AccountService } from 'app/services/account.service';
-import { AccountRequest } from 'app/models/request/request-account';
-import { RequestDevice } from 'app/models/request/request-device';
+import { AccountRequest } from 'app/models/request/account.request';
+import { DeviceRequest } from 'app/models/request/device.request';
 import { DeviceService } from 'app/services/device.service';
 
 @Component({
@@ -98,7 +98,7 @@ export class AddEditDeviceComponent implements OnInit {
 
     onSave(): void {
         this.data.expiredOn = this.dateExpired;
-        let data1 = new RequestDevice(this.data);
+        let data1 = new DeviceRequest(this.data);
         data1.accountIds = this.accountIds;
         this.dialogRef.close(data1);
     }

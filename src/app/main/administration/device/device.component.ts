@@ -8,7 +8,7 @@ import { OptionalColumnDeviceComponent } from 'app/main/administration/device/op
 import { AddEditDeviceComponent } from 'app/main/administration/device/add-edit-device/add-edit-device.component';
 import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
-import { RequestDevice } from 'app/models/request/request-device';
+import { DeviceRequest } from 'app/models/request/device.request';
 
 import {merge} from 'rxjs/observable/merge';
 import {of as observableOf} from 'rxjs/observable/of';
@@ -17,11 +17,9 @@ import {map} from 'rxjs/operators/map';
 import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { ToastService } from 'app/shared/toast.service';
-import { WaitingService } from 'app/services/waiting.service';
 
 @Component({
-    selector: 'app-device',
+    selector: 'applicationContext-device',
     templateUrl: './device.component.html',
     styleUrls: ['./device.component.scss']
 })
@@ -65,10 +63,8 @@ export class DeviceComponent implements OnInit, AfterViewInit {
 
 
     constructor(private dialog: MatDialog,
-                private app: ApplicationContext,
-                private service: DeviceService,
-                private spinner: WaitingService,
-                private toast: ToastService) { }
+                private applicationContext: ApplicationContext,
+                private service: DeviceService) { }
 
     ngOnInit() {
         this.initTableSettings();
@@ -84,23 +80,22 @@ export class DeviceComponent implements OnInit, AfterViewInit {
             .pipe(
                 startWith({}),
                 switchMap(() => {
-                    this.spinner.show(true);
+                    this.applicationContext.spin(true);
                     return this.service.searchAndSort(
                         this.paginator.pageIndex, this.paginator.pageSize,
                         this.sort.active, this.sort.direction);
                 }),
                 map(data => {
-                    this.spinner.show(false);
+                    this.applicationContext.spin(false);
                     this.resultsLength = data.totalElements;
                     return data.content;
                 }),
                 catchError(() => {
-                    this.spinner.show(false);
+                    this.applicationContext.spin(false);
                     return observableOf([]);
                 })
             ).subscribe(data => {
                 this.dataSource.data = data;
-                console.log('Data', data);
             });
     }
 
@@ -149,7 +144,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
 
     openDialogNewObject(): void {
         const data = new Device();
-        //data.companyId = this.app.getCurrentAccount().organizationId;
+        //data.companyId = this.applicationContext.getCurrentAccount().organizationId;
         const dialogRef = this.dialog.open(AddEditDeviceComponent, {
             // width: '600px',
             disableClose: true,
@@ -163,7 +158,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         });
     }
 
-    create(device: RequestDevice): void {
+    create(device: DeviceRequest): void {
         this.service.create(device).subscribe(
             data => {
                 this.dataChange.next(data.id);
@@ -185,7 +180,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         });
     }
 
-    update(device: RequestDevice): void {
+    update(device: DeviceRequest): void {
         this.service.update(device.id, device).subscribe(
             response => {
                 this.dataChange.next(0);
@@ -235,12 +230,12 @@ export class DeviceComponent implements OnInit, AfterViewInit {
             device.status = 'enabled';
         }
 
-        let request = new RequestDevice(device)
+        let request = new DeviceRequest(device)
         this.service.update(device.id, request).subscribe(
             data => {},
             error => {},
             () => {
-                this.toast.info("Updated device!");
+                this.applicationContext.info("Updated device #id: " + device.id);
             }
         )
     }

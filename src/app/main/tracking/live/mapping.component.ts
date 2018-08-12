@@ -22,15 +22,14 @@ import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/forkJoin';
 
 import { StatusPieChart } from 'app/models/status-pie-chart';
-import { DeviceLittle } from 'app/models/little/device-little';
+import { DeviceLittle } from 'app/models/little/device.little';
 import { PopupService } from 'app/main/tracking/live/popup/popup.service';
 import { MappingUtils } from 'app/main/tracking/live/mapping-utils';
-import { WaitingService } from 'app/services/waiting.service';
 import { Observable } from 'rxjs/Observable';
-import { ToastService } from 'app/shared/toast.service';
 import { CircleMarker } from 'leaflet';
 import { MatBottomSheet } from '@angular/material';
 import { PanelCommandComponent } from 'app/main/tracking/live/panel-command/panel-command.component';
+import { ApplicationContext } from 'app/application-context';
 
 const TILE_OSM = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
 const TILE_MAPBOX = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -68,14 +67,13 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     constructor(private deviceService: DeviceService,
                 private eventService: EventService,
-                private spinner: WaitingService,
-                private toast: ToastService,
+                private applicationContext: ApplicationContext,
                 private popupLink: PopupService,
                 private bottomSheet: MatBottomSheet) { }
 
     ngOnInit() {
         this.alive = true;
-        this.spinner.show(true);
+        this.applicationContext.spin(true);
 
         Observable.forkJoin(
             this.deviceService.getAllLittle(),
@@ -86,13 +84,13 @@ export class MappingComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.liveEvents = data[1];
             },
             error => {
-                this.toast.error("Error when loading data");
+                this.applicationContext.error("Error when loading data");
             },
             () => {
                 this.deviceList = _.filter(this.allDeviceList, (d) => {
                     return true;
                 });
-                this.spinner.show(false);
+                this.applicationContext.spin(false);
                 this.processEvents();
             }
         );

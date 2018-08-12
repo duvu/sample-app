@@ -1,7 +1,7 @@
 import { Device } from 'app/models/device';
 import * as _ from 'lodash';
 
-export class RequestDevice {
+export class DeviceRequest {
     public id: number;
 
     public name: string;

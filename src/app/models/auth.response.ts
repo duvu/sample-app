@@ -1,4 +1,17 @@
-export class LoginResponse {
+export class AuthResponse {
+
+    private _access_token: string;
+    private _accountId: number;
+    private _accountName: string;
+    private _authorities: string[];
+    private _expires_in: number;
+    private _jti: string;
+    private _companyId: number;
+    private _organizationName: string;
+    private _firstPageUrl: string;
+    private _scope: string;
+    private _token_type: string;
+
     get firstPageUrl(): string {
         return this._firstPageUrl;
     }
@@ -88,16 +101,4 @@ export class LoginResponse {
     set token_type(value: string) {
         this._token_type = value;
     }
-
-    private _access_token: string;
-    private _accountId: number;
-    private _accountName: string;
-    private _authorities: string[];
-    private _expires_in: number;
-    private _jti: string;
-    private _companyId: number;
-    private _organizationName: string;
-    private _firstPageUrl: string;
-    private _scope: string;
-    private _token_type: string;
 }

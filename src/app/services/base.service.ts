@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { PageableResponse } from 'app/models/pageable-response';
+import { PageableCommonResponse } from 'app/models/pageable-common.response';
 
 export class BaseService<T> {
     private _http: HttpClient;
@@ -15,12 +15,12 @@ export class BaseService<T> {
         this._http = http;
     }
 
-    searchAndSort(page: number, size: number, sort: string, order: string): Observable<PageableResponse<T>> {
+    searchAndSort(page: number, size: number, sort: string, order: string): Observable<PageableCommonResponse<T>> {
         let params = new HttpParams();
         params.append('page', String(page));
         params.append('size', String(size));
         params.append('sort', sort + ',' + order);
-        return this._http.get<PageableResponse<T>>(this._url, {params: params});
+        return this._http.get<PageableCommonResponse<T>>(this._url, {params: params});
     }
 
     getAll(): Observable<T[]> {

@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
+import { Observable, of } from 'rxjs';
 import { Router } from "@angular/router";
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import {PageableResponse} from 'app/models/pageable-response';
+import {PageableCommonResponse} from 'app/models/pageable-common.response';
 
 export class Base2Service<I, O> {
+
+    private readonly _url: string;
+
     private _http: HttpClient;
-    private _url: string;
     private _router: Router;
 
     constructor(http: HttpClient, router: Router, url: string) {
@@ -15,13 +16,13 @@ export class Base2Service<I, O> {
         this._http = http;
     }
 
-    searchAndSort(page: number, size: number, sort: string, order: string): Observable<PageableResponse<O>> {
+    searchAndSort(page: number, size: number, sort: string, order: string): Observable<PageableCommonResponse<O>> {
         let params = new HttpParams();
         params = params.append('page', String(page));
         params = params.append('size', String(size));
         sort = sort ? sort : '';
         params = params.append('sort', sort + ',' + order);
-        return this._http.get<PageableResponse<O>>(this._url, {params: params});
+        return this._http.get<PageableCommonResponse<O>>(this._url, {params: params});
     }
 
     getAll(): Observable<O[]> {
@@ -66,7 +67,7 @@ export class Base2Service<I, O> {
             } else {
                 errMsg = error.message ? error.message : error.toString();
             }
-            return Observable.throw(errMsg);
+            return of(errMsg);//Observable.throw(errMsg);
         }
     }
 }
