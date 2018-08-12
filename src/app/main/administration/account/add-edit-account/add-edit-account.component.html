@@ -58,10 +58,6 @@
             </div>
         </div>
 
-        <!--mat-form-field class="full-width" *ngIf="isCurrentLoggedInAccount">
-            <input matInput i18n-placeholder placeholder="Roles" name="acc-role" value="{{data.privileges | flatten: 'name'}}">
-        </mat-form-field-->
-
         <mat-form-field class="full-width">
             <mat-select matInput placeholder="Roles" [(ngModel)]="data.privilege">
                 <mat-option *ngFor="let pri of privilegeList" [value]="pri.id">{{pri.name}}</mat-option>

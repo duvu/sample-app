@@ -5,13 +5,16 @@ import { AlertProfileRoutingModule } from 'app/main/administration/alert-profile
 import { AddEditAlertProfileComponent } from './add-edit-alert-profile/add-edit-alert-profile.component';
 import { MaterialShared } from 'app/shared/material-shared';
 import { CustomDirectivesModule } from 'app/directives/custom-directives.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         CommonModule,
         MaterialShared,
         CustomDirectivesModule,
-        AlertProfileRoutingModule
+        AlertProfileRoutingModule,
+        ReactiveFormsModule,
+        FormsModule
     ],
     declarations: [
         AlertProfileComponent,
