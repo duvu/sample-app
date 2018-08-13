@@ -34,6 +34,11 @@ const routes: Routes = [
             {
                 path: 'help',
                 loadChildren: 'app/main/help/help.module#HelpModule',
+                canActivate: [AuthGuard]
+            },
+            {
+                path: 'sys-admin',
+                loadChildren: 'app/main/sys-admin/sys-admin.module#SysAdminModule',
                 canActivate: [AuthGuard],
                 canLoad: [SysAdminGuard]
             },
