@@ -8,6 +8,9 @@ import { CompanyService } from 'app/services/organization.service';
 import { ApplicationContext } from 'app/application-context';
 import { Observable } from 'rxjs/Observable';
 import { FormControl } from '@angular/forms';
+import { AlertProfileRequest } from 'app/models/request/alert-profile.request';
+import { ActivatedRoute } from '@angular/router';
+import { AlertProfileService } from 'app/services/alert-profile.service';
 
 @Component({
     selector: 'add-edit-alert-profile',
@@ -20,13 +23,21 @@ export class AddEditAlertProfileComponent implements OnInit {
     companyList: Company[];
     filteredCompanies: Observable<Company[]>;
 
+    alertProfile: AlertProfileRequest;
+    isEditting: boolean;
+
     companyControl: FormControl = new FormControl();
+
     constructor(private companyService: CompanyService,
                 private applicationContext: ApplicationContext,
+                private activeRouter: ActivatedRoute,
+                private alertProfileSerivce: AlertProfileService,
                 public dialogRef: MatDialogRef<AddEditAlertProfileComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: any) {}
 
     ngOnInit() {
+        this.alertProfile = new AlertProfileRequest();
+
         this.companyService.getAll().subscribe(
             response => {
                 this.companyList = response;
@@ -47,7 +58,13 @@ export class AddEditAlertProfileComponent implements OnInit {
     }
 
     save(): void {
-
+        this.alertProfileSerivce.create(this.alertProfile).subscribe(
+            data => {
+                console.log('Data#Alert#Create', data);
+            },
+            error => {},
+            () => {}
+        );
     }
 
     filter(value: string): Company[] {

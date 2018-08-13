@@ -1,9 +1,9 @@
 import { Observable, of } from 'rxjs';
 import { Router } from "@angular/router";
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import {PageableCommonResponse} from 'app/models/pageable-common.response';
+import { PageableCommonResponse } from 'app/models/pageable-common.response';
 
-export class Base2Service<I, O> {
+export class AbstractService<I, O> {
 
     private readonly _url: string;
 
