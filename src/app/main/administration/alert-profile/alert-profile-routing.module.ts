@@ -11,8 +11,8 @@ const routes: Routes = [
             // {
             //     path: '_company',
             //     component: CompanyComponent,
-            //     canActivate: [CompanyGuard],
-            //     canLoad: [CompanyGuard]
+            //     canActivate: [SysAdminGuard],
+            //     canLoad: [SysAdminGuard]
             // },
             // { path: '_device',      component: DeviceComponent,     canActivate: [AuthGuard] },
             // { path: '_driver',      component: DriverComponent,     canActivate: [AuthGuard] },

@@ -46,16 +46,23 @@
             <mat-icon>setting</mat-icon>
             <span i18n>Administration</span>
         </button>
+
         <button mat-button [matMenuTriggerFor]="menuHelp">
             <mat-icon>help</mat-icon>
             <span i18n>Help</span>
         </button>
-
         <mat-menu #menuHelp="matMenu" overlapTrigger="false">
             <button mat-menu-item routerLink="help/usage">
                 <mat-icon>help</mat-icon>
                 <span>Help</span>
             </button>
+        </mat-menu>
+
+        <button mat-button [matMenuTriggerFor]="menuSys" *showIfRole="'vd5lord,sysadmin'">
+            <mat-icon>setting</mat-icon>
+            <span i18n>SysAdmin</span>
+        </button>
+        <mat-menu #menuSys="matMenu" overlapTrigger="false">
             <button mat-menu-item routerLink="help/development">
                 <mat-icon>voicemail</mat-icon>
                 <span>Development Plan</span>

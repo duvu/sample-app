@@ -6,11 +6,13 @@ import { FormsModule} from '@angular/forms';
 import { MaterialShared} from 'app/shared/material-shared';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
 import { ProfileComponent } from 'app/main/profile/profile.component';
+import { CustomDirectivesModule } from 'app/directives/custom-directives.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
+        CustomDirectivesModule,
         MaterialShared,
         MainRoutingModule,
     ],

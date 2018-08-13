@@ -7,7 +7,7 @@ import { Privilege } from 'app/models/privilege';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ComponentPortal, DomPortalHost } from '@angular/cdk/portal';
-import { SpinnerComponent } from 'app/shared/components/spinner/spinner.component';
+import { SpinnerComponent } from 'app/pages/spinner/spinner.component';
 
 
 export const redirectUrl = 'redirectUrl';

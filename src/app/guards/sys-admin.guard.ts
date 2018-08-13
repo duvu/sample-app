@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 @Injectable({
   providedIn: 'root'
 })
-export class CompanyGuard implements CanActivate, CanLoad {
+export class SysAdminGuard implements CanActivate, CanLoad {
     constructor(private applicationContext: ApplicationContext) {}
   canActivate(
     next: ActivatedRouteSnapshot,

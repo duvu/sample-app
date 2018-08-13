@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {MainComponent} from './main.component';
-import {AuthGuard} from 'app/guards/auth.guard';
+import { MainComponent} from './main.component';
 import { ProfileComponent } from 'app/main/profile/profile.component';
+//-- guards
+import { AuthGuard} from 'app/guards/auth.guard';
+import { SysAdminGuard } from 'app/guards/sys-admin.guard';
 
 const routes: Routes = [
     {
@@ -32,7 +34,8 @@ const routes: Routes = [
             {
                 path: 'help',
                 loadChildren: 'app/main/help/help.module#HelpModule',
-                canActivate: [AuthGuard]
+                canActivate: [AuthGuard],
+                canLoad: [SysAdminGuard]
             },
             {
                 path: 'profile',

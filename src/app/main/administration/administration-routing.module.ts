@@ -5,7 +5,7 @@ import { AuthGuard} from 'app/guards/auth.guard';
 import { AccountComponent} from "./account/account.component";
 import { DeviceComponent} from "./device/device.component";
 import { CompanyComponent } from 'app/main/administration/company/organization.component';
-import { CompanyGuard } from 'app/guards/company.guard';
+import { SysAdminGuard } from 'app/guards/sys-admin.guard';
 const routes: Routes = [
     {
         path: '',
@@ -19,8 +19,8 @@ const routes: Routes = [
             {
                 path: '_company',
                 component: CompanyComponent,
-                canActivate: [CompanyGuard],
-                canLoad: [CompanyGuard]
+                canActivate: [SysAdminGuard],
+                canLoad: [SysAdminGuard]
             },
             {
                 path: '_device',
