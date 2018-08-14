@@ -9,35 +9,40 @@
 </div>
 <div mat-dialog-content>
     <form class="">
-        <mat-form-field class="full-width">
-            <input matInput placeholder="Name" [(ngModel)]="alertProfile.name" name="name of alert-profile">
-        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Name" [(ngModel)]="alertProfile.name" name="name of alert-profile">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50" fxLayout="row" fxLayoutGap="16px">
+                <div fxFlex="50">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Type">
+                    </mat-form-field>
+                </div>
+                <div fxFlex="50">
+                    <mat-slide-toggle [checked]="alertProfile.active">Active/Inactive</mat-slide-toggle>
+                    <!--mat-form-field class="full-width">
+                        <input matInput placeholder="Actice">
+                    </mat-form-field-->
+                </div>
+            </div>
+        </div>
         <mat-form-field class="full-width">
             <input matInput placeholder="Description">
         </mat-form-field>
 
-        <mat-form-field class="full-width">
+        <!--mat-form-field class="full-width">
             <input type="text"  placeholder="Company" aria-label="Company" matInput [formControl]="companyControl" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
                     {{company.name}}
                 </mat-option>
             </mat-autocomplete>
-        </mat-form-field>
+        </mat-form-field-->
 
-        <div fxLayout="row" fxLayoutGap="16px">
-            <div fxFlex="50">
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Type">
-                </mat-form-field>
-            </div>
-            <div fxFlex="50">
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Actice">
-                </mat-form-field>
 
-            </div>
-        </div>
 
         <div fxLayout="row" fxLayoutGap="16px">
             <div fxFlex="25">
@@ -62,50 +67,95 @@
             </div>
         </div>
 
+        <div class="full-width">
+            <mat-button-toggle-group #weekDays="matButtonToggleGroup" [multiple]="true">
+                <mat-button-toggle value="monday">
+                    <span>Mon</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="tuesday">
+                    <span>Tue</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="wednesday">
+                    <span>Wed</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="thursday">
+                    <span>Thu</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="friday">
+                    <span>Fri</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="saturday">
+                    <span>Sat</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="sunday">
+                    <span>Sun</span>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div class="full-width">
+            <mat-button-toggle-group #daytime="matButtonToggleGroup">
+                <mat-button-toggle value="allTheTime">
+                    <span>All Day</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="officeTime">
+                    <span>Office Time (9:00 AM - 5:00 PM)</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="outOfOfficeTime">
+                    <span>Out of Office</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="customTime">
+                    <span>Custom Time</span>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <!--<div fxLayout="row" fxLayoutGap="16px">-->
+            <!--<div fxFlex="50">-->
+
+                <!--&lt;!&ndash;mat-form-field class="full-width">-->
+                    <!--<input matInput placeholder="Week days">-->
+                <!--</mat-form-field&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div fxFlex="50">-->
+                <!--&lt;!&ndash;mat-form-field class="full-width">-->
+                    <!--<input matInput placeholder="Time">-->
+                <!--</mat-form-field&ndash;&gt;-->
+
+            <!--</div>-->
+        <!--</div>-->
         <div fxLayout="row" fxLayoutGap="16px">
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Week days">
+                    <input matInput placeholder="Notify Email">
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Email Subject">
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Email Text">
+                </mat-form-field>
+
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Email Template">
                 </mat-form-field>
             </div>
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Time">
+                    <input matInput placeholder="Notify SMS">
                 </mat-form-field>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="SMS Text">
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Send Command">
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Action" value="http://">
+                </mat-form-field>
+
             </div>
         </div>
 
-        <mat-form-field class="full-width">
-            <input matInput placeholder="Action">
-        </mat-form-field>
-
-        <mat-form-field class="full-width">
-            <input matInput placeholder="Notify Email">
-        </mat-form-field>
-
-        <mat-form-field class="full-width">
-            <input matInput placeholder="Notify SMS">
-        </mat-form-field>
-
-        <mat-form-field class="full-width">
-            <input matInput placeholder="Email Subject">
-        </mat-form-field>
-
-        <mat-form-field class="full-width">
-            <input matInput placeholder="Email Text">
-        </mat-form-field>
-
-        <mat-form-field class="full-width">
-            <input matInput placeholder="Email Template">
-        </mat-form-field>
-
-        <mat-form-field class="full-width">
-            <input matInput placeholder="SMS Text">
-        </mat-form-field>
-
-        <mat-form-field class="full-width">
-            <input matInput placeholder="Send Command">
-        </mat-form-field>
     </form>
 </div>
 <div mat-dialog-actions align="end">
