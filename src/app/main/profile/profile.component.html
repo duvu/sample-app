@@ -1,5 +1,62 @@
-<div class="page-profile">
-    <mat-card>
-        <mat-card-header>Profile</mat-card-header>
-    </mat-card>
-</div>
+<form>
+    <div fxLayout="column" class="page-profile">
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Account ID" [disabled]="!isEditting" [value]="accountId">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Account Name" [disabled]="!isEditting" [value]="accountName">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Company ID" [disabled]="!isEditting" [value]="companyId">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Company Name" [disabled]="!isEditting" [value]="companyName">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <mat-form-field>
+            <input matInput placeholder="First Page URL" [disabled]="!isEditting" [value]="firstPageUrl">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Redirect URL" [disabled]="!isEditting" [value]="redirectURL">
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutGap="16px">
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Token Type" disabled [value]="token_type">
+                </mat-form-field>
+            </div>
+            <div fxFlex="50">
+                <mat-form-field class="full-width">
+                    <input matInput placeholder="Expired In" disabled [value]="expires_in">
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-form-field>
+            <textarea matInput placeholder="Access Token" disabled [value]="access_token"></textarea>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="JTI" disabled [value]="jti">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Scope" disabled [value]="scope">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Authorities" disabled [value]="authorities">
+        </mat-form-field>
+    </div>
+</form>
