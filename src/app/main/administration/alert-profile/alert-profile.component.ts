@@ -20,8 +20,7 @@ export class AlertProfileComponent implements OnInit {
 
     dialogToCreateNewAlertProfile(): void {
         const dialogRef = this.dialog.open(AddEditAlertProfileComponent, {
-            width: 800,
-            data: { id: '' }
+            width: 800
         });
         dialogRef.afterClosed().subscribe(result => {});
     }
