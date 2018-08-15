@@ -6,6 +6,7 @@ import { AddEditAlertProfileComponent } from './add-edit-alert-profile/add-edit-
 import { MaterialShared } from 'app/shared/material-shared';
 import { CustomDirectivesModule } from 'app/directives/custom-directives.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SchedulerModule } from 'app/shared/scheduler/scheduler.module';
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CustomDirectivesModule,
         AlertProfileRoutingModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        SchedulerModule
     ],
     declarations: [
         AlertProfileComponent,

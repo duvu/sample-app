@@ -21,11 +21,8 @@
                         <input matInput placeholder="Type">
                     </mat-form-field>
                 </div>
-                <div fxFlex="50">
+                <div fxFlex="50" class="flex-middle">
                     <mat-slide-toggle [checked]="alertProfile.active">Active/Inactive</mat-slide-toggle>
-                    <!--mat-form-field class="full-width">
-                        <input matInput placeholder="Actice">
-                    </mat-form-field-->
                 </div>
             </div>
         </div>
@@ -66,8 +63,12 @@
                 </mat-form-field>
             </div>
         </div>
+        <div fxLayout="row" fxLayoutGap="16px">
+                <weekday type="short"></weekday>
+                <daytime></daytime>
+        </div>
 
-        <div class="full-width">
+        <!--div class="full-width">
             <mat-button-toggle-group #weekDays="matButtonToggleGroup" [multiple]="true">
                 <mat-button-toggle value="monday">
                     <span>Mon</span>
@@ -107,7 +108,7 @@
                     <span>Custom Time</span>
                 </mat-button-toggle>
             </mat-button-toggle-group>
-        </div>
+        </div-->
         <!--<div fxLayout="row" fxLayoutGap="16px">-->
             <!--<div fxFlex="50">-->
 
