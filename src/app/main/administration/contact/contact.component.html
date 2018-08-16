@@ -1,0 +1,14 @@
+<div class="x-container">
+    <div class="x-header">
+        <mat-form-field>
+            <input matInput i18n-placeholder placeholder="Search" (keyup)="applyFilter($event.target.value)">
+        </mat-form-field>
+        <span class="fill-remain-space"></span>
+        <button mat-icon-button (click)="dialogColumnOptions()">
+            <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button (click)="dialogNewContact()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</div>

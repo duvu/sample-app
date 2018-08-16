@@ -23,6 +23,11 @@ const routes: Routes = [
                 canLoad: [SysAdminGuard]
             },
             {
+                path: 'contact',
+                loadChildren: 'app/main/administration/contact/contact.module#ContactModule',
+                canActivate: [AuthGuard]
+            },
+            {
                 path: '_device',
                 component: DeviceComponent,
                 canActivate: [AuthGuard]

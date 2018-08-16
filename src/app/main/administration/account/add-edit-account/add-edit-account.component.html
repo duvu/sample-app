@@ -41,7 +41,7 @@
         </div>
 
         <div fxLayout="row" fxLayoutGap="16px">
-            <div fxFlex="80">
+            <div fxFlex="50">
                 <mat-form-field class="full-width">
                     <input type="text"  placeholder="Company" aria-label="Company" matInput [formControl]="companyControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
@@ -51,18 +51,16 @@
                     </mat-autocomplete>
                 </mat-form-field>
             </div>
-            <div fxFlex="20">
+            <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input matInput i18n-placeholder placeholder="Company ID" name="dev-company-id" [(ngModel)]="data.company.id" disabled>
+                    <mat-select matInput placeholder="Roles" [(ngModel)]="data.privilege">
+                        <mat-option *ngFor="let pri of privilegeList" [value]="pri.id">{{pri.name}}</mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
         </div>
 
-        <mat-form-field class="full-width">
-            <mat-select matInput placeholder="Roles" [(ngModel)]="data.privilege">
-                <mat-option *ngFor="let pri of privilegeList" [value]="pri.id">{{pri.name}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+
 
         <mat-form-field class="full-width">
             <input type="text"  placeholder="Status" aria-label="Status" matInput [formControl]="statusControl" [matAutocomplete]="autoStatus">
