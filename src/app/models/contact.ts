@@ -5,7 +5,6 @@ export class Contact {
     firstName: string;
     lastName: string;
     title: string;
-    active: boolean;
     publishInCompany: boolean;
     //company: CompanyLittle;
     //account: AccountLittle;

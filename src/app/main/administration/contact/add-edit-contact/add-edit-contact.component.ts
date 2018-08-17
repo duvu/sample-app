@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { ContactRequest } from 'app/models/request/contact.request';
 
 @Component({
     selector: 'app-add-edit-contact',
@@ -19,6 +20,7 @@ export class AddEditContactComponent implements OnInit {
         this.dialogRef.close();
     }
     onSave() {
-
+        //const request = new ContactRequest(this.data);
+        this.dialogRef.close(true);
     }
 }
