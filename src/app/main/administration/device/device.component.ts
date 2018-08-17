@@ -146,7 +146,7 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         const data = new Device();
         //data.companyId = this.applicationContext.getCurrentAccount().organizationId;
         const dialogRef = this.dialog.open(AddEditDeviceComponent, {
-            // width: '600px',
+            width: '800px',
             disableClose: true,
             data: data
         });

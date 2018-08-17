@@ -18,6 +18,17 @@
     flex: 1 1 auto;
   }
 
+  .mat-button-toggle {
+    //  background-color: mat-color($primary);
+    color: gray;
+  }
+
+  .mat-button-toggle-checked {
+    background-color: mat-color($primary);
+    color: mat-color($primary, default-contrast);
+  }
+
+
   .flex-middle {
     display: flex;
     align-items: center;

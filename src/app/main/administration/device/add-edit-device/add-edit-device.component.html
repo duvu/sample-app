@@ -28,7 +28,7 @@
         <div fxLayout="row" fxLayoutGap="16px">
             <div fxFlex="80">
                 <mat-form-field class="full-width">
-                    <input type="text"  placeholder="Company" aria-label="Company" [(ngModel)]="data.company" matInput [formControl]="companyControl" [matAutocomplete]="auto">
+                    <input type="text"  placeholder="Company" aria-label="Company" matInput [formControl]="companyControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                         <mat-option *ngFor="let company of filteredCompanies | async" [value]="company">
                             {{company.name}}
@@ -38,7 +38,6 @@
             </div>
             <div fxFlex="80">
                 <mat-form-field class="full-width">
-
                     <mat-select multiple matInput placeholder="Accounts" [(ngModel)]="accountIds">
                         <mat-option *ngFor="let acc of accountList | async" [value]="acc.id">{{acc.accountId}}</mat-option>
                     </mat-select>
@@ -71,7 +70,7 @@
             </div>
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input type="text" i18n-placeholder placeholder="Status" aria-label="Status" [(ngModel)]="data.status" matInput [formControl]="statusControl" [matAutocomplete]="autoStatus">
+                    <input type="text" i18n-placeholder placeholder="Status" aria-label="Status" matInput [formControl]="statusControl" [matAutocomplete]="autoStatus">
                     <mat-autocomplete #autoStatus="matAutocomplete">
                         <mat-option *ngFor="let status of filteredStatus | async" [value]="status">
                             {{status}}

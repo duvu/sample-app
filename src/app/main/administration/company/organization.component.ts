@@ -126,6 +126,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
     openDialogNewObject(): void {
         const data = new Company();
         const dialogRef = this.dialog.open(AddEditOrganizationComponent, {
+            width: '800px',
             disableClose: true,
             data: data
         });

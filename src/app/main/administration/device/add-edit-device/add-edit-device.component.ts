@@ -10,9 +10,9 @@ import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { AccountLittle } from 'app/models/little/account.little';
 import { AccountService } from 'app/services/account.service';
-import { AccountRequest } from 'app/models/request/account.request';
 import { DeviceRequest } from 'app/models/request/device.request';
 import { DeviceService } from 'app/services/device.service';
+import { Device } from 'app/models/device';
 
 @Component({
   selector: 'app-add-edit-device',
@@ -37,12 +37,14 @@ export class AddEditDeviceComponent implements OnInit {
                 private accountService: AccountService,
                 private deviceService: DeviceService,
                 public dialogRef: MatDialogRef<AddEditDeviceComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: any) { }
+                @Inject(MAT_DIALOG_DATA) public data: Device | any) { }
 
     ngOnInit() {
         this.accountIds = _.map(this.data.accounts, (acc: AccountLittle) => {
             return acc.id;
         });
+        this.companyControl.setValue(this.data.company);
+        this.statusControl.setValue(this.data.status);
 
         this.accountList = this.accountService.getAll();
 
@@ -99,6 +101,8 @@ export class AddEditDeviceComponent implements OnInit {
     onSave(): void {
         this.data.expiredOn = this.dateExpired;
         let data1 = new DeviceRequest(this.data);
+        data1.companyId = this.companyControl.value.id;
+        data1.status = this.statusControl.value;
         data1.accountIds = this.accountIds;
         this.dialogRef.close(data1);
     }
