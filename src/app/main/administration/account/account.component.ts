@@ -180,7 +180,7 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
             data.company = new CompanyLittle();
         }
         const dialogRef = this.dialog.open(AddEditAccountComponent, {
-            width: '600px',
+            width: '800px',
             disableClose: true,
             data: data
         });

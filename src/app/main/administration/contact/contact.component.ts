@@ -8,6 +8,8 @@ import { ContactService } from 'app/services/contact.service';
 import { merge, of } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { ApplicationContext } from 'app/application-context';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { DeleteContactComponent } from 'app/main/administration/contact/delete-contact/delete-contact.component';
 
 @Component({
     selector: 'app-contact',
@@ -19,17 +21,20 @@ export class ContactComponent implements OnInit {
     constructor(public dialog: MatDialog, private contactService: ContactService,
                 private applicationContext: ApplicationContext) { }
     dataSource: Array<Contact>;
+    change: ReplaySubject<any>;
 
-    displayedColumns: string[] = ['id', 'name', 'description', 'firstName', 'lastName', 'title', 'phoneNumber', 'emailAddress', 'addressLine1', 'addressLine2', 'createdBy', 'createdOn', 'updatedBy', 'updatedOn']
+    displayedColumns: string[] = ['name', 'description', 'firstName', 'lastName', 'title', 'phoneNumber',
+        'emailAddress', 'addressLine1', 'addressLine2', 'createdBy', 'createdOn', 'updatedBy', 'updatedOn', 'actions'];
     resultsLength = 0;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
     ngOnInit() {
+        this.change = new ReplaySubject(1);
         this.sort.sortChange.subscribe(() => {
             this.paginator.pageIndex = 0;
         });
-        merge(this.sort.sortChange, this.paginator.page)
+        merge(this.sort.sortChange, this.paginator.page, this.change)
         .pipe(
             startWith({}),
             switchMap(() => {
@@ -69,20 +74,80 @@ export class ContactComponent implements OnInit {
         });
         dialogRef.afterClosed().subscribe(
             result => {
-                this.create(contact);
+                if (result) {
+                    this.create(contact);
+                }
             }
         )
     }
 
     create(data: ContactRequest | Contact): void {
         if (data) {
-            data.publishInCompany = data.publishInCompany !== undefined;
+            this.applicationContext.spin(true)
             this.contactService.create(data).subscribe(
                 resp => {
-                    console.log('datt', resp);
+                    this.applicationContext.spin(false)
+                    this.applicationContext.info('A contact has been created');
+                    this.change.next();
+                },
+                error => {
+                    this.applicationContext.spin(false);
+                    this.applicationContext.info('An error occured while creating contact');
                 }
             );
         }
+    }
+
+    dialogEditContact(contact: Contact) {
+        const dialogRef = this.dialog.open(AddEditContactComponent, {
+            width: '800px',
+            data: contact
+        });
+        dialogRef.afterClosed().subscribe(
+            result => {
+                if (result) {
+                    this.update(contact);
+                }
+            }
+        )
+    }
+
+    update(data: Contact): void {
+        if (data) {
+            this.applicationContext.spin(true);
+            this.contactService.update(data.id, data).subscribe(
+                resp => {
+                    this.applicationContext.spin(false);
+                    this.applicationContext.info('A contact has been updated');
+                    this.change.next();
+                },
+                error => {
+                    this.applicationContext.spin(false);
+                    this.applicationContext.info('An error occured while creating contact');
+                }
+            );
+        }
+    }
+
+    dialogDelete(contact: Contact | any) {
+        const dialogRef = this.dialog.open(DeleteContactComponent, {
+            data: contact.name
+        });
+        dialogRef.afterClosed().subscribe(
+            result => {
+                if (result) {
+                    this.delete(contact.id);
+                }
+            }
+        )
+    }
+
+    delete(id: number): void {
+        this.contactService._delete(id).subscribe(
+            data => {
+                this.change.next();
+            }
+        )
     }
 
     applyFilter(value: any) {

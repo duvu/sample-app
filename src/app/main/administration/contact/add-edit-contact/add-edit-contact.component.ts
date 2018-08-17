@@ -16,9 +16,6 @@ export class AddEditContactComponent implements OnInit {
     ngOnInit() {
     }
 
-    cancel() {
-        this.dialogRef.close();
-    }
     onSave() {
         //const request = new ContactRequest(this.data);
         this.dialogRef.close(true);

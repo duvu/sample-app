@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialShared } from 'app/shared/material-shared';
 import { AddEditContactComponent } from 'app/main/administration/contact/add-edit-contact/add-edit-contact.component';
 import { OptionalColumnContactComponent } from './optional-column-contact/optional-column-contact.component';
+import { DeleteContactComponent } from './delete-contact/delete-contact.component';
 
 @NgModule({
     imports: [
@@ -17,11 +18,13 @@ import { OptionalColumnContactComponent } from './optional-column-contact/option
     declarations: [
         ContactComponent,
         AddEditContactComponent,
-        OptionalColumnContactComponent
+        OptionalColumnContactComponent,
+        DeleteContactComponent
     ],
 
     entryComponents: [
         AddEditContactComponent,
+        DeleteContactComponent,
         OptionalColumnContactComponent
     ]
 })
