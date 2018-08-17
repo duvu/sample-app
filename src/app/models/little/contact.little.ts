@@ -1,4 +1,4 @@
-export class Contact {
+export class ContactLittle {
     id: number;
     name: string;
     description: string;
@@ -8,10 +8,4 @@ export class Contact {
     publicInCompany: boolean;
     phoneNumber: string;
     emailAddress: string;
-    addressLine1: string;
-    addressLine2: string;
-    createdBy: string;
-    updatedBy: string;
-    createdOn: Date;
-    updatedOn: Date;
 }

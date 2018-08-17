@@ -33,7 +33,6 @@ export class Weekday implements OnInit {
     { id: 6,   name: 'Saturday',   s_name: 'Sat', selected: false, isWeekDay: false}
   ];
 
-  private _data: Array<any>;
   get data(): Array<any> {
     return this.internal_week_days.map((value: Day, index: number) => {
       return {

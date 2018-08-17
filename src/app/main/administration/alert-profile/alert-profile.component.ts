@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AddEditAlertProfileComponent } from 'app/main/administration/alert-profile/add-edit-alert-profile/add-edit-alert-profile.component';
+import { AlertProfileRequest } from 'app/models/request/alert-profile.request';
 
 @Component({
     selector: 'app-alert-profile',
@@ -19,8 +20,10 @@ export class AlertProfileComponent implements OnInit {
     }
 
     dialogToCreateNewAlertProfile(): void {
+        const data = new AlertProfileRequest();
         const dialogRef = this.dialog.open(AddEditAlertProfileComponent, {
-            width: '800px'
+            width: '800px',
+            data: data
         });
         dialogRef.afterClosed().subscribe(result => {});
     }

@@ -1,23 +1,24 @@
 export class AlertProfileRequest {
     name: string;
     description: string;
-    companyId: number;
-    accountIds: Array<number>;
+    publicInCompany: boolean;
     type: string;
     active: boolean;
     speedKph: number;
     zoneId: number;
-    params1: string;
+    params1: number;
     params2: string;
     weekDays: string;
-    time: string;
-    cannedAction: string;
-    notifyEmail: string;
-    notifySms:string;
-    emailSubject: string;
-    emailText: string;
-    emailTemplateId: string;
+    dayTime: string;
 
-    smsText: string;
-    sendCommand: string;
+    alertEmail: boolean;
+    alertSms: boolean;
+    alertApp: boolean;
+    cannedAction: string;
+
+    contactIds: Array<number>;
+
+    subject: string;
+    text: string;
+    templateId: string;
 }

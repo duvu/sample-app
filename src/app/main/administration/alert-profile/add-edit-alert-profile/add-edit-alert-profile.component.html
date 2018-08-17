@@ -2,7 +2,7 @@
     <span i18n>{{isEditing ? 'Modifying Alert Profile' : 'Creating Alert Profile'}}</span>
     <span> #{{ data ? data.id : ''}}</span>
     <span class="x-dialog-close-btn">
-        <button mat-icon-button (click)="cancel()">
+        <button mat-icon-button mat-dialog-close>
             <mat-icon>cancel</mat-icon>
         </button>
     </span>
@@ -12,43 +12,90 @@
         <div fxLayout="row" fxLayoutGap="16px">
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Name" [(ngModel)]="alertProfile.name" name="name of alert-profile">
+                    <input type="text" matInput
+                           i18n-placeholder
+                           placeholder="Type"
+                           aria-label="Type of alert"
+                           required
+                           [(ngModel)]="data.type" name="Type of alert">
                 </mat-form-field>
             </div>
-            <div fxFlex="50" fxLayout="row" fxLayoutGap="16px">
-                <div fxFlex="50">
-                    <mat-form-field class="full-width">
-                        <input matInput placeholder="Type">
-                    </mat-form-field>
-                </div>
-                <div fxFlex="50" class="flex-middle">
-                    <mat-slide-toggle [checked]="alertProfile.active">Active/Inactive</mat-slide-toggle>
-                </div>
+            <div fxFlex="50" class="flex-center">
+                <mat-slide-toggle [(ngModel)]="data.active"
+                                  name="Active">Active/Inactive</mat-slide-toggle>
             </div>
+            <div fxFlex="50" class="flex-center">
+                <mat-checkbox [(ngModel)]="data.publicInCompany"
+                              name="checked if this alert avail for other in the company">Public in company</mat-checkbox>
+            </div>
+
         </div>
         <mat-form-field class="full-width">
-            <input matInput placeholder="Description">
+            <input type="text" matInput
+                   i18n-placeholder
+                   placeholder="Name"
+                   aria-label="Nam Of Alert"
+                   [(ngModel)]="data.name"
+                   required
+                   name="name of alert-profile">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input type="text" matInput
+                   i18n-placeholder
+                   placeholder="Description"
+                   aria-label="Alert Description"
+                   [(ngModel)]="data.description" name="Description of alert">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <input type="text" matInput
+                   i18n-placeholder
+                   placeholder="Contacts to receive Alerts"
+                   aria-label="Contacts to receive alerts"
+                   [(ngModel)]="data.contactIds"
+                   required
+                   name="List of contacts">
         </mat-form-field>
 
         <div fxLayout="row" fxLayoutGap="16px">
             <div fxFlex="25">
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Speed KPH">
+                    <input type="text" matInput
+                           i18n-placeholder
+                           placeholder="Speed KPH"
+                           aria-label="Speed KPH"
+                           [(ngModel)]="data.speedKph"
+                           name="Speed KPH">
                 </mat-form-field>
             </div>
             <div fxFlex="25">
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Zone ID">
+                    <input type="text" matInput
+                           i18n-placeholder
+                           placeholder="Zone ID"
+                           aria-label="Geozone ID"
+                           [(ngModel)]="data.zoneId"
+                           name="Geozone ID">
                 </mat-form-field>
             </div>
             <div fxFlex="25">
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Param1">
+                    <input type="text" matInput
+                           i18n-placeholder
+                           placeholder="Param1"
+                           aria-label="Param 1"
+                           [(ngModel)]="data.param1"
+                           name="Param1">
                 </mat-form-field>
             </div>
             <div fxFlex="25">
                 <mat-form-field class="full-width">
-                    <input matInput placeholder="Param2">
+                    <input type="text" matInput
+                           i18n-placeholder
+                           placeholder="Param2"
+                           aria-label="Param2"
+                           [(ngModel)]="data.param2"
+                           name="Param2">
                 </mat-form-field>
             </div>
         </div>
@@ -62,42 +109,56 @@
         </div>
 
         <div fxLayout="row" fxLayoutGap="16px">
-            <div fxFlex="50">
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Notify Email">
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Email Subject">
-                </mat-form-field>
-
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Email Text">
-                </mat-form-field>
-
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Email Template">
-                </mat-form-field>
+            <div fxFlex="50" class="flex-center">
+                <mat-checkbox [(ngModel)]="data.alertEmail"
+                    name="ALert to email">Alert to email</mat-checkbox>
             </div>
-            <div fxFlex="50">
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Notify SMS">
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="SMS Text">
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Send Command">
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Action" value="http://">
-                </mat-form-field>
-
+            <div fxFlex="50" class="flex-center">
+                <mat-checkbox [(ngModel)]="data.alertSms"
+                              name="ALert to sms">Alert to Sms</mat-checkbox>
+            </div>
+            <div fxFlex="50" class="flex-center">
+                <mat-checkbox [(ngModel)]="data.alertApp"
+                              name="ALert to app">Alert to App</mat-checkbox>
             </div>
         </div>
 
+        <mat-form-field class="full-width">
+            <input type="text" matInput
+                   i18n-placeholder
+                   placeholder="Action"
+                   aria-label="External Actions"
+                   name="external action"
+                   [(ngModel)]="data.cannedAction">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+            <input type="text" matInput
+                   i18n-placeholder
+                   placeholder="Subject"
+                   aria-label="Subject of message"
+                   name="Subject of message"
+                   [(ngModel)]="data.subject">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input type="text" matInput
+                   i18n-placeholder
+                   placeholder="Text"
+                   aria-label="Text of message"
+                   name="Text of message"
+                   [(ngModel)]="data.text">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input type="text" matInput
+                   i18n-placeholder
+                   placeholder="TemplateId"
+                   aria-label="Template of message"
+                   name="Template of message"
+                   [(ngModel)]="data.templateId">
+        </mat-form-field>
     </form>
 </div>
 <div mat-dialog-actions align="end">
-    <button mat-flat-button (click)="save()" i18n>Save</button>
+    <button mat-flat-button (click)="onSave()" i18n>Save</button>
     <button mat-button mat-dialog-close i18n>Cancel</button>
 </div>

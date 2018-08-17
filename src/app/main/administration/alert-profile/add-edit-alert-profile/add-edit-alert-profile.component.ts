@@ -20,13 +20,6 @@ import { AlertProfileService } from 'app/services/alert-profile.service';
 export class AddEditAlertProfileComponent implements OnInit {
 
     isEditing: boolean = false;
-    companyList: Company[];
-    filteredCompanies: Observable<Company[]>;
-
-    alertProfile: AlertProfileRequest;
-    isEditting: boolean;
-
-    companyControl: FormControl = new FormControl();
 
     constructor(private companyService: CompanyService,
                 private applicationContext: ApplicationContext,
@@ -36,47 +29,8 @@ export class AddEditAlertProfileComponent implements OnInit {
                 @Inject(MAT_DIALOG_DATA) public data: any) {}
 
     ngOnInit() {
-        this.alertProfile = new AlertProfileRequest();
-
-        this.companyService.getAll().subscribe(
-            response => {
-                this.companyList = response;
-            },
-            error => {},
-            () => {
-                this.filteredCompanies = this.companyControl.valueChanges
-                    .pipe(
-                        startWith(''),
-                        map(value => this.filter(value))
-                    );
-            }
-        );
     }
+    onSave() {
 
-    cancel(): void {
-        this.dialogRef.close();
-    }
-
-    save(): void {
-        this.alertProfileSerivce.create(this.alertProfile).subscribe(
-            data => {
-                console.log('Data#Alert#Create', data);
-            },
-            error => {},
-            () => {}
-        );
-    }
-
-    filter(value: string): Company[] {
-        if(_.isString(value)) {
-            return this.companyList.filter(co => co.name.toLowerCase().indexOf(value.toLowerCase()) === 0)
-        } else {
-            return this.companyList;
-        }
-    }
-
-
-    displayFn(company: Company): string | undefined {
-        return company ? company.name : undefined;
     }
 }
