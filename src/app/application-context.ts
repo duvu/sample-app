@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ComponentPortal, DomPortalHost } from '@angular/cdk/portal';
 import { SpinnerComponent } from 'app/pages/spinner/spinner.component';
 
+import * as _ from 'lodash';
 
 export const redirectUrl = 'redirectUrl';
 const DEFAULT_REDIRECT_URL = '/main/tracking';
@@ -204,15 +205,15 @@ export class ApplicationContext implements OnInit, OnDestroy {
         this.clear();
     }
 
-    navigate(url: string) {
-        this.router.navigate([url]);
+    navigate(url: string | any) {
+        this.router.navigate(url);
     }
 
     isLoggedIn(): boolean {
-        if (this.access_token) {
-            const decoded: any = jwt(this.access_token);
+        try {
+            const decoded: any = jwt(this._access_token);
             return decoded.exp > Date.now()/1000;
-        } else {
+        } catch (e) {
             return false;
         }
     }

@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(private applicationContext: ApplicationContext, private router: Router) {
+    constructor(private applicationContext: ApplicationContext) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -29,11 +29,11 @@ export class AuthInterceptor implements HttpInterceptor {
                             (err: any, caught: Observable<HttpEvent<any>>) => {
                                 if (err.status === 401) {
                                     this.applicationContext.logout();
-                                    this.router.navigate(['/login']);
+                                    this.applicationContext.navigate(['/login']);
                                     return of(err);
                                 } else if (err.status === 500) {
                                     this.applicationContext.logout();
-                                    this.router.navigate(['/error']);
+                                    this.applicationContext.navigate(['/error']);
                                     return of(err)
                                 }
                                 throw err;

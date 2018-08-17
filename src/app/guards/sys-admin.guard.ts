@@ -16,7 +16,7 @@ export class SysAdminGuard implements CanActivate, CanLoad {
       if ( this.checkSystemRole()) {
           return true;
       } else {
-          this.applicationContext.navigate('/not-found');
+          this.applicationContext.navigate(['/not-found']);
           return false;
       }
   }
