@@ -1,4 +1,5 @@
 import { ContactLittle } from 'app/models/little/contact.little';
+import { DaySelected } from 'app/shared/scheduler/weekday/weekday';
 
 export class AlertProfile {
     id: number;
@@ -11,7 +12,7 @@ export class AlertProfile {
     zoneId: number;
     param1: number;
     param2: string;
-    weekDays: any;
+    weekDays: DaySelected;
     dayTime: any;
     alertEmail: boolean;
     alertSms: boolean;

@@ -12,12 +12,22 @@
         <div fxLayout="row" fxLayoutGap="16px">
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input type="text" matInput
+                    <!--input type="text" matInput
                            i18n-placeholder
                            placeholder="Type"
                            aria-label="Type of alert"
                            required
-                           [(ngModel)]="data.type" name="Type of alert">
+                           [(ngModel)]="data.type" name="Type of alert"-->
+                    <mat-select i18n-placeholder
+                                placeholder="Type"
+                                aria-label="Type of alert"
+                                required
+                                [(ngModel)]="data.type"
+                                name="Type of alert">
+                        <mat-option *ngFor="let type of types" [value]="type">
+                            {{type}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div fxFlex="50" class="flex-center">
@@ -48,13 +58,21 @@
         </mat-form-field>
 
         <mat-form-field class="full-width">
-            <input type="text" matInput
-                   i18n-placeholder
-                   placeholder="Contacts to receive Alerts"
-                   aria-label="Contacts to receive alerts"
-                   [(ngModel)]="data.contactIds"
-                   required
-                   name="List of contacts">
+            <mat-select [multiple]="true"
+                        i18n-placeholder
+                        [(ngModel)]="data.contactIds"
+                        required
+                        name="List of contacts"
+                        placeholder="Contacts to receive Alerts"
+                        aria-label="Contacts to receive alerts">
+                <mat-option *ngFor="let contact of contactList | async"
+                            [value]="contact.id">
+                    {{contact.name}}
+                </mat-option>
+            </mat-select>
+            <button mat-icon-button matSuffix (click)="dialogToAddContact($event)">
+                <mat-icon>add</mat-icon>
+            </button>
         </mat-form-field>
 
         <div fxLayout="row" fxLayoutGap="16px">

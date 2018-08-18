@@ -7,6 +7,7 @@ import { MaterialShared } from 'app/shared/material-shared';
 import { CustomDirectivesModule } from 'app/directives/custom-directives.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SchedulerModule } from 'app/shared/scheduler/scheduler.module';
+import { ContactModule } from 'app/main/administration/contact/contact.module';
 
 @NgModule({
     imports: [
@@ -15,6 +16,7 @@ import { SchedulerModule } from 'app/shared/scheduler/scheduler.module';
         CustomDirectivesModule,
         AlertProfileRoutingModule,
         ReactiveFormsModule,
+        ContactModule,
         FormsModule,
         SchedulerModule
     ],

@@ -1,3 +1,5 @@
+import { Weekday } from 'app/shared/scheduler/weekday/weekday';
+
 export class AlertProfileRequest {
     name: string;
     description: string;
@@ -8,8 +10,8 @@ export class AlertProfileRequest {
     zoneId: number;
     params1: number;
     params2: string;
-    weekDays: string;
-    dayTime: string;
+    weekDays: Weekday;
+    dayTime: any;
 
     alertEmail: boolean;
     alertSms: boolean;

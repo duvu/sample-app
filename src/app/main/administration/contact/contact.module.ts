@@ -26,6 +26,9 @@ import { DeleteContactComponent } from './delete-contact/delete-contact.componen
         AddEditContactComponent,
         DeleteContactComponent,
         OptionalColumnContactComponent
+    ],
+    exports: [
+        AddEditContactComponent
     ]
 })
 export class ContactModule { }

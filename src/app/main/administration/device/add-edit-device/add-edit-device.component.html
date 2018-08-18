@@ -38,8 +38,12 @@
             </div>
             <div fxFlex="80">
                 <mat-form-field class="full-width">
-                    <mat-select multiple matInput placeholder="Accounts" [(ngModel)]="accountIds">
-                        <mat-option *ngFor="let acc of accountList | async" [value]="acc.id">{{acc.accountId}}</mat-option>
+                    <mat-select [multiple]="true"
+                                placeholder="Accounts"
+                                [(ngModel)]="accountIds">
+                        <mat-option *ngFor="let acc of accountList | async"
+                                    [value]="acc.id">{{acc.accountId}}
+                        </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

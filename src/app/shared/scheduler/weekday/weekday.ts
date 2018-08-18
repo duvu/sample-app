@@ -8,6 +8,16 @@ export interface Day {
   isWeekDay: boolean;
 }
 
+export class DaySelected {
+    sunday: boolean;
+    monday: boolean;
+    tuesday: boolean;
+    wednesday: boolean;
+    thursday: boolean;
+    friday: boolean;
+    saturday: boolean;
+}
+
 @Component({
   selector: 'weekday',
   templateUrl: './weekday.html',
@@ -33,14 +43,27 @@ export class Weekday implements OnInit {
     { id: 6,   name: 'Saturday',   s_name: 'Sat', selected: false, isWeekDay: false}
   ];
 
-  get data(): Array<any> {
-    return this.internal_week_days.map((value: Day, index: number) => {
-      return {
-        id: value.id,
-        name: this.display(value),
-        selected: value.selected
-      };
-    });
+  set data(s_input: DaySelected) {
+      this.internal_week_days[0].selected = s_input.sunday;
+      this.internal_week_days[1].selected = s_input.monday;
+      this.internal_week_days[2].selected = s_input.tuesday;
+      this.internal_week_days[3].selected = s_input.wednesday;
+      this.internal_week_days[4].selected = s_input.thursday;
+      this.internal_week_days[5].selected = s_input.friday;
+      this.internal_week_days[6].selected = s_input.saturday;
+  }
+
+  get data(): DaySelected {
+      const ds = new DaySelected();
+      ds.sunday = this.internal_week_days[0].selected;
+      ds.monday = this.internal_week_days[1].selected;
+      ds.tuesday = this.internal_week_days[2].selected;
+      ds.wednesday = this.internal_week_days[3].selected;
+      ds.thursday = this.internal_week_days[4].selected;
+      ds.friday = this.internal_week_days[5].selected;
+      ds.saturday = this.internal_week_days[6].selected;
+
+      return ds;
   }
 
   static toggleColor(isSelected: boolean): string {
