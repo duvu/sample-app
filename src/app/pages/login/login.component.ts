@@ -34,8 +34,14 @@ export class LoginComponent implements OnInit {
                 const redirectUrl = this.applicationContext.getRedirectURL();
                 this.router.navigate([redirectUrl]);
             },
-            (err: HttpErrorResponse) => {
-                this.applicationContext.error(err.error.error_description);
+            (err: any) => {
+                console.log(err);
+                if (err instanceof HttpErrorResponse) {
+                    this.applicationContext.error(err.error.error_description || err.message);
+                } else {
+                    this.applicationContext.error(err);
+                }
+
                 this.applicationContext.spin(false);
             },
             () => {}
