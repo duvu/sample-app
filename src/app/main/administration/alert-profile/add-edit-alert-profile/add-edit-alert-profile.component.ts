@@ -43,7 +43,7 @@ export class AddEditAlertProfileComponent implements OnInit {
                 private applicationContext: ApplicationContext,
                 public matDialog: MatDialog,
                 public dialogRef: MatDialogRef<AddEditAlertProfileComponent>,
-                @Inject(MAT_DIALOG_DATA) public data: AlertProfile | AlertProfileRequest) {}
+                @Inject(MAT_DIALOG_DATA) public data: AlertProfile | AlertProfileRequest | any) {}
 
     ngOnInit() {
         this.contactList = this.contactService.getAll();
