@@ -1,7 +1,7 @@
 <div mat-dialog-title>
     <span *ngIf="data.id" i18n>Modifying Device</span>
     <span *ngIf="data.id==null" i18n>Creating Device</span>
-    <span> #{{data.accountId}}</span>
+    <span> #{{data.deviceId}}</span>
     <span class="x-dialog-close-btn">
         <button mat-icon-button (click)="cancel()">
             <mat-icon>cancel</mat-icon>
@@ -20,7 +20,7 @@
             </div>
             <div fxFlex="50">
                 <mat-form-field class="full-width">
-                    <input matInput i18n-placeholder placeholder="Device ID" name="dev-device-id" [(ngModel)]="data.deviceId">
+                    <input matInput i18n-placeholder placeholder="Device ID" name="dev-device-id" [(ngModel)]="data.deviceId" [disabled]="data.id">
                 </mat-form-field>
             </div>
         </div>
@@ -123,6 +123,10 @@
             </div>
         </div>
     </div>
+
+    <mat-divider></mat-divider>
+    <span>Alerts</span>
+
 </div>
 
 <div mat-dialog-actions align="end">

@@ -3,11 +3,11 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Company } from 'app/models/company';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ApplicationContext } from 'app/application-context';
-import { CompanyService } from 'app/services/organization.service';
+import { CompanyService } from 'app/services/company.service';
 import { DeleteEvent } from 'app/models/delete-event';
 import { ConfirmDeleteComponent } from 'app/shared/components/confirm-delete/confirm-delete.component';
-import { OptionalColumnOrganizationComponent } from 'app/main/administration/company/optional-column-organization/optional-column-organization.component';
-import { AddEditOrganizationComponent } from 'app/main/administration/company/add-edit-organization/add-edit-organization.component';
+import { OptionalColumnCompanyComponent } from 'app/main/administration/company/optional-column-company/optional-column-company.component';
+import { AddEditCompanyComponent } from 'app/main/administration/company/add-edit-company/add-edit-company.component';
 import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
@@ -16,8 +16,8 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Component({
     selector: 'applicationContext-organization',
-    templateUrl: './organization.component.html',
-    styleUrls: ['./organization.component.scss']
+    templateUrl: './company.component.html',
+    styleUrls: ['./company.component.scss']
 })
 export class CompanyComponent implements OnInit, AfterViewInit {
 
@@ -105,7 +105,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
     }
 
     openDialogColumnOptions(): void {
-        const dialogRef = this.dialog.open(OptionalColumnOrganizationComponent, {
+        const dialogRef = this.dialog.open(OptionalColumnCompanyComponent, {
             data: this.columns
         });
         dialogRef.afterClosed().subscribe(
@@ -125,7 +125,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
 
     openDialogNewObject(): void {
         const data = new Company();
-        const dialogRef = this.dialog.open(AddEditOrganizationComponent, {
+        const dialogRef = this.dialog.open(AddEditCompanyComponent, {
             width: '800px',
             disableClose: true,
             data: data
@@ -147,7 +147,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
     }
 
     openDialogEditing(data: Company): void {
-        const dialogRef = this.dialog.open(AddEditOrganizationComponent, {
+        const dialogRef = this.dialog.open(AddEditCompanyComponent, {
             // width: '600px',
             disableClose: true,
             data: data

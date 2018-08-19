@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Company } from 'app/models/company';
 import { Account } from 'app/models/account';
-import { CompanyService } from 'app/services/organization.service';
+import { CompanyService } from 'app/services/company.service';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
 import { AccountLittle } from 'app/models/little/account.little';

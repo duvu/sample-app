@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 import { Company } from 'app/models/company';
 import { FormControl } from '@angular/forms';
-import { CompanyService } from 'app/services/organization.service';
+import { CompanyService } from 'app/services/company.service';
 import { Privilege } from 'app/models/privilege';
 
 import { Observable } from 'rxjs/Observable';

@@ -4,7 +4,7 @@ import { AdministrationComponent} from "./administration.component";
 import { AuthGuard} from 'app/guards/auth.guard';
 import { AccountComponent} from "./account/account.component";
 import { DeviceComponent} from "./device/device.component";
-import { CompanyComponent } from 'app/main/administration/company/organization.component';
+import { CompanyComponent } from 'app/main/administration/company/company.component';
 import { SysAdminGuard } from 'app/guards/sys-admin.guard';
 const routes: Routes = [
     {
@@ -29,7 +29,7 @@ const routes: Routes = [
             },
             {
                 path: '_device',
-                component: DeviceComponent,
+                loadChildren: 'app/main/administration/device/device.module#DeviceModule',
                 canActivate: [AuthGuard]
             },
             {
