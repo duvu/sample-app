@@ -2,29 +2,34 @@ import { Device } from 'app/models/device';
 import * as _ from 'lodash';
 
 export class DeviceRequest {
-    public id: number;
+    id: number;
 
-    public name: string;
-    public deviceId: string;
+    name: string;
+    description: string;
 
-    public companyId: number;
-    public accountIds: Array<number>;
+    deviceId: string;
+    imei: string;
 
-    public expiredOn: Date;
-    public status;
+    companyId: number;
+    accountIds: Array<number>;
+    alertProfileIds: Array<number>;
 
-    public vehicleId: number;
+    vehicleId: number;
+    protocol: string;
+    timeZoneStr: string;
+    maxStoredDataTime: number;
+    expiredOn: Date;
+    status;
 
-    public ipAddress: string;
-    public port: number;
+    ipAddress: string;
+    port: number;
 
-    public protocol: string;
-    public serialNumber: string;
-    public modelName: string;
+    serialNumber: string;
+    modelName: string;
 
-    public manufacturerName: string;
-    public firmwareVersion: string;
-    public originalCountry: string;
+    manufacturerName: string;
+    firmwareVersion: string;
+    originalCountry: string;
 
 
     constructor(device?: Device) {

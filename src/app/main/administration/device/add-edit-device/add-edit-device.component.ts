@@ -13,6 +13,9 @@ import { AccountService } from 'app/services/account.service';
 import { DeviceRequest } from 'app/models/request/device.request';
 import { DeviceService } from 'app/services/device.service';
 import { Device } from 'app/models/device';
+import { AlertProfile } from 'app/models/alert-profile';
+import { AlertProfileService } from 'app/services/alert-profile.service';
+import { AlertProfileLittle } from 'app/models/little/alert-profile.little';
 
 @Component({
   selector: 'app-add-edit-device',
@@ -32,9 +35,14 @@ export class AddEditDeviceComponent implements OnInit {
     dateExpired: Date;
 
     accountList: Observable<Account[]>;
+    alertProfileList: Observable<AlertProfile[]>;
+
     accountIds: number[];
+    alertIds: number[];
+
     constructor(private companyService: CompanyService,
                 private accountService: AccountService,
+                private alertProfileService: AlertProfileService,
                 private deviceService: DeviceService,
                 public dialogRef: MatDialogRef<AddEditDeviceComponent>,
                 @Inject(MAT_DIALOG_DATA) public data: Device | any) { }
@@ -43,10 +51,14 @@ export class AddEditDeviceComponent implements OnInit {
         this.accountIds = _.map(this.data.accounts, (acc: AccountLittle) => {
             return acc.id;
         });
+
+        this.alertIds = _.map(this.data.alertProfiles, (alert: AlertProfileLittle) => alert.id);
+
         this.companyControl.setValue(this.data.company);
         this.statusControl.setValue(this.data.status);
 
         this.accountList = this.accountService.getAll();
+        this.alertProfileList = this.alertProfileService.getAll();
 
         this.companyService.getAll().subscribe(
             response => {
@@ -104,6 +116,7 @@ export class AddEditDeviceComponent implements OnInit {
         data1.companyId = this.companyControl.value.id;
         data1.status = this.statusControl.value;
         data1.accountIds = this.accountIds;
+        data1.alertProfileIds = this.alertIds;
         this.dialogRef.close(data1);
     }
 
