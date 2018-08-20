@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Company } from 'app/models/company';
 
 @Component({
   selector: 'app-delete-company',
@@ -7,7 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteCompanyComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<DeleteCompanyComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: Company | any) { }
 
   ngOnInit() {
   }

@@ -13,6 +13,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
 import { of as observableOf } from 'rxjs/observable/of';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { DeleteCompanyComponent } from 'app/main/administration/company/delete-company/delete-company.component';
 
 @Component({
     selector: 'applicationContext-organization',
@@ -175,7 +176,7 @@ export class CompanyComponent implements OnInit, AfterViewInit {
         data.setId(organization.id);
         data.setName(organization.name);
         data.setType('Company');
-        const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+        const dialogRef = this.dialog.open(DeleteCompanyComponent, {
             disableClose: true,
             data: data
         });
