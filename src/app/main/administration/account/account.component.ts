@@ -1,29 +1,26 @@
 import * as _ from 'lodash';
 import {
-    AfterContentInit,
     AfterViewChecked,
     AfterViewInit,
-    ChangeDetectorRef,
     Component,
     OnInit,
     ViewChild
 } from '@angular/core';
-import {AccountService} from 'app/services/account.service';
-import {Account} from 'app/models/account';
+import { AccountService } from 'app/services/account.service';
+import { Account } from 'app/models/account';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import {AddEditAccountComponent} from 'app/main/administration/account/add-edit-account/add-edit-account.component';
-import {OptionalColumnAccountComponent} from './optional-column-account/optional-column-account.component';
-import {ApplicationContext} from 'app/application-context';
-import {DeleteEvent} from 'app/models/delete-event';
-import {ConfirmDeleteComponent} from 'app/shared/components/confirm-delete/confirm-delete.component';
+import { AddEditAccountComponent } from 'app/main/administration/account/add-edit-account/add-edit-account.component';
+import { OptionalColumnAccountComponent } from './optional-column-account/optional-column-account.component';
+import { ApplicationContext } from 'app/application-context';
 import { merge } from 'rxjs/observable/merge';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { startWith } from 'rxjs/operators';
-import {of as observableOf} from 'rxjs/observable/of';
+import { of as observableOf } from 'rxjs/observable/of';
 import { AccountRequest } from 'app/models/request/account.request';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { CompanyLittle } from 'app/models/little/company.little';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DeleteAccountComponent } from 'app/main/administration/account/delete-account/delete-account.component';
 
 @Component({
     selector: 'applicationContext-account',
@@ -205,13 +202,10 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
     }
 
     openDialogConfirmDelete(account: Account): void {
-        const data = new DeleteEvent();
-        data.setId(account.id);
-        data.setName(account.accountId);
-        data.setType('Account');
-        const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+        const dialogRef = this.dialog.open(DeleteAccountComponent, {
             disableClose: true,
-            data: data
+            minWidth: 350,
+            data: account
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -248,9 +242,4 @@ export class AccountComponent implements OnInit, AfterViewInit, AfterViewChecked
 
         this.update(account.id, new AccountRequest(account));
     }
-
-
-
-
-
 }

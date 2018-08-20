@@ -13,12 +13,12 @@ const routes: Routes = [
         children:[
             {
                 path: '_account',
-                component: AccountComponent,
+                loadChildren: 'app/main/administration/account/account.module#AccountModule',
                 canActivate: [AuthGuard]
             },
             {
                 path: '_company',
-                component: CompanyComponent,
+                loadChildren: 'app/main/administration/company/company.module#CompanyModule',
                 canActivate: [SysAdminGuard],
                 canLoad: [SysAdminGuard]
             },
