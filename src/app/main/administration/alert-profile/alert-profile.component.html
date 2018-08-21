@@ -158,10 +158,10 @@
                 <div class="element-detail" [@detailExpand]="el == expandedElement ? 'expanded' : 'collapsed'">
                     <div fxLayout="row" fxLayoutGap="16px" class="full-width ">
                         <div fxFlex="50">
-                            <weekday type="short" [editMode]="false"></weekday>
+                            <weekday type="short" [editMode]="false" [data]="el.weekDays"></weekday>
                         </div>
                         <div fxFlex="50">
-                            <daytime></daytime>
+                            <daytime [editMode]="false" [data]="el.dayTime"></daytime>
                         </div>
                     </div>
 

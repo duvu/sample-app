@@ -44,6 +44,7 @@ export class Weekday implements OnInit {
     { id: 6,   name: 'Saturday',   s_name: 'Sat', selected: false, isWeekDay: false}
   ];
 
+  @Input()
   set data(s_input: DaySelected) {
       this.internal_week_days[0].selected = s_input.sunday;
       this.internal_week_days[1].selected = s_input.monday;

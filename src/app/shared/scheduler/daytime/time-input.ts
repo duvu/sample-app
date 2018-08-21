@@ -1,9 +1,9 @@
-import {FocusMonitor} from '@angular/cdk/a11y';
-import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {Component, ElementRef, HostBinding, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {MatFormFieldControl} from '@angular/material';
-import {Subject} from 'rxjs';
+import { FocusMonitor} from '@angular/cdk/a11y';
+import { coerceBooleanProperty} from '@angular/cdk/coercion';
+import { Component, ElementRef, HostBinding, Input, OnDestroy, OnInit} from '@angular/core';
+import { FormBuilder, FormGroup} from '@angular/forms';
+import { MatFormFieldControl} from '@angular/material';
+import { Subject} from 'rxjs';
 
 export class MyTime {
   constructor(public fromHour: string, public fromMinute: string, public toHour: string, public toMinute: string) {}

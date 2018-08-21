@@ -1,8 +1,15 @@
 <div class="mat-day-time">
   <mat-form-field>
-    <time-input placeholder="Select time" [(value)]="scheduleTime"></time-input>
+    <time-input i18n-placeholder
+                placeholder="Select time"
+                [(value)]="scheduleTime"
+                [disabled]="!editMode"></time-input>
   </mat-form-field>
-  <button mat-button (click)="setBizTime()" [disabled]="!editMode">Business time</button>
-  <button mat-button (click)="setAllDay()">All day</button>
+  <button mat-button
+          (click)="setBizTime()"
+          [disabled]="!editMode">Business time</button>
+  <button mat-button
+          (click)="setAllDay()"
+          [disabled]="!editMode">All day</button>
 </div>
 

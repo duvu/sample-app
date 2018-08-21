@@ -10,6 +10,8 @@ import { AlertProfile } from 'app/models/alert-profile';
 import { merge, of } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Weekday } from 'app/shared/scheduler/weekday/weekday';
+import { DayTime } from 'app/shared/scheduler/daytime/day-time';
 
 @Component({
     selector: 'app-alert-profile',
