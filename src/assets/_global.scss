@@ -132,11 +132,12 @@
       flex-direction: row;
       font-size: 20px;
       align-items: center;
+      .mat-form-field {
+        font-size: 14px;
+        min-width: 300px;
+      }
     }
-    .mat-form-field {
-      font-size: 14px;
-      min-width: 300px;
-    }
+
   }
 
   .x-dialog-close-btn {

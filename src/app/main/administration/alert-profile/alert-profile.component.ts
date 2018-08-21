@@ -9,11 +9,19 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { AlertProfile } from 'app/models/alert-profile';
 import { merge, of } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'app-alert-profile',
     templateUrl: './alert-profile.component.html',
-    styleUrls: ['./alert-profile.component.scss']
+    styleUrls: ['./alert-profile.component.scss'],
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+            state('expanded', style({height: '*'})),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
 })
 export class AlertProfileComponent implements OnInit {
 
@@ -25,9 +33,9 @@ export class AlertProfileComponent implements OnInit {
     change: ReplaySubject<any>;
 
     displayedColumns: string[] = ['name', 'description', 'publicInCompany', 'type', 'active',
-        'speedKph', 'zoneId', 'params1', 'params2', 'weekDays', 'dayTime', 'alertEmail', 'alertSms',
-        'alertApp', 'cannedAction', 'contacts', 'subject', 'text', 'templateId', 'createdBy', 'createdOn', 'updatedBy', 'updatedOn', 'actions'];
-
+        'speedKph', 'zoneId', 'params1', 'params2', /*'weekDays', 'dayTime', 'alertEmail', 'alertSms',
+        'alertApp', 'cannedAction', */'contacts', 'subject', 'text', 'templateId', 'createdBy', 'createdOn', 'updatedBy', 'updatedOn', 'actions'];
+    expandedElement: any;
     resultsLength = 0;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
