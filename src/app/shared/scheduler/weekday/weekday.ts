@@ -27,6 +27,7 @@ export class Weekday implements OnInit {
   @Input() type: 'short' | 'long' = 'short';
   @Input() direction: 'horizontal' | 'vertical' = 'horizontal';
   @Input() buttonPosition: 'above' | 'below' | 'right' | 'left' = 'below';
+  @Input() editMode: true | false = true;
 
   @Output() dayChanged = new EventEmitter<Day>();
 
@@ -88,8 +89,10 @@ export class Weekday implements OnInit {
   }
 
   toggle(i: number, day: Day): void {
-    this.internal_week_days[i].selected = !this.internal_week_days[i].selected;
-    this.dayChanged.emit(this.internal_week_days[i]);
+      if (this.editMode) {
+          this.internal_week_days[i].selected = !this.internal_week_days[i].selected;
+          this.dayChanged.emit(this.internal_week_days[i]);
+      }
   }
 
   checkIfAllDays(): boolean {
@@ -135,31 +138,37 @@ export class Weekday implements OnInit {
   }
 
   toggleAllDays(): void {
-    const isAll = !this.checkIfAllDays();
-    for (let i = 0; i < this.internal_week_days.length; i++) {
-      this.internal_week_days[i].selected = isAll;
-    }
+      if (this.editMode) {
+          const isAll = !this.checkIfAllDays();
+          for (let i = 0; i < this.internal_week_days.length; i++) {
+              this.internal_week_days[i].selected = isAll;
+          }
+      }
   }
 
   toggleWeekDays(): void {
-    const isWeekdays = !this.checkIfWeekDays();
-    for (let i = 0; i < this.internal_week_days.length; i++) {
-      if (this.internal_week_days[i].isWeekDay) {
-        this.internal_week_days[i].selected = isWeekdays;
-      } else {
-        this.internal_week_days[i].selected = false;
+      if (this.editMode) {
+          const isWeekdays = !this.checkIfWeekDays();
+          for (let i = 0; i < this.internal_week_days.length; i++) {
+              if (this.internal_week_days[i].isWeekDay) {
+                  this.internal_week_days[i].selected = isWeekdays;
+              } else {
+                  this.internal_week_days[i].selected = false;
+              }
+          }
       }
-    }
   }
 
   toggleWeekend(): void {
-    const isWeekend = !this.checkIfWeekend();
-    for (let i = 0; i < this.internal_week_days.length; i++) {
-      if (!this.internal_week_days[i].isWeekDay) {
-        this.internal_week_days[i].selected = isWeekend;
-      } else {
-        this.internal_week_days[i].selected = false;
+      if (this.editMode) {
+          const isWeekend = !this.checkIfWeekend();
+          for (let i = 0; i < this.internal_week_days.length; i++) {
+              if (!this.internal_week_days[i].isWeekDay) {
+                  this.internal_week_days[i].selected = isWeekend;
+              } else {
+                  this.internal_week_days[i].selected = false;
+              }
+          }
       }
-    }
   }
 }

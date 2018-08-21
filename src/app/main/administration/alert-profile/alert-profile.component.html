@@ -153,12 +153,12 @@
         </ng-container>
 
         <!--Expanded Content Column-->
-        <ng-container matColumnDef="expandedDetail">
+        <ng-container matColumnDef="expanded-detail">
             <td mat-cell *matCellDef="let el" [attr.colspan]="displayedColumns.length">
                 <div class="element-detail" [@detailExpand]="el == expandedElement ? 'expanded' : 'collapsed'">
-                    <div fxLayout="row" fxLayoutGap="16px">
+                    <div fxLayout="row" fxLayoutGap="16px" class="full-width ">
                         <div fxFlex="50">
-                            <weekday type="short"></weekday>
+                            <weekday type="short" [editMode]="false"></weekday>
                         </div>
                         <div fxFlex="50">
                             <daytime></daytime>
@@ -176,7 +176,7 @@
             [class.expanded-row]="expandedElement === element"
             (click)="expandedElement = element"></tr>
 
-        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expanded-detail']" class="detail-row"></tr>
     </table>
 
     <mat-paginator [length]="resultsLength"

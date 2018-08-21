@@ -180,6 +180,10 @@
     }
   }
 
+  .mat-column-expanded-detail {
+    background-color: lighten(mat-color($accent), 35%);
+  }
+
   .mat-icon-button.small {
     width: $icon-small-container-size!important;
     height: $icon-small-container-size!important;

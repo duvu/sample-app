@@ -1,8 +1,22 @@
 <mat-chip-list [multiple]="true" [selectable]="true" [aria-orientation]="direction">
-  <mat-chip *ngFor="let day of week_days; index as i" color="primary" [selected]="day.selected" [selectable]="true" (click)="toggle(i, day)">
+  <mat-chip *ngFor="let day of week_days; index as i"
+            color="primary"
+            [selected]="day.selected"
+            [selectable]="true"
+            (click)="toggle(i, day)">
     {{display(day)}}
   </mat-chip>
 </mat-chip-list>
-<button mat-button [color]="colorAll()" (click)="toggleAllDays()">All week</button>
-<button mat-button [color]="colorWeekDays()" (click)="toggleWeekDays()">Weekdays</button>
-<button mat-button [color]="colorWeekend()" (click)="toggleWeekend()">Weekend</button>
+
+<button mat-button
+        [color]="colorAll()"
+        (click)="toggleAllDays()"
+        [disabled]="!editMode">All week</button>
+<button mat-button
+        [color]="colorWeekDays()"
+        (click)="toggleWeekDays()"
+        [disabled]="!editMode">Weekdays</button>
+<button mat-button
+        [color]="colorWeekend()"
+        (click)="toggleWeekend()"
+        [disabled]="!editMode">Weekend</button>
