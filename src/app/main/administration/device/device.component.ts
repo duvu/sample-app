@@ -17,6 +17,7 @@ import {map} from 'rxjs/operators/map';
 import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'applicationContext-device',
@@ -24,7 +25,6 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
     styleUrls: ['./device.component.scss']
 })
 export class DeviceComponent implements OnInit, AfterViewInit {
-
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -61,18 +61,26 @@ export class DeviceComponent implements OnInit, AfterViewInit {
     dataSource: MatTableDataSource<Device> | null;
     dataChange: ReplaySubject<number>;
 
-
+    cmd: string;
     constructor(private dialog: MatDialog,
                 private applicationContext: ApplicationContext,
+                private route: ActivatedRoute,
                 private service: DeviceService) { }
 
     ngOnInit() {
         this.initTableSettings();
         this.dataSource = new MatTableDataSource();
         this.dataChange = new ReplaySubject(1);
+
+        this.route.queryParams.subscribe(
+            params => {
+                this.cmd = params['cmd'];
+            }
+        );
     }
 
     ngAfterViewInit(): void {
+
         this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
         this.dataSource.sort = this.sort;
 
@@ -96,6 +104,9 @@ export class DeviceComponent implements OnInit, AfterViewInit {
                 })
             ).subscribe(data => {
                 this.dataSource.data = data;
+                if (this.cmd === 'add') {
+                    this.openDialogNewObject();
+                }
             });
     }
 
@@ -152,6 +163,8 @@ export class DeviceComponent implements OnInit, AfterViewInit {
         });
 
         dialogRef.afterClosed().subscribe(result => {
+            console.log('closing dialog');
+            this.cmd = undefined;
             if (result) {
                 this.create(result);
             }

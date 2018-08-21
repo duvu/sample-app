@@ -2,7 +2,7 @@
   <mat-form-field>
     <time-input placeholder="Select time" [(value)]="scheduleTime"></time-input>
   </mat-form-field>
-  <button mat-button (click)="setBizTime()">Business time</button>
+  <button mat-button (click)="setBizTime()" [disabled]="!editMode">Business time</button>
   <button mat-button (click)="setAllDay()">All day</button>
 </div>
 

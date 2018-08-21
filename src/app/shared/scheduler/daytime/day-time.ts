@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import {MyTime, TimeInput} from './time-input';
 
 @Component({
@@ -9,6 +9,7 @@ import {MyTime, TimeInput} from './time-input';
 export class DayTime implements OnInit {
 
   scheduleTime: MyTime;
+  @Input() editMode = true;
   @ViewChild(TimeInput) timeInput: TimeInput;
   constructor() { }
 

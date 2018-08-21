@@ -65,6 +65,18 @@ export class AlertProfileComponent implements OnInit {
             })).subscribe(data => this.dataSource = data)
     }
 
+    isExpanded(element: any): boolean {
+        return this.expandedElement === element;
+    }
+
+    toggleExpandCollapse(element): void {
+        if (this.isExpanded(element)) {
+            this.expandedElement = null;
+        } else {
+            this.expandedElement = element;
+        }
+    }
+
     dialogColumnOptions(): void {
 
     }

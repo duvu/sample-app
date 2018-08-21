@@ -173,8 +173,8 @@
 
         <tr mat-row *matRowDef="let element; columns: displayedColumns;"
             class="element-row"
-            [class.expanded-row]="expandedElement === element"
-            (click)="expandedElement = element"></tr>
+            [class.expanded-row]="isExpanded(element)"
+            (click)="toggleExpandCollapse(element)"></tr>
 
         <tr mat-row *matRowDef="let row; columns: ['expanded-detail']" class="detail-row"></tr>
     </table>

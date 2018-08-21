@@ -6,9 +6,12 @@
                     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Devices Filter">
                 </mat-form-field>
                 <div class="m-dev-add">
-                    <button mat-icon-button color="primary">
+                    <a mat-icon-button
+                       color="primary"
+                       [routerLink]="['/', 'main', '_admin', '_device']"
+                       [queryParams]="{cmd: 'add'}">
                         <mat-icon>add</mat-icon>
-                    </button>
+                    </a>
                 </div>
 
             </div>

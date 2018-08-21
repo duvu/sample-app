@@ -10,6 +10,7 @@ import { ComponentPortal, DomPortalHost } from '@angular/cdk/portal';
 import { SpinnerComponent } from 'app/pages/spinner/spinner.component';
 
 import * as _ from 'lodash';
+import { NavigationExtras } from '@angular/router/src/router';
 
 export const redirectUrl = 'redirectUrl';
 const DEFAULT_REDIRECT_URL = '/main/tracking';
@@ -205,8 +206,8 @@ export class ApplicationContext implements OnInit, OnDestroy {
         this.clear();
     }
 
-    navigate(url: string | any) {
-        this.router.navigate(url);
+    navigate(commands: any[], extras?: NavigationExtras) {
+        return this.router.navigate(commands);
     }
 
     isLoggedIn(): boolean {
