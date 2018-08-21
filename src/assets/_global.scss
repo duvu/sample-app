@@ -182,6 +182,11 @@
 
   .mat-column-expanded-detail {
     background-color: lighten(mat-color($accent), 35%);
+
+    .element-detail {
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
   }
 
   .mat-icon-button.small {
